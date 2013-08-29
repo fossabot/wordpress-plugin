@@ -23,6 +23,7 @@ class Selz_Form {
 		// Set up the default form values
 		$defaults = array(
 			'modal' 			=> false,
+			'position'			=> 'default',
 			'link' 				=> '',
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#241d33',
@@ -41,6 +42,11 @@ class Selz_Form {
 			__( 'Advanced', $this->textdomain ),
 			__( 'Information', $this->textdomain )
 		);
+		
+		$button_positions = array( 
+			'default' 	=> __( 'Default', $this->textdomain ),  
+			'above'		=> __( 'Above', $this->textdomain )
+		);		
 		?>
 
 		<div class="pluginName"><?php echo $this->name; ?><span class="pluginVersion"><?php echo $this->version; ?></span></div>
@@ -58,6 +64,15 @@ class Selz_Form {
 							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item Link', $this->textdomain ); ?></label>
 							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
+						</li>
+						<li>
+							<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Position', $this->textdomain ); ?></label> 
+							<span class="description"><?php _e( 'The button position.', $this->textdomain ); ?></span>
+							<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>">
+								<?php foreach ( $button_positions as $key => $val ) { ?>
+									<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
+								<?php } ?>
+							</select>
 						</li>						
 						<li>
 							<label for="<?php echo $this->get_field_id( 'modal' ); ?>">

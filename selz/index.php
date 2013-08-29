@@ -53,7 +53,7 @@ add_action( 'plugins_loaded', 'selz_plugin_loaded', 9 );
  * @since 0.0.1
  */
 function selz_activation_hook() {
-	add_option( 'selz', SELZ_VERSION );
+	add_option( 'selz_version', SELZ_VERSION );
 }
 
 
@@ -65,10 +65,11 @@ function selz_activation_hook() {
 function selz_plugin_loaded() {
 	require_once( SELZ_DIR . 'lib/total.php' );
 	require_once( SELZ_DIR . 'shortcode.php' );
+
 	new Selz_Shortcode();
-		
+
 	load_plugin_textdomain( 'selz', false, SELZ_DIR . 'lang/' );	
-		
+
 	add_action( 'widgets_init', 'selz_widgets_init' );
 }
 
@@ -92,6 +93,7 @@ function selz_widgets_init() {
 function selz_button($instance) {
 	$defaults = array(
 		'link'				=> '',
+		'position'			=> 'default',
 		'modal' 			=> false,
 		'text_color' 		=> '#ffffff',
 		'background_color' 	=> '#241d33'
@@ -112,7 +114,7 @@ function selz_button($instance) {
 	$args['background_color'] = str_replace( '#', '', $args['background_color'] );
 	
 	return 
-	'<script data-selz-t="_selz-btn-top" data-selz-a="'.$args['modal'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'">
+	'<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['modal'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'">
 		if (typeof _$elz === "undefined") { var _$elz = {}; }
 		if (typeof _$elz.b === "undefined") {
 			_$elz.b = { e: document.createElement("script") };
