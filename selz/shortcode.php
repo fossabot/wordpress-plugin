@@ -58,22 +58,7 @@ class Selz_Shortcode {
 			'outro_text' 		=> ''		
 		), $atts );		
 		
-		// overwrite "true" to 1, "false" to 0, "#" to empty
-		foreach( $atts as $key => $att )
-			$atts[$key] = str_replace( array('true', 'false'), array(true, false), $att );
-
-		// modify modal value
-		$atts['modal'] = $atts['modal'] ? 'modal' : '';
-		
-		return '
-			<script data-selz-t="_selz-btn-default" data-selz-a="'.$atts['modal'].'" data-selz-ct="'.$atts['text_color'].'" data-selz-cb="'.$atts['background_color'].'" data-selz-b="'.$atts['link'].'">
-				if (typeof _$elz === "undefined") { var _$elz = {}; }
-				if (typeof _$elz.b === "undefined") {
-					_$elz.b = { e: document.createElement("script") };
-					_$elz.b.e.src = "https://selz.com/embed/button";
-					document.body.appendChild(_$elz.b.e);
-				}
-			</script>';
+		return selz_button($atts);
 	}
 
 
