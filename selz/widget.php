@@ -129,7 +129,7 @@ class Selz_Widget extends WP_Widget {
 		if ( !empty( $instance['intro_text'] ) )
 			echo '<p class="'. $this->id . '-intro-text intro-text">' . $instance['intro_text'] . '</p>';
 			
-		echo 'Under construction';
+		echo '<p>' . selz_button($instance) . '</p>';
 		
 		// Print outro text if exist
 		if ( !empty( $instance['outro_text'] ) )
@@ -210,7 +210,7 @@ class Selz_Widget extends WP_Widget {
 						</li>
 						<li>
 							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item Link', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'The item selz link.', $this->textdomain ); ?></span>
+							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
 						</li>
 						<li>

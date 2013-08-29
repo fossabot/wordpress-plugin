@@ -56,7 +56,7 @@ class Selz_Form {
 					<ul>
 						<li>
 							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item Link', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'The item selz link.', $this->textdomain ); ?></span>
+							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
 						</li>						
 						<li>

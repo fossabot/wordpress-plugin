@@ -67,7 +67,9 @@ function selz_plugin_loaded() {
 	require_once( SELZ_DIR . 'shortcode.php' );
 	new Selz_Shortcode();
 		
-	add_action( 'widgets_init', 'selz_widgets_init' );	
+	load_plugin_textdomain( 'selz', false, SELZ_DIR . 'lang/' );	
+		
+	add_action( 'widgets_init', 'selz_widgets_init' );
 }
 
 
@@ -78,5 +80,45 @@ function selz_plugin_loaded() {
 function selz_widgets_init() {
 	require_once( SELZ_DIR . 'widget.php' );
 	register_widget( 'Selz_Widget' );
+}
+
+
+/**
+ * Generate the selz button with custom arguments
+ * Set up the default form values
+ * @param $instance, see $defaults for complete parameters
+ * @since 0.0.1
+ */
+function selz_button($instance) {
+	$defaults = array(
+		'link'				=> '',
+		'modal' 			=> false,
+		'text_color' 		=> '#ffffff',
+		'background_color' 	=> '#241d33'
+	);
+
+	// merge the user-selected arguments with the defaults.
+	$args = wp_parse_args( (array) $instance, $defaults );
+
+	// overwrite "true" to 1, "false" to 0
+	foreach( $args as $k => $v )
+		$args[$k] = str_replace( array('true', 'false'), array(true, false), $v );
+
+	// modify modal value
+	$args['modal'] = $args['modal'] ? 'modal' : '';
+	
+	// remove the # for hexcolor
+	$args['text_color'] = str_replace( '#', '', $args['text_color'] );
+	$args['background_color'] = str_replace( '#', '', $args['background_color'] );
+	
+	return 
+	'<script data-selz-t="_selz-btn-top" data-selz-a="'.$args['modal'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'">
+		if (typeof _$elz === "undefined") { var _$elz = {}; }
+		if (typeof _$elz.b === "undefined") {
+			_$elz.b = { e: document.createElement("script") };
+			_$elz.b.e.src = "https://selz.com/embed/button";
+			document.body.appendChild(_$elz.b.e);
+		}
+	</script>';
 }
 ?>
