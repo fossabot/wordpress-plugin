@@ -103,6 +103,7 @@ class Selz_Widget extends WP_Widget {
 		$args = array(
 			'title'					=> $instance['title'],
 			'modal' 				=> ! empty( $instance['modal'] ) ? true : false,
+			'position' 				=> $instance['position'],
 			'link' 					=> $instance['link'],
 			'text_color' 			=> $instance['text_color'],
 			'background_color' 		=> $instance['background_color'],
@@ -152,6 +153,7 @@ class Selz_Widget extends WP_Widget {
 
 		$instance['title'] 				= strip_tags( $new_instance['title'] );
 		$instance['modal'] 				= ( isset( $new_instance['modal'] ) ? 1 : 0 );
+		$instance['position']			= $new_instance['position'];
 		$instance['link'] 				= $new_instance['link'];
 		$instance['text_color'] 		= $new_instance['text_color'];
 		$instance['background_color'] 	= $new_instance['background_color'];
@@ -174,6 +176,7 @@ class Selz_Widget extends WP_Widget {
 			'title'				=> esc_attr__( 'Selz Widget', $this->textdomain ),
 			'link'				=> '',
 			'modal' 			=> false,
+			'position' 			=> 'default',
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#241d33',
 			'tab_active'		=> array( 0 => true, 1 => false, 2 => false ),
@@ -191,6 +194,11 @@ class Selz_Widget extends WP_Widget {
 			__( 'Advanced', $this->textdomain ),
 			__( 'Information', $this->textdomain )
 		);
+		
+		$button_positions = array( 
+			'default' 	=> __( 'Default', $this->textdomain ),  
+			'above'		=> __( 'Above', $this->textdomain )
+		);		
 		?>
 
 		<div class="pluginName"><?php echo $this->name; ?><span class="pluginVersion"><?php echo $this->version; ?></span></div>
@@ -213,6 +221,15 @@ class Selz_Widget extends WP_Widget {
 							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
 						</li>
+						<li>
+							<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Position', $this->textdomain ); ?></label> 
+							<span class="description"><?php _e( 'The button position.', $this->textdomain ); ?></span>
+							<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>">
+								<?php foreach ( $button_positions as $key => $val ) { ?>
+									<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
+								<?php } ?>
+							</select>
+						</li>						
 						<li>
 							<label for="<?php echo $this->get_field_id( 'modal' ); ?>">
 							<input class="checkbox" type="checkbox" <?php checked( $instance['modal'], true ); ?> id="<?php echo $this->get_field_id( 'modal' ); ?>" name="<?php echo $this->get_field_name( 'modal' ); ?>" /><?php _e( 'Modal', $this->textdomain ); ?></label>

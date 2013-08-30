@@ -1,0 +1,150 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2013-08-29 22:10+0700\n"
+"PO-Revision-Date: 2013-08-29 22:10+0700\n"
+"Last-Translator: Selz <engineer@selz.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: E:\\xampp\\htdocs\\wptheme\\wp-content\\plugins"
+"\\selz\n"
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:41
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:193
+msgid "General"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:42
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:194
+msgid "Advanced"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:43
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:195
+msgid "Information"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:47
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:199
+msgid "Default"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:48
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:200
+msgid "Above"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:64
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:220
+msgid "Item Link"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:65
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:221
+msgid "The item selz link. Example: http://selz.co/14ufE5G"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:69
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:225
+msgid "Position"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:70
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:226
+msgid "The button position."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:79
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:235
+msgid "Modal"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:80
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:236
+msgid "Use overlay modal popup."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:83
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:239
+msgid "Text Color"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:84
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:240
+msgid "Button text color."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:88
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:244
+msgid "Background Color"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:89
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:245
+msgid "Button background color."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:97
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:253
+msgid "Intro Text"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:98
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:254
+msgid ""
+"This option will display addtional text before the widget content and HTML "
+"supports."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:102
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:258
+msgid "Outro Text"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/dialog.php:103
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:259
+msgid "This option will display addtional text after widget and HTML supports."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/shortcode.php:157
+msgid "Cancel"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:216
+msgid "Title"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:264
+msgid "Custom Script & Stylesheet"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/widget.php:265
+msgid ""
+"Use this box for additional widget CSS style of custom javascript. Current "
+"widget selector: "
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/lib/options.php:76
+msgid "Default Field"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/lib/options.php:77
+msgid "This is a default description."
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/lib/options.php:165
+msgid "Save Changes"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/lib/options.php:283
+msgid "Add Image"
+msgstr ""
+
+#: E:\xampp\htdocs\wptheme\wp-content\plugins\selz/lib/options.php:284
+msgid "Remove"
+msgstr ""
