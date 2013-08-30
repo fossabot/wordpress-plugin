@@ -52,6 +52,10 @@ Or you want more features on next release? Feel free to get in touch about any o
 
 == Screenshots ==
 
+1. Shortcode generator
+2. Widget settings
+3. Front end post view
+
 == Changelog ==
 
 = 0.0.1 =
