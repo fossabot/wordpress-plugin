@@ -27,10 +27,7 @@ class Selz_Form {
 			'link' 				=> '',
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#241d33',
-			'tab_active'		=> array( 0 => true, 1 => false, 2 => false ),
-			'intro_text' 		=> '',
-			'outro_text' 		=> '',
-			'customstylescript'	=> ''
+			'tab_active'		=> array( 0 => true, 1 => false, 2 => false )
 		);
 
 		// Merge the user-selected arguments with the defaults.
@@ -38,14 +35,13 @@ class Selz_Form {
 
 		// Create default tab
 		$tabs = array( 
-			__( 'General', $this->textdomain ),  
-			__( 'Advanced', $this->textdomain ),
+			__( 'General', $this->textdomain ), 
 			__( 'Information', $this->textdomain )
 		);
 		
 		$button_positions = array( 
-			'default' 	=> __( 'Default', $this->textdomain ),  
-			'above'		=> __( 'Above', $this->textdomain )
+			'default' 	=> __( 'price on right', $this->textdomain ),  
+			'above'		=> __( 'price above', $this->textdomain )
 		);		
 		?>
 
@@ -92,21 +88,6 @@ class Selz_Form {
 					</ul>
 				</li>
 				<li class="tab-pane <?php if ( $instance['tab_active'][1] ) : ?>active<?php endif; ?>">
-					<ul>
-						<li>
-							<label for="<?php echo $this->get_field_id('intro_text'); ?>"><?php _e( 'Intro Text', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'This option will display addtional text before the widget content and HTML supports.', $this->textdomain ); ?></span>
-							<textarea name="<?php echo $this->get_field_name( 'intro_text' ); ?>" id="<?php echo $this->get_field_id( 'intro_text' ); ?>" rows="2" class="widefat"><?php echo esc_textarea($instance['intro_text']); ?></textarea>
-						</li>
-						<li>
-							<label for="<?php echo $this->get_field_id('outro_text'); ?>"><?php _e( 'Outro Text', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'This option will display addtional text after widget and HTML supports.', $this->textdomain ); ?></span>
-							<textarea name="<?php echo $this->get_field_name( 'outro_text' ); ?>" id="<?php echo $this->get_field_id( 'outro_text' ); ?>" rows="2" class="widefat"><?php echo esc_textarea($instance['outro_text']); ?></textarea>
-							
-						</li>
-					</ul>
-				</li>
-				<li class="tab-pane <?php if ( $instance['tab_active'][2] ) : ?>active<?php endif; ?>">
 					<ul>
 						<li>
 							<h3>About Selz</h3>

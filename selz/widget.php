@@ -196,8 +196,8 @@ class Selz_Widget extends WP_Widget {
 		);
 		
 		$button_positions = array( 
-			'default' 	=> __( 'Default', $this->textdomain ),  
-			'above'		=> __( 'Above', $this->textdomain )
+			'default' 	=> __( 'price on right', $this->textdomain ),  
+			'above'		=> __( 'price above', $this->textdomain )
 		);		
 		?>
 
