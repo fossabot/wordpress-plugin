@@ -40,7 +40,7 @@ var selzShortcode;
 			inputs.dialog.wpdialog('close');
 		},
 		insert : function() {
-			var ed = tinyMCEPopup.editor, e, b, fields = '';
+			var ed = tinyMCEPopup.editor, e, b, fields = '', canvas = document.getElementById(wpActiveEditor);
 			
 			$('input', inputs.dialog).each(function(){				
 				if ( $(this).attr('id') && $(this).is(':checkbox') )
@@ -60,12 +60,15 @@ var selzShortcode;
 					fields += ' ' + $(this).attr('id') + '="' + $(this).val() + '"';
 			});
 			
-			shortcode = "[selz " + fields + "]";			
+			shortcode = "[selz " + fields + "]";	
 
-			tinyMCEPopup.restoreSelection();
-			tinyMCEPopup.execCommand("mceBeginUndoLevel");
-			tinyMCEPopup.execCommand('mceInsertContent', false, shortcode);
-			tinyMCEPopup.execCommand("mceEndUndoLevel");
+			if ( ed ) {
+				tinyMCEPopup.restoreSelection();
+				tinyMCEPopup.execCommand("mceBeginUndoLevel");
+				tinyMCEPopup.execCommand('mceInsertContent', false, shortcode);
+				tinyMCEPopup.execCommand("mceEndUndoLevel");							
+			}
+			edInsertContent('', shortcode);
 			selzShortcode.close();
 		},
 		update : function() {

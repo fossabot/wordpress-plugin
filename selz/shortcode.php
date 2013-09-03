@@ -39,6 +39,7 @@ class Selz_Shortcode {
 		add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
 		add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 		add_shortcode( 'selz', array( &$this, 'add_shortcode' ) );
+		add_action( 'admin_print_footer_scripts', array( &$this, 'quicktag_button' ) );
 	}
 
 	
@@ -50,7 +51,7 @@ class Selz_Shortcode {
 	**/
 	function add_shortcode( $atts, $content ) {
 		$atts = shortcode_atts( array(
-			'modal' 			=> false,
+			'interact' 			=> 'overlay',
 			'link' 				=> '#',
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#241d33',
@@ -234,6 +235,17 @@ class Selz_Shortcode {
 		.wp_themeSkin .mce_selz:hover span {
 			background-position: 0 -28px;
 		}</style><?php
+	}
+	
+
+
+	function quicktag_button() { 
+		if ( wp_script_is( 'quicktags' ) ) { ?>
+			<script type="text/javascript">
+				QTags.addButton( 'qt_selz', 'selz', selz_dialog, '', 'selz', 'Paragraph tag' );
+				function selz_dialog() { selzShortcode.open(); }
+			</script><?php
+		}
 	}
 }
 ?>
