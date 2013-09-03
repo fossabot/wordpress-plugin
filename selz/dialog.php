@@ -22,7 +22,7 @@ class Selz_Form {
 
 		// Set up the default form values
 		$defaults = array(
-			'modal' 			=> false,
+			'interact'			=> 'modal',
 			'position'			=> 'default',
 			'link' 				=> '',
 			'text_color' 		=> '#ffffff',
@@ -38,6 +38,11 @@ class Selz_Form {
 			__( 'General', $this->textdomain ), 
 			__( 'Information', $this->textdomain )
 		);
+		
+		$interacts = array( 
+			'modal' 	=> __( 'Overlay', $this->textdomain ),  
+			'blank'		=> __( 'New tab', $this->textdomain )
+		);		
 		
 		$button_positions = array( 
 			'default' 	=> __( 'price on right', $this->textdomain ),  
@@ -71,10 +76,13 @@ class Selz_Form {
 							</select>
 						</li>						
 						<li>
-							<label for="<?php echo $this->get_field_id( 'modal' ); ?>">
-							<input class="checkbox" type="checkbox" <?php checked( $instance['modal'], true ); ?> id="<?php echo $this->get_field_id( 'modal' ); ?>" name="<?php echo $this->get_field_name( 'modal' ); ?>" /><?php _e( 'Modal', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'Use overlay modal popup.', $this->textdomain ); ?></span>
-						</li>
+							<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'Buyers Interact', $this->textdomain ); ?></label> 								
+							<select id="<?php echo $this->get_field_id( 'interact' ); ?>" name="<?php echo $this->get_field_name( 'interact' ); ?>">
+								<?php foreach ( $interacts as $k => $v ) { ?>
+									<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['interact'], $k ); ?>><?php echo esc_html( $v ); ?></option>
+								<?php } ?>
+							</select>
+						</li>	
 						<li>
 							<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Text Color', $this->textdomain ); ?></label>
 							<span class="description"><?php _e( 'Button text color.', $this->textdomain ); ?></span>

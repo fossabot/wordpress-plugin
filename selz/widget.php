@@ -102,9 +102,11 @@ class Selz_Widget extends WP_Widget {
 		// Set up the arguments for wp_list_categories()
 		$args = array(
 			'title'					=> $instance['title'],
-			'modal' 				=> ! empty( $instance['modal'] ) ? true : false,
+			'interact' 				=> $instance['interact'],
 			'position' 				=> $instance['position'],
 			'link' 					=> $instance['link'],
+			'type' 					=> $instance['type'],
+			'theme' 				=> $instance['theme'],
 			'text_color' 			=> $instance['text_color'],
 			'background_color' 		=> $instance['background_color'],
 			'tab_active'			=> $instance['tab_active'],
@@ -152,9 +154,11 @@ class Selz_Widget extends WP_Widget {
 		$instance = $new_instance;
 
 		$instance['title'] 				= strip_tags( $new_instance['title'] );
-		$instance['modal'] 				= ( isset( $new_instance['modal'] ) ? 1 : 0 );
+		$instance['interact']			= $new_instance['interact'];
 		$instance['position']			= $new_instance['position'];
 		$instance['link'] 				= $new_instance['link'];
+		$instance['type'] 				= $new_instance['type'];
+		$instance['theme'] 				= $new_instance['theme'];
 		$instance['text_color'] 		= $new_instance['text_color'];
 		$instance['background_color'] 	= $new_instance['background_color'];
 		$instance['tab_active'] 		= $new_instance['tab_active'];
@@ -175,7 +179,9 @@ class Selz_Widget extends WP_Widget {
 		$defaults = array(
 			'title'				=> esc_attr__( 'Selz Widget', $this->textdomain ),
 			'link'				=> '',
-			'modal' 			=> false,
+			'type'				=> 'button',
+			'theme'				=> 'light',
+			'interact' 			=> 'modal',
 			'position' 			=> 'default',
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#241d33',
@@ -193,6 +199,21 @@ class Selz_Widget extends WP_Widget {
 			__( 'General', $this->textdomain ),  
 			__( 'Advanced', $this->textdomain ),
 			__( 'Information', $this->textdomain )
+		);
+		
+		$types = array( 
+			'button' 	=> __( 'button', $this->textdomain ),  
+			'widget'	=> __( 'widget', $this->textdomain )
+		);
+		
+		$interacts = array( 
+			'modal' 	=> __( 'Overlay', $this->textdomain ),  
+			'blank'		=> __( 'New tab', $this->textdomain )
+		);
+		
+		$themes = array( 
+			'light'		=> __( 'light', $this->textdomain ),  
+			'dark'		=> __( 'dark', $this->textdomain )
 		);
 		
 		$button_positions = array( 
@@ -217,24 +238,46 @@ class Selz_Widget extends WP_Widget {
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 						</li>
 						<li>
-							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item Link', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
-							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
-						</li>
-						<li>
-							<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Position', $this->textdomain ); ?></label> 
-							<span class="description"><?php _e( 'The button position.', $this->textdomain ); ?></span>
-							<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>">
-								<?php foreach ( $button_positions as $key => $val ) { ?>
-									<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
+							<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Selz Type', $this->textdomain ); ?></label> 							
+							<select onchange="wpWidgets.save(jQuery(this).closest('div.widget'),0,1,0);" id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>">
+								<?php foreach ( $types as $k => $v ) { ?>
+									<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['type'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 								<?php } ?>
 							</select>
 						</li>						
 						<li>
-							<label for="<?php echo $this->get_field_id( 'modal' ); ?>">
-							<input class="checkbox" type="checkbox" <?php checked( $instance['modal'], true ); ?> id="<?php echo $this->get_field_id( 'modal' ); ?>" name="<?php echo $this->get_field_name( 'modal' ); ?>" /><?php _e( 'Modal', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'Use overlay modal popup.', $this->textdomain ); ?></span>
+							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item Link', $this->textdomain ); ?></label>
+							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
+							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
 						</li>
+						<?php if( ( 'button' == $instance['type'] ) ) : ?>
+							<li>
+								<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Position', $this->textdomain ); ?></label> 
+								<span class="description"><?php _e( 'The button position.', $this->textdomain ); ?></span>
+								<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>">
+									<?php foreach ( $button_positions as $key => $val ) { ?>
+										<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
+									<?php } ?>
+								</select>
+							</li>
+						<?php else: ?>	
+							<li>
+								<label for="<?php echo $this->get_field_id( 'theme' ); ?>"><?php _e( 'Widget Theme', $this->textdomain ); ?></label> 								
+								<select id="<?php echo $this->get_field_id( 'theme' ); ?>" name="<?php echo $this->get_field_name( 'theme' ); ?>">
+									<?php foreach ( $themes as $k => $v ) { ?>
+										<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['theme'], $k ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+								</select>
+							</li>	
+						<?php endif; ?>						
+						<li>
+							<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'Buyers Interact', $this->textdomain ); ?></label> 								
+							<select id="<?php echo $this->get_field_id( 'interact' ); ?>" name="<?php echo $this->get_field_name( 'interact' ); ?>">
+								<?php foreach ( $interacts as $k => $v ) { ?>
+									<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['interact'], $k ); ?>><?php echo esc_html( $v ); ?></option>
+								<?php } ?>
+							</select>
+						</li>	
 						<li>
 							<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Text Color', $this->textdomain ); ?></label>
 							<span class="description"><?php _e( 'Button text color.', $this->textdomain ); ?></span>

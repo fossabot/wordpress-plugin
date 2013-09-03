@@ -93,8 +93,10 @@ function selz_widgets_init() {
 function selz_button($instance) {
 	$defaults = array(
 		'link'				=> '',
+		'type'				=> 'button',
+		'theme'				=> 'light',
 		'position'			=> 'default',
-		'modal' 			=> false,
+		'interact' 			=> 'modal',
 		'text_color' 		=> '#ffffff',
 		'background_color' 	=> '#241d33'
 	);
@@ -105,22 +107,30 @@ function selz_button($instance) {
 	// overwrite "true" to 1, "false" to 0
 	foreach( $args as $k => $v )
 		$args[$k] = str_replace( array('true', 'false'), array(true, false), $v );
-
-	// modify modal value
-	$args['modal'] = $args['modal'] ? 'modal' : '';
 	
 	// remove the # for hexcolor
 	$args['text_color'] = str_replace( '#', '', $args['text_color'] );
 	$args['background_color'] = str_replace( '#', '', $args['background_color'] );
+
+	if( 'button' == $args['type'] )
+		$html = '<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'">
+			if (typeof _$elz === "undefined") { var _$elz = {}; }
+			if (typeof _$elz.b === "undefined") {
+				_$elz.b = { e: document.createElement("script") };
+				_$elz.b.e.src = "https://selz.com/embed/button";
+				document.body.appendChild(_$elz.b.e);
+			}
+		</script>';
+	else
+		$html = '<script data-selz-t="'.$args['theme'].'" data-selz-a="'.$args['interact'].'" data-selz-w="'.$args['link'].'">
+			if (typeof _$elz === "undefined") { var _$elz = {}; }
+			if (typeof _$elz.w === "undefined") {
+				_$elz.w = { e: document.createElement("script") };
+				_$elz.w.e.src = "https://selz.com/embed/widget";
+				document.body.appendChild(_$elz.w.e);
+			}
+		</script>';
 	
-	return 
-	'<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['modal'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'">
-		if (typeof _$elz === "undefined") { var _$elz = {}; }
-		if (typeof _$elz.b === "undefined") {
-			_$elz.b = { e: document.createElement("script") };
-			_$elz.b.e.src = "https://selz.com/embed/button";
-			document.body.appendChild(_$elz.b.e);
-		}
-	</script>';
+	return $html;
 }
 ?>
