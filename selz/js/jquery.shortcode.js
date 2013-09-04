@@ -75,7 +75,7 @@ var selzShortcode;
 			if ( ! inputs.loading ) {
 				inputs.loading = true;
 				inputs.spinner.show();
-				$.post( ajaxurl, { action: spscvars.action, nonce: spscvars.nonce, data:$(inputs.dialog).serialize() }, function( data ){
+				$.post( ajaxurl, { action: selzvars.action, nonce: selzvars.nonce, data:$(inputs.dialog).serialize() }, function( data ){
 					inputs.spinner.hide();
 					inputs.options.html(data);
 					inputs.loading = false;
