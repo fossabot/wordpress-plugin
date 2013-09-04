@@ -6,7 +6,10 @@ Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: 0.0.1
 
-Embed your Selz items directly into your wordpress site. 1) Choose to embed a button or widget for your items. 2) Customize your button or widget colours. 3) Choose to display your item within an overlay or new tab
+Embed your Selz items directly into your wordpress site. 
+1) Choose to embed a button or widget for your items. 
+2) Customize your button or widget colours. 
+3) Choose to display your item within an overlay or new tab
 
 == Description ==
 
@@ -54,7 +57,8 @@ Or you want more features on next release? Feel free to get in touch about any o
 
 1. Shortcode generator
 2. Widget settings
-3. Front end post view
+3. Front end Selz button
+3. Front end Selz widget
 
 == Changelog ==
 

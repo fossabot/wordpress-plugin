@@ -279,13 +279,11 @@ class Selz_Widget extends WP_Widget {
 							</select>
 						</li>	
 						<li>
-							<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Text Color', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'Button text color.', $this->textdomain ); ?></span>
+							<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Button Text Color', $this->textdomain ); ?></label>
 							<input class="color-picker" type="text" id="<?php echo $this->get_field_id( 'text_color' ); ?>" name="<?php echo $this->get_field_name( 'text_color' ); ?>" value="<?php echo esc_attr( $instance['text_color'] ); ?>">
 						</li>
 						<li>
-							<label for="<?php echo $this->get_field_id( 'background_color' ); ?>"><?php _e( 'Background Color', $this->textdomain ); ?></label>
-							<span class="description"><?php _e( 'Button background color.', $this->textdomain ); ?></span>
+							<label for="<?php echo $this->get_field_id( 'background_color' ); ?>"><?php _e( 'Button Background Color', $this->textdomain ); ?></label>
 							<input class="color-picker" type="text" id="<?php echo $this->get_field_id( 'background_color' ); ?>" name="<?php echo $this->get_field_name( 'background_color' ); ?>" value="<?php echo esc_attr( $instance['background_color'] ); ?>">
 						</li>
 					</ul>
