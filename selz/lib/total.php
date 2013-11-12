@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 if ( ! defined( 'TOTAL_VERSION' ) ) {
 
-	define( 'TOTAL_VERSION', '0.0.1' );
+	define( 'TOTAL_VERSION', '1.1' );
 	define( 'TOTAL_DIR', plugin_dir_path( __FILE__ ) );
 	define( 'TOTAL_URL', plugin_dir_url( __FILE__ ) );
 	

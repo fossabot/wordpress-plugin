@@ -67,7 +67,6 @@ class Selz_Widget extends WP_Widget {
 		}
 	}
 
-	
 	/**
 	 * Push the widget stylesheet widget.css into widget admin page
 	 * @since 0.0.1
@@ -78,7 +77,6 @@ class Selz_Widget extends WP_Widget {
 		wp_enqueue_script( 'total-dialog' );
 	}
 
-	
 	/**
 	 * Print the custom style and script
 	 * @since 0.0.1
@@ -90,7 +88,6 @@ class Selz_Widget extends WP_Widget {
 				echo $setting['customstylescript'];
 		}
 	}
-	
 	
 	/**
 	 * Outputs the widget based on the arguments input through the widget controls.
@@ -109,6 +106,7 @@ class Selz_Widget extends WP_Widget {
 			'theme' 				=> $instance['theme'],
 			'text_color' 			=> $instance['text_color'],
 			'background_color' 		=> $instance['background_color'],
+			'show_logos'			=> $instance['show_logos'],
 			'tab_active'			=> $instance['tab_active'],
 			'intro_text' 			=> $instance['intro_text'],
 			'outro_text' 			=> $instance['outro_text'],
@@ -161,6 +159,7 @@ class Selz_Widget extends WP_Widget {
 		$instance['theme'] 				= $new_instance['theme'];
 		$instance['text_color'] 		= $new_instance['text_color'];
 		$instance['background_color'] 	= $new_instance['background_color'];
+		$instance['show_logos'] 	    = $new_instance['show_logos'];
 		$instance['tab_active'] 		= $new_instance['tab_active'];
 		$instance['intro_text'] 		= $new_instance['intro_text'];
 		$instance['outro_text'] 		= $new_instance['outro_text'];
@@ -184,8 +183,9 @@ class Selz_Widget extends WP_Widget {
 			'interact' 			=> 'modal',
 			'position' 			=> 'default',
 			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#241d33',
+			'background_color' 	=> '#7350c9',
 			'tab_active'		=> array( 0 => true, 1 => false, 2 => false ),
+			'show_logos'        => 'false',
 			'intro_text' 		=> '',
 			'outro_text' 		=> '',
 			'customstylescript'	=> ''
@@ -238,7 +238,7 @@ class Selz_Widget extends WP_Widget {
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 						</li>
 						<li>
-							<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Selz Type', $this->textdomain ); ?></label> 							
+							<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Display type', $this->textdomain ); ?></label> 							
 							<select onchange="wpWidgets.save(jQuery(this).closest('div.widget'),0,1,0);" id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>">
 								<?php foreach ( $types as $k => $v ) { ?>
 									<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['type'], $k ); ?>><?php echo esc_html( $v ); ?></option>
@@ -246,14 +246,14 @@ class Selz_Widget extends WP_Widget {
 							</select>
 						</li>						
 						<li>
-							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item Link', $this->textdomain ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item link', $this->textdomain ); ?></label>
 							<span class="description"><?php _e( 'The item selz link. Example: http://selz.co/14ufE5G', $this->textdomain ); ?></span>
 							<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" />
 						</li>
 						<?php if( ( 'button' == $instance['type'] ) ) : ?>
 							<li>
-								<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Position', $this->textdomain ); ?></label> 
-								<span class="description"><?php _e( 'The button position.', $this->textdomain ); ?></span>
+								<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Button style', $this->textdomain ); ?></label> 
+								<span class="description"><?php _e( 'The button layout style.', $this->textdomain ); ?></span>
 								<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>">
 									<?php foreach ( $button_positions as $key => $val ) { ?>
 										<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
@@ -262,16 +262,20 @@ class Selz_Widget extends WP_Widget {
 							</li>
 						<?php else: ?>	
 							<li>
-								<label for="<?php echo $this->get_field_id( 'theme' ); ?>"><?php _e( 'Widget Theme', $this->textdomain ); ?></label> 								
+								<label for="<?php echo $this->get_field_id( 'theme' ); ?>"><?php _e( 'Widget theme', $this->textdomain ); ?></label> 								
 								<select id="<?php echo $this->get_field_id( 'theme' ); ?>" name="<?php echo $this->get_field_name( 'theme' ); ?>">
 									<?php foreach ( $themes as $k => $v ) { ?>
 										<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['theme'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 								</select>
 							</li>	
-						<?php endif; ?>						
+						<?php endif; ?>	
 						<li>
-							<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'Buyers Interact', $this->textdomain ); ?></label> 								
+							<label for="<?php echo $this->get_field_id( 'show_logos' ); ?>"><input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" value="true"> <?php _e( 'Add payment logos', $this->textdomain ); ?></label>
+							<span class="description"><?php _e( 'Show the Visa, MasterCard and Norton Secured logos underneath.', $this->textdomain ); ?></span>
+						</li>					
+						<li>
+							<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'How buyers interact', $this->textdomain ); ?></label> 								
 							<select id="<?php echo $this->get_field_id( 'interact' ); ?>" name="<?php echo $this->get_field_name( 'interact' ); ?>">
 								<?php foreach ( $interacts as $k => $v ) { ?>
 									<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['interact'], $k ); ?>><?php echo esc_html( $v ); ?></option>
@@ -279,11 +283,11 @@ class Selz_Widget extends WP_Widget {
 							</select>
 						</li>	
 						<li>
-							<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Button Text Color', $this->textdomain ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Button text color', $this->textdomain ); ?></label>
 							<input class="color-picker" type="text" id="<?php echo $this->get_field_id( 'text_color' ); ?>" name="<?php echo $this->get_field_name( 'text_color' ); ?>" value="<?php echo esc_attr( $instance['text_color'] ); ?>">
 						</li>
 						<li>
-							<label for="<?php echo $this->get_field_id( 'background_color' ); ?>"><?php _e( 'Button Background Color', $this->textdomain ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'background_color' ); ?>"><?php _e( 'Button background color', $this->textdomain ); ?></label>
 							<input class="color-picker" type="text" id="<?php echo $this->get_field_id( 'background_color' ); ?>" name="<?php echo $this->get_field_name( 'background_color' ); ?>" value="<?php echo esc_attr( $instance['background_color'] ); ?>">
 						</li>
 					</ul>
@@ -291,19 +295,19 @@ class Selz_Widget extends WP_Widget {
 				<li class="tab-pane <?php if ( $instance['tab_active'][1] ) : ?>active<?php endif; ?>">
 					<ul>
 						<li>
-							<label for="<?php echo $this->get_field_id('intro_text'); ?>"><?php _e( 'Intro Text', $this->textdomain ); ?></label>
+							<label for="<?php echo $this->get_field_id('intro_text'); ?>"><?php _e( 'Intro text', $this->textdomain ); ?></label>
 							<span class="description"><?php _e( 'This option will display addtional text before the widget content and HTML supports.', $this->textdomain ); ?></span>
 							<textarea name="<?php echo $this->get_field_name( 'intro_text' ); ?>" id="<?php echo $this->get_field_id( 'intro_text' ); ?>" rows="2" class="widefat"><?php echo esc_textarea($instance['intro_text']); ?></textarea>
 						</li>
 						<li>
-							<label for="<?php echo $this->get_field_id('outro_text'); ?>"><?php _e( 'Outro Text', $this->textdomain ); ?></label>
+							<label for="<?php echo $this->get_field_id('outro_text'); ?>"><?php _e( 'Outro text', $this->textdomain ); ?></label>
 							<span class="description"><?php _e( 'This option will display addtional text after widget and HTML supports.', $this->textdomain ); ?></span>
 							<textarea name="<?php echo $this->get_field_name( 'outro_text' ); ?>" id="<?php echo $this->get_field_id( 'outro_text' ); ?>" rows="2" class="widefat"><?php echo esc_textarea($instance['outro_text']); ?></textarea>
 							
 						</li>				
 						<li>
-							<label for="<?php echo $this->get_field_id('customstylescript'); ?>"><?php _e( 'Custom Script & Stylesheet', $this->textdomain ) ; ?></label>
-							<span class="description"><?php _e( 'Use this box for additional widget CSS style of custom javascript. Current widget selector: ', $this->textdomain ); ?><?php echo '<tt>#' . $this->id . '</tt>'; ?></span>
+							<label for="<?php echo $this->get_field_id('customstylescript'); ?>"><?php _e( 'Custom JavaScript & CSS', $this->textdomain ) ; ?></label>
+							<span class="description"><?php _e( 'Use this for additional widget CSS styles and JavaScript. Current widget selector: ', $this->textdomain ); ?><?php echo '<tt>#' . $this->id . '</tt>'; ?></span>
 							<textarea name="<?php echo $this->get_field_name( 'customstylescript' ); ?>" id="<?php echo $this->get_field_id( 'customstylescript' ); ?>" rows="3" class="widefat code"><?php echo htmlentities($instance['customstylescript']); ?></textarea>
 						</li>
 					</ul>

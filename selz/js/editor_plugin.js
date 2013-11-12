@@ -51,7 +51,7 @@
 				author 	  : 'selz',
 				authorurl : 'http://www.selz.com',
 				infourl   : 'http://www.selz.com',
-				version   : '0.1'
+				version   : '1.1'
 			};
 		}
 	});

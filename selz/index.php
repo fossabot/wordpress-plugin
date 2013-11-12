@@ -3,7 +3,7 @@
     Plugin Name: Selz
     Plugin URI: http://selz.com
     Description: Embed your Selz items directly into your wordpress site. 1) Choose to embed a button or widget for your items. 2) Customize your button or widget colours. 3) Choose to display your item within an overlay or new tab
-    Version: 0.0.1
+    Version: 1.2
     Author: selz.com
     Author URI: http://selz.com
     License: GPL2
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 // Set constant
 define( 'SELZ', true );
-define( 'SELZ_VERSION', '0.0.1' );
+define( 'SELZ_VERSION', '1.2' );
 define( 'SELZ_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SELZ_URL', plugin_dir_url( __FILE__ ) );
 define( 'SELZ_NAME', 'Selz' );
@@ -98,7 +98,8 @@ function selz_button($instance) {
 		'position'			=> 'default',
 		'interact' 			=> 'modal',
 		'text_color' 		=> '#ffffff',
-		'background_color' 	=> '#241d33'
+		'background_color' 	=> '#6d48cc',
+		'show_logos'        => 'false',
 	);
 
 	// merge the user-selected arguments with the defaults.
@@ -113,23 +114,27 @@ function selz_button($instance) {
 	$args['background_color'] = str_replace( '#', '', $args['background_color'] );
 
 	if( 'button' == $args['type'] )
-		$html = '<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'">
+		$html = '<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.$args['link'].'"'.($args['show_logos'] ? ' data-selz-lg="true"' : '').'>
 			if (typeof _$elz === "undefined") { var _$elz = {}; }
 			if (typeof _$elz.b === "undefined") {
 				_$elz.b = { e: document.createElement("script") };
 				_$elz.b.e.src = "https://selz.com/embed/button";
 				document.body.appendChild(_$elz.b.e);
 			}
-		</script>';
+		</script>
+		<a href="'.$args['link'].'" target="_blank" class="_selz_nojs_link">Buy this on Selz</a>
+        <a href="https://selz.com" target="_blank" class="_selz_nojs_link">Start selling on Selz</a>';
 	else
-		$html = '<script data-selz-t="'.$args['theme'].'" data-selz-a="'.$args['interact'].'" data-selz-w="'.$args['link'].'">
+		$html = '<script data-selz-t="'.$args['theme'].'" data-selz-a="'.$args['interact'].'" data-selz-w="'.$args['link'].'"'.($args['show_logos'] ? ' data-selz-lg="true"' : '').'>
 			if (typeof _$elz === "undefined") { var _$elz = {}; }
 			if (typeof _$elz.w === "undefined") {
 				_$elz.w = { e: document.createElement("script") };
 				_$elz.w.e.src = "https://selz.com/embed/widget";
 				document.body.appendChild(_$elz.w.e);
 			}
-		</script>';
+		</script>
+		<a href="'.$args['link'].'" target="_blank" class="_selz_nojs_link">Buy this on Selz</a>
+        <a href="https://selz.com" target="_blank" class="_selz_nojs_link">Start selling on Selz</a>';
 	
 	return $html;
 }

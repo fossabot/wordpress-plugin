@@ -42,7 +42,6 @@ class Selz_Shortcode {
 		add_action( 'admin_print_footer_scripts', array( &$this, 'quicktag_button' ) );
 	}
 
-	
 	/**
 	 * Shortcode function
 	 * Uses add_shortcode
@@ -56,14 +55,14 @@ class Selz_Shortcode {
 			'interact' 			=> 'overlay',
 			'link' 				=> '#',
 			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#241d33',
+			'background_color' 	=> '#6d48cc',
+			'show_logos'        => 'false',
 			'intro_text' 		=> '',
 			'outro_text' 		=> ''		
 		), $atts );		
 		
 		return selz_button($atts);
 	}
-
 
 	/**
 	 * PHP shortcode function for using in template file
@@ -83,7 +82,6 @@ class Selz_Shortcode {
 			return super_post( $args );
 	}
 	
-	
 	/*
 	 * Check if the post has a shortcode(s) used in the current post content with stripos PHP function
 	 * Add !empty($cur_post->post_content) if the post has no content
@@ -100,7 +98,6 @@ class Selz_Shortcode {
 		
 		return false;
 	}
-	
 	
 	/*
 	 * Print additional styles and script to the header after wp_enqueue_scripts 
@@ -135,8 +132,7 @@ class Selz_Shortcode {
 			}
 		}
 	}	
-
-
+	
 	/**
 	 * Dialog for internal linking.
 	 * @since 3.1.0
@@ -183,7 +179,6 @@ class Selz_Shortcode {
 		exit;
 	}
 
-	 
 	function add_buttons() {		
 		if ( get_user_option('rich_editing') == 'true') {		
 			add_filter('mce_external_plugins',  array( &$this, 'mce_external_plugins'), 5);
@@ -196,17 +191,14 @@ class Selz_Shortcode {
 		return $buttons;
 	}
 
-
 	function mce_external_plugins( $plugin_array ) {
 		$plugin_array['selz'] = SELZ_URL . 'js/editor_plugin.js';	
 		return $plugin_array;
 	}
 
-
 	function tiny_mce_version($version) {
 		return ++$version;
 	}
-	
 	
 	/**
 	 * Load custom style or script to the current page admin
@@ -228,7 +220,6 @@ class Selz_Shortcode {
 		));	
 	}
 	
-	
 	function enqueue_styles() {
 		?><style type="text/css">
 		.wp_themeSkin .mce_selz span {
@@ -239,8 +230,6 @@ class Selz_Shortcode {
 		}</style><?php
 	}
 	
-
-
 	function quicktag_button() { 
 		if ( wp_script_is( 'quicktags' ) ) { ?>
 			<script type="text/javascript">
