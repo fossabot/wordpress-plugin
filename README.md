@@ -2,6 +2,8 @@
 
 Embed your Selz items directly into your wordpress site. 
 
+Latest version: **1.2**
+
 ### Features
 
 - Choose to embed a button or widget for your items
