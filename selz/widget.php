@@ -183,7 +183,7 @@ class Selz_Widget extends WP_Widget {
 			'interact' 			=> 'modal',
 			'position' 			=> 'default',
 			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#7350c9',
+			'background_color' 	=> '#6d48cc',
 			'tab_active'		=> array( 0 => true, 1 => false, 2 => false ),
 			'show_logos'        => 'false',
 			'intro_text' 		=> '',
