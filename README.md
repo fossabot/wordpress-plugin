@@ -1,6 +1,6 @@
-# Selz Wordpress Plugin
+# Selz WordPress Plugin
 
-Embed your Selz items directly into your wordpress site. 
+Embed your Selz items directly into your WordPress site. 
 
 ### Features
 
@@ -8,7 +8,7 @@ Embed your Selz items directly into your wordpress site.
 - Customize your button or widget colours
 - Choose to display your item within an overlay or new tab
 
-For the latest information and changelog, visit the wordpress plugin page:
+For the latest information and changelog, visit the WordPress plugin page:
 
 [http://wordpress.org/plugins/selz-ecommerce](http://wordpress.org/plugins/selz-ecommerce)
 
