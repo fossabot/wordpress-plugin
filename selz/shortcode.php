@@ -42,7 +42,6 @@ class Selz_Shortcode {
 		add_action( 'admin_print_footer_scripts', array( &$this, 'quicktag_button' ) );
 	}
 
-	
 	/**
 	 * Shortcode function
 	 * Uses add_shortcode
@@ -56,7 +55,8 @@ class Selz_Shortcode {
 			'interact' 			=> 'overlay',
 			'link' 				=> '#',
 			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#241d33',
+			'background_color' 	=> '#6d48cc',
+			'show_logos'        => 'false',
 			'intro_text' 		=> '',
 			'outro_text' 		=> ''		
 		), $atts );		
@@ -64,25 +64,6 @@ class Selz_Shortcode {
 		return selz_button($atts);
 	}
 
-
-	/**
-	 * PHP shortcode function for using in template file
-	 * @params $id	: the widget option id
-	 * 		   $echo: echo the HTML or return
-	 * @return HTML.
-	 * @since 1.5
-	**/
-	function super_post_search_shortcode( $id, $echo = true ) {
-		$options = get_option( 'widget_selz' );	
-		$args = $options[$id]; 	// overwrite
-		$args['id'] = $id;		// add the id for load more post link
-		
-		if( $echo )
-			echo super_post( $args );
-		else
-			return super_post( $args );
-	}
-	
 	
 	/*
 	 * Check if the post has a shortcode(s) used in the current post content with stripos PHP function
@@ -100,7 +81,6 @@ class Selz_Shortcode {
 		
 		return false;
 	}
-	
 	
 	/*
 	 * Print additional styles and script to the header after wp_enqueue_scripts 
@@ -135,15 +115,19 @@ class Selz_Shortcode {
 			}
 		}
 	}	
-
-
+	
 	/**
 	 * Dialog for internal linking.
 	 * @since 3.1.0
 	 */
 	function print_dialog() { ?>
-		<div style="display:none;">
-			<form id="selz-dialog" tabindex="-1">
+		<div id="selz-backdrop" style="display: none"></div>
+		<div id="selz-wrap" class="wp-core-ui" style="display: none">
+			<form id="selz-form" tabindex="-1">
+				<div id="selz-modal-title">
+					<?php _e( 'Selz Shortcode Editor' ) ?>
+					<div id="selz-close" tabindex="0"></div>
+				</div>			
 				<div class="total-shortcode" style="padding: 12px 12px 10px;">
 					<div id="selz-dialog-options">
 						<?php
@@ -156,13 +140,13 @@ class Selz_Shortcode {
 							<span class="spinner" style="display: none;float: left;"></span>
 							<input type="submit" value="<?php esc_attr_e( 'Add Shortcode', SELZ_LANG ); ?>" class="button-primary selz-dialog-submit">					
 						</div>
-						<div id="selz-dialog-cancel" style="float:left;line-height: 25px;">
+						<div id="selz-cancel" style="float:left;line-height: 25px;">
 							<a class="submitdelete deletion" href="#"><?php _e( 'Cancel', SELZ_LANG ); ?></a>
 						</div>
 					</div>
 				</div>
 			</form>
-		</div><?php
+		</div><?php		
 	}
 
 	function admin_footer() {
@@ -183,7 +167,6 @@ class Selz_Shortcode {
 		exit;
 	}
 
-	 
 	function add_buttons() {		
 		if ( get_user_option('rich_editing') == 'true') {		
 			add_filter('mce_external_plugins',  array( &$this, 'mce_external_plugins'), 5);
@@ -196,17 +179,14 @@ class Selz_Shortcode {
 		return $buttons;
 	}
 
-
 	function mce_external_plugins( $plugin_array ) {
 		$plugin_array['selz'] = SELZ_URL . 'js/editor_plugin.js';	
 		return $plugin_array;
 	}
 
-
 	function tiny_mce_version($version) {
 		return ++$version;
 	}
-	
 	
 	/**
 	 * Load custom style or script to the current page admin
@@ -228,19 +208,89 @@ class Selz_Shortcode {
 		));	
 	}
 	
-	
 	function enqueue_styles() {
+		global $hook_suffix;
+		if( ! in_array( $hook_suffix, array( 'post-new.php', 'post.php' ) ) )
+			return;
+			
 		?><style type="text/css">
-		.wp_themeSkin .mce_selz span {
+		#selz-backdrop {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			min-height: 360px;
+			background: #000;
+			opacity: 0.7;
+			filter: alpha(opacity=70);
+			z-index: 100100;
+		}	
+		#selz-wrap {
+			transition: none 0s ease 0s;
+			display: none;
+			background-color: #fff;
+			-webkit-box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.3 );
+			box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.3 );
+			width: 500px;
+			overflow: hidden;
+			margin-left: -250px;
+			margin-top: -125px;
+			position: absolute;
+			top: 200px;
+			left: 50%;
+			z-index: 100105;
+			-webkit-transition: height 0.2s, margin-top 0.2s;
+			transition: height 0.2s, margin-top 0.2s;
+		}
+		#selz-modal-title {
+			background: #fcfcfc;
+			border-bottom: 1px solid #dfdfdf;
+			height: 36px;
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 36px;
+			padding: 0 36px 0 16px;
+			top: 0;
+			right: 0;
+			left: 0;
+		}
+		#selz-close {
+			color: #666;
+			cursor: pointer;
+			padding: 0;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 36px;
+			height: 36px;
+			text-align: center;
+		}
+
+		#selz-close:before {
+			font: normal 20px/36px 'dashicons';
+			vertical-align: top;
+			speak: none;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			width: 36px;
+			height: 36px;
+			content: '\f158';
+		}
+
+		#selz-close:hover,
+		#selz-close:focus {
+			color: #2ea2cc;
+		}
+		i.mce-i-selz {
 			background: url("<?php echo SELZ_URL . 'img/shortcode.png'; ?>") no-repeat scroll 0 0 transparent;
 		}
-		.wp_themeSkin .mce_selz:hover span {
+		button:hover i.mce-i-selz {
 			background-position: 0 -28px;
 		}</style><?php
 	}
 	
-
-
 	function quicktag_button() { 
 		if ( wp_script_is( 'quicktags' ) ) { ?>
 			<script type="text/javascript">

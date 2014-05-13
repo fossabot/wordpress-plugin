@@ -26,6 +26,7 @@
 	// tinymce.PluginManager.requireLangPack('selz');
 	tinymce.create('tinymce.plugins.selz', {
 		init : function(ed, url) {
+			
 			ed.addCommand('selz', function() {
 				if ( typeof(selzShortcode) != 'undefined' ) {
 					selzShortcode.open();
@@ -37,10 +38,6 @@
 				title : 'Selz',
 				cmd : 'selz'
 			});
-			
-			ed.onNodeChange.add(function(ed, cm, n) {	// Add a node change handler, selects the button in the UI when a image is selected
-				cm.setActive('selz', n.nodeName == 'IMG');
-			});
 		},
 		createControl : function(n, cm) {
 			return null;
@@ -51,7 +48,7 @@
 				author 	  : 'selz',
 				authorurl : 'http://www.selz.com',
 				infourl   : 'http://www.selz.com',
-				version   : '0.1'
+				version   : '1.1'
 			};
 		}
 	});

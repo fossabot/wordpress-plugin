@@ -4,17 +4,20 @@ var selzShortcode;
 	var inputs = {}, ed;
 	selzShortcode = {
 		init : function() {
-			inputs.dialog = $('#selz-dialog');
+			inputs.wrap = $('#selz-wrap');
+			inputs.backdrop = $( '#selz-backdrop' );
+			inputs.form = $( '#selz-form' );
 			inputs.options = $('#selz-dialog-options');
 			inputs.submit = $('.selz-dialog-submit');
+			inputs.close = $( '#selz-close' );
 			inputs.spinner = $('#selz-dialog-update').find('.spinner');
 			inputs.loading = false;
 			inputs.submit.click( function(e){
 				e.preventDefault();
 				selzShortcode.insert();
 			});			
-			$('#selz-dialog-cancel').click( function(e){
-				e.preventDefault();
+			inputs.close.add( inputs.backdrop ).add( '#selz-cancel a' ).click( function( event ) {
+				event.preventDefault();
 				selzShortcode.close();
 			});
 		},		
@@ -22,27 +25,17 @@ var selzShortcode;
 			if ( !wpActiveEditor )
 				return;
 
-			// Initialize the dialog if necessary (html mode).
-			if ( ! inputs.dialog.data('wpdialog') ) {
-				inputs.dialog.wpdialog({
-					title: 'Selz Shortcode Generator',
-					width: 430,
-					height: 'auto',
-					modal: true,
-					dialogClass: 'wp-dialog',
-					//zIndex: 300000
-				});
-			}
-
-			inputs.dialog.wpdialog('open');
+			inputs.wrap.show();
+			inputs.backdrop.show();
 		},
 		close : function() {
-			inputs.dialog.wpdialog('close');
+			inputs.backdrop.hide();
+			inputs.wrap.hide();		
 		},
 		insert : function() {
-			var ed = tinyMCEPopup.editor, e, b, fields = '', canvas = document.getElementById(wpActiveEditor);
+			var ed = tinymce.get( wpActiveEditor ), fields = '';
 			
-			$('input', inputs.dialog).each(function(){				
+			$('input', inputs.wrap).each(function(){				
 				if ( $(this).attr('id') && $(this).is(':checkbox') )
 					fields += ' ' + $(this).attr('id') + '="' + $(this).prop("checked") + '"';
 			
@@ -50,12 +43,12 @@ var selzShortcode;
 					fields += ' ' + $(this).attr('id') + '="' + $(this).val() + '"';
 			});
 
-			$('select', inputs.dialog).each(function(){
+			$('select', inputs.wrap).each(function(){
 				if ( $(this).attr('id') && $(this).val())
 					fields += ' ' + $(this).attr('id') + '="' + $(this).val() + '"';
 			});
 			
-			$('textarea', inputs.dialog).each(function(){
+			$('textarea', inputs.wrap).each(function(){
 				if ( $(this).attr('id') && $(this).val())
 					fields += ' ' + $(this).attr('id') + '="' + $(this).val() + '"';
 			});
@@ -63,10 +56,9 @@ var selzShortcode;
 			shortcode = "[selz " + fields + "]";	
 
 			if ( ed ) {
-				tinyMCEPopup.restoreSelection();
-				tinyMCEPopup.execCommand("mceBeginUndoLevel");
-				tinyMCEPopup.execCommand('mceInsertContent', false, shortcode);
-				tinyMCEPopup.execCommand("mceEndUndoLevel");							
+				tinymce.execCommand("mceBeginUndoLevel");
+				tinymce.execCommand('mceInsertContent', false, shortcode);
+				tinymce.execCommand("mceEndUndoLevel");
 			}
 			edInsertContent('', shortcode);
 			selzShortcode.close();
@@ -75,7 +67,7 @@ var selzShortcode;
 			if ( ! inputs.loading ) {
 				inputs.loading = true;
 				inputs.spinner.show();
-				$.post( ajaxurl, { action: selzvars.action, nonce: selzvars.nonce, data:$(inputs.dialog).serialize() }, function( data ){
+				$.post( ajaxurl, { action: selzvars.action, nonce: selzvars.nonce, data: inputs.form.serialize() }, function( data ){
 					inputs.spinner.hide();
 					inputs.options.html(data);
 					inputs.loading = false;
