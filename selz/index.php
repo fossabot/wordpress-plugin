@@ -3,7 +3,7 @@
     Plugin Name: Selz
     Plugin URI: http://selz.com
     Description: Embed your Selz items directly into your WordPress site. 1) Choose to embed a button or widget for your items. 2) Customize your button or widget colours. 3) Choose to display your item within an overlay or new tab
-    Version: 1.4
+    Version: 1.5.0
     Author: selz.com
     Author URI: http://selz.com
     License: GPL2
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 // Set constant
 define( 'SELZ', true );
-define( 'SELZ_VERSION', '1.4' );
+define( 'SELZ_VERSION', '1.5.0' );
 define( 'SELZ_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SELZ_URL', plugin_dir_url( __FILE__ ) );
 define( 'SELZ_NAME', 'Selz' );

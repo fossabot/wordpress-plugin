@@ -39,7 +39,7 @@
 .total-shortcode,
 #poststuff .total-meta,
 .widget .total-widget {
-    background: url("img/background.png") no-repeat scroll left top transparent;
+    background: url("img/background.png") no-repeat scroll left top #F7F7F7;
     border-top: 1px solid #E4E4E4;
     position: relative;
 }
@@ -139,7 +139,9 @@
     color: #777777;
     display: block;
     font-size: 11px;
-	font-style: normal;
+    font-style: normal;
+    padding-bottom: 5px;
+    padding-left: 0 !important;
 }
 .total-options .description code {
     color: #444;

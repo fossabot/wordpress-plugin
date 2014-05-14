@@ -130,7 +130,7 @@ class Selz_Widget extends WP_Widget {
 		if ( !empty( $instance['intro_text'] ) )
 			echo '<p class="'. $this->id . '-intro-text intro-text">' . $instance['intro_text'] . '</p>';
 			
-		echo '<p>' . selz_button($instance) . '</p>';
+		echo selz_button($instance);
 		
 		// Print outro text if exist
 		if ( !empty( $instance['outro_text'] ) )
