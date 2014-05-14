@@ -2,25 +2,25 @@
 /*
 	Shortcode
 	@since 0.0.1
-    http://Selz.com
-    
+	http://Selz.com
+
 	Copyright 2013 selz.com (email: engineer@selz.com)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License, version 2, as 
+	published by the Free Software Foundation.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-	
+
 class Selz_Shortcode {
 
 	var $shortcode;
@@ -60,31 +60,11 @@ class Selz_Shortcode {
 			'intro_text' 		=> '',
 			'outro_text' 		=> ''		
 		), $atts );		
-		
+
 		return selz_button($atts);
 	}
 
-<<<<<<< HEAD
-	/**
-	 * PHP shortcode function for using in template file
-	 * @params $id	: the widget option id
-	 * 		   $echo: echo the HTML or return
-	 * @return HTML.
-	 * @since 1.5
-	**/
-	function super_post_search_shortcode( $id, $echo = true ) {
-		$options = get_option( 'widget_selz' );	
-		$args = $options[$id]; 	// overwrite
-		$args['id'] = $id;		// add the id for load more post link
-		
-		if( $echo )
-			echo super_post( $args );
-		else
-			return super_post( $args );
-	}
-=======
->>>>>>> 6ddeda4f778924401e9b33d31209c099ea948d79
-	
+
 	/*
 	 * Check if the post has a shortcode(s) used in the current post content with stripos PHP function
 	 * Add !empty($cur_post->post_content) if the post has no content
@@ -94,14 +74,14 @@ class Selz_Shortcode {
 	function has_shortcode() {
 		global $post;
 		$cur_post = get_post($post->ID); 
-		
+
 		// Check the post content if has shortcode 
 		if ( ! empty( $cur_post->post_content ) && stripos( $cur_post->post_content, '[' . $this->shortcode ) !== false )
 			return true;
-		
+
 		return false;
 	}
-	
+
 	/*
 	 * Print additional styles and script to the header after wp_enqueue_scripts 
 	 * the 'the_coundown_pro_enqueue_scripts_shortcode' funtion to avoid wrong arrangement
@@ -111,16 +91,16 @@ class Selz_Shortcode {
 	 */
 	function shortcode_head() {
 		if ( $this->has_shortcode() ) {
-			
+
 			global $post;
 			$cur_post = get_post($post->ID);
-			
+
 			// Let's extract the shortcode arguments by delimiter ="
 			preg_match_all("/\[" . $this->shortcode . ".*?\]/", $cur_post->post_content, $matches);
-			
+
 			if ($matches) {
 				$shortcode = array();
-				
+
 				foreach( $matches[0] as $match ) {
 					preg_match_all('/([^\s]*?)="([^"]*?)"/',$match, $arr);
 					$array = array();
@@ -135,7 +115,7 @@ class Selz_Shortcode {
 			}
 		}
 	}	
-	
+
 	/**
 	 * Dialog for internal linking.
 	 * @since 3.1.0
@@ -179,7 +159,7 @@ class Selz_Shortcode {
 		$nonce = $_POST['nonce'];
 		if ( ! wp_verify_nonce( $nonce, 'selz' ) && ! isset( $_POST['data'] ) )
 			die();
-			
+
 		// Set up the default form values and parse
 		parse_str( $_POST['data'], $instance );
 		require_once( SELZ_DIR . 'dialog.php' );
@@ -207,7 +187,7 @@ class Selz_Shortcode {
 	function tiny_mce_version($version) {
 		return ++$version;
 	}
-	
+
 	/**
 	 * Load custom style or script to the current page admin
 	 * Enqueue the jQuery library including UI, colorpicker, 
@@ -227,12 +207,12 @@ class Selz_Shortcode {
 			'action'	=> 'selz_form'
 		));	
 	}
-	
+
 	function enqueue_styles() {
 		global $hook_suffix;
 		if( ! in_array( $hook_suffix, array( 'post-new.php', 'post.php' ) ) )
 			return;
-			
+
 		?><style type="text/css">
 		#selz-backdrop {
 			display: none;
@@ -310,7 +290,7 @@ class Selz_Shortcode {
 			background-position: 0 -28px;
 		}</style><?php
 	}
-	
+
 	function quicktag_button() { 
 		if ( wp_script_is( 'quicktags' ) ) { ?>
 			<script type="text/javascript">
