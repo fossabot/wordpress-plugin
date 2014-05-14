@@ -26,6 +26,7 @@
 	// tinymce.PluginManager.requireLangPack('selz');
 	tinymce.create('tinymce.plugins.selz', {
 		init : function(ed, url) {
+			
 			ed.addCommand('selz', function() {
 				if ( typeof(selzShortcode) != 'undefined' ) {
 					selzShortcode.open();
@@ -36,10 +37,6 @@
 			ed.addButton('selz', {		// Register example button
 				title : 'Selz',
 				cmd : 'selz'
-			});
-			
-			ed.onNodeChange.add(function(ed, cm, n) {	// Add a node change handler, selects the button in the UI when a image is selected
-				cm.setActive('selz', n.nodeName == 'IMG');
 			});
 		},
 		createControl : function(n, cm) {
