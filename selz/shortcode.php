@@ -49,19 +49,8 @@ class Selz_Shortcode {
 	 * @since 1.5
 	**/
 	function add_shortcode( $atts, $content ) {
-		$atts = shortcode_atts( array(
-			'type'				=> 'button',
-			'theme'				=> 'light',		
-			'interact' 			=> 'overlay',
-			'link' 				=> '#',
-			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#6d48cc',
-			'show_logos'        => 'false',
-			'intro_text' 		=> '',
-			'outro_text' 		=> ''		
-		), $atts );		
-
-		return selz_button($atts);
+		$atts = shortcode_atts( selz_default_args(), $atts );	
+		return selz_button( $atts );
 	}
 
 

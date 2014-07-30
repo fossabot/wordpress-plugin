@@ -3,7 +3,7 @@
     Plugin Name: Selz
     Plugin URI: http://selz.com
     Description: Embed your Selz items directly into your WordPress site. 1) Choose to embed a button or widget for your items. 2) Customize your button or widget colours. 3) Choose to display your item within an overlay or new tab
-    Version: 1.5.0
+    Version: 1.5.1
     Author: selz.com
     Author URI: http://selz.com
     License: GPL2
@@ -33,14 +33,17 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 
-// Set constant
+/**
+ * Define constants
+ * @since 0.0.1
+ */
 define( 'SELZ', true );
-define( 'SELZ_VERSION', '1.5.0' );
+define( 'SELZ_VERSION', '1.5.1' );
 define( 'SELZ_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SELZ_URL', plugin_dir_url( __FILE__ ) );
 define( 'SELZ_NAME', 'Selz' );
 define( 'SELZ_SLUG', 'selz' );
-define( 'SELZ_LANG', 'selz' );
+define( 'SELZ_LANG', 'selz-ecommerce' );
 	
 
 // Launch the plugin
@@ -68,8 +71,10 @@ function selz_plugin_loaded() {
 
 	new Selz_Shortcode();
 
+	// Load plugin translation
 	load_plugin_textdomain( 'selz', false, SELZ_DIR . 'lang/' );	
 
+	// Initialize widgets
 	add_action( 'widgets_init', 'selz_widgets_init' );
 }
 
@@ -90,30 +95,40 @@ function selz_widgets_init() {
  * @param $instance, see $defaults for complete parameters
  * @since 0.0.1
  */
-function selz_button($instance) {
-	$defaults = array(
-		'link'				=> '',
-		'type'				=> 'button',
-		'theme'				=> 'light',
-		'position'			=> 'default',
-		'interact' 			=> 'modal',
-		'text_color' 		=> '#ffffff',
-		'background_color' 	=> '#6d48cc',
-		'show_logos'        => 'false',
-	);
+function selz_button( $instance ) {
 
-	// merge the user-selected arguments with the defaults.
-	$args = wp_parse_args( (array) $instance, $defaults );
+	// Merge the user-selected arguments with the defaults.
+	$args = wp_parse_args( (array) $instance, selz_default_args() );
 
-	// overwrite "true" to 1, "false" to 0
+	// Overwrite "true" to 1, "false" to 0
 	foreach( $args as $k => $v )
 		$args[$k] = str_replace( array('true', 'false'), array(true, false), $v );
 	
-	// remove the # for hexcolor
+	// Remove the # for hexcolor
+	$args['link_color'] = str_replace( '#', '', $args['link_color'] );
 	$args['text_color'] = str_replace( '#', '', $args['text_color'] );
 	$args['background_color'] = str_replace( '#', '', $args['background_color'] );
 
-	if( 'button' == $args['type'] )
+	if( 'store' == $args['type'] ) {
+		if( ! $args['store_link'] )
+			return __( 'Selz store URL is empty', SELZ_LANG );
+			
+		$parseurl = parse_url( $args['store_link'] );
+		$host = explode( ".", $parseurl['host'] );
+		$store_domain = $host[0];
+		
+		$html = '<script data-selz-cb="'.$args['background_color'].'" data-selz-cbt="'.$args['text_color'].'" data-selz-cl="'.$args['link_color'].'" data-selz-s="'.$store_domain.'">
+			if (typeof _$elz === "undefined") { var _$elz = {}; }
+			if (typeof _$elz.s === "undefined") {
+				_$elz.s = { e: document.createElement("script") };
+				_$elz.s.e.src = "https://selz.com/embed/store/'.$store_domain.'";
+				document.body.appendChild(_$elz.s.e);
+			}
+		</script>
+		<a href="'.$args['store_link'].'" target="_blank" class="_selz_nojs_link">'. __('Selz Store', SELZ_LANG) .'</a>
+		<a href="https://selz.com" target="_blank" class="_selz_nojs_link">'. __('Sell digital downloads on Selz', SELZ_LANG) .'</a>';
+	
+	} elseif ( 'button' == $args['type'] ) {	
 		$html = '<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.trim($args['link']).'"'.($args['show_logos'] ? ' data-selz-lg="true"' : '').'>
 			if (typeof _$elz === "undefined") { var _$elz = {}; }
 			if (typeof _$elz.b === "undefined") {
@@ -122,9 +137,10 @@ function selz_button($instance) {
 				document.body.appendChild(_$elz.b.e);
 			}
 		</script>
-		<a href="'.$args['link'].'" target="_blank" class="_selz_nojs_link">Buy this on Selz</a>
-        <a href="https://selz.com" target="_blank" class="_selz_nojs_link">Start selling on Selz</a>';
-	else
+		<a href="'.$args['link'].'" target="_blank" class="_selz_nojs_link">'. __('Buy this on Selz', SELZ_LANG) .'</a>
+        <a href="https://selz.com" target="_blank" class="_selz_nojs_link">'. __('Start selling on Selz', SELZ_LANG) .'</a>';
+	
+	} else {
 		$html = '<script data-selz-t="'.$args['theme'].'" data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-w="'.trim($args['link']).'"'.($args['show_logos'] ? ' data-selz-lg="true"' : '').'>
 			if (typeof _$elz === "undefined") { var _$elz = {}; }
 			if (typeof _$elz.w === "undefined") {
@@ -133,9 +149,37 @@ function selz_button($instance) {
 				document.body.appendChild(_$elz.w.e);
 			}
 		</script>
-		<a href="'.$args['link'].'" target="_blank" class="_selz_nojs_link">Buy this on Selz</a>
-        <a href="https://selz.com" target="_blank" class="_selz_nojs_link">Start selling on Selz</a>';
+		<a href="'.$args['link'].'" target="_blank" class="_selz_nojs_link">'. __('Buy this on Selz', SELZ_LANG) .'</a>
+        <a href="https://selz.com" target="_blank" class="_selz_nojs_link">'. __('Start selling on Selz', SELZ_LANG) .'</a>';
+	}
 	
 	return $html;
+}
+
+
+/**
+ * Return default arguments for widgets or shortcodes
+ * @since 1.5.1
+ */
+function selz_default_args() {
+	$defaults = array(
+		'title'				=> esc_attr__( 'Selz Widget', SELZ_LANG ),
+		'link'				=> '',
+		'store_link'		=> '',
+		'type'				=> 'button',
+		'theme'				=> 'light',
+		'interact' 			=> 'modal',
+		'position' 			=> 'default',
+		'text_color' 		=> '#ffffff',
+		'background_color' 	=> '#6d48cc',
+		'link_color' 		=> '#6d48cc',
+		'tab_active'		=> array( 0 => true, 1 => false, 2 => false ),
+		'show_logos'        => 'false',
+		'intro_text' 		=> '',
+		'outro_text' 		=> '',
+		'customstylescript'	=> ''
+	);
+	
+	return $defaults;
 }
 ?>

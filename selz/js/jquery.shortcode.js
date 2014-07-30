@@ -53,7 +53,7 @@ var selzShortcode;
 					fields += ' ' + $(this).attr('id') + '="' + $(this).val() + '"';
 			});
 			
-			shortcode = "[selz " + fields + "]";	
+			shortcode = "[selz" + fields + "]";	
 
 			if ( ed ) {
 				tinymce.execCommand("mceBeginUndoLevel");
