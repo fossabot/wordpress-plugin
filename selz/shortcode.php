@@ -5,24 +5,9 @@
 	http://Selz.com
 
 	Copyright 2013 selz.com (email: engineer@selz.com)
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License, version 2, as 
-	published by the Free Software Foundation.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 class Selz_Shortcode {
-
 	var $shortcode;
 	/**
 	 * class constructor.
@@ -49,7 +34,7 @@ class Selz_Shortcode {
 	 * @since 1.5
 	**/
 	function add_shortcode( $atts, $content ) {
-		$atts = shortcode_atts( selz_default_args(), $atts );	
+		$atts = shortcode_atts( selz_default_args(), $atts );
 		return selz_button( $atts );
 	}
 
@@ -62,9 +47,9 @@ class Selz_Shortcode {
 	*/
 	function has_shortcode() {
 		global $post;
-		$cur_post = get_post($post->ID); 
+		$cur_post = get_post($post->ID);
 
-		// Check the post content if has shortcode 
+		// Check the post content if has shortcode
 		if ( ! empty( $cur_post->post_content ) && stripos( $cur_post->post_content, '[' . $this->shortcode ) !== false )
 			return true;
 
@@ -72,7 +57,7 @@ class Selz_Shortcode {
 	}
 
 	/*
-	 * Print additional styles and script to the header after wp_enqueue_scripts 
+	 * Print additional styles and script to the header after wp_enqueue_scripts
 	 * the 'the_coundown_pro_enqueue_scripts_shortcode' funtion to avoid wrong arrangement
 	 * @param no parameter
 	 * @since 1.3
@@ -103,44 +88,19 @@ class Selz_Shortcode {
 				}
 			}
 		}
-	}	
+	}
 
 	/**
 	 * Dialog for internal linking.
 	 * @since 3.1.0
 	 */
-	function print_dialog() { ?>
-		<div id="selz-backdrop" style="display: none"></div>
-		<div id="selz-wrap" class="wp-core-ui" style="display: none">
-			<form id="selz-form" tabindex="-1">
-				<div id="selz-modal-title">
-					<?php _e( 'Selz Shortcode Editor' ) ?>
-					<div id="selz-close" tabindex="0"></div>
-				</div>			
-				<div class="total-shortcode" style="padding: 12px 12px 10px;">
-					<div id="selz-dialog-options">
-						<?php
-							require_once( SELZ_DIR . 'dialog.php' );
-							new Selz_Form();
-						?>
-					</div>
-					<div class="submitbox" style="height:29px;overflow:auto;padding: 5px 0;">
-						<div id="selz-dialog-update" style=" float: right;line-height: 23px;">
-							<span class="spinner" style="display: none;float: left;"></span>
-							<input type="submit" value="<?php esc_attr_e( 'Add Shortcode', SELZ_LANG ); ?>" class="button-primary selz-dialog-submit">					
-						</div>
-						<div id="selz-cancel" style="float:left;line-height: 25px;">
-							<a class="submitdelete deletion" href="#"><?php _e( 'Cancel', SELZ_LANG ); ?></a>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div><?php		
+	function print_dialog() {
+		include_once( SELZ_DIR . '/includes/modal.php' );
 	}
 
 	function admin_footer() {
-		wp_enqueue_script( 'wpdialogs-popup' );
-		wp_enqueue_style( 'wp-jquery-ui-dialog' );
+		wp_enqueue_script('wpdialogs-popup');
+		wp_enqueue_style('wp-jquery-ui-dialog');
 	}
 
 	function dialog_ajax() {
@@ -156,8 +116,8 @@ class Selz_Shortcode {
 		exit;
 	}
 
-	function add_buttons() {		
-		if ( get_user_option('rich_editing') == 'true') {		
+	function add_buttons() {
+		if ( get_user_option('rich_editing') == 'true') {
 			add_filter('mce_external_plugins',  array( &$this, 'mce_external_plugins'), 5);
 			add_filter('mce_buttons',  array( &$this, 'mce_buttons'), 5);
 		}
@@ -169,7 +129,7 @@ class Selz_Shortcode {
 	}
 
 	function mce_external_plugins( $plugin_array ) {
-		$plugin_array['selz'] = SELZ_URL . 'js/editor_plugin.js';	
+		$plugin_array['selz'] = SELZ_URL . 'dist/js/plugin.js';
 		return $plugin_array;
 	}
 
@@ -179,7 +139,7 @@ class Selz_Shortcode {
 
 	/**
 	 * Load custom style or script to the current page admin
-	 * Enqueue the jQuery library including UI, colorpicker, 
+	 * Enqueue the jQuery library including UI, colorpicker,
 	 * the popup window and some custom styles/scripts
 	 * @param string $hook.
 	 * @since 1.1
@@ -188,103 +148,27 @@ class Selz_Shortcode {
 		if( 'post.php' != $hook && 'post-new.php' != $hook )
 			return;
 
-		wp_enqueue_style( 'total-dialog' );
-		wp_enqueue_script( 'total-dialog' );	
-		wp_enqueue_script( 'selz-shortcode', SELZ_URL . 'js/jquery.shortcode.js', array( 'jquery' ), SELZ_VERSION );		
-		wp_localize_script( 'selz-shortcode', 'selzvars', array(
-			'nonce'		=> wp_create_nonce( 'selz' ),
+		wp_enqueue_script('selz', plugins_url('dist/js/scripts.js?v=' . SELZ_VERSION, __FILE__ ), array('jquery', 'wp-color-picker'), SELZ_VERSION);
+
+		wp_localize_script('selz', 'selzvars', array(
+			'nonce'		=> wp_create_nonce('selz'),
 			'action'	=> 'selz_form'
-		));	
+		));
 	}
 
 	function enqueue_styles() {
 		global $hook_suffix;
-		if( ! in_array( $hook_suffix, array( 'post-new.php', 'post.php' ) ) )
+
+		if (!in_array($hook_suffix, array('post-new.php', 'post.php'))) {
 			return;
-
-		?><style type="text/css">
-		#selz-backdrop {
-			display: none;
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			min-height: 360px;
-			background: #000;
-			opacity: 0.7;
-			filter: alpha(opacity=70);
-			z-index: 100100;
-		}	
-		#selz-wrap {
-			transition: none 0s ease 0s;
-			display: none;
-			background-color: #fff;
-			-webkit-box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.3 );
-			box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.3 );
-			width: 500px;
-			overflow: hidden;
-			margin-left: -250px;
-			margin-top: -125px;
-			position: absolute;
-			top: 200px;
-			left: 50%;
-			z-index: 100105;
-			-webkit-transition: height 0.2s, margin-top 0.2s;
-			transition: height 0.2s, margin-top 0.2s;
 		}
-		#selz-modal-title {
-			background: #fcfcfc;
-			border-bottom: 1px solid #dfdfdf;
-			height: 36px;
-			font-size: 14px;
-			font-weight: 600;
-			line-height: 36px;
-			padding: 0 36px 0 16px;
-			top: 0;
-			right: 0;
-			left: 0;
-		}
-		#selz-close {
-			color: #666;
-			cursor: pointer;
-			padding: 0;
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 36px;
-			height: 36px;
-			text-align: center;
-		}
-
-		#selz-close:before {
-			font: normal 20px/36px 'dashicons';
-			vertical-align: top;
-			speak: none;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			width: 36px;
-			height: 36px;
-			content: '\f158';
-		}
-
-		#selz-close:hover,
-		#selz-close:focus {
-			color: #2ea2cc;
-		}
-		i.mce-i-selz {
-			background: url("<?php echo SELZ_URL . 'img/shortcode.png'; ?>") no-repeat scroll 0 0 transparent;
-		}
-		button:hover i.mce-i-selz {
-			background-position: 0 -28px;
-		}</style><?php
 	}
 
-	function quicktag_button() { 
-		if ( wp_script_is( 'quicktags' ) ) { ?>
-			<script type="text/javascript">
-				QTags.addButton( 'qt_selz', 'selz', selz_dialog, '', 'selz', 'Paragraph tag' );
-				function selz_dialog() { selzShortcode.open(); }
+	function quicktag_button() {
+		if (wp_script_is('quicktags')) { ?>
+			<script>
+				QTags.addButton('qt_selz', 'selz', openSelzModal, '', 'selz', 'Paragraph tag');
+				function openSelzModal() { new SelzModel(); }
 			</script><?php
 		}
 	}

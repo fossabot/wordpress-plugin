@@ -1,0 +1,44 @@
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+& {
+    font-weight: @font-weight-base;
+    font-family: @font-text;
+    line-height: @line-height-base;
+    color: @color-text;
+    .font-size();
+    .font-smoothing(on);
+}
+
+* {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+small {
+    .font-size(@font-size-small);
+    color: @gray-light;
+}
+
+a:not(.wp-color-result) {
+    color: @color-link;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &:focus {
+        border-bottom-style: solid;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &.tab-focus {
+        .tab-focus(@color-link);
+    }
+}
