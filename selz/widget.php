@@ -52,6 +52,10 @@ class Selz_Widget extends WP_Widget {
 		if ( is_active_widget(false, false, $this->id_base, false ) ) {
 			add_action( 'wp_head', array( &$this, 'print_script') );
 		}
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		//add_action( 'wp_ajax_selz_widget_form', array( &$this, 'dialog_ajax' ) );
+
 	}
 
 	/**
@@ -84,6 +88,7 @@ class Selz_Widget extends WP_Widget {
 		// Set up the arguments for
 		$instance = wp_parse_args( (array) $instance, selz_default_args() );
 
+		
 		// Output the theme's widget wrapper
 		echo $before_widget;
 
@@ -112,7 +117,7 @@ class Selz_Widget extends WP_Widget {
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-
+		//update_option( 'test333', time() );
 		// Set the instance to the new instance.
 		$instance = $new_instance;
 
@@ -120,7 +125,13 @@ class Selz_Widget extends WP_Widget {
 		$instance['interact']			= $new_instance['interact'];
 		$instance['position']			= $new_instance['position'];
 		$instance['link'] 				= $new_instance['link'];
+		$instance['store_link'] 		= $new_instance['store_link'];
+		$instance['action'] 			= $new_instance['action'];
 		$instance['type'] 				= $new_instance['type'];
+		$instance['button_text'] 		= $new_instance['button_text'];
+		$instance['show_description'] 	= $new_instance['show_description'];
+		$instance['width'] 				= $new_instance['width'];
+		$instance['auto_width'] 		= $new_instance['auto_width'];
 		$instance['text_color'] 		= $new_instance['text_color'];
 		$instance['background_color'] 	= $new_instance['background_color'];
 		$instance['chbg_color'] 		= $new_instance['chbg_color'];
@@ -129,7 +140,6 @@ class Selz_Widget extends WP_Widget {
 		$instance['tab_active'] 		= $new_instance['tab_active'];
 		$instance['intro_text'] 		= $new_instance['intro_text'];
 		$instance['outro_text'] 		= $new_instance['outro_text'];
-		$instance['customstylescript']	= $new_instance['customstylescript'];
 
 		return $instance;
 	}
@@ -151,19 +161,53 @@ class Selz_Widget extends WP_Widget {
 			'store'		=> __( 'Store', $this->textdomain ) // since 1.5.1
 		);
 
+		$actions = array(
+			'add-to-cart' 	=> __( 'Add To Cart', $this->textdomain ),
+			'buy-now'		=> __( 'Buy Now', $this->textdomain ),
+			'view'			=> __( 'View', $this->textdomain )
+		);
+
 		$interacts = array(
 			'modal' 	=> __( 'Overlay', $this->textdomain ),
 			'blank'		=> __( 'New tab', $this->textdomain )
 		);
 
 		$button_positions = array(
-			'default' 	=> __( 'Price on right', $this->textdomain ),
-			'above'		=> __( 'Price above', $this->textdomain )
+			'price-right' 	=> __( 'Price on right', $this->textdomain ),
+			'price-left' 	=> __( 'Price on left', $this->textdomain ),
+			'price-above'	=> __( 'Price above', $this->textdomain ),
+			'price-below'	=> __( 'Price below', $this->textdomain )
 		);
 
 		$onchange = "wpWidgets.save(jQuery(this).closest('div.widget'),0,1,0);";
 
 		include( SELZ_DIR . '/includes/widget-editor.php' );
 	}
+
+	function admin_enqueue_scripts($hook) {
+		if( 'widgets.php' != $hook )
+			return;
+
+		wp_localize_script('selz', 'selzvars', array(
+			'nonce'		=> wp_create_nonce('selz'),
+			'action'	=> 'selz_widget_form'
+		));
+	}
+
+	// function dialog_ajax() {
+
+	// 	// Check the nonce and if not isset the id, just die.
+	// 	$nonce = $_POST['nonce'];
+	// 	if ( ! wp_verify_nonce( $nonce, 'selz' ) && ! isset( $_POST['data'] ) )
+	// 		die();
+		
+	// 	// Set up the default form values and parse
+	// 	parse_str( $_POST['data'], $instance );
+	// 	//require_once( SELZ_DIR . 'dialog.php' );
+	// 	$this->form( $instance );
+	// 	//new Selz_Form( $instance );
+	// 	exit;
+	// }
+
 }
 ?>

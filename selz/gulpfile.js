@@ -65,7 +65,9 @@ var build = {
                     return gulp
                         .src(bundles.js[key])
                         .pipe(concat(key))
-                        .pipe(uglify())
+                        .pipe(uglify().on('error', function(e){
+                            console.log(e);
+                         }))
                         .pipe(gulp.dest(paths.dist.js));
                 });
             })(key);

@@ -6,8 +6,8 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-	<div class="selz-settings">
-		<div class="selz-settings-content">
+	<div class="selz-help">
+		<div class="selz-help-content">
 			<h1>Selz Ecommerce</h1>
 			<p>Start selling products online or digital downloads from your WordPress site in minutes. If you don't already have a Selz account, set one up now at <a href="https://selz.com">selz.com</a>.</p>
 
@@ -38,7 +38,7 @@ if (!defined('ABSPATH')) {
 			<p>If you need help setting up HTTPS on your WordPress site, check out the <a href="http://wordpress.org/plugins/wordpress-https/" target="_blank">WordPress HTTPS Plugin</a> that can help.</p>
 		</div>
 		<aside id="selz-settings-sidebar">
-			<?php include( SELZ_DIR . '/views/admin-sidebar.php' ); ?>
+			<?php include( SELZ_DIR . '/views/help-sidebar.php' ); ?>
 		</aside>
 	</div>
 </div>

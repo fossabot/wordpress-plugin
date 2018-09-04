@@ -27,16 +27,17 @@
 				<small class="help-block"><?php _e( 'This option will display additional text or HTML <em>after</em> the widget content', $this->textdomain ); ?></small>
 			</div>
 		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<label for="<?php echo $this->get_field_id('customstylescript'); ?>"><?php _e( 'Custom JavaScript & CSS', $this->textdomain ) ; ?></label>
-			</div>
-			<div class="controls">
-				<textarea name="<?php echo $this->get_field_name( 'customstylescript' ); ?>" id="<?php echo $this->get_field_id( 'customstylescript' ); ?>" rows="3" class="input-control"><?php echo htmlentities($instance['customstylescript']); ?></textarea>
-				<small class="help-block"><?php _e( 'Use this for additional widget CSS and/or JavaScript. Current widget selector: ', $this->textdomain ); ?><?php echo '<tt>#' . $this->id . '</tt>'; ?></small>
-			</div>
-		</div>
 
-		<?php include( SELZ_DIR . '/includes/fields.php' ); ?>
+		<section class="selz-widget-controls">
+			<?php 
+			//var_dump($instance);
+			include( SELZ_DIR . '/includes/widget-fields.php' ); ?>
+		</section>
+<!-- 		<section class="selz-widget-controls">
+			<?php
+				//require_once( SELZ_DIR . 'dialog.php' );
+				//new Selz_Form();
+			?>
+		</section> -->
 	</fieldset>
 </div>

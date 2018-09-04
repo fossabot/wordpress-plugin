@@ -14,8 +14,7 @@
 
 	<div class="tab-panel" id="selz-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-general<?php echo $id ?>" aria-hidden="false">
 
-		<?php if( ( 'store' != $instance['kind'] ) ) : ?>
-		<div class="control-group">
+		<div class="control-group widget-type">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Widget type', $this->textdomain ); ?></label>
 			</div>
@@ -30,34 +29,31 @@
 				</select>
 			</div>
 		</div>
-		<?php endif; ?>
 
-		<?php if( ( 'store' == $instance['kind'] ) ) : ?>
-			<div class="control-group">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'store_link' ); ?>"><?php _e( 'Store URL', $this->textdomain ); ?></label>
-				</div>
-				<div class="controls">
-					<input type="url" placeholder="e.g. https://mystore.selz.com" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( $instance['store_link'] ); ?>" class="input-control" required>
-					<small class="help-block">
-						<?php _e( 'Go to <a href="https://selz.com/settings/store?tab=domain" target="_blank">domain settings</a> and copy the URL ending in ".selz.com", for example "https://mystore.selz.com"', $this->textdomain ); ?>
-					</small>
-				</div>
+		<div class="control-group" data-type="store">
+			<div class="control-label">
+				<label for="<?php echo $this->get_field_id( 'store_link' ); ?>"><?php _e( 'Store URL', $this->textdomain ); ?></label>
 			</div>
+			<div class="controls">
+				<input type="url" placeholder="e.g. https://mystore.selz.com" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( $instance['store_link'] ); ?>" class="input-control">
+				<small class="help-block">
+					<?php _e( 'Go to <a href="https://selz.com/settings/store?tab=domain" target="_blank">domain settings</a> and copy the URL ending in ".selz.com", for example "https://mystore.selz.com"', $this->textdomain ); ?>
+				</small>
+			</div>
+		</div>
 
-		<?php else : ?>
 
-			<div class="control-group">
+			<div class="control-group" data-type="button-widget">
 				<div class="control-label">
 					<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item URL', $this->textdomain ); ?></label>
 				</div>
 				<div class="controls">
-					<input type="text" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" class="input-control" placeholder="e.g. http://selz.co/123abc4" required>
+					<input type="text" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" class="input-control" placeholder="e.g. http://selz.co/123abc4">
 					<small class="help-block"><?php _e( 'Go to "Options" > "Share" on one of your <a href="https://selz.com/items" target="_blank">item tiles</a> and copy the short link', $this->textdomain ); ?></small>
 				</div>
 			</div>
 
-			<div class="control-group">
+			<div class="control-group" data-type="button-widget">
 					<div class="control-label">
 						<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->textdomain ); ?></label>
 					</div>
@@ -70,8 +66,7 @@
 					</div>
 				</div>
 
-			<?php if( ( 'button' == $instance['type'] ) ) : ?>
-				<div class="control-group">
+				<div class="control-group" data-type="button">
 					<div class="control-label">
 						<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Button style', $this->textdomain ); ?></label>
 					</div>
@@ -83,9 +78,8 @@
 						</select>
 					</div>
 				</div>
-			<?php endif; ?>
 
-			<div class="control-group">
+			<div class="control-group" data-type="button">
 				<div class="control-label">
 					<p class="faux-label"><?php _e( 'Button text', $this->textdomain ); ?></p>
 				</div>
@@ -94,59 +88,32 @@
 				</div>
 			</div>
 
-			<?php if( ( 'widget' == $instance['type'] ) ) : ?>
-				<div class="control-group">
-					<div class="control-label">
-						<p class="faux-label"><?php _e( 'Description', $this->textdomain ); ?></p>
-					</div>
-					<div class="controls">
-						<label for="<?php echo $this->get_field_id( 'show_description' ); ?>" class="control-checkbox">
-							<input type="checkbox" id="<?php echo $this->get_field_id( 'show_description' ); ?>" name="<?php echo $this->get_field_name( 'show_description' ); ?>" value="true">
-							<?php _e( 'Show the description', $this->textdomain ); ?>
-						</label>
-						<small class="help-block"><?php _e( 'Show the item description', $this->textdomain ); ?></small>
-					</div>
-				</div>
-			<?php endif; ?>
-
-
-			<?php 
-			//$current_screen = get_current_screen();
-    		//if( $current_screen->id != "widgets" ) {
-			$min = 'widget' == $instance['type'] ? '240' : '160'; ?>
-			<div class="control-group">
+			<div class="control-group" data-type="widget">
 				<div class="control-label">
-					<p class="faux-label"><?php _e( 'Width', $this->textdomain ); ?></p>
+					<p class="faux-label"><?php _e( 'Description', $this->textdomain ); ?></p>
 				</div>
 				<div class="controls">
-					<label for="<?php echo $this->get_field_id( 'width' ); ?>">
-						<input data-range="{&quot;unit&quot;:&quot;px&quot;}" id="<?php echo $this->get_field_id( 'width' ); ?>" max="1000" min="<?php esc_html_e( $min ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>" step="1" value="0" type="range" oninput="outputUpdate(value)">
-						<output for="<?php echo $this->get_field_id( 'width' ); ?>" id="the-width"><?php esc_html_e( $min ); ?></output>px
+					<label for="<?php echo $this->get_field_id( 'show_description' ); ?>" class="control-checkbox">
+						<input type="checkbox" id="<?php echo $this->get_field_id( 'show_description' ); ?>" name="<?php echo $this->get_field_name( 'show_description' ); ?>" <?php checked( $instance[ 'show_description' ], 'on' ); ?> />
+						<?php _e( 'Show the description', $this->textdomain ); ?>
 					</label>
-					
-					<label for="<?php echo $this->get_field_id( 'auto_width' ); ?>" class="control-checkbox">
-						<input type="checkbox" id="<?php echo $this->get_field_id( 'auto_width' ); ?>" name="<?php echo $this->get_field_name( 'auto_width' ); ?>" value="true">
-						<?php _e( 'Automatic', $this->textdomain ); ?>
-					</label>
-					<small class="help-block"><?php _e( 'Set the maximum width or choose automatic width', $this->textdomain ); ?></small>
+					<small class="help-block"><?php _e( 'Show the item description', $this->textdomain ); ?></small>
 				</div>
 			</div>
-			<script>function outputUpdate(width) {document.querySelector('#the-width').value = width;}</script>
-			<?php //} ?>
 
-			<div class="control-group">
+			<div class="control-group" data-type="button-widget">
 				<div class="control-label">
 					<p class="faux-label"><?php _e( 'Logos', $this->textdomain ); ?></p>
 				</div>
 				<div class="controls">
 					<label for="<?php echo $this->get_field_id( 'show_logos' ); ?>" class="control-checkbox">
-						<input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" value="true">
+						<input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" <?php checked( $instance[ 'show_logos' ], 'on' ); ?> />
 						<?php _e( 'Show payment logos', $this->textdomain ); ?>
 					</label>
 					<small class="help-block"><?php _e( 'Show payment method logos underneath embed', $this->textdomain ); ?></small>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="control-group" data-type="button-widget">
 				<div class="control-label">
 					<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'Window type', $this->textdomain ); ?></label>
 				</div>
@@ -158,7 +125,7 @@
 					</select>
 				</div>
 			</div>
-		<?php endif; ?>
+
 	</div>
 
 	<div class="tab-panel" id="selz-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-colors<?php echo $id ?>" aria-hidden="true">

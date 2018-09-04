@@ -1,7 +1,7 @@
 <?php
 /**
  * Shortcode admin form interface
- * @since 2.0.3
+ * @since 1.8.0
 **/
 class Selz_Form {
 
@@ -23,10 +23,21 @@ class Selz_Form {
 		// Merge the user-selected arguments with the defaults.
 		$instance = wp_parse_args( (array) $instance, selz_default_args() );
 
+		$kind = array(
+			'product' 	=> __( 'Product', $this->textdomain ),
+			'store'		=> __( 'store', $this->textdomain ),
+		);
+
 		$types = array(
 			'button' 	=> __( 'Button', $this->textdomain ),
 			'widget'	=> __( 'Widget', $this->textdomain ),
 			'store'		=> __( 'Store', $this->textdomain ) // since 1.5.1
+		);
+
+		$actions = array(
+			'add-to-cart' 	=> __( 'Add To Cart', $this->textdomain ),
+			'buy-now'		=> __( 'Buy Now', $this->textdomain ),
+			'view'			=> __( 'View', $this->textdomain )
 		);
 
 		$interacts = array(
@@ -35,8 +46,10 @@ class Selz_Form {
 		);
 
 		$button_positions = array(
-			'default' 	=> __( 'Price on right', $this->textdomain ),
-			'above'		=> __( 'Price above', $this->textdomain )
+			'price-right' 	=> __( 'Price on right', $this->textdomain ),
+			'price-left' 	=> __( 'Price on left', $this->textdomain ),
+			'price-above'	=> __( 'Price above', $this->textdomain ),
+			'price-below'	=> __( 'Price below', $this->textdomain )
 		);
 		?>
 

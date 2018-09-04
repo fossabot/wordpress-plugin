@@ -3,7 +3,7 @@
     Plugin Name: Selz WordPress Ecommerce
     Plugin URI: https://selz.com/features/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.7.2
+    Version: 1.8.0
     Author: selz.com
     Author URI: https://selz.com/features/wordpress-ecommerce
     License: MIT
@@ -21,7 +21,7 @@ if (!defined('ABSPATH'))
  * @since 0.0.1
  */
 define('SELZ', true);
-define('SELZ_VERSION', '1.7.2');
+define('SELZ_VERSION', '1.8.0');
 define('SELZ_DIR', plugin_dir_path(__FILE__));
 define('SELZ_URL', plugin_dir_url(__FILE__));
 define('SELZ_NAME', 'Selz');
@@ -31,17 +31,39 @@ define('SELZ_LANG', 'selz-ecommerce');
 // Launch the plugin
 register_activation_hook( __FILE__, 'selz_activation_hook' );
 add_action( 'plugins_loaded', 'selz_plugin_loaded', 9 );
+add_action( 'admin_enqueue_scripts', 'selz_enqueue_scripts', 10 );
 add_action( 'admin_menu', 'selz_admin_menu' );
+add_action( 'admin_init', 'selz_init_settings' );
+add_action( 'wp_footer', 'selz_show_cart' );
 
 function selz_admin_menu() {
     add_menu_page(
-        'Selz Help',
+        'Selz Settings',
         SELZ_NAME,
         'manage_options',
         SELZ_SLUG,
-        'selz_menu_page',
-        plugins_url('dist/img/png/icon.png', __FILE__ )
+        'selz_settings_page',
+        plugins_url('dist/img/png/icon.png', __FILE__ ),
+        2
     );
+
+    add_submenu_page(
+    	SELZ_SLUG,
+    	__( 'Selz Settings', SELZ_LANG ),
+    	__( 'Settings', SELZ_LANG ),
+    	'manage_options',
+    	SELZ_SLUG
+   	);
+
+    add_submenu_page(
+    	SELZ_SLUG,
+    	__( 'Selz Help', SELZ_LANG ),
+    	__( 'Help', SELZ_LANG ),
+    	'manage_options',
+    	'selz_help',
+    	'selz_help_page'
+   	);
+
 }
 
 /**
@@ -69,7 +91,13 @@ function selz_plugin_loaded() {
 
 	// Initialize widgets
 	add_action('widgets_init', 'selz_widgets_init');
+}
 
+/**
+ * Enqueue scripts and styles
+ * @since 1.7.2
+ */
+function selz_enqueue_scripts() {
 	// Load styles
 	wp_enqueue_style('selz', plugins_url( 'dist/css/styles.css?v=' . SELZ_VERSION, __FILE__ ), SELZ_VERSION);
 	wp_enqueue_style('wp-color-picker');
@@ -77,6 +105,7 @@ function selz_plugin_loaded() {
 	// Scripts
 	wp_enqueue_script('selz', plugins_url('dist/js/scripts.js?v=' . SELZ_VERSION, __FILE__ ), array('jquery', 'wp-color-picker'), SELZ_VERSION);
 }
+
 
 /**
  * Load widget files and register
@@ -102,14 +131,7 @@ function selz_button($instance) {
 		$args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
 	}
 
-	// Remove the # for hexcolor
-	$args['link_color'] = str_replace('#', '', $args['link_color']);
-	$args['text_color'] = str_replace('#', '', $args['text_color']);
-	$args['background_color'] = str_replace('#', '', $args['background_color']);
-	$args['chbg_color'] = str_replace('#', '', $args['chbg_color']);
-	$args['chtx_color'] = str_replace('#', '', $args['chtx_color']);
-
-	if ('store' == $args['type']) {
+	if ('store' == $args['type'] || $args['type'] == '') {
 		if (!$args['store_link']) {
 			return __('Store URL is empty', SELZ_LANG);
 		}
@@ -118,42 +140,84 @@ function selz_button($instance) {
 		$host = explode(".", $parseurl['host']);
 		$store_domain = $host[0];
 
-		$html = '<script data-selz-cb="'.$args['background_color'].'" data-selz-cbt="'.$args['text_color'].'" data-selz-cl="'.$args['link_color'].'" data-selz-s="'.$store_domain.'" data-selz-chbg="'.$args['chbg_color'].'" data-selz-chtx="'.$args['chtx_color'].'">
-			if (typeof _$elz === "undefined") { var _$elz = {}; }
-			if (typeof _$elz.s === "undefined") {
-				_$elz.s = { e: document.createElement("script") };
-				_$elz.s.e.src = "https://selz.com/embed/store/'.$store_domain.'";
-				document.body.appendChild(_$elz.s.e);
-			}
-		</script>
-		<noscript><a href="'.$args['link'].'" target="_blank">'. __('View store', SELZ_LANG) .'</a><a href="https://selz.com/" target="_blank">'. __('Powered by Selz Ecommerce', SELZ_LANG) .'</a></noscript>';
+		$html = '<div data-embed="store">
+		    <script type="text/props">
+		    {
+		        "colors": {
+		            "buttons": {
+		                "background": "' . $args['background_color'] . '",
+		                "text": "' . $args['text_color'] . '"
+		            },
+		            "checkout": {
+		                "background": "' . $args['chbg_color'] . '",
+		                "text": "' . $args['chtx_color'] . '"
+		            },
+		            "links": "' . $args['link_color'] . '"
+		        },
+		        "url": "' . $args['store_link'] . '"
+		    }
+		    </script>
+		</div>
+		<script async src="https://embeds.selzstatic.com/1/loader.js"></script>
+		<noscript><a href="' . $args['link'] . '" target="_blank">'. __('View store', SELZ_LANG) .'</a></noscript>';
 
-	} elseif ( 'button' == $args['type']) {
-		$html = '<script data-selz-t="_selz-btn-'.$args['position'].'" data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-b="'.trim($args['link']).'"'.($args['show_logos'] ? ' data-selz-lg="true"' : '').'  data-selz-chbg="'.$args['chbg_color'].'" data-selz-chtx="'.$args['chtx_color'].'" data-text="'.$args['button_text'].'">
-			if (typeof _$elz === "undefined") { var _$elz = {}; }
-			if (typeof _$elz.b === "undefined") {
-				_$elz.b = { e: document.createElement("script") };
-				_$elz.b.e.src = "https://selz.com/embed/button";
-				document.body.appendChild(_$elz.b.e);
-			}
-		</script>
-		<noscript><a href="'.$args['link'].'" target="_blank">'.$args['button_text'].'</a><a href="https://selz.com/" target="_blank">'. __('Powered by Selz Ecommerce', SELZ_LANG) .'</a></noscript>';
+	} elseif ('button' == $args['type']) {
+
+		$html = '<div data-embed="button">
+		    <script type="text/props">
+		    {
+		        "style": "' . $args['position'] . '",
+		        "action": "' . $args['action'] . '",
+		        "colors": {
+		            "buttons": {
+		                "background": "' . $args['background_color'] . '",
+		                "text": "' . $args['text_color'] . '"
+		            },
+		            "checkout": {
+		                "background": "' . $args['chbg_color'] . '",
+		                "text": "' . $args['chtx_color'] . '"
+		            }
+		        },
+		        '. ( $args['auto_width'] ? '"width": "' . $args['width'] . '",' : '') . '
+		        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
+		        "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+		        "url": "' . trim( $args['link'] ) . '"
+		    }
+		    </script>
+		</div>
+		<script async src="https://embeds.selzstatic.com/1/loader.js"></script>
+        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
 
 	} else {
-		$html = '<script data-selz-a="'.$args['interact'].'" data-selz-ct="'.$args['text_color'].'" data-selz-cb="'.$args['background_color'].'" data-selz-w="'.trim($args['link']).'"'.($args['show_logos'] ? ' data-selz-lg="true"' : '').' data-selz-chbg="'.$args['chbg_color'].'" data-selz-chtx="'.$args['chtx_color'].'" data-text="'.$args['button_text'].'">
-			if (typeof _$elz === "undefined") { var _$elz = {}; }
-			if (typeof _$elz.w === "undefined") {
-				_$elz.w = { e: document.createElement("script") };
-				_$elz.w.e.src = "https://selz.com/embed/widget";
-				document.body.appendChild(_$elz.w.e);
-			}
-		</script>
-		<noscript><a href="'.$args['link'].'" target="_blank">'.$args['button_text'].'</a><a href="https://selz.com/" target="_blank">'. __('Powered by Selz Ecommerce', SELZ_LANG) .'</a></noscript>';
+
+		$html = '<div data-embed="widget">
+		    <script type="text/props">
+		    {
+		        "action": "' . $args['action'] . '",
+		        "colors": {
+		            "buttons": {
+		                "background": "' . $args['background_color'] . '",
+		                "text": "' . $args['text_color'] . '"
+		            },
+		            "checkout": {
+		                "background": "' . $args['chbg_color'] . '",
+		                "text": "' . $args['chtx_color'] . '"
+		            }
+		        },
+		        '. ( $args['auto_width'] ? '"width": "' . $args['width'] . '",' : '') . '
+		        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
+		        "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+		        "url": "' . $args['link'] . '",
+		        "description": ' . ( isset( $args['description'] ) && $args['description'] == 'on' ? 'true' : 'false' ) . '
+		    }
+		    </script>
+		</div>
+		<script async src="https://embeds.selzstatic.com/1/loader.js"></script>
+		<noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
 	}
 
 	return $html;
 }
-
 
 /**
  * Return default arguments for widgets or shortcodes
@@ -164,29 +228,69 @@ function selz_default_args() {
 		'title'				=> esc_attr__('Selz Widget', SELZ_LANG),
 		'link'				=> '',
 		'store_link'		=> '',
-		'type'				=> 'button',
+		'kind'				=> '',
+		'type'				=> '',
 		'interact' 			=> 'modal',
 		'position' 			=> 'default',
+		'action' 			=> 'buy-it-now',
+		'width' 			=> 240,
+		'auto_width' 		=> false,
 		'button_text'		=> 'Buy it now',
 		'text_color' 		=> '#ffffff',
 		'background_color' 	=> '#7959c7',
 		'link_color' 		=> '#7959c7',
 		'chbg_color' 		=> '#7959c7',
 		'chtx_color' 		=> '#ffffff',
-		'tab_active'		=> array( 0 => true, 1 => false, 2 => false ),
+		'tab_active'		=> array(0 => true, 1 => false, 2 => false),
 		'show_logos'        => 'false',
 		'intro_text' 		=> '',
 		'outro_text' 		=> '',
-		'customstylescript'	=> ''
 	);
 
 	return $defaults;
 }
 
-function selz_menu_page() {
-	// Load styles
-	wp_enqueue_style('selz', plugins_url('dist/css/styles.css?v=' . SELZ_VERSION, __FILE__), SELZ_VERSION);
+function selz_settings_page() {
+	include(SELZ_DIR .  '/views/settings.php');
+}
+function selz_help_page() {
+	include(SELZ_DIR .  '/views/help.php');
+}
 
-	include(SELZ_DIR .  '/views/admin.php');
+// Register our settings. Add the settings section, and settings fields
+function selz_init_settings(){
+	register_setting( 'selz_settings', 'selz_settings', 'selz_settings_validate' );
+
+	add_settings_field( 'selz_store_id', '', '', __FILE__ );
+	add_settings_field( 'selz_display_cart', '', '', __FILE__ );
+}
+
+function selz_settings_validate( $input ) {
+	$input['store_id'] = absint( $input['store_id'] );
+	$input['display_cart'] = sanitize_text_field( $input['display_cart'] );
+	return $input;
+}
+
+/*
+ * Show the cart if selected
+ */
+function selz_show_cart() {
+	$settings = get_option( 'selz_settings' );
+
+	if (
+		( isset( $settings['display_cart'] ) && $settings['display_cart'] == 'on' ) &&
+		( isset( $settings['store_id'] ) && $settings['store_id'] != '' )
+	) {
+		$html = '<div data-embed="cart">
+		    <script type="text/props">
+		    {
+		        "storeId": ' . absint( $settings['store_id'] ) . '
+		    }
+		    </script>
+		</div>
+		<script async src="https://embeds.selzstatic.com/1/loader.js"></script>';
+    }
+
+	echo $html;
 }
 ?>

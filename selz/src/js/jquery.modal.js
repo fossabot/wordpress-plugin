@@ -2,7 +2,8 @@
     'use strict';
     /* global wpActiveEditor, edInsertContent, tinymce, selzvars, jQuery, ajaxurl */
 
-    function Modal() {
+    function Modal(type) {
+
         this.$element = $('.selz-modal');
         this.$backdrop = $('.selz-modal-backdrop');
         this.$controls = $('.selz-modal-controls');
@@ -14,7 +15,7 @@
         this.loading = false;
         this.shown = false;
 
-        this.show();
+        this.show(type);
     }
 
     // Toggle element visibility
@@ -55,7 +56,7 @@
         this.$form.off('change.type.modal').off('submit.modal');
     };
 
-    Modal.prototype.show = function() {
+    Modal.prototype.show = function(type) {
         if (!wpActiveEditor) {
             return;
         }
@@ -63,11 +64,19 @@
         if (this.shown) {
             return;
         }
+        // add hidden input with the kind
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'kind',
+        }).appendTo(this.$form);
 
         this.shown = true;
         toggle(this.$backdrop, this.shown);
         toggle(this.$element, this.shown);
         this.$close.focus();
+
+        $('input[name="kind"]').val(type);
+        this.update();
 
         this.$close.on(
             'click.hide.modal',
@@ -103,6 +112,7 @@
         );
 
         this.enforceFocus();
+
     };
 
     Modal.prototype.insert = function() {
@@ -171,4 +181,5 @@
     };
 
     window.SelzModal = Modal;
+
 })(jQuery);

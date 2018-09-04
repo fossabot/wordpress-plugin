@@ -15,8 +15,7 @@ class Selz_Shortcode {
 	**/
 	function __construct() {
 		$this->shortcode = 'selz';
-		add_filter( 'tiny_mce_version', array( &$this, 'tiny_mce_version' ) );		// Modified the version when TinyMCE plugins are changed
-		add_action( 'init', array( &$this, 'add_buttons' ) );						// Add action to the WordPress init
+		add_action( 'media_buttons', array( &$this, 'add_buttons' ), 11 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_print_footer_scripts', array( &$this, 'print_dialog'), 50 );
 		add_action( 'admin_footer', array( &$this, 'admin_footer' ), 1 );
@@ -24,7 +23,7 @@ class Selz_Shortcode {
 		add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
 		add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 		add_shortcode( 'selz', array( &$this, 'add_shortcode' ) );
-		add_action( 'admin_print_footer_scripts', array( &$this, 'quicktag_button' ) );
+		add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
 	}
 
 	/**
@@ -38,20 +37,21 @@ class Selz_Shortcode {
 		return selz_button( $atts );
 	}
 
-
 	/*
 	 * Check if the post has a shortcode(s) used in the current post content with stripos PHP function
 	 * Add !empty($cur_post->post_content) if the post has no content
 	 * @return bool true, default false
-	 * @since 2.0.4
+	 * @since 1.8.0
 	*/
 	function has_shortcode() {
 		global $post;
 		$cur_post = get_post($post->ID);
 
 		// Check the post content if has shortcode
-		if ( ! empty( $cur_post->post_content ) && stripos( $cur_post->post_content, '[' . $this->shortcode ) !== false )
+		if (!empty($cur_post->post_content) && stripos($cur_post->post_content, '[' . $this->shortcode) !== false)
+		{
 			return true;
+		}
 
 		return false;
 	}
@@ -64,8 +64,7 @@ class Selz_Shortcode {
 	 * @return javascript and CSS
 	 */
 	function shortcode_head() {
-		if ( $this->has_shortcode() ) {
-
+		if ($this->has_shortcode()) {
 			global $post;
 			$cur_post = get_post($post->ID);
 
@@ -75,16 +74,14 @@ class Selz_Shortcode {
 			if ($matches) {
 				$shortcode = array();
 
-				foreach( $matches[0] as $match ) {
+				foreach ($matches[0] as $match) {
 					preg_match_all('/([^\s]*?)="([^"]*?)"/',$match, $arr);
 					$array = array();
 					$count = count($arr[1]);
-					for($i=0;$i<$count;++$i){
+
+					for ($i = 0; $i < $count; ++$i){
 						$array[$arr[1][$i]] = $arr[2][$i];
 					}
-					//print_r( $array );
-					//wp_enqueue_script('selz', SELZ_URL . 'js/jquery.selz.js', array('jquery') );
-					//wp_localize_script( 'selz', $array['id'], $array );
 				}
 			}
 		}
@@ -92,7 +89,7 @@ class Selz_Shortcode {
 
 	/**
 	 * Dialog for internal linking.
-	 * @since 3.1.0
+	 * @since 1.1
 	 */
 	function print_dialog() {
 		include_once( SELZ_DIR . '/includes/modal.php' );
@@ -117,24 +114,20 @@ class Selz_Shortcode {
 	}
 
 	function add_buttons() {
-		if ( get_user_option('rich_editing') == 'true') {
-			add_filter('mce_external_plugins',  array( &$this, 'mce_external_plugins'), 5);
-			add_filter('mce_buttons',  array( &$this, 'mce_buttons'), 5);
+		global $pagenow, $typenow;
+		$output = '';
+
+		/** Only run in post/page creation and edit screens */
+		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
+			$product = 'product';
+			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
+			$output .= '<a id="product" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img1 . __( 'Add Product', SELZ_LANG ) . '</a>';
+
+			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
+			$output .= '<a id="store" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img2 . __( 'Add Store', SELZ_LANG ) . '</a>';
 		}
-	}
 
-	function mce_buttons( $buttons ) {
-		array_push($buttons, 'separator', 'selz');
-		return $buttons;
-	}
-
-	function mce_external_plugins( $plugin_array ) {
-		$plugin_array['selz'] = SELZ_URL . 'dist/js/plugin.js';
-		return $plugin_array;
-	}
-
-	function tiny_mce_version($version) {
-		return ++$version;
+		echo $output;
 	}
 
 	/**
@@ -164,13 +157,14 @@ class Selz_Shortcode {
 		}
 	}
 
-	function quicktag_button() {
-		if (wp_script_is('quicktags')) { ?>
-			<script>
-				QTags.addButton('qt_selz', 'selz', openSelzModal, '', 'selz', 'Paragraph tag');
-				function openSelzModal() { new SelzModel(); }
-			</script><?php
+	function buttons() {
+		?>
+		<script>
+		function openSelzModal(evt) {
+			new SelzModal(evt);
 		}
+		</script>
+		<?php
 	}
 }
 ?>
