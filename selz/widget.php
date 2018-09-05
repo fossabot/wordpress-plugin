@@ -88,7 +88,7 @@ class Selz_Widget extends WP_Widget {
 		// Set up the arguments for
 		$instance = wp_parse_args( (array) $instance, selz_default_args() );
 
-		
+
 		// Output the theme's widget wrapper
 		echo $before_widget;
 
@@ -100,7 +100,7 @@ class Selz_Widget extends WP_Widget {
 		if ( ! empty( $instance['intro_text'] ) )
 			echo '<p class="'. $this->id . '-intro-text intro-text">' . $instance['intro_text'] . '</p>';
 
-		echo selz_button($instance);
+		echo selz_embed($instance);
 
 		// Print outro text if exist
 		if ( !empty( $instance['outro_text'] ) )
@@ -162,8 +162,8 @@ class Selz_Widget extends WP_Widget {
 		);
 
 		$actions = array(
-			'add-to-cart' 	=> __( 'Add To Cart', $this->textdomain ),
-			'buy-now'		=> __( 'Buy Now', $this->textdomain ),
+			'add-to-cart' 	=> __( 'Add to cart', $this->textdomain ),
+			'buy'			=> __( 'Buy now', $this->textdomain ),
 			'view'			=> __( 'View', $this->textdomain )
 		);
 
@@ -200,7 +200,7 @@ class Selz_Widget extends WP_Widget {
 	// 	$nonce = $_POST['nonce'];
 	// 	if ( ! wp_verify_nonce( $nonce, 'selz' ) && ! isset( $_POST['data'] ) )
 	// 		die();
-		
+
 	// 	// Set up the default form values and parse
 	// 	parse_str( $_POST['data'], $instance );
 	// 	//require_once( SELZ_DIR . 'dialog.php' );

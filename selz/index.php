@@ -3,7 +3,7 @@
     Plugin Name: Selz WordPress Ecommerce
     Plugin URI: https://selz.com/features/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.8.0
+    Version: 1.8.2
     Author: selz.com
     Author URI: https://selz.com/features/wordpress-ecommerce
     License: MIT
@@ -21,7 +21,7 @@ if (!defined('ABSPATH'))
  * @since 0.0.1
  */
 define('SELZ', true);
-define('SELZ_VERSION', '1.8.0');
+define('SELZ_VERSION', '1.8.1');
 define('SELZ_DIR', plugin_dir_path(__FILE__));
 define('SELZ_URL', plugin_dir_url(__FILE__));
 define('SELZ_NAME', 'Selz');
@@ -48,20 +48,20 @@ function selz_admin_menu() {
     );
 
     add_submenu_page(
-    	SELZ_SLUG,
-    	__( 'Selz Settings', SELZ_LANG ),
-    	__( 'Settings', SELZ_LANG ),
-    	'manage_options',
-    	SELZ_SLUG
+        SELZ_SLUG,
+        __( 'Selz Settings', SELZ_LANG ),
+        __( 'Settings', SELZ_LANG ),
+        'manage_options',
+        SELZ_SLUG
    	);
 
     add_submenu_page(
-    	SELZ_SLUG,
-    	__( 'Selz Help', SELZ_LANG ),
-    	__( 'Help', SELZ_LANG ),
-    	'manage_options',
-    	'selz_help',
-    	'selz_help_page'
+        SELZ_SLUG,
+        __( 'Selz Help', SELZ_LANG ),
+        __( 'Help', SELZ_LANG ),
+        'manage_options',
+        'selz_help',
+        'selz_help_page'
    	);
 
 }
@@ -106,7 +106,6 @@ function selz_enqueue_scripts() {
 	wp_enqueue_script('selz', plugins_url('dist/js/scripts.js?v=' . SELZ_VERSION, __FILE__ ), array('jquery', 'wp-color-picker'), SELZ_VERSION);
 }
 
-
 /**
  * Load widget files and register
  * @since 0.0.1
@@ -122,14 +121,14 @@ function selz_widgets_init() {
  * @param $instance, see $defaults for complete parameters
  * @since 0.0.1
  */
-function selz_button($instance) {
+function selz_embed($instance) {
 	// Merge the user-selected arguments with the defaults.
 	$args = wp_parse_args((array) $instance, selz_default_args());
 
 	// Overwrite "true" to 1, "false" to 0
 	foreach ($args as $k => $v) {
 		$args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
-	}
+    }
 
 	if ('store' == $args['type'] || $args['type'] == '') {
 		if (!$args['store_link']) {
@@ -178,10 +177,11 @@ function selz_button($instance) {
 		                "text": "' . $args['chtx_color'] . '"
 		            }
 		        },
-		        '. ( $args['auto_width'] ? '"width": "' . $args['width'] . '",' : '') . '
+		        '. ( !$args['auto_width'] ? '"width": ' . $args['width'] . ',' : '') . '
 		        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-		        "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-		        "url": "' . trim( $args['link'] ) . '"
+                "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+                "text": "' . trim($args['button_text']) . '",
+                "url": "' . trim( $args['link'] ) . '"
 		    }
 		    </script>
 		</div>
@@ -203,17 +203,19 @@ function selz_button($instance) {
 		                "background": "' . $args['chbg_color'] . '",
 		                "text": "' . $args['chtx_color'] . '"
 		            }
-		        },
-		        '. ( $args['auto_width'] ? '"width": "' . $args['width'] . '",' : '') . '
+                },
+                "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
+		        "width": ' . ( $args['auto_width'] ? '"100%"' : $args['width'] ) . ',
 		        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-		        "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-		        "url": "' . $args['link'] . '",
-		        "description": ' . ( isset( $args['description'] ) && $args['description'] == 'on' ? 'true' : 'false' ) . '
+                "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+                "text": "' . trim($args['button_text']) . '",
+		        "url": "' . $args['link'] . '"
 		    }
 		    </script>
 		</div>
 		<script async src="https://embeds.selzstatic.com/1/loader.js"></script>
-		<noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
+        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
+
 	}
 
 	return $html;
@@ -232,17 +234,18 @@ function selz_default_args() {
 		'type'				=> '',
 		'interact' 			=> 'modal',
 		'position' 			=> 'default',
-		'action' 			=> 'buy-it-now',
+		'action' 			=> 'add-to-cart',
 		'width' 			=> 240,
 		'auto_width' 		=> false,
-		'button_text'		=> 'Buy it now',
+		'button_text'		=> 'Add to cart',
 		'text_color' 		=> '#ffffff',
 		'background_color' 	=> '#7959c7',
 		'link_color' 		=> '#7959c7',
 		'chbg_color' 		=> '#7959c7',
 		'chtx_color' 		=> '#ffffff',
 		'tab_active'		=> array(0 => true, 1 => false, 2 => false),
-		'show_logos'        => 'false',
+        'show_logos'        => 'false',
+        'show_description'  => 'true',
 		'intro_text' 		=> '',
 		'outro_text' 		=> '',
 	);
@@ -266,7 +269,7 @@ function selz_init_settings(){
 }
 
 function selz_settings_validate( $input ) {
-	$input['store_id'] = absint( $input['store_id'] );
+	$input['store_id'] = trim(sanitize_text_field( $input['store_id'] ));
 	$input['display_cart'] = sanitize_text_field( $input['display_cart'] );
 	return $input;
 }
@@ -281,10 +284,12 @@ function selz_show_cart() {
 		( isset( $settings['display_cart'] ) && $settings['display_cart'] == 'on' ) &&
 		( isset( $settings['store_id'] ) && $settings['store_id'] != '' )
 	) {
+        $id = $settings['store_id'];
+
 		$html = '<div data-embed="cart">
 		    <script type="text/props">
 		    {
-		        "storeId": ' . absint( $settings['store_id'] ) . '
+		        "store": ' . ( is_numeric($id) ? absint($id) : '"' . trim($id) . '"') . '
 		    }
 		    </script>
 		</div>

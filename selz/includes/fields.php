@@ -21,7 +21,7 @@
 			</div>
 			<div class="controls">
 				<select id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" class="input-control">
-					<?php foreach ( $types as $k => $v ) { 
+					<?php foreach ( $types as $k => $v ) {
 						if( 'product' == $instance['kind'] && $v == 'Store' )
 							continue;
 						?>
@@ -109,21 +109,17 @@
 				</div>
 			<?php endif; ?>
 
-
-			<?php 
-			//$current_screen = get_current_screen();
-    		//if( $current_screen->id != "widgets" ) {
-			$min = 'widget' == $instance['type'] ? '240' : '160'; ?>
+			<?php $min = 'widget' == $instance['type'] ? '240' : '160'; ?>
 			<div class="control-group">
 				<div class="control-label">
 					<p class="faux-label"><?php _e( 'Width', $this->textdomain ); ?></p>
 				</div>
 				<div class="controls">
 					<label for="<?php echo $this->get_field_id( 'width' ); ?>">
-						<input data-range="{&quot;unit&quot;:&quot;px&quot;}" id="<?php echo $this->get_field_id( 'width' ); ?>" max="1000" min="<?php esc_html_e( $min ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>" step="1" value="0" type="range" oninput="outputUpdate(value)">
+						<input type="range" max="1000" min="<?php esc_html_e( $min ); ?>" step="5" value="0" id="<?php echo $this->get_field_id( 'width' ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>" oninput="outputUpdate(value)">
 						<output for="<?php echo $this->get_field_id( 'width' ); ?>" id="the-width"><?php esc_html_e( $min ); ?></output>px
 					</label>
-					
+
 					<label for="<?php echo $this->get_field_id( 'auto_width' ); ?>" class="control-checkbox">
 						<input type="checkbox" id="<?php echo $this->get_field_id( 'auto_width' ); ?>" name="<?php echo $this->get_field_name( 'auto_width' ); ?>" value="true">
 						<?php _e( 'Automatic', $this->textdomain ); ?>
@@ -132,7 +128,6 @@
 				</div>
 			</div>
 			<script>function outputUpdate(width) {document.querySelector('#the-width').value = width;}</script>
-			<?php //} ?>
 
 			<div class="control-group">
 				<div class="control-label">

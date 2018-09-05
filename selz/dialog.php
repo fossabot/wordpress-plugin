@@ -35,8 +35,8 @@ class Selz_Form {
 		);
 
 		$actions = array(
-			'add-to-cart' 	=> __( 'Add To Cart', $this->textdomain ),
-			'buy-now'		=> __( 'Buy Now', $this->textdomain ),
+			'add-to-cart' 	=> __( 'Add to cart', $this->textdomain ),
+			'buy'			=> __( 'Buy now', $this->textdomain ),
 			'view'			=> __( 'View', $this->textdomain )
 		);
 

@@ -34,7 +34,7 @@ class Selz_Shortcode {
 	**/
 	function add_shortcode( $atts, $content ) {
 		$atts = shortcode_atts( selz_default_args(), $atts );
-		return selz_button( $atts );
+		return selz_embed( $atts );
 	}
 
 	/*

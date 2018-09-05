@@ -20,7 +20,7 @@
 			</div>
 			<div class="controls">
 				<select id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" class="input-control">
-					<?php foreach ( $types as $k => $v ) { 
+					<?php foreach ( $types as $k => $v ) {
 						if( 'product' == $instance['kind'] && $v == 'Store' )
 							continue;
 						?>
@@ -42,90 +42,89 @@
 			</div>
 		</div>
 
-
-			<div class="control-group" data-type="button-widget">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item URL', $this->textdomain ); ?></label>
-				</div>
-				<div class="controls">
-					<input type="text" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" class="input-control" placeholder="e.g. http://selz.co/123abc4">
-					<small class="help-block"><?php _e( 'Go to "Options" > "Share" on one of your <a href="https://selz.com/items" target="_blank">item tiles</a> and copy the short link', $this->textdomain ); ?></small>
-				</div>
+		<div class="control-group" data-type="button-widget">
+			<div class="control-label">
+				<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Item URL', $this->textdomain ); ?></label>
 			</div>
-
-			<div class="control-group" data-type="button-widget">
-					<div class="control-label">
-						<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->textdomain ); ?></label>
-					</div>
-					<div class="controls">
-						<select id="<?php echo $this->get_field_id( 'action' ); ?>" name="<?php echo $this->get_field_name( 'action' ); ?>" class="input-control">
-							<?php foreach ( $actions as $key => $val ) { ?>
-								<option value="<?php echo $key; ?>" <?php selected( $instance['action'], $key ); ?>><?php echo $val; ?></option>
-							<?php } ?>
-						</select>
-					</div>
-				</div>
-
-				<div class="control-group" data-type="button">
-					<div class="control-label">
-						<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Button style', $this->textdomain ); ?></label>
-					</div>
-					<div class="controls">
-						<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>" class="input-control">
-							<?php foreach ( $button_positions as $key => $val ) { ?>
-								<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
-							<?php } ?>
-						</select>
-					</div>
-				</div>
-
-			<div class="control-group" data-type="button">
-				<div class="control-label">
-					<p class="faux-label"><?php _e( 'Button text', $this->textdomain ); ?></p>
-				</div>
-				<div class="controls">
-					<input type="text" id="<?php echo $this->get_field_id( 'button_text' ); ?>" name="<?php echo $this->get_field_name( 'button_text' ); ?>" value="<?php echo esc_attr( $instance['button_text'] ); ?>" class="input-control" placeholder="e.g. Buy it now" required>
-				</div>
+			<div class="controls">
+				<input type="text" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" value="<?php echo esc_attr( $instance['link'] ); ?>" class="input-control" placeholder="e.g. http://selz.co/123abc4">
+				<small class="help-block"><?php _e( 'Go to "Options" > "Share" on one of your <a href="https://selz.com/items" target="_blank">item tiles</a> and copy the short link', $this->textdomain ); ?></small>
 			</div>
+		</div>
 
-			<div class="control-group" data-type="widget">
+		<div class="control-group" data-type="button-widget">
 				<div class="control-label">
-					<p class="faux-label"><?php _e( 'Description', $this->textdomain ); ?></p>
+					<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->textdomain ); ?></label>
 				</div>
 				<div class="controls">
-					<label for="<?php echo $this->get_field_id( 'show_description' ); ?>" class="control-checkbox">
-						<input type="checkbox" id="<?php echo $this->get_field_id( 'show_description' ); ?>" name="<?php echo $this->get_field_name( 'show_description' ); ?>" <?php checked( $instance[ 'show_description' ], 'on' ); ?> />
-						<?php _e( 'Show the description', $this->textdomain ); ?>
-					</label>
-					<small class="help-block"><?php _e( 'Show the item description', $this->textdomain ); ?></small>
-				</div>
-			</div>
-
-			<div class="control-group" data-type="button-widget">
-				<div class="control-label">
-					<p class="faux-label"><?php _e( 'Logos', $this->textdomain ); ?></p>
-				</div>
-				<div class="controls">
-					<label for="<?php echo $this->get_field_id( 'show_logos' ); ?>" class="control-checkbox">
-						<input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" <?php checked( $instance[ 'show_logos' ], 'on' ); ?> />
-						<?php _e( 'Show payment logos', $this->textdomain ); ?>
-					</label>
-					<small class="help-block"><?php _e( 'Show payment method logos underneath embed', $this->textdomain ); ?></small>
-				</div>
-			</div>
-			<div class="control-group" data-type="button-widget">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'Window type', $this->textdomain ); ?></label>
-				</div>
-				<div class="controls">
-					<select id="<?php echo $this->get_field_id( 'interact' ); ?>" name="<?php echo $this->get_field_name( 'interact' ); ?>" class="input-control">
-						<?php foreach ( $interacts as $k => $v ) { ?>
-							<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['interact'], $k ); ?>><?php echo esc_html( $v ); ?></option>
+					<select id="<?php echo $this->get_field_id( 'action' ); ?>" name="<?php echo $this->get_field_name( 'action' ); ?>" class="input-control">
+						<?php foreach ( $actions as $key => $val ) { ?>
+							<option value="<?php echo $key; ?>" <?php selected( $instance['action'], $key ); ?>><?php echo $val; ?></option>
 						<?php } ?>
 					</select>
 				</div>
 			</div>
 
+			<div class="control-group" data-type="button">
+				<div class="control-label">
+					<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Button style', $this->textdomain ); ?></label>
+				</div>
+				<div class="controls">
+					<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>" class="input-control">
+						<?php foreach ( $button_positions as $key => $val ) { ?>
+							<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+
+		<div class="control-group" data-type="button">
+			<div class="control-label">
+				<p class="faux-label"><?php _e( 'Button text', $this->textdomain ); ?></p>
+			</div>
+			<div class="controls">
+				<input type="text" id="<?php echo $this->get_field_id( 'button_text' ); ?>" name="<?php echo $this->get_field_name( 'button_text' ); ?>" value="<?php echo esc_attr( $instance['button_text'] ); ?>" class="input-control" placeholder="e.g. Buy it now" required>
+			</div>
+		</div>
+
+		<div class="control-group" data-type="widget">
+			<div class="control-label">
+				<p class="faux-label"><?php _e( 'Description', $this->textdomain ); ?></p>
+			</div>
+			<div class="controls">
+				<label for="<?php echo $this->get_field_id( 'show_description' ); ?>" class="control-checkbox">
+					<input type="checkbox" id="<?php echo $this->get_field_id( 'show_description' ); ?>" name="<?php echo $this->get_field_name( 'show_description' ); ?>" value="true" <?php checked( $instance[ 'show_description' ], 'checked' ); ?>>
+					<?php _e( 'Show the description', $this->textdomain ); ?>
+				</label>
+				<small class="help-block"><?php _e( 'Show the item description', $this->textdomain ); ?></small>
+			</div>
+		</div>
+
+		<div class="control-group" data-type="button-widget">
+			<div class="control-label">
+				<p class="faux-label"><?php _e( 'Logos', $this->textdomain ); ?></p>
+			</div>
+			<div class="controls">
+				<label for="<?php echo $this->get_field_id( 'show_logos' ); ?>" class="control-checkbox">
+					<input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" <?php checked( $instance[ 'show_logos' ], 'on' ); ?>>
+					<?php _e( 'Show payment logos', $this->textdomain ); ?>
+				</label>
+				<small class="help-block"><?php _e( 'Show payment method logos underneath embed', $this->textdomain ); ?></small>
+			</div>
+		</div>
+
+		<div class="control-group" data-type="button-widget">
+			<div class="control-label">
+				<label for="<?php echo $this->get_field_id( 'interact' ); ?>"><?php _e( 'Window type', $this->textdomain ); ?></label>
+			</div>
+			<div class="controls">
+				<select id="<?php echo $this->get_field_id( 'interact' ); ?>" name="<?php echo $this->get_field_name( 'interact' ); ?>" class="input-control">
+					<?php foreach ( $interacts as $k => $v ) { ?>
+						<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['interact'], $k ); ?>><?php echo esc_html( $v ); ?></option>
+					<?php } ?>
+				</select>
+			</div>
+		</div>
 	</div>
 
 	<div class="tab-panel" id="selz-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-colors<?php echo $id ?>" aria-hidden="true">
