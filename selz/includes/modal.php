@@ -1,11 +1,26 @@
-
+<style>
+	.loader {
+	    border: 6px solid #dbe3e8;
+	    border-top: 6px solid #4cb953; 
+	    border-radius: 50%;
+	    width: 30px;
+	    height: 30px;
+	    animation: spin 0.7s linear infinite;
+	    float: left;
+	    margin: 0px 15px 0px 0;
+	}
+	@keyframes spin {
+	    0% { transform: rotate(0deg); }
+	    100% { transform: rotate(360deg); }
+	}
+</style>
 <div class="selz selz-modal" hidden role="dialog" aria-labelledby="selz-modal-title" aria-describedby="selz-modal-description" tabindex="-1">
 	<form class="selz-modal-dialog">
 		<header class="selz-modal-header">
-			<h1 id="selz-modal-title"><?php _e('Selz Widget Options') ?></h1>
+			<h1 id="selz-modal-title"><?php _e( $this->name . ' Widget Options', selz()->lang ) ?></h1>
 
 			<p id="selz-modal-description" class="sr-only">
-				<?php _e('Configure the options for your embed') ?>
+				<?php _e('Configure the options for your embed', selz()->lang ); ?>
 			</p>
 
 			<button type="button" class="btn-close-modal" data-modal="close">
@@ -19,15 +34,17 @@
 		</header>
 
 		<section class="selz-modal-controls">
-			<?php
-				require_once( SELZ_DIR . 'dialog.php' );
+			<?php if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+
+				require_once( selz()->dir . 'dialog.php' );
 				new Selz_Form();
-			?>
+
+			} ?>
 		</section>
 
 		<footer class="selz-modal-footer">
 			<button type="submit" class="btn btn-primary btn-block">
-				<?php esc_attr_e( 'Add Shortcode', SELZ_LANG ); ?>
+				<?php esc_attr_e( 'Add Shortcode', selz()->lang ); ?>
 			</button>
 		</footer>
 	</form>

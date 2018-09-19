@@ -3,6 +3,6 @@
         "styles.css": "src/less/bundle.less"
     },
     "js": {
-        "scripts.js": ["src/js/tab-focus.js", "src/js/jquery.modal.js", "src/js/jquery.widgets.js", "src/js/jquery.dialog.js"]
+        "scripts.js": ["src/js/tab-focus.js", "src/js/jquery.modal.js", "src/js/jquery.widgets.js", "src/js/jquery.dialog.js", "src/js/jquery.ddslick.js"]
     }
 }

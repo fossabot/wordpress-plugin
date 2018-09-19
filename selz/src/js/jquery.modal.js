@@ -64,6 +64,10 @@
         if (this.shown) {
             return;
         }
+
+        $('.selz-modal-controls .js-tab-container').html();
+        $('.selz-modal-controls').html( selzvars.spinner );
+        
         // add hidden input with the kind
         $('<input>').attr({
             type: 'hidden',
@@ -107,6 +111,7 @@
             $.proxy(function(event) {
                 if (event.keyCode === 27) {
                     this.hide();
+                    
                 }
             }, this)
         );
@@ -145,7 +150,7 @@
             }
         });
 
-        var shortcode = '[selz' + fields + ']';
+        var shortcode = '[' + selzvars.slug + fields + ']';
 
         if (ed) {
             tinymce.execCommand('mceBeginUndoLevel');

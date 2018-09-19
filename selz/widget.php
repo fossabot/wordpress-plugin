@@ -2,10 +2,8 @@
 /*
     Selz Widget
 	@since 0.0.1
-    http://Selz.com
     License: GPL2
 
-	Copyright 2013 selz.com (email: engineer@selz.com)
 */
 
 class Selz_Widget extends WP_Widget {
@@ -14,7 +12,7 @@ class Selz_Widget extends WP_Widget {
 	var $slug;
 	var $version;
 	var $url;
-	var $textdomain;
+	var $lang;
 	var $name;
 
 	/**
@@ -23,16 +21,16 @@ class Selz_Widget extends WP_Widget {
 	 */
 	function __construct() {
 
-		$this->slug = 'selz';
-		$this->version = SELZ_VERSION;
-		$this->textdomain = SELZ_LANG;
-		$this->url = SELZ_URL;
-		$this->name = SELZ_NAME;
+		$this->slug = selz()->slug;
+		$this->version = selz()->version;
+		$this->lang = selz()->lang;
+		$this->url = selz()->url;
+		$this->name = selz()->name;
 
 		// Set up the widget options
 		$widget_options = array(
-			'classname' => 'selz',
-			'description' => esc_html__( 'Add Selz items to your sidebar', $this->textdomain )
+			'classname' => $this->slug,
+			'description' => sprintf( esc_html__( 'Add %s items to your sidebar', $this->lang ), $this->name )
 		);
 
 		// Set up the widget control options
@@ -43,7 +41,7 @@ class Selz_Widget extends WP_Widget {
 		);
 
 		// Create the widget
-		parent::__construct( $this->slug, esc_attr__( 'Selz', $this->textdomain ), $widget_options, $control_options );
+		parent::__construct( $this->slug, esc_attr__( $this->name, $this->lang ), $widget_options, $control_options );
 
 		// Load the widget stylesheet for the widgets admin screen
 		add_action( 'load-widgets.php', array(&$this, 'load_widgets') );
@@ -54,7 +52,6 @@ class Selz_Widget extends WP_Widget {
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		//add_action( 'wp_ajax_selz_widget_form', array( &$this, 'dialog_ajax' ) );
 
 	}
 
@@ -86,7 +83,7 @@ class Selz_Widget extends WP_Widget {
 		extract( $args );
 
 		// Set up the arguments for
-		$instance = wp_parse_args( (array) $instance, selz_default_args() );
+		$instance = wp_parse_args( (array) $instance, selz()->default_args() );
 
 
 		// Output the theme's widget wrapper
@@ -100,7 +97,7 @@ class Selz_Widget extends WP_Widget {
 		if ( ! empty( $instance['intro_text'] ) )
 			echo '<p class="'. $this->id . '-intro-text intro-text">' . $instance['intro_text'] . '</p>';
 
-		echo selz_embed($instance);
+		echo selz()->embed($instance);
 
 		// Print outro text if exist
 		if ( !empty( $instance['outro_text'] ) )
@@ -117,7 +114,7 @@ class Selz_Widget extends WP_Widget {
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-		//update_option( 'test333', time() );
+
 		// Set the instance to the new instance.
 		$instance = $new_instance;
 
@@ -130,8 +127,8 @@ class Selz_Widget extends WP_Widget {
 		$instance['type'] 				= $new_instance['type'];
 		$instance['button_text'] 		= $new_instance['button_text'];
 		$instance['show_description'] 	= $new_instance['show_description'];
-		$instance['width'] 				= $new_instance['width'];
-		$instance['auto_width'] 		= $new_instance['auto_width'];
+		//$instance['width'] 				= $new_instance['width'];
+		$instance['auto_width'] 		= 'true';
 		$instance['text_color'] 		= $new_instance['text_color'];
 		$instance['background_color'] 	= $new_instance['background_color'];
 		$instance['chbg_color'] 		= $new_instance['chbg_color'];
@@ -152,62 +149,50 @@ class Selz_Widget extends WP_Widget {
 	function form( $instance ) {
 
 		// Merge the user-selected arguments with the defaults.
-		$instance = wp_parse_args( (array) $instance, selz_default_args() );
+		$instance = wp_parse_args( (array) $instance, selz()->default_args() );
 
 		// Drop down select options for type
 		$types = array(
-			'button' 	=> __( 'Button', $this->textdomain ),
-			'widget'	=> __( 'Widget', $this->textdomain ),
-			'store'		=> __( 'Store', $this->textdomain ) // since 1.5.1
+			'button' 	=> __( 'Button', $this->lang ),
+			'widget'	=> __( 'Widget', $this->lang ),
+			'store'		=> __( 'Store', $this->lang ) // since 1.5.1
 		);
 
 		$actions = array(
-			'add-to-cart' 	=> __( 'Add to cart', $this->textdomain ),
-			'buy'			=> __( 'Buy now', $this->textdomain ),
-			'view'			=> __( 'View', $this->textdomain )
+			'add-to-cart' 	=> __( 'Add to cart', $this->lang ),
+			'buy'			=> __( 'Buy now', $this->lang ),
+			'view'			=> __( 'View', $this->lang )
 		);
 
 		$interacts = array(
-			'modal' 	=> __( 'Overlay', $this->textdomain ),
-			'blank'		=> __( 'New tab', $this->textdomain )
+			'modal' 	=> __( 'Overlay', $this->lang ),
+			'blank'		=> __( 'New tab', $this->lang )
 		);
 
 		$button_positions = array(
-			'price-right' 	=> __( 'Price on right', $this->textdomain ),
-			'price-left' 	=> __( 'Price on left', $this->textdomain ),
-			'price-above'	=> __( 'Price above', $this->textdomain ),
-			'price-below'	=> __( 'Price below', $this->textdomain )
+			'price-right' 	=> __( 'Price on right', $this->lang ),
+			'price-left' 	=> __( 'Price on left', $this->lang ),
+			'price-above'	=> __( 'Price above', $this->lang ),
+			'price-below'	=> __( 'Price below', $this->lang )
 		);
 
 		$onchange = "wpWidgets.save(jQuery(this).closest('div.widget'),0,1,0);";
 
-		include( SELZ_DIR . '/includes/widget-editor.php' );
+		$products = selz()->api->get_products();
+
+		$store = selz()->api->get_store();
+
+		include( selz()->dir . '/includes/widget-editor.php' );
 	}
 
 	function admin_enqueue_scripts($hook) {
 		if( 'widgets.php' != $hook )
 			return;
 
-		wp_localize_script('selz', 'selzvars', array(
-			'nonce'		=> wp_create_nonce('selz'),
-			'action'	=> 'selz_widget_form'
+		wp_localize_script( $this->slug, $this->slug . 'vars', array(
+			'nonce'		=> wp_create_nonce( $this->slug ),
+			'action'	=> $this->slug . '_widget_form'
 		));
 	}
 
-	// function dialog_ajax() {
-
-	// 	// Check the nonce and if not isset the id, just die.
-	// 	$nonce = $_POST['nonce'];
-	// 	if ( ! wp_verify_nonce( $nonce, 'selz' ) && ! isset( $_POST['data'] ) )
-	// 		die();
-
-	// 	// Set up the default form values and parse
-	// 	parse_str( $_POST['data'], $instance );
-	// 	//require_once( SELZ_DIR . 'dialog.php' );
-	// 	$this->form( $instance );
-	// 	//new Selz_Form( $instance );
-	// 	exit;
-	// }
-
 }
-?>

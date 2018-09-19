@@ -14,48 +14,63 @@ class Selz_Form {
 
 	function __construct( $instance = array(), $number = null, $ids = array(), $names = array() ) {
 
-		$this->slug = 'selz';
-		$this->version = SELZ_VERSION;
-		$this->textdomain = SELZ_LANG;
-		$this->url = SELZ_URL;
-		$this->name = SELZ_NAME;
+		$this->slug = selz()->slug;
+		$this->version = selz()->version;
+		$this->lang = selz()->lang;
+		$this->url = selz()->url;
+		$this->name = selz()->name;
 
 		// Merge the user-selected arguments with the defaults.
-		$instance = wp_parse_args( (array) $instance, selz_default_args() );
+		$instance = wp_parse_args( (array) $instance, selz()->default_args() );
 
 		$kind = array(
-			'product' 	=> __( 'Product', $this->textdomain ),
-			'store'		=> __( 'store', $this->textdomain ),
+			'product' 	=> __( 'Product', $this->lang ),
+			'store'		=> __( 'store', $this->lang ),
 		);
 
 		$types = array(
-			'button' 	=> __( 'Button', $this->textdomain ),
-			'widget'	=> __( 'Widget', $this->textdomain ),
-			'store'		=> __( 'Store', $this->textdomain ) // since 1.5.1
+			'button' 	=> __( 'Button', $this->lang ),
+			'widget'	=> __( 'Widget', $this->lang ),
+			'store'		=> __( 'Store', $this->lang ) // since 1.5.1
 		);
 
 		$actions = array(
-			'add-to-cart' 	=> __( 'Add to cart', $this->textdomain ),
-			'buy'			=> __( 'Buy now', $this->textdomain ),
-			'view'			=> __( 'View', $this->textdomain )
+			'add-to-cart' 	=> __( 'Add to cart', $this->lang ),
+			'buy'			=> __( 'Buy now', $this->lang ),
+			'view'			=> __( 'View', $this->lang )
 		);
 
 		$interacts = array(
-			'modal' 	=> __( 'Overlay', $this->textdomain ),
-			'blank'		=> __( 'New tab', $this->textdomain )
+			'modal' 	=> __( 'Overlay', $this->lang ),
+			'blank'		=> __( 'New tab', $this->lang )
 		);
 
 		$button_positions = array(
-			'price-right' 	=> __( 'Price on right', $this->textdomain ),
-			'price-left' 	=> __( 'Price on left', $this->textdomain ),
-			'price-above'	=> __( 'Price above', $this->textdomain ),
-			'price-below'	=> __( 'Price below', $this->textdomain )
+			'price-right' 	=> __( 'Price on right', $this->lang ),
+			'price-left' 	=> __( 'Price on left', $this->lang ),
+			'price-above'	=> __( 'Price above', $this->lang ),
+			'price-below'	=> __( 'Price below', $this->lang )
 		);
+
+		// only call the API once modal is opened
+		if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			
+			// only fetch products when necessary
+			if ( $instance['kind'] == 'product' ) {
+				$products = selz()->api->get_products();
+			}
+			// only fetch store when necessary
+			if ( $instance['kind'] == 'store' ) {
+				$store = selz()->api->get_store();
+			}
+
+		}
+
 		?>
 
 		<fieldset>
 			<legend class="sr-only">Widget Options</legend>
-			<?php include( SELZ_DIR . 'includes/fields.php' ); ?>
+			<?php include( selz()->dir . 'includes/fields.php' ); ?>
 		</fieldset>
 
 		<?php
@@ -68,5 +83,7 @@ class Selz_Form {
 	function get_field_name( $name ) {
 		return isset( $this->names[$name] ) ? $this->names[$name] : $name;
 	}
+
+
 }
 ?>

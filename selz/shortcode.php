@@ -2,28 +2,44 @@
 /*
 	Shortcode
 	@since 0.0.1
-	http://Selz.com
-
-	Copyright 2013 selz.com (email: engineer@selz.com)
 */
+
 
 class Selz_Shortcode {
 	var $shortcode;
+
 	/**
 	 * class constructor.
 	 * @since 1.5
 	**/
 	function __construct() {
-		$this->shortcode = 'selz';
-		add_action( 'media_buttons', array( &$this, 'add_buttons' ), 11 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'admin_print_footer_scripts', array( &$this, 'print_dialog'), 50 );
-		add_action( 'admin_footer', array( &$this, 'admin_footer' ), 1 );
-		add_action( 'wp_ajax_selz_form', array( &$this, 'dialog_ajax' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
-		add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
-		add_shortcode( 'selz', array( &$this, 'add_shortcode' ) );
-		add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
+		$this->shortcode = selz()->slug;
+
+		if( ! selz()->api->is_connected() ) {
+			add_action( 'admin_notices', array( &$this, 'not_connected' ), 11 );
+		} else {
+			add_action( 'media_buttons', array( &$this, 'add_buttons' ), 11 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+			add_action( 'admin_print_footer_scripts', array( &$this, 'print_dialog'), 50 );
+			add_action( 'admin_footer', array( &$this, 'admin_footer' ), 1 );
+			add_action( 'wp_ajax_selz_form', array( &$this, 'dialog_ajax' ) );
+			add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
+			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
+			add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
+			add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
+		}
+		
+	}
+
+	public function not_connected() {
+		$screen = get_current_screen();
+		if ($screen->base === 'post') {
+		    ?>
+		    <div class="notice notice-info">
+		        <p><?php printf( __( 'Please %s', selz()->lang ), '<a href="' . admin_url( 'admin.php?page=' . selz()->slug ) . '">connect your ' . selz()->name . ' account' ); ?></p>
+		    </div>
+		    <?php
+		}
 	}
 
 	/**
@@ -33,8 +49,8 @@ class Selz_Shortcode {
 	 * @since 1.5
 	**/
 	function add_shortcode( $atts, $content ) {
-		$atts = shortcode_atts( selz_default_args(), $atts );
-		return selz_embed( $atts );
+		$atts = shortcode_atts( selz()->default_args(), $atts );
+		return selz()->embed( $atts );
 	}
 
 	/*
@@ -92,7 +108,7 @@ class Selz_Shortcode {
 	 * @since 1.1
 	 */
 	function print_dialog() {
-		include_once( SELZ_DIR . '/includes/modal.php' );
+		include_once( selz()->dir . '/includes/modal.php' );
 	}
 
 	function admin_footer() {
@@ -103,12 +119,12 @@ class Selz_Shortcode {
 	function dialog_ajax() {
 		// Check the nonce and if not isset the id, just die.
 		$nonce = $_POST['nonce'];
-		if ( ! wp_verify_nonce( $nonce, 'selz' ) && ! isset( $_POST['data'] ) )
+		if ( ! wp_verify_nonce( $nonce, selz()->slug ) && ! isset( $_POST['data'] ) )
 			die();
 
 		// Set up the default form values and parse
 		parse_str( $_POST['data'], $instance );
-		require_once( SELZ_DIR . 'dialog.php' );
+		require_once( selz()->dir . 'dialog.php' );
 		new Selz_Form( $instance );
 		exit;
 	}
@@ -121,10 +137,10 @@ class Selz_Shortcode {
 		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
 			$product = 'product';
 			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
-			$output .= '<a id="product" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img1 . __( 'Add Product', SELZ_LANG ) . '</a>';
+			$output .= '<a id="product" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</a>';
 
 			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
-			$output .= '<a id="store" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img2 . __( 'Add Store', SELZ_LANG ) . '</a>';
+			$output .= '<a id="store" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</a>';
 		}
 
 		echo $output;
@@ -141,11 +157,13 @@ class Selz_Shortcode {
 		if( 'post.php' != $hook && 'post-new.php' != $hook )
 			return;
 
-		wp_enqueue_script('selz', plugins_url('dist/js/scripts.js?v=' . SELZ_VERSION, __FILE__ ), array('jquery', 'wp-color-picker'), SELZ_VERSION);
+		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js?v=' . selz()->version, __FILE__ ), array('jquery', 'wp-color-picker'), selz()->version);
 
-		wp_localize_script('selz', 'selzvars', array(
-			'nonce'		=> wp_create_nonce('selz'),
-			'action'	=> 'selz_form'
+		wp_localize_script( selz()->slug, selz()->slug . 'vars', array(
+			'nonce'		=> wp_create_nonce( selz()->slug ),
+			'action'	=> 'selz_form',
+			'spinner'	=> '<div class="control-group"><div class="loader"></div>' . __('Fetching your store data', selz()->lang ) . '</div>',
+			'slug'		=> selz()->slug,
 		));
 	}
 

@@ -67,6 +67,7 @@ var build = {
                         .pipe(concat(key))
                         .pipe(uglify().on('error', function(e){
                             console.log(e);
+                            console.log(key);
                          }))
                         .pipe(gulp.dest(paths.dist.js));
                 });

@@ -46,37 +46,7 @@
         });
 
     };
-
-    // Widget.prototype.update = function() {
-    //     if (!this.loading && typeof ajaxurl === 'string' && ajaxurl.length) {
-    //         this.loading = true;
-
-    //         //this.$submit.prop('disabled', true);
-    //         console.log(this.$form);
-    //         $.post(
-    //             ajaxurl,
-    //             {
-    //                 action: selzvars.action,
-    //                 nonce: selzvars.nonce,
-    //                 data: this.$form.serialize(),
-    //             },
-    //             $.proxy(function(data) {
-    //                 //this.$submit.prop('disabled', false);
-
-    //                 this.$controls.html(data);
-    //                 console.log('sent');
-    //                 this.loading = false;
-    //             }, this)
-    //         );
-    //     }
-    // };
-
-    //jQuery(document).ready(function(){
-    // $(document)
-    //     .ready(Widget);
-        // /Widget('button');
     window.SelzWidget = Widget;
-    //})
 
     $(document).ready(function(){
         openSelzWidget();
@@ -86,7 +56,6 @@
 
         $('.widgets-sortables > div').each(function (index, value){
             var widgetId = $(value).attr('id');
-            //console.log(widgetId)
             if( widgetId !== undefined && widgetId.indexOf('selz') != -1 ) {
                 new SelzWidget( widgetId ); 
             }
