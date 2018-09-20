@@ -4,6 +4,7 @@
   },
   "js": {
     "scripts.js": [
+      "src/js/vendor/polyfills/array.prototype.includes.js",
       "src/js/vendor/jquery.ddslick.js",
       "src/js/vendor/webkit-lowerfill.js",
       "src/js/tab-focus.js",

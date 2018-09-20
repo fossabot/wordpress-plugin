@@ -9,6 +9,7 @@
 				<input type="text" class="input-control" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>">
 			</div>
 		</div>
+
         <div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id('intro_text'); ?>"><?php _e( 'Intro text', $this->lang ); ?></label>
@@ -18,6 +19,7 @@
 				<small class="help-block"><?php _e( 'This option will display additional text or HTML <em>before</em> the widget content', $this->lang ); ?></small>
 			</div>
 		</div>
+
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id('outro_text'); ?>"><?php _e( 'Outro text', $this->lang ); ?></label>
@@ -31,6 +33,5 @@
 		<section class="selz-widget-controls">
 			<?php include( selz()->dir . '/includes/widget-fields.php' ); ?>
 		</section>
-
 	</fieldset>
 </div>
