@@ -1,6 +1,6 @@
 <div class="selz selz-widget-editor">
 	<fieldset>
-		<legend class="sr-only">Widget Options</legend>
+		<legend class="sr-only">Options</legend>
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', $this->lang ); ?></label>

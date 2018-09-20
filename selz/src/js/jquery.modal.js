@@ -79,6 +79,7 @@
             this.$close.focus();
 
             $('input[name="kind"]').val(type);
+
             this.update();
 
             this.$close.on('click.hide.modal', event => {

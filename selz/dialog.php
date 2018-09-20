@@ -67,7 +67,7 @@ class Selz_Form {
 		?>
 
 		<fieldset>
-			<legend class="sr-only">Widget Options</legend>
+			<legend class="sr-only">Options</legend>
 			<?php include( selz()->dir . 'includes/fields.php' ); ?>
 		</fieldset>
 
