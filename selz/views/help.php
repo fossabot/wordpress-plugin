@@ -27,15 +27,7 @@ if (!defined('ABSPATH')) {
 				<p><?php printf( __( 'You can also embed items and your store to your sidebar using the Widgets menu. Simply drag "%s" into your chose widget container and customize your embed.', selz()->lang ), selz()->name ); ?></p>
 
 				<h2><?php _e( 'Shopping cart', selz()->lang ); ?></h2>
-				<p><?php printf( __( 'By default, the shopping cart will only show on pages containing a widget, button or store that you\'ve added. You can also enable a global shopping cart on all pages by enabling it in <a href="?page=%s">settings</a> and entering your store\'s URL, domain name or store ID. You can find your store domain/URL in %s at the top.', selz()->lang ), selz()->slug, '<a href="' . esc_url( selz()->home ) . 'settings/store/domain" target="_blank">store domain settings</a>' ); ?></p>
-
-				<h2><?php _e( 'Embed your store', selz()->lang ); ?></h2>
-				<p><?php printf( __( 'To embed your whole store, you need your %s store URL (e.g. https://mystore.%s). To find the URL, head to your %s page and copy the URL ending in ".%s" - it may be your primary or secondary depending on whether you have a custom domain. You can then paste this into the form.', selz()->lang ), selz()->home2, selz()->home2, '<a href="' . esc_url( selz()->home ) . 'settings/store/domain" target="_blank">store domain settings</a>', selz()->home2 ); ?></p>
-
-				<h2><?php _e( 'Embed a buy button or widget', selz()->lang ); ?></h2>
-				<p><?php _e( 'To embed a button or widget, you need the URL for your item. To find the URL, head to <a href="https://selz.com/items" target="_blank">items</a>, find the item you want to embed, click "Options" and then "Share". Then click the "Short Link" tab and copy the URL.', selz()->lang ); ?></p>
-
-				<p><img src="<?php echo plugins_url( '../dist/img/png/share.png?v=' . selz()->version, __FILE__ ); ?>" alt="Item options"></p>
+				<p><?php printf( __( 'By default, the shopping cart will only show on pages containing a widget, button or store that you\'ve added. You can also enable a global shopping cart on all pages by enabling it in <a href="?page=%s">settings</a>.', selz()->lang ), selz()->slug ); ?></p>
 
 				<h2><?php _e( 'SSL/HTTPS Security', selz()->lang ); ?></h2>
 				<p><?php printf( __( 'You don\'t need an SSL certificate on your site to use the %s embeds since all the overlays and store embed use SSL. However, it is recommend to help with buyer confidence. Contact your hosting provider for more information.', selz()->lang ), selz()->name ); ?></p>
