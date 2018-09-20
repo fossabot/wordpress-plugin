@@ -13,7 +13,6 @@
 	</nav>
 
 	<div class="tab-panel" id="selz-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-general<?php echo $id ?>" aria-hidden="false">
-
 		<div class="control-group widget-type">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Widget type', $this->lang ); ?></label>
@@ -31,15 +30,14 @@
 		</div>
 
 		<div class="control-group" data-type="store">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'store_link' ); ?>"><?php _e( 'Store URL', $this->lang ); ?></label>
-				</div>
-				<div class="controls">
-					<input type="url" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( 'https://' . $store->name ); ?>" class="input-control"  disabled="disabled">
-				</div>
+			<div class="control-label">
+				<label for="<?php echo $this->get_field_id( 'store_link' ); ?>"><?php _e( 'Store URL', $this->lang ); ?></label>
 			</div>
+			<div class="controls">
+				<input type="url" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( 'https://' . $store->name ); ?>" class="input-control"  disabled="disabled">
+			</div>
+		</div>
 
-		
 		<div class="control-group" data-type="button-widget">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Product', $this->lang ); ?></label>
@@ -47,7 +45,7 @@
 			<div class="controls products">
 				<select id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" class="input-control">
 					<?php if( $products ) {
-						foreach ( $products as $i => $prod ) { 
+						foreach ( $products as $i => $prod ) {
 							$img = $prod->featured_image->icon ? $prod->featured_image->icon : '';
 							?>
 						<option value="<?php echo $prod->short_url; ?>" data-imagesrc="<?php esc_attr_e( $img ); ?>" <?php selected( $instance['products'], $i ); ?>><?php echo $prod->title; ?></option>
@@ -64,30 +62,30 @@
 		</script>
 
 		<div class="control-group" data-type="button-widget">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->lang ); ?></label>
-				</div>
-				<div class="controls">
-					<select id="<?php echo $this->get_field_id( 'action' ); ?>" name="<?php echo $this->get_field_name( 'action' ); ?>" class="input-control">
-						<?php foreach ( $actions as $key => $val ) { ?>
-							<option value="<?php echo $key; ?>" <?php selected( $instance['action'], $key ); ?>><?php echo $val; ?></option>
-						<?php } ?>
-					</select>
-				</div>
+			<div class="control-label">
+				<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->lang ); ?></label>
 			</div>
+			<div class="controls">
+				<select id="<?php echo $this->get_field_id( 'action' ); ?>" name="<?php echo $this->get_field_name( 'action' ); ?>" class="input-control">
+					<?php foreach ( $actions as $key => $val ) { ?>
+						<option value="<?php echo $key; ?>" <?php selected( $instance['action'], $key ); ?>><?php echo $val; ?></option>
+					<?php } ?>
+				</select>
+			</div>
+		</div>
 
-			<div class="control-group" data-type="button">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Button style', $this->lang ); ?></label>
-				</div>
-				<div class="controls">
-					<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>" class="input-control">
-						<?php foreach ( $button_positions as $key => $val ) { ?>
-							<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
-						<?php } ?>
-					</select>
-				</div>
+		<div class="control-group" data-type="button">
+			<div class="control-label">
+				<label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Button style', $this->lang ); ?></label>
 			</div>
+			<div class="controls">
+				<select id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>" class="input-control">
+					<?php foreach ( $button_positions as $key => $val ) { ?>
+						<option value="<?php echo $key; ?>" <?php selected( $instance['position'], $key ); ?>><?php echo $val; ?></option>
+					<?php } ?>
+				</select>
+			</div>
+		</div>
 
 		<div class="control-group" data-type="button">
 			<div class="control-label">
@@ -147,6 +145,7 @@
 				<input class="input-control color-picker js-color-picker" type="text" id="<?php echo $this->get_field_id( 'background_color' ); ?>" name="<?php echo $this->get_field_name( 'background_color' ); ?>" value="<?php echo esc_attr( $instance['background_color'] ); ?>" data-default-color="<?php echo esc_attr( $instance['background_color'] ); ?>">
 			</div>
 		</div>
+
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'text_color' ); ?>"><?php _e( 'Button text', $this->lang ); ?></label>
@@ -155,6 +154,7 @@
 				<input class="input-control color-picker js-color-picker" type="text" id="<?php echo $this->get_field_id( 'text_color' ); ?>" name="<?php echo $this->get_field_name( 'text_color' ); ?>" value="<?php echo esc_attr( $instance['text_color'] ); ?>" data-default-color="<?php echo esc_attr( $instance['text_color'] ); ?>">
 			</div>
 		</div>
+
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'link_color' ); ?>"><?php _e( 'Links', $this->lang ); ?></label>
@@ -163,6 +163,7 @@
 				<input class="input-control color-picker js-color-picker" type="text" id="<?php echo $this->get_field_id( 'link_color' ); ?>" name="<?php echo $this->get_field_name( 'link_color' ); ?>" value="<?php echo esc_attr( $instance['link_color'] ); ?>" data-default-color="<?php echo esc_attr( $instance['link_color'] ); ?>">
 			</div>
 		</div>
+
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'chbg_color' ); ?>"><?php _e( 'Checkout header background', $this->lang ); ?></label>
@@ -171,6 +172,7 @@
 				<input class="input-control color-picker js-color-picker" type="text" id="<?php echo $this->get_field_id( 'chbg_color' ); ?>" name="<?php echo $this->get_field_name( 'chbg_color' ); ?>" value="<?php echo esc_attr( $instance['chbg_color'] ); ?>" data-default-color="<?php echo esc_attr( $instance['chbg_color'] ); ?>">
 			</div>
 		</div>
+
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'chtx_color' ); ?>"><?php _e( 'Checkout header text', $this->lang ); ?></label>
