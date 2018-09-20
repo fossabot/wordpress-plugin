@@ -30,7 +30,6 @@ final class Selz {
 	public $slug 	= 'selz';
 	public $lang 	= 'selz-ecommerce';
 	public $home 	= 'https://selz.com/';
-	public $home2 	= 'selz.com';
 	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
 
 	/**
@@ -98,14 +97,11 @@ final class Selz {
 	 * @since 0.0.1
 	 */
 	public function plugin_loaded() {
-
 		$this->api = new Selz_API();
 		$this->shortcode = new Selz_Shortcode();
 
-
 		// Load plugin translation
 		load_plugin_textdomain($this->slug, false, $this->dir . 'lang/');
-
 	}
 
 	/**
@@ -117,7 +113,6 @@ final class Selz {
 	}
 
 	public function admin_menu() {
-
 	    add_menu_page(
 	        __( $this->name . ' Settings', $this->lang ),
 	        $this->name,
@@ -144,7 +139,6 @@ final class Selz {
 	        $this->slug . '_help',
 	        array( $this, 'help_page' )
 	   	);
-
 	}
 
 	/**
@@ -159,7 +153,6 @@ final class Selz {
 		// Scripts
 		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js?v=' . $this->version, __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
 	}
-
 
 	public function settings_page() {
 		include($this->dir .  '/views/settings.php');
@@ -207,7 +200,6 @@ final class Selz {
 
 		echo $html;
 	}
-
 
 	/**
 	 * Generate the selz button with custom arguments
@@ -314,7 +306,6 @@ final class Selz {
 
 		return $html;
 	}
-
 
 	/**
 	 * Return default arguments for widgets or shortcodes
