@@ -80,6 +80,8 @@ final class Selz {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'init_settings' ) );
 		add_action( 'wp_footer', array( $this, 'show_cart' ) );
+
+		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
 	}
 
 	/**
@@ -345,8 +347,21 @@ final class Selz {
 
 		return $defaults;
 	}
-}
 
+	/**
+     * Show row meta on the plugin screen.
+     *
+     */
+    public function plugin_action_links( $links, $file ) {
+        $settings_link = '<a href="' . admin_url( 'admin.php?page=' . $this->slug ) . '">' . esc_html__( 'Settings', $this->lang ) . '</a>';
+
+		if ( $file == $this->slug . '-ecommerce/index.php' ) {
+			array_unshift( $links, $settings_link );
+		}
+
+ 		return $links;
+    }
+}
 
 /*
  * Start the plugin
