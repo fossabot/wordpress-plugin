@@ -1,70 +1,51 @@
-(function($) {
-    'use strict';
+($ => {
+    class Widget {
+        constructor(id) {
+            this.$element = $(`#${id}`);
+            this.$controls = $('.selz-widget-controls');
 
-    function Widget(id) {
+            this.$form = this.$element.find('form');
+            this.$type = this.$form.find('.widget-type select');
 
-        this.$element = $( '#' + id );
-        this.$controls = $('.selz-widget-controls');
+            this.loading = false;
 
-        this.$form = this.$element.find('form');
-        this.$type = this.$form.find('.widget-type select');
+            this.show();
+        }
 
-        this.loading = false;
+        show() {
+            this.update(this.$type.val());
 
-        this.show();
+            this.$type.on('change', () => {
+                this.update(this.$type.val());
+            });
+        }
 
+        update(val) {
+            this.$form.find('.control-group').each((index, element) => {
+                const type = $(element).data('type');
+                $(element).toggle(!type || type.indexOf(val) !== -1);
+            });
+        }
     }
 
-    Widget.prototype.show = function() {
-
-        this.update( this.$type.val() );
-
-        this.$type.on(
-            'change',
-            $.proxy(function(evt) {
-                this.update(this.$type.val());
-            }, this)
-        );
-
-    };
-
-    Widget.prototype.update = function(val) {
-
-        this.$form.find('.control-group').each(function (index, el){
-            
-            var type = $( el ).data('type');
-            
-            if( type !== undefined && type.indexOf( val ) !== -1 ) {
-                $( el ).show();
-            } else {
-                $( el ).hide();
-            }
-
-            if( type == undefined )
-                $( el ).show();
-            
-        });
-
-    };
     window.SelzWidget = Widget;
 
-    $(document).ready(function(){
-        openSelzWidget();
-    });
+    function openWidget() {
+        $('.widgets-sortables > div').each((index, value) => {
+            const widgetId = $(value).attr('id');
+            let widget;
 
-    function openSelzWidget(evt) { 
-
-        $('.widgets-sortables > div').each(function (index, value){
-            var widgetId = $(value).attr('id');
-            if( widgetId !== undefined && widgetId.indexOf('selz') != -1 ) {
-                new SelzWidget( widgetId ); 
+            if (widgetId !== undefined && widgetId.indexOf('selz') !== -1) {
+                widget = new Widget(widgetId);
             }
         });
     }
 
-    $(document).on('widget-added widget-updated', function(event, widget){
-        openSelzWidget();
+    $(document).ready(() => {
+        openWidget();
     });
 
-
+    $(document).on('widget-added widget-updated', () => {
+        openWidget();
+    });
 })(jQuery);

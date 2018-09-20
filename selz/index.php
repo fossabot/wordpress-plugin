@@ -96,14 +96,14 @@ final class Selz {
 	 * @since 0.0.1
 	 */
 	public function plugin_loaded() {
-		
+
 		$this->api = new Selz_API();
 		$this->shortcode = new Selz_Shortcode();
-		
+
 
 		// Load plugin translation
 		load_plugin_textdomain($this->slug, false, $this->dir . 'lang/');
-		
+
 	}
 
 	/**
@@ -115,7 +115,7 @@ final class Selz {
 	}
 
 	public function admin_menu() {
-	    
+
 	    add_menu_page(
 	        __( $this->name . ' Settings', $this->lang ),
 	        $this->name,
@@ -345,9 +345,6 @@ final class Selz {
 
 		return $defaults;
 	}
-
-
-
 }
 
 
@@ -358,7 +355,6 @@ function selz() {
 	return Selz::instance();
 }
 selz();
-
 
 /*
  * Pretty print helper function for quick debugging

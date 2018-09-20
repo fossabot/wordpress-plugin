@@ -52,18 +52,16 @@ class Selz_Form {
 			'price-below'	=> __( 'Price below', $this->lang )
 		);
 
-		// only call the API once modal is opened
+		// Only call the API once modal is opened
 		if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			
-			// only fetch products when necessary
+			// Only fetch products when necessary
 			if ( $instance['kind'] == 'product' ) {
 				$products = selz()->api->get_products();
 			}
-			// only fetch store when necessary
+			// Only fetch store when necessary
 			if ( $instance['kind'] == 'store' ) {
 				$store = selz()->api->get_store();
 			}
-
 		}
 
 		?>
@@ -83,7 +81,5 @@ class Selz_Form {
 	function get_field_name( $name ) {
 		return isset( $this->names[$name] ) ? $this->names[$name] : $name;
 	}
-
-
 }
 ?>
