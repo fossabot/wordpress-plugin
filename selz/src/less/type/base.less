@@ -23,22 +23,3 @@ small {
     color: @gray-light;
 }
 
-a:not(.wp-color-result) {
-    color: @color-link;
-    text-decoration: none;
-    border-bottom: 1px dotted;
-    transition: all 0.3s ease;
-
-    &:hover,
-    &:focus {
-        border-bottom-style: solid;
-    }
-
-    &:focus {
-        outline: none;
-    }
-
-    &.tab-focus {
-        .tab-focus(@color-link);
-    }
-}
