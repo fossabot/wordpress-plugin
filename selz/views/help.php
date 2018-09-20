@@ -5,9 +5,9 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="wrap">
-	<div class="selz selz-help">
-		<div class="panel">
+<div class="selz selz-help">
+	<div class="container">
+		<div class="panel margin-top-4 margin-bottom-2">
 			<div class="padding-4">
 				<h1><?php _e( 'Selz Ecommerce', selz()->lang ); ?></h1>
 				<p><?php printf( __( 'Start selling products online or digital downloads from your WordPress site in minutes. If you don\'t already have a %s account, set one up now at %s', selz()->lang ), selz()->name, '<a href="' . esc_url( selz()->home ) . '">' . selz()->home2 . '</a>' ); ?>.</p>
@@ -38,5 +38,7 @@ if (!defined('ABSPATH')) {
 				<?php include( selz()->dir . '/views/help-sidebar.php' ); ?>
 			</aside>
 		</div>
+
+		<?php include( selz()->dir . '/includes/version.php' ); ?>
 	</div>
 </div>

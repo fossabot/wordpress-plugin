@@ -5,9 +5,9 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="wrap">
-	<div class="selz selz-settings">
-		<div class="panel margin-top-4 margin-bottom-4">
+<div class="selz selz-settings">
+	<div class="container container--narrow">
+		<div class="panel margin-top-4 margin-bottom-2">
 			<div class="padding-6">
 				<div class="text-center padding-4">
 					<img width="100" src="<?php echo plugins_url( '../dist/img/svg/logo.svg?v=' . selz()->version, __FILE__ ); ?>" alt="Selz logo">
@@ -74,5 +74,7 @@ if (!defined('ABSPATH')) {
 				<?php } ?>
 			</div>
 		</div>
+
+		<?php include( selz()->dir . '/includes/version.php' ); ?>
 	</div>
 </div>
