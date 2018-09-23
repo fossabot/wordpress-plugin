@@ -1,9 +1,8 @@
 <?php
-/*
-	Shortcode
-	@since 0.0.1
-*/
-
+/**
+ * Shortcode
+ * @since 0.0.1
+**/
 
 class Selz_Shortcode {
 	var $shortcode;
@@ -15,7 +14,7 @@ class Selz_Shortcode {
 	function __construct() {
 		$this->shortcode = selz()->slug;
 
-		if( ! selz()->api->is_connected() ) {
+		if ( ! selz()->api->is_connected() ) {
 			add_action( 'admin_notices', array( &$this, 'not_connected' ), 11 );
 		} else {
 			add_action( 'media_buttons', array( &$this, 'add_buttons' ), 11 );
@@ -28,7 +27,6 @@ class Selz_Shortcode {
 			add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
 			add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
 		}
-		
 	}
 
 	public function not_connected() {
@@ -45,7 +43,7 @@ class Selz_Shortcode {
 	/**
 	 * Shortcode function
 	 * Uses add_shortcode
-	 * @return HTML.
+	 * @return HTML
 	 * @since 1.5
 	**/
 	function add_shortcode( $atts, $content ) {
@@ -72,13 +70,12 @@ class Selz_Shortcode {
 		return false;
 	}
 
-	/*
+	/**
 	 * Print additional styles and script to the header after wp_enqueue_scripts
 	 * the 'the_coundown_pro_enqueue_scripts_shortcode' funtion to avoid wrong arrangement
-	 * @param no parameter
 	 * @since 1.3
-	 * @return javascript and CSS
-	 */
+	 * @return JavaScript and CSS
+	 **/
 	function shortcode_head() {
 		if ($this->has_shortcode()) {
 			global $post;
@@ -106,7 +103,7 @@ class Selz_Shortcode {
 	/**
 	 * Dialog for internal linking.
 	 * @since 1.1
-	 */
+	 **/
 	function print_dialog() {
 		include_once( selz()->dir . '/includes/modal.php' );
 	}
@@ -137,10 +134,10 @@ class Selz_Shortcode {
 		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
 			$product = 'product';
 			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
-			$output .= '<a id="product" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</a>';
+			$output .= '<button type="button" id="product" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</button>';
 
 			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
-			$output .= '<a id="store" href="#" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</a>';
+			$output .= '<button type="button" id="store" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</button>';
 		}
 
 		echo $output;
@@ -154,7 +151,7 @@ class Selz_Shortcode {
 	 * @since 1.1
 	**/
 	function admin_enqueue_scripts($hook) {
-		if( 'post.php' != $hook && 'post-new.php' != $hook )
+		if ( 'post.php' != $hook && 'post-new.php' != $hook )
 			return;
 
 		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js?v=' . selz()->version, __FILE__ ), array('jquery', 'wp-color-picker'), selz()->version);
@@ -162,7 +159,7 @@ class Selz_Shortcode {
 		wp_localize_script( selz()->slug, selz()->slug . 'vars', array(
 			'nonce'		=> wp_create_nonce( selz()->slug ),
 			'action'	=> 'selz_form',
-			'spinner'	=> '<div class="control-group"><div class="loader"></div>' . __('Fetching your store data', selz()->lang ) . '</div>',
+			'spinner'	=> '<div class="text-center padding-6"><span class="loader" aria-hidden="true"></span><p class="margin-0 margin-top-2">' . __('Fetching your store data', selz()->lang ) . '</p></div>',
 			'slug'		=> selz()->slug,
 		));
 	}

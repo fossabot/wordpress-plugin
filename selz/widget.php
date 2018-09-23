@@ -1,13 +1,11 @@
 <?php
-/*
-    Selz Widget
-	@since 0.0.1
-    License: GPL2
-
-*/
+/**
+ * Selz Widget
+ * @since 0.0.1
+ * License: GPL2
+**/
 
 class Selz_Widget extends WP_Widget {
-
 	// Setup class variables
 	var $slug;
 	var $version;

@@ -12,20 +12,32 @@
 
 // Opt-in via classname
 .selz {
-    @import "base.less";
+    @import "base";
 
     // Type
-    @import "type/base.less";
+    @import "type/base";
+    @import "type/headings";
+    @import "type/links";
+
+    // Layouts
+    @import "layout/containers";
 
     // Components
-    @import "components/buttons.less";
-    @import "components/form.less";
-    @import "components/tabs.less";
+    @import "components/alerts";
+    @import "components/buttons";
+    @import "components/forms/base";
+    @import "components/forms/range";
+    @import "components/loader";
+    @import "components/panels";
+    @import "components/tabs";
 
     // Helpers
-    @import "utils/helpers.less";
+    @import "utils/hidden";
+    @import "utils/spacing";
+    @import "utils/type";
 }
 
-@import "custom/modal.less";
-@import "custom/settings.less";
-@import "custom/widget-editor.less";
+@import "custom/modal";
+@import "custom/help";
+@import "custom/settings";
+@import "custom/widget-editor";

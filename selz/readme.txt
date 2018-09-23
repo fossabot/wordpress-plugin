@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.8.2
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,7 +32,7 @@ Check out our video to see how easy it is to add Selz products to your WordPress
 - Automated secure download links for digital items
 - Realtime shipping rates are available for physical products
 - Full-featured Shopping Cart on the Standard and Pro monthly plans
-- Three plans to choose from with pricing starting at $11.50/month
+- Three plans to choose from with pricing starting at just $11.50/month
 - Social commerce
 - App Store
 - One click sharing and selling on Facebook, Twitter and Pinterest
@@ -45,7 +45,7 @@ You can use the built in installer and upgrader, or you can install the plugin m
 
 ### Automatic Installation
 
-1. Install directly from your Dashboard (Plugins > Add New). Just search for "Selz ecommerce".
+1. Install directly from your Dashboard (Plugins > Add New). Just search for "selz".
 
 ### Manual Installation
 
@@ -53,29 +53,13 @@ You can use the built in installer and upgrader, or you can install the plugin m
 2. Navigate to to the 'Plugins' page in the WordPress Dashboard
 3. Select 'Add New > Upload > Choose File' and select the Selz zip file
 
-Once the plugin has been activated you will have a Selz button available in your Visual editor. Click on the "Selz" button to insert your Selz product into your page or post. You will need to copy the short link from the bottom of the "Share" page on Selz where you normally share to Facebook or Twitter.
+Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your Visual editor to add to your post or page.
 
 == Frequently Asked Questions ==
 
 ### What is Selz?
 
 Our mission is to make it incredibly simple for you to sell what you do and get paid. Selz requires no programming skills, we handle all aspects of selling and getting paid and it takes only moments to set up. We are constantly adding new features to help creative entrepreneurs like you realize their potential. For more info visit the [Selz website](https://selz.com)
-
-### How do I insert an item for sale into a post of page?
-
-1. Once you’ve installed and activated the plugin, within your visual editor click the purple ‘Selz’ button to show the Selz shortcode generator.
-2. Copy the short link from the “Share” page on Selz. If you’re stuck, see the section below on how to get the link. Paste this copied link into the “Item URL” section on the plugin editor.
-3. Customize the position, colors and choose whether to display your item within an overlay or as a new tab.
-4. You’re done!
-
-Check out the video in the description if you're still lost.
-
-### How do I get the item link?
-
-1. Sign up or sign in to Selz.com
-2. If you already have an item on Selz, go to the item you want to add and click ‘Options’ and then ‘Share’ to get the short link for your product. If you have just signed up, you’ll need to add a new item.
-3. Once you’re done adding an item or you’ve clicked ‘Share’, you’ll see the ‘Share item’ page. Click the tab with your short link and hit ‘Copy link’.
-4. Paste this into the WordPress dialog where it asks for the item link.
 
 ### Will Selz work with my theme?
 
@@ -94,7 +78,9 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 1. The short code generator
 
 == Changelog ==
-= 1.8.1 =
+= 1.9.0 =
+- Connect your Selz account to automatically list your products and store details
+= 1.8.2 =
 - Fixed issue with button text not showing correctly
 = 1.8.1 =
 - Allow input of store URL, domain or ID for the global cart option

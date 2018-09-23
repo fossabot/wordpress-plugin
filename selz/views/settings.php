@@ -5,157 +5,76 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<style>
-.selz-settings {
-	background: #fff;
-	max-width: 700px;
-	margin: 70px auto;
-	padding: 0px;
-	border-radius: 3px;
-	border: 1px solid #ddd;
-}
-.selz-settings .button {
-	margin-top: -60px;
-	background: #4CB952;
-	border-color: #4CB952;
-	color: #fff;
-	padding: 10px 24px;
-	height: auto;
-	line-height: 24px;
-	font-size: 17px;
-	box-shadow: none;
-	text-decoration: none;
-	display: inline-block;
-	border-radius: 3px;
-}
+<div class="selz selz-settings">
+	<div class="container container--narrow">
+		<div class="panel margin-top-4 margin-bottom-2">
+			<div class="padding-6">
+				<div class="text-center padding-4">
+					<img width="100" src="<?php echo plugins_url( '../dist/img/svg/logo.svg?v=' . selz()->version, __FILE__ ); ?>" alt="Selz logo">
 
-.selz-settings .button.connect {
-	margin: 10px auto;
-	background: #7959C7;
-	border-color: #7959C7;
-	padding: 12px 40px;
-	font-size: 16px;
-}
-.selz-settings .button.dash {
-	margin: 10px auto;
-	background: #eee;
-	border-color: #eee;
-	color: #222;
-	padding: 12px 40px;
-	font-size: 16px;
-}
-.selz-settings .button.store {
-	margin: 10px auto;
-	padding: 12px 40px;
-	font-size: 16px;
-}
-.selz-settings .button.join {
-	float: right;
-}
-.selz-settings-content {
-	padding: 30px;
-	text-align: center;
-}
-.selz-settings-content .logo img {
-	margin: 0 auto;
-	padding: 20px;
-	display: block;
-}
-.selz-settings-footer {
-	padding: 30px;
-	border-top: 1px solid #ddd;
-}
+					<?php if (!selz()->api->is_connected()) { ?>
 
-</style>
+						<h4 class="margin-top-4"><?php printf( __( 'Connect your %s account to WordPress', selz()->lang ), selz()->name ); ?></h4>
 
-<div class="wrap">
-	<div class="selz-settings">
-		<div class="selz-settings-content">
+						<a href="<?php echo esc_url( selz()->api->auth_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4"><?php _e( 'Connect', selz()->lang ); ?></a>
 
-			<a class="logo" href="<?php echo esc_url( selz()->home ); ?>">
-				<img width="100" src="<?php echo plugins_url( '../dist/img/svg/logo.svg?v=' . selz()->version, __FILE__ ); ?>" alt="">
-			</a>
+						<small class="help-block margin-top-4"><?php printf( __( 'You will be redirected to sign into your %s account and accept permissions to allow WordPress to access your %s account', selz()->lang ), selz()->name, selz()->name ); ?></small>
 
-			<?php if( ! selz()->api->is_connected() ) { ?>
+					<?php } else {
+						$store = selz()->api->get_store();
+						?>
 
-				<h2><?php printf( __( 'Connect your %s account to WordPress', selz()->lang ), selz()->name ); ?></h2>
+						<p><?php printf(
+							__( 'Connected to %s. %s', selz()->lang ),
+							'<strong>' . $store->owner->email . '</strong>',
+							'<a href="' . esc_url( selz()->api->disconnect_url() ) . '">' . __( 'Disconnect', selz()->lang ) . '</a>'
+						); ?></p>
 
-				<a class="connect button" href="<?php echo esc_url( selz()->api->auth_url() ); ?>"><?php _e( 'Connect', selz()->lang ); ?></a>
+						<a href="<?php echo esc_url( selz()->home ); ?>dashboard/" target="_blank" class="btn"><?php _e( 'Go to Selz dashboard', selz()->lang ); ?></a>
+					<?php } ?>
+				</div>
 
-				<p><?php printf( __( 'You will be redirected to sign into your %s account and accept permissions to allow WordPress to access your %s account', selz()->lang ), selz()->name, selz()->name ); ?></p>
+				<?php if (selz()->api->is_connected()) { ?>
+					<form action="options.php" method="post" id="settings" class="padding-top-4">
+						<?php
+						settings_fields( selz()->slug . '_settings' );
+						$options = get_option( selz()->slug . '_settings');
+						?>
 
-			<?php } else { 
+						<label for="<?php echo selz()->slug . "_display_cart" ?>">
+							<?php
+							$checked = '';
+							if ( isset( $options['display_cart'] ) && $options['display_cart'] == 'on' ) {
+								$checked = 'checked';
+							}
+							echo "<input type='checkbox' id='" . selz()->slug . "_display_cart' name='" . selz()->slug . "_settings[display_cart]' ".$checked." onchange='document.forms.settings.submit()'>";
+							?>
+							<?php _e( 'Shopping Cart', selz()->lang ); ?>
+							<small class="help-block"><?php _e( 'Display the shopping cart on all pages of your website.', selz()->lang ); ?></small>
+						</label>
 
-				$store = selz()->api->get_store(); 
-				// $p = selz()->api->get_products();
-				// pp($p);
-				?>
+						<?php echo "<input type='hidden' name='" . selz()->slug . "_settings[store_id]' value='{$options['store_id']}'>"; ?>
+					</form>
 
-				<p><?php printf( 
-					__( 'Connected to account %s. %s', selz()->lang ), 
-					$store->owner->email, 
-					'<a class="disconnect" href="' . esc_url( selz()->api->disconnect_url() ) . '">' . __( 'Disconnect', selz()->lang ) . '</a>' 
-				); ?></p>
-
-				<p><?php printf(
-					__( 'Read our %s on how to get the best out of your %s WordPress plugin.', selz()->lang ), 
-					'<a href="' . admin_url() . 'admin.php?page' . selz()->slug . '_help">' . __( 'guide', selz()->lang ) . '</a>', 
-					selz()->name 
-				); ?></p>
-				
-				<a class="dash button" target="_blank" href="<?php echo esc_url( selz()->home ); ?>dashboard/"><?php _e( 'Dashboard', selz()->lang ); ?></a>
-				<a class="store button" target="_blank" href="<?php echo esc_url( $store->name ); ?>"><?php _e( 'View Store', selz()->lang ); ?></a>
-
-			<?php } ?>
-
-			<form action="options.php" method="post" style="text-align:left">
-				<?php
-				settings_fields( selz()->slug . '_settings' );
-				$options = get_option( selz()->slug . '_settings');
-				?>
-
-				<h3><?php _e( 'Shopping Cart', selz()->lang ); ?></h3>
-				<p><?php _e( 'Add a shopping cart to all pages of your website. Simply check the option and enter your store URL or domain below.', selz()->lang ); ?></p>
-				<table class="form-table">
-					<tbody>
-						<tr>
-							<th scope="row"><?php _e( 'Display cart on all pages?', selz()->lang ); ?></th>
-							<td>
-								<?php
-								$checked = '';
-								if ( isset( $options['display_cart'] ) && $options['display_cart'] == 'on' ) {
-									$checked = 'checked';
-								}
-								echo "<input type='checkbox' id='" . selz()->slug . "_display_cart' name='" . selz()->slug . "_settings[display_cart]' ".$checked.">";
-								?>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">
-								<?php _e( 'Store', selz()->lang ); ?>
-							</th>
-							<td>
-								<?php
-								echo "<input type='text' id='" . selz()->slug . "_store_id' name='" . selz()->slug . "_settings[store_id]' value='{$options['store_id']}' class='regular-text code'>";
-								?>
-								<p class="description"><?php printf( __( 'Enter your %s store URL or domain for use with the shopping cart', selz()->lang ), selz()->name ); ?>.</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<p class="submit">
-					<button type="submit" class="button-primary"><?php esc_attr_e('Save', selz()->lang); ?></button>
-				</p>
-			</form>
-
+					<div class="alert margin-top-4 padding-top-3 padding-bottom-3 padding-left-4 padding-right-4 text-center">
+						<?php printf(
+							__( 'Read our %s on how to get the best out of your %s WordPress plugin.', selz()->lang ),
+							'<a href="' . admin_url() . 'admin.php?page=' . selz()->slug . '_help">' . __( 'guide', selz()->lang ) . '</a>',
+							selz()->name
+						); ?>
+					</div>
+				<?php } else { ?>
+					<aside class="padding-top-4">
+						<div>
+							<h4 class="margin-bottom-1"><?php printf( __( 'Need a %s account?', selz()->lang ), selz()->name ); ?></h4>
+							<p class="margin-0"><?php printf( __( 'Try %s free for 14 days. No risk and no credit card required.', selz()->lang ), selz()->name ); ?></p>
+						</div>
+						<a href="<?php echo esc_url( selz()->home ); ?>" target="_blank" class="btn btn-primary"><?php _e( 'Start free trial', selz()->lang ); ?></a>
+					</aside>
+				<?php } ?>
+			</div>
 		</div>
 
-		<footer class="selz-settings-footer">
-			<h3><?php printf( __( 'Need a %s account?', selz()->lang ), selz()->name ); ?></h3>
-			<p><?php printf( __( 'Try %s free for 14 days. No risk and no credit card required.', selz()->lang ), selz()->name ); ?></p>
-			<a href="<?php echo esc_url( selz()->home ); ?>" class="join button" target="_blank"><?php _e( 'Start free trial', selz()->lang ); ?></a>
-		</footer>
-
+		<?php include( selz()->dir . '/includes/version.php' ); ?>
 	</div>
 </div>

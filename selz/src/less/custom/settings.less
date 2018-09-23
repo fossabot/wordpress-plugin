@@ -2,35 +2,20 @@
 // Settings page
 // ==========================================================================
 
-.selz-settings-sidebar {
-    padding-top: (@padding-base * 2);
-}
-.selz-panel {
-    margin-bottom: (@padding-base / 2);
-}
-
-@media screen and (min-width: 1280px) {
-    overflow: hidden;
-
-    .selz-settings-content {
-        float: left;
-        max-width: 800px;
-    }
-    .selz-settings-sidebar {
-        float: right;
-        width: 280px;
-        margin: (@padding-base / 2) 0;
-        padding-top: 0;
+.selz-settings {
+    form,
+    aside {
+        border-top: 1px solid @gray-xxxlight;
     }
 
-    .selz-panel {
-        padding: @padding-base;
-        background: @panel-bg;
-        border: 1px solid @panel-border-color;
-        box-shadow: @panel-shadow;
+    @media screen and (min-width: 720px) {
+        aside {
+            display: flex;
+            align-items: center;
 
-        p {
-            margin: 0 0 (@padding-base / 2);
+            .btn {
+                flex-shrink: 0;
+            }
         }
     }
 }

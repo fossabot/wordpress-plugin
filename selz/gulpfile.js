@@ -1,26 +1,23 @@
 // ==========================================================================
 // Gulp build script
 // ==========================================================================
-/*global require, __dirname*/
-/*jshint -W079 */
 
-'use strict';
+const fs = require('fs');
+const path = require('path');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const gutil = require('gulp-util');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const less = require('gulp-less');
+const cleancss = require('gulp-clean-css');
+const imagemin = require('gulp-imagemin');
+const run = require('run-sequence');
+const prefix = require('gulp-autoprefixer');
 
-var fs = require('fs');
-var path = require('path');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var less = require('gulp-less');
-var cleancss = require('gulp-clean-css');
-var imagemin = require('gulp-imagemin');
-var run = require('run-sequence');
-var prefix = require('gulp-autoprefixer');
+const root = __dirname;
 
-var root = __dirname;
-
-var paths = {
+const paths = {
     src: {
         less: path.join(root, 'src/less/**/*.less'),
         js: path.join(root, 'src/js/**/*.js'),
@@ -36,70 +33,74 @@ var paths = {
 };
 
 // Task arrays
-var tasks = {
+const tasks = {
     less: [],
     js: [],
     images: ['images'],
 };
 
-// Fetch bundles from JSON
-var bundles = loadJSON(path.join(root, 'bundles.json'));
-
-// Load json
-function loadJSON(path) {
+// Try and load JSON
+const loadJSON = path => {
     try {
         return JSON.parse(fs.readFileSync(path));
     } catch (err) {
         return {};
     }
-}
+};
 
-var build = {
-    js: function(files) {
-        for (var key in files) {
-            (function(key) {
-                var name = 'js-' + key;
-                tasks.js.push(name);
+// Fetch bundles from JSON
+const bundles = loadJSON(path.join(root, 'bundles.json'));
 
-                gulp.task(name, function() {
-                    return gulp
-                        .src(bundles.js[key])
-                        .pipe(concat(key))
-                        .pipe(uglify().on('error', function(e){
-                            console.log(e);
-                            console.log(key);
-                         }))
-                        .pipe(gulp.dest(paths.dist.js));
-                });
-            })(key);
-        }
+const build = {
+    js: files => {
+        Object.keys(files).forEach(key => {
+            const name = `js-${key}`;
+            tasks.js.push(name);
+
+            gulp.task(name, () =>
+                gulp
+                    .src(bundles.js[key])
+                    .pipe(concat(key))
+                    .pipe(
+                        babel({
+                            sourceType: 'script',
+                            babelrc: false,
+                            presets: ['@babel/env', 'minify'],
+                        })
+                    )
+                    .pipe(
+                        uglify().on('error', error => {
+                            console.log(key, error);
+                        })
+                    )
+                    .pipe(gulp.dest(paths.dist.js))
+            );
+        });
     },
-    less: function(files) {
-        for (var key in files) {
-            (function(key) {
-                var name = 'less-' + key;
-                tasks.less.push(name);
+    less: files => {
+        Object.keys(files).forEach(key => {
+            const name = `less-${key}`;
+            tasks.less.push(name);
 
-                gulp.task(name, function() {
-                    return gulp
-                        .src(bundles.less[key])
-                        .pipe(less())
-                        .on('error', gutil.log)
-                        .pipe(concat(key))
-                        .pipe(prefix({ cascade: false }))
-                        .pipe(
-                            cleancss({
-                                keepSpecialComments: 0,
-                            })
-                        )
-                        .pipe(gulp.dest(paths.dist.css));
-                });
-            })(key);
-        }
+            gulp.task(name, () =>
+                gulp
+                    .src(bundles.less[key])
+                    .pipe(less())
+                    .on('error', gutil.log)
+                    .pipe(concat(key))
+                    .pipe(prefix({ cascade: false }))
+                    .pipe(
+                        cleancss({
+                            keepSpecialComments: 0,
+                        })
+                    )
+                    .pipe(gulp.dest(paths.dist.css))
+            );
+        });
     },
-    images: function() {
-        gulp.task(tasks.images[0], function() {
-            return gulp
+    images: () => {
+        gulp.task(tasks.images[0], () =>
+            gulp
                 .src(paths.src.images)
                 .on('error', gutil.log)
                 .pipe(
@@ -112,8 +113,8 @@ var build = {
                         }),
                     ])
                 )
-                .pipe(gulp.dest(paths.dist.images));
-        });
+                .pipe(gulp.dest(paths.dist.images))
+        );
     },
 };
 
@@ -123,7 +124,7 @@ build.less(bundles.less);
 build.images();
 
 // Watch for file changes
-gulp.task('watch', function() {
+gulp.task('watch', () => {
     // Plyr core
     gulp.watch(paths.src.js, tasks.js);
     gulp.watch(paths.src.less, tasks.less);
@@ -131,6 +132,6 @@ gulp.task('watch', function() {
 });
 
 // Default gulp task
-gulp.task('default', function() {
+gulp.task('default', () => {
     run(tasks.js, tasks.less, tasks.images, 'watch');
 });

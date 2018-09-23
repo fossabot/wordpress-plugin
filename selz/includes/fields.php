@@ -51,7 +51,7 @@
 				<div class="controls">
 					<select id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" class="input-control">
 						<?php if( $products ) {
-							foreach ( $products as $i => $prod ) { 
+							foreach ( $products as $i => $prod ) {
 								$img = $prod->featured_image->icon ? $prod->featured_image->icon : '';
 								?>
 							<option value="<?php esc_attr_e( $prod->short_url ); ?>" data-imagesrc="<?php esc_attr_e( $img ); ?>" <?php selected( $instance['products'], $i ); ?>><?php esc_attr_e( $prod->title ); ?></option>
@@ -122,13 +122,15 @@
 			<?php $min = 'widget' == $instance['type'] ? '240' : '160'; ?>
 			<div class="control-group">
 				<div class="control-label">
-					<p class="faux-label"><?php _e( 'Width', $this->lang ); ?></p>
+				<label for="<?php echo $this->get_field_id( 'width' ); ?>"><?php _e( 'Width', $this->lang ); ?></label>
 				</div>
 				<div class="controls">
-					<label for="<?php echo $this->get_field_id( 'width' ); ?>">
+					<div class="control-range">
 						<input type="range" max="1000" min="<?php esc_html_e( $min ); ?>" step="5" value="0" id="<?php echo $this->get_field_id( 'width' ); ?>" name="<?php echo $this->get_field_name( 'width' ); ?>" oninput="outputUpdate(value)">
-						<output for="<?php echo $this->get_field_id( 'width' ); ?>" id="the-width"><?php esc_html_e( $min ); ?></output>px
-					</label>
+						<span class="control-range-value">
+							<output for="<?php echo $this->get_field_id( 'width' ); ?>" id="the-width"><?php esc_html_e( $min ); ?></output>px
+						</span>
+					</div>
 
 					<label for="<?php echo $this->get_field_id( 'auto_width' ); ?>" class="control-checkbox">
 						<input type="checkbox" id="<?php echo $this->get_field_id( 'auto_width' ); ?>" name="<?php echo $this->get_field_name( 'auto_width' ); ?>" value="true">

@@ -3,18 +3,14 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
 class Selz_API {
-
 	public $api_url 		= 'https://api.selz.com';
 	public $redirect 		= '';
-	private $client_id 		= '5b8f7838f6281a0ef8d86a2a';
-	private $client_secret 	= 'kmRY9jjsgaBhnMCCJhRAsOgKmbFr7ovm';
+	private $client_id 		= '5ba2f911f6281a0cf0b7560a';
+	private $client_secret 	= 'YgbXHJwbYaLJlkdTTmH5eo9DHSazU/Pm';
 	private $test_token 	= 'f44f8926cdec90046bcefa00deecd85de8031027f8be56dd9b79b7d118e62c03';
 
-
 	public function __construct() {
-
 		$this->slug 	= selz()->slug;
 		$this->version 	= selz()->version;
 		$this->lang 	= selz()->lang;
@@ -26,14 +22,11 @@ class Selz_API {
 		add_action( 'current_screen', array( $this, 'set_store' ) );
 
 		add_action( 'admin_post_disconnect_' . $this->slug, array( $this, 'disconnect' ) );
-
 	}
 
-
 	public function auth_url() {
-
 		$endpoint = '/oauth/connect/authorize';
-		
+
 		$args = array(
 	        'response_type' => 'code',
 	        'client_id' => $this->client_id,
@@ -45,17 +38,17 @@ class Selz_API {
 	    $url = add_query_arg( $args, $this->api_url . $endpoint );
 
 	    return $url;
-
 	}
 
 	public function disconnect_url() {
 		$args = array(
 	        'action' => 'disconnect_' . selz()->slug,
-	    );
-	    $url = add_query_arg( $args, admin_url( 'admin-post.php' ) );
-	    return $url;
-	}
+		);
 
+	    $url = add_query_arg( $args, admin_url( 'admin-post.php' ) );
+
+		return $url;
+	}
 
 	public function disconnect() {
 		delete_option( $this->slug . '_api_access_token' );
@@ -63,22 +56,20 @@ class Selz_API {
 		delete_option( $this->slug . '_api_expires_on' );
 		delete_option( $this->slug . '_store' );
 		wp_redirect( $this->redirect );
+
 		exit;
 	}
 
-
-
 	public function get_first_token( $current_screen ) {
-		
 		// only load on main plugin page
-		if( $current_screen->id != 'toplevel_page_' . selz()->slug ) 
+		if( $current_screen->id != 'toplevel_page_' . selz()->slug )
 			return;
-		
-		if( 
+
+		if(
 			( isset( $_GET['page'] ) && $_GET['page'] == $this->slug ) &&
 			( isset( $_GET['code'] ) && $_GET['code'] != '' )
 		) {
-		
+
 			$code = sanitize_text_field( $_GET['code'] );
 
 		    $fields = array(
@@ -89,7 +80,7 @@ class Selz_API {
 		        'code' => $code,
 		    );
 
-		    $response = wp_remote_post( $this->api_url . '/oauth/connect/token', 
+		    $response = wp_remote_post( $this->api_url . '/oauth/connect/token',
 		    	array(
 			        'timeout' => 10,
 			        'redirection' => 5,
@@ -103,13 +94,13 @@ class Selz_API {
 		    if ( is_wp_error( $response ) ) {
 		       $error_message = $response->get_error_message();
 		    } else {
-		    	
+
 		    	if( isset( $response['body'] ) && $response['body'] != '' ) {
 
 		    		$body = json_decode( $response['body'] );
 
-		    		if( $body->access_token ) {
-		    			
+		    		if ( $body->access_token ) {
+
 		    			//update_option( $this->slug . '_api', $body );
 		    			//update_option( $this->slug . '_api_access_token', $body->access_token );
 		    			update_option( $this->slug . '_api_access_token', $this->test_token );
@@ -121,17 +112,11 @@ class Selz_API {
 
 		    		}
 				}
-		       
 		    }
-
 		}
-
 	}
 
-
-
 	public function refresh_token() {
-		
 		$refresh = get_option( $this->slug . '_api_refresh_token' );
 
 	    $fields = array(
@@ -141,7 +126,7 @@ class Selz_API {
 	        'refresh_token' => $refresh,
 	    );
 
-	    $response = wp_remote_post( $this->api_url . '/oauth/connect/token', 
+	    $response = wp_remote_post( $this->api_url . '/oauth/connect/token',
 	    	array(
 		        'timeout' => 10,
 		        'redirection' => 5,
@@ -155,7 +140,7 @@ class Selz_API {
 	    if ( is_wp_error( $response ) ) {
 	       $error_message = $response->get_error_message();
 	    } else {
-	    	
+
 	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
 
 	    		$body = json_decode( $response['body'] );
@@ -166,27 +151,24 @@ class Selz_API {
 	    			update_option( $this->slug . '_api_expires_on', current_time( 'timestamp' ) + $body->expires_in );
 	    		}
 			}
-	       
-	    }
 
+	    }
 	}
 
-
 	public function set_store( $current_screen ) {
-		
 		// only load on main plugin page
-		if( $current_screen->id != 'toplevel_page_' . selz()->slug ) 
+		if ( $current_screen->id != 'toplevel_page_' . selz()->slug )
 			return;
 
 		// ignore if we already have a store
-		if( $this->get_store() ) 
+		if ( $this->get_store() )
 			return;
 
 		// ignore if we aren't connected
-		if( ! $this->is_connected() )
+		if ( ! $this->is_connected() )
 			return;
 
-	    $response = wp_remote_get( $this->api_url . '/store', 
+	    $response = wp_remote_get( $this->api_url . '/store',
 	    	array(
 		        'timeout' => 10,
 		        'redirection' => 5,
@@ -198,14 +180,13 @@ class Selz_API {
 	    if ( is_wp_error( $response ) ) {
 	       	$error_message = $response->get_error_message();
 	    } else {
-	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
+	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
 	    		if( $body ) {
 	    			update_option( $this->slug . '_store', $body );
 	    		}
     		}
     	}
-
 	}
 
 	public function get_store() {
@@ -213,20 +194,18 @@ class Selz_API {
 	    if( $store ) {
 	    	return $store;
 	    } else {
-	    	 
+
 	    }
 	}
 
-
 	public function get_products() {
-		
 		$this->is_expired();
 
 		$args = array(
 	        'limit' => 100,
 	    );
 
-	    $response = wp_remote_get( add_query_arg( $args, $this->api_url . '/products' ), 
+	    $response = wp_remote_get( add_query_arg( $args, $this->api_url . '/products' ),
 	    	array(
 		        'timeout' => 10,
 		        'redirection' => 5,
@@ -238,7 +217,7 @@ class Selz_API {
 	    if ( is_wp_error( $response ) ) {
 	       $error_message = $response->get_error_message();
 	    } else {
-	    	
+
 	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
 	    		if( $body->data ) {
@@ -247,14 +226,12 @@ class Selz_API {
     		}
 
     	}
-
 	}
 
-
 	public function is_connected() {
-		if( 
-			( get_option( $this->slug . '_api_access_token' ) != '' ) && 
-			( get_option( $this->slug . '_api_expires_on' ) >= current_time( 'timestamp' ) ) ) 
+		if(
+			( get_option( $this->slug . '_api_access_token' ) != '' ) &&
+			( get_option( $this->slug . '_api_expires_on' ) >= current_time( 'timestamp' ) ) )
 		{
 			return true;
 		}
@@ -270,13 +247,9 @@ class Selz_API {
 	}
 
 	public function get_headers() {
-		return array( 
+		return array(
 			'Authorization' => 'Bearer ' . $this->get_token(),
 			'Accept' => 'application/json',
 		);
 	}
-
-
-
 }
-

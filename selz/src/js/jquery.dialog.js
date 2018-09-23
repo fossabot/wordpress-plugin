@@ -1,7 +1,4 @@
-(function($) {
-    /*global jQuery*/
-    'use strict';
-
+($ => {
     function setupColorPicker() {
         $('.js-color-picker:not(.has-colorpicker)')
             .addClass('has-colorpicker')
@@ -10,8 +7,8 @@
     }
 
     function showTabPanel($tab) {
-        var $container = $tab.parents('.js-tab-container');
-        var $tabpanel = $('#' + $tab.attr('aria-controls'));
+        const $container = $tab.parents('.js-tab-container');
+        const $tabpanel = $(`#${$tab.attr('aria-controls')}`);
 
         // Deselect all the tabs
         $("[role='tab']", $container).attr('aria-selected', 'false');
@@ -26,35 +23,43 @@
         $tabpanel.attr('aria-hidden', 'false');
     }
 
-    function setupTabs() {
-        $(".js-tab-container [role='tab']")
-            .on('click', function(event) {
-                // Prevent default
-                event.preventDefault();
+    function handleClick(event) {
+        // Prevent default
+        event.preventDefault();
+
+        // Show the tab
+        showTabPanel($(this));
+    }
+
+    function handleKey(event) {
+        if (![37, 39].includes(event.which)) {
+            return;
+        }
+
+        const $current = $(this);
+        const isSelected = $current.attr('aria-selected') === 'true';
+
+        // If focused element is selected
+        if (isSelected) {
+            const $item = $current
+                .parent('li')
+                [event.which === 39 ? 'next' : 'prev']('li');
+            const $target = $item.find("[role='tab']");
+
+            if ($target) {
+                // Shift focus
+                $target.focus();
 
                 // Show the tab
-                showTabPanel($(this));
-            })
-            .on('keydown', function(event) {
-                if (event.which === 39 || event.which === 37) {
-                    var $current = $(this);
-                    var isSelected = $current.attr('aria-selected') === 'true';
+                showTabPanel($target);
+            }
+        }
+    }
 
-                    // If focused element is selected
-                    if (isSelected) {
-                        var $item = $current.parent('li')[event.which === 39 ? 'next' : 'prev']('li');
-                        var $target = $item.find("[role='tab']");
-
-                        if ($target) {
-                            // Shift focus
-                            $target.focus();
-
-                            // Show the tab
-                            showTabPanel($target);
-                        }
-                    }
-                }
-            });
+    function setupTabs() {
+        $(".js-tab-container [role='tab']")
+            .on('click', handleClick)
+            .on('keydown', handleKey);
     }
 
     $(document)

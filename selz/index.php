@@ -3,7 +3,7 @@
     Plugin Name: Selz WordPress Ecommerce
     Plugin URI: https://selz.com/features/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.8.3
+    Version: 1.9.0
     Author: selz.com
     Author URI: https://selz.com/features/wordpress-ecommerce
     License: MIT
@@ -23,14 +23,13 @@ if (!defined('ABSPATH'))
  */
 final class Selz {
 
-	public $version = '1.8.1';
+	public $version = '1.9.0';
 	public $dir 	= '';
 	public $url 	= '';
 	public $name 	= 'Selz';
 	public $slug 	= 'selz';
 	public $lang 	= 'selz-ecommerce';
 	public $home 	= 'https://selz.com/';
-	public $home2 	= 'selz.com';
 	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
 
 	/**
@@ -80,6 +79,8 @@ final class Selz {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'init_settings' ) );
 		add_action( 'wp_footer', array( $this, 'show_cart' ) );
+
+		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
 	}
 
 	/**
@@ -96,14 +97,11 @@ final class Selz {
 	 * @since 0.0.1
 	 */
 	public function plugin_loaded() {
-		
 		$this->api = new Selz_API();
 		$this->shortcode = new Selz_Shortcode();
-		
 
 		// Load plugin translation
 		load_plugin_textdomain($this->slug, false, $this->dir . 'lang/');
-		
 	}
 
 	/**
@@ -115,7 +113,6 @@ final class Selz {
 	}
 
 	public function admin_menu() {
-	    
 	    add_menu_page(
 	        __( $this->name . ' Settings', $this->lang ),
 	        $this->name,
@@ -142,7 +139,6 @@ final class Selz {
 	        $this->slug . '_help',
 	        array( $this, 'help_page' )
 	   	);
-
 	}
 
 	/**
@@ -157,7 +153,6 @@ final class Selz {
 		// Scripts
 		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js?v=' . $this->version, __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
 	}
-
 
 	public function settings_page() {
 		include($this->dir .  '/views/settings.php');
@@ -205,7 +200,6 @@ final class Selz {
 
 		echo $html;
 	}
-
 
 	/**
 	 * Generate the selz button with custom arguments
@@ -313,7 +307,6 @@ final class Selz {
 		return $html;
 	}
 
-
 	/**
 	 * Return default arguments for widgets or shortcodes
 	 * @since 1.5.1
@@ -346,10 +339,20 @@ final class Selz {
 		return $defaults;
 	}
 
+	/**
+     * Show row meta on the plugin screen.
+     *
+     */
+    public function plugin_action_links( $links, $file ) {
+        $settings_link = '<a href="' . admin_url( 'admin.php?page=' . $this->slug ) . '">' . esc_html__( 'Settings', $this->lang ) . '</a>';
 
+		if ( $file == $this->slug . '-ecommerce/index.php' ) {
+			array_unshift( $links, $settings_link );
+		}
 
+ 		return $links;
+    }
 }
-
 
 /*
  * Start the plugin
@@ -358,7 +361,6 @@ function selz() {
 	return Selz::instance();
 }
 selz();
-
 
 /*
  * Pretty print helper function for quick debugging
