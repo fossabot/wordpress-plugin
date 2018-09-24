@@ -81,6 +81,8 @@ final class Selz {
 		add_action( 'wp_footer', array( $this, 'show_cart' ) );
 
 		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
+
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 	}
 
 	/**
@@ -352,6 +354,20 @@ final class Selz {
 
  		return $links;
     }
+
+
+    /**
+	 * Load Localisation files.
+	 * @since  1.0.0
+	 */
+	public function load_plugin_textdomain() {
+		$locale = apply_filters( 'plugin_locale', get_locale(), $this->lang );
+
+		load_textdomain( $this->lang, WP_LANG_DIR . '/' . $this->lang . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+
+	}
+
 }
 
 /*
