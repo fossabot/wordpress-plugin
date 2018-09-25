@@ -324,7 +324,7 @@ class Selz_API {
 		if ( $this->key )
 			return $this->key;			
 
-	    $response = wp_remote_get( $this->auth_url . '/key?referrer=' . site_url(),
+	    $response = wp_remote_get( $this->auth_url . '/key?redirect_uri=' . $this->redirect,
 	    	array(
 		        'timeout' => 10,
 		        'redirection' => 5,
