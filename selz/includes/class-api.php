@@ -39,6 +39,11 @@ class Selz_API {
 		if ( $this->is_connected() )
 			return;
 
+		// ignore if we don't have a key
+		if ( ! $this->key ){
+			return;
+		}		
+
 		$fields = array(
 			'key' => $this->key,
 			'source' => $this->name,
@@ -319,7 +324,7 @@ class Selz_API {
 		if ( $this->key )
 			return $this->key;			
 
-	    $response = wp_remote_get( $this->auth_url . '/key',
+	    $response = wp_remote_get( $this->auth_url . '/key?referrer=' . site_url(),
 	    	array(
 		        'timeout' => 10,
 		        'redirection' => 5,
