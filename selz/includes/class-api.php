@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Selz_API {
 	private $auth_url 		= 'https://selz.com/wp';
-	private $api_url 		= 'https://api.selz.com/store';
+	private $api_url 		= 'https://api.selz.com';
 	private $redirect 		= '';
 	private $key 		= '';
 
