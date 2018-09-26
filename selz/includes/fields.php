@@ -1,48 +1,38 @@
 <?php $id = (strlen($this->id) > 0 ? "-" . $this->id : ""); ?>
 
+<?php if ('store' == $instance['kind']) : ?>
+	<input type="hidden" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( 'https://' . $store->name ); ?>">
+<?php endif; ?>
+
 <div class="js-tab-container">
-	<nav class="nav-tabs">
-		<ul role="tablist">
-			<li class="active">
-				<a href="#selz-general" id="tab-selz-general" role="tab" aria-controls="selz-general<?php echo $id ?>" aria-selected="true"><?php _e( 'General', $this->lang ); ?></a>
-			</li>
-			<li>
-				<a href="#selz-colors" id="tab-selz-colors" role="tab" aria-controls="selz-colors<?php echo $id ?>" aria-selected="false"><?php _e( 'Colors', $this->lang ); ?></a>
-			</li>
-		</ul>
-	</nav>
+	<?php if ('store' != $instance['kind']) : ?>
+		<nav class="nav-tabs">
+			<ul role="tablist">
+				<li class="active">
+					<a href="#selz-general" id="tab-selz-general" role="tab" aria-controls="selz-general<?php echo $id ?>" aria-selected="true"><?php _e( 'General', $this->lang ); ?></a>
+				</li>
+				<li>
+					<a href="#selz-colors" id="tab-selz-colors" role="tab" aria-controls="selz-colors<?php echo $id ?>" aria-selected="false"><?php _e( 'Colors', $this->lang ); ?></a>
+				</li>
+			</ul>
+		</nav>
 
-	<div class="tab-panel" id="selz-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-general<?php echo $id ?>" aria-hidden="false">
-
-		<?php if( ( 'store' != $instance['kind'] ) ) : ?>
-		<div class="control-group">
-			<div class="control-label">
-				<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Widget type', $this->lang ); ?></label>
-			</div>
-			<div class="controls">
-				<select id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" class="input-control">
-					<?php foreach ( $types as $k => $v ) {
-						if( 'product' == $instance['kind'] && $v == 'Store' )
-							continue;
-						?>
-						<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['type'], $k ); ?>><?php echo esc_html( $v ); ?></option>
-					<?php } ?>
-				</select>
-			</div>
-		</div>
-		<?php endif; ?>
-
-		<?php if( ( 'store' == $instance['kind'] ) ) : ?>
+		<div class="tab-panel" id="selz-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-general<?php echo $id ?>" aria-hidden="false">
 			<div class="control-group">
 				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'store_link' ); ?>"><?php _e( 'Store URL', $this->lang ); ?></label>
+					<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Widget type', $this->lang ); ?></label>
 				</div>
 				<div class="controls">
-					<input type="url" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( 'https://' . $store->name ); ?>" class="input-control"  disabled="disabled">
+					<select id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" class="input-control">
+						<?php foreach ( $types as $k => $v ) {
+							if( 'product' == $instance['kind'] && $v == 'Store' )
+								continue;
+							?>
+							<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['type'], $k ); ?>><?php echo esc_html( $v ); ?></option>
+						<?php } ?>
+					</select>
 				</div>
 			</div>
-
-		<?php else : ?>
 
 			<div class="control-group">
 				<div class="control-label">
@@ -68,17 +58,17 @@
 			</script>
 
 			<div class="control-group">
-					<div class="control-label">
-						<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->lang ); ?></label>
-					</div>
-					<div class="controls">
-						<select id="<?php echo $this->get_field_id( 'action' ); ?>" name="<?php echo $this->get_field_name( 'action' ); ?>" class="input-control">
-							<?php foreach ( $actions as $key => $val ) { ?>
-								<option value="<?php esc_attr_e( $key ); ?>" <?php selected( $instance['action'], $key ); ?>><?php esc_attr_e( $val ); ?></option>
-							<?php } ?>
-						</select>
-					</div>
+				<div class="control-label">
+					<label for="<?php echo $this->get_field_id( 'action' ); ?>"><?php _e( 'Action', $this->lang ); ?></label>
 				</div>
+				<div class="controls">
+					<select id="<?php echo $this->get_field_id( 'action' ); ?>" name="<?php echo $this->get_field_name( 'action' ); ?>" class="input-control">
+						<?php foreach ( $actions as $key => $val ) { ?>
+							<option value="<?php esc_attr_e( $key ); ?>" <?php selected( $instance['action'], $key ); ?>><?php esc_attr_e( $val ); ?></option>
+						<?php } ?>
+					</select>
+				</div>
+			</div>
 
 			<?php if( ( 'button' == $instance['type'] ) ) : ?>
 				<div class="control-group">
@@ -165,10 +155,10 @@
 					</select>
 				</div>
 			</div>
-		<?php endif; ?>
-	</div>
+		</div>
+	<?php endif; ?>
 
-	<div class="tab-panel" id="selz-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-colors<?php echo $id ?>" aria-hidden="true">
+	<div class="tab-panel" id="selz-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-colors<?php echo $id ?>" aria-hidden="<?php echo ('store' != $instance['kind'] ? 'true' : 'false'); ?>">
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'background_color' ); ?>"><?php _e( 'Button background', $this->lang ); ?></label>
