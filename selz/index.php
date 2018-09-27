@@ -365,9 +365,7 @@ final class Selz {
 
 		load_textdomain( $this->lang, WP_LANG_DIR . '/' . $this->lang . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
-
 	}
-
 }
 
 /*

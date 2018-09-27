@@ -28,10 +28,7 @@
             $(document)
                 .off('focusin.modal') // guard against infinite focus loop
                 .on('focusin.modal', event => {
-                    if (
-                        this.$element[0] !== event.target &&
-                        !this.$element.has(event.target).length
-                    ) {
+                    if (this.$element[0] !== event.target && !this.$element.has(event.target).length) {
                         this.$element.trigger('focus');
                     }
                 });
@@ -132,17 +129,13 @@
                 }
             };
 
-            $('input select textarea', this.$form).each(getFields);
+            $('input, select, textarea', this.$form).each(getFields);
 
             const shortcode = `[${window.selzvars.slug}${fields}]`;
 
             if (editor) {
                 window.tinymce.execCommand('mceBeginUndoLevel');
-                window.tinymce.execCommand(
-                    'mceInsertContent',
-                    false,
-                    shortcode
-                );
+                window.tinymce.execCommand('mceInsertContent', false, shortcode);
                 window.tinymce.execCommand('mceEndUndoLevel');
             }
 
@@ -150,11 +143,7 @@
         }
 
         update() {
-            if (
-                !this.loading &&
-                typeof window.ajaxurl === 'string' &&
-                window.ajaxurl.length
-            ) {
+            if (!this.loading && typeof window.ajaxurl === 'string' && window.ajaxurl.length) {
                 this.loading = true;
 
                 this.$submit.prop('disabled', true);
@@ -170,7 +159,7 @@
                         this.$submit.prop('disabled', false);
                         this.$controls.html(data);
                         this.loading = false;
-                    }
+                    },
                 );
             }
         }
