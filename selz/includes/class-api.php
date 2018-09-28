@@ -24,6 +24,8 @@ class Selz_API {
 		add_action( 'current_screen', array( $this, 'set_store' ) );
 
 		add_action( 'admin_post_disconnect_' . $this->slug, array( $this, 'disconnect' ) );
+
+		add_action( 'admin_init', array( $this, 'is_expired' ) );
 	}
 
 	public function register_client( $current_screen ) {
@@ -249,7 +251,6 @@ class Selz_API {
 	}
 
 	public function get_products() {
-		$this->is_expired();
 
 		$args = array(
 	        'limit' => 100,
@@ -279,7 +280,6 @@ class Selz_API {
 	}
 
 	public function search_products( $query, $page ) {
-		$this->is_expired();
 
 		$args = array(
 	        'limit' => 2,
