@@ -1,4 +1,4 @@
-<div class="selz selz-modal" hidden role="dialog" aria-labelledby="selz-modal-title" aria-describedby="selz-modal-description" tabindex="-1">
+<div class="selz selz-modal" hidden role="dialog" aria-labelledby="selz-modal-title" aria-describedby="selz-modal-description">
 	<form class="selz-modal-dialog">
 		<header class="selz-modal-header">
 			<h1 id="selz-modal-title"><?php _e( $this->name . ' Options', selz()->lang ) ?></h1>

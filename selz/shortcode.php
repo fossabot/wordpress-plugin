@@ -26,7 +26,22 @@ class Selz_Shortcode {
 			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 			add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
 			add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
+
+			add_action( 'wp_ajax_' . selz()->slug . '_get_products', array( &$this, 'get_products' ) );
 		}
+	}
+
+	public function get_products() {
+
+		$api = new Selz_API();
+		$results = $api->search_products( sanitize_text_field( $_REQUEST['q'] ), sanitize_text_field( $_REQUEST['page'] ) );
+
+		if( $results ) {
+			wp_send_json( $results );
+		}
+
+		exit;
+
 	}
 
 	public function not_connected() {
@@ -154,13 +169,18 @@ class Selz_Shortcode {
 		if ( 'post.php' != $hook && 'post-new.php' != $hook )
 			return;
 
+		wp_enqueue_style( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css' );
+
 		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js?v=' . selz()->version, __FILE__ ), array('jquery', 'wp-color-picker'), selz()->version);
+
+		wp_enqueue_script( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js', array('jquery'), selz()->version);
 
 		wp_localize_script( selz()->slug, selz()->slug . 'vars', array(
 			'nonce'		=> wp_create_nonce( selz()->slug ),
 			'action'	=> 'selz_form',
 			'spinner'	=> '<div class="text-center padding-6"><span class="loader" aria-hidden="true"></span><p class="margin-0 margin-top-2">' . __('Fetching your store data', selz()->lang ) . '</p></div>',
 			'slug'		=> selz()->slug,
+			'ajax_url' 	=> admin_url( 'admin-ajax.php' )
 		));
 	}
 
