@@ -66,14 +66,14 @@ const build = {
                             sourceType: 'script',
                             babelrc: false,
                             presets: ['@babel/env', 'minify'],
-                        })
+                        }),
                     )
                     .pipe(
                         uglify().on('error', error => {
                             console.log(key, error);
-                        })
+                        }),
                     )
-                    .pipe(gulp.dest(paths.dist.js))
+                    .pipe(gulp.dest(paths.dist.js)),
             );
         });
     },
@@ -92,9 +92,9 @@ const build = {
                     .pipe(
                         cleancss({
                             keepSpecialComments: 0,
-                        })
+                        }),
                     )
-                    .pipe(gulp.dest(paths.dist.css))
+                    .pipe(gulp.dest(paths.dist.css)),
             );
         });
     },
@@ -111,9 +111,9 @@ const build = {
                         imagemin.svgo({
                             plugins: [{ removeDesc: true }],
                         }),
-                    ])
+                    ]),
                 )
-                .pipe(gulp.dest(paths.dist.images))
+                .pipe(gulp.dest(paths.dist.images)),
         );
     },
 };

@@ -171,9 +171,9 @@ class Selz_Shortcode {
 
 		wp_enqueue_style( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css' );
 
-		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js?v=' . selz()->version, __FILE__ ), array('jquery', 'wp-color-picker'), selz()->version);
-
 		wp_enqueue_script( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js', array('jquery'), selz()->version);
+
+		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js'), array('jquery', 'wp-color-picker'), selz()->version);
 
 		wp_localize_script( selz()->slug, selz()->slug . 'vars', array(
 			'nonce'		=> wp_create_nonce( selz()->slug ),

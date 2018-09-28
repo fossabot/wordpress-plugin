@@ -1,16 +1,17 @@
 {
-  "less": {
-    "styles.css": "src/less/bundle.less"
-  },
-  "js": {
-    "scripts.js": [
-      "src/js/vendor/polyfills/array.prototype.includes.js",
-      "src/js/vendor/jquery.ddslick.js",
-      "src/js/vendor/webkit-lowerfill.js",
-      "src/js/tab-focus.js",
-      "src/js/jquery.modal.js",
-      "src/js/jquery.widgets.js",
-      "src/js/jquery.dialog.js"
-    ]
-  }
+    "less": {
+        "styles.css": "src/less/bundle.less"
+    },
+    "js": {
+        "scripts.js": [
+            "src/js/vendor/polyfills/array.prototype.includes.js",
+            "src/js/vendor/jquery.ddslick.js",
+            "src/js/vendor/webkit-lowerfill.js",
+            "src/js/tab-focus.js",
+            "src/js/jquery.modal.js",
+            "src/js/jquery.widgets.js",
+            "src/js/jquery.dialog.js",
+            "src/js/jquery.select2.js"
+        ]
+    }
 }

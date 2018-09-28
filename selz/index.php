@@ -106,7 +106,7 @@ final class Selz {
 		delete_option( $this->slug . '_api_access_token' );
 		delete_option( $this->slug . '_api_refresh_token' );
 	}
-	
+
 	/**
 	 * Initializes the plugin and it's features
 	 * Load necessary plugin files and add action to widget init
@@ -163,11 +163,11 @@ final class Selz {
 	 */
 	public function enqueue_scripts() {
 		// Load styles
-		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css?v=' . $this->version, __FILE__ ), $this->version );
+		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css', __FILE__ ), $this->version);
 		wp_enqueue_style('wp-color-picker');
 
 		// Scripts
-		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js?v=' . $this->version, __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
+		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
 	}
 
 	public function settings_page() {

@@ -48,6 +48,8 @@
                 .off('keyup.hide.modal');
 
             this.$form.off('change.type.modal').off('submit.modal');
+
+            this.$element.trigger('hidden.modal');
         }
 
         show(type) {
@@ -98,6 +100,8 @@
                     this.hide();
                 }
             });
+
+            this.$element.trigger('shown.modal');
 
             this.enforceFocus();
         }
@@ -159,6 +163,8 @@
                         this.$submit.prop('disabled', false);
                         this.$controls.html(data);
                         this.loading = false;
+
+                        this.$element.trigger('updated.modal');
                     },
                 );
             }
