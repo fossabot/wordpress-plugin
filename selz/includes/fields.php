@@ -39,22 +39,84 @@
 					<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Product', $this->lang ); ?></label>
 				</div>
 				<div class="controls">
-					<select id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" class="input-control">
-						<?php if( $products ) {
-							foreach ( $products as $i => $prod ) {
-								$img = $prod->featured_image->icon ? $prod->featured_image->icon : '';
-								?>
-							<option value="<?php esc_attr_e( $prod->short_url ); ?>" data-imagesrc="<?php esc_attr_e( $img ); ?>" <?php selected( $instance['products'], $i ); ?>><?php esc_attr_e( $prod->title ); ?></option>
-						<?php }
-						} ?>
-					</select>
+					<select class="input-control" id="<?php echo $this->get_field_id( 'link' ); ?>"></select>
 				</div>
 			</div>
 
+			<style>
+				.select2-container {
+					z-index: 999999;
+				}
+			</style>
+
 			<script>
-				(function ($) {
-					$('#selz-general #link').ddslick();
-				})(jQuery);
+
+			function formatProducts (product) {
+			  	if (! product.id && ! product.title) {
+			    	return 'Searching your products...';
+			  	}
+
+			  	var markup = "<div class='select2-result-product clearfix'>" +
+			    	"<div class='select2-result-product__image'><img src='" + product.img.toLowerCase() + "' /></div>" +
+			    	"<div class='select2-result-product__meta'>" +
+			      	"<div class='select2-result-product__title'>" + product.title + "</div>";
+
+			  	if (product.price) {
+			    	markup += "<div class='select2-result-product__price'>$" + product.price + "</div>";
+			  	}
+
+			  	return markup;
+			}
+
+			function formatProductSelection (product) {
+				//console.log(product)
+			  	return product.title || product.text;
+			}
+
+			$("#selz-general #link").select2({
+
+				ajax: {
+					url: selzvars.ajax_url, // AJAX URL is predefined in WordPress admin
+					dataType: 'json',
+					delay: 250, // delay in ms while typing when to perform a AJAX search
+					data: function (params) {
+						return {
+							q: params.term, // search query
+							action: 'selz_get_products', // AJAX action for admin-ajax.php
+							nonce: selzvars.nonce,
+							page: params.page || 1
+						};
+					},
+
+					processResults: function (data, params) {
+						// console.log(data)
+						// console.log(params)
+
+				      	params.page = params.page || 1;
+				      	var options = [];
+						if ( data.data ) {
+							$.each( data.data, function( index, product ) { 
+								var image = product.featured_image != null ? product.featured_image.small : '';
+								options.push( { id: product.short_url, title: product.title, img: image, price: product.price } );
+							});
+						}
+						//console.log(options)
+				      	return {
+				        	results: options,
+				        	pagination: {
+				            	more: data.has_more
+				        	}
+				      	};
+				    },
+					cache: true
+				},
+				placeholder: "Select a product",
+				minimumInputLength: 3, // the minimum of symbols to input before perform a search
+				escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+				templateResult: formatProducts,
+				templateSelection: formatProductSelection
+			});
+
 			</script>
 
 			<div class="control-group">

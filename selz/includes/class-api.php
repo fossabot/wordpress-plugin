@@ -278,6 +278,38 @@ class Selz_API {
     	}
 	}
 
+	public function search_products( $query, $page ) {
+		$this->is_expired();
+
+		$args = array(
+	        'limit' => 2,
+	        'q' => $query,
+	        'page' => $page,
+	    );
+
+	    $response = wp_remote_get( add_query_arg( $args, $this->api_url . '/search/products' ),
+	    	array(
+		        'timeout' => 10,
+		        'redirection' => 5,
+		        'httpversion' => '1.0',
+		        'headers' => $this->get_headers(),
+	        )
+	    );
+
+	    if ( is_wp_error( $response ) ) {
+	       $error_message = $response->get_error_message();
+	    } else {
+
+	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
+	    		$body = json_decode( $response['body'] );
+	    		if( $body ) {
+	    			return $body;
+	    		}
+    		}
+
+    	}
+	}
+
 	public function is_connected() {
 		if(
 			( get_option( $this->slug . '_api_access_token' ) != '' ) &&

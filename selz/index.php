@@ -71,6 +71,7 @@ final class Selz {
 
 	private function init_hooks() {
 		register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'deactivation_hook' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'plugin_loaded' ), 9 );
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
@@ -93,6 +94,19 @@ final class Selz {
 		add_option( $this->slug . '_version', $this->version );
 	}
 
+	/**
+	 * Delete plugin data on activation
+	 * @since 1.9.0
+	 */
+	public function deactivation_hook() {
+		delete_option( $this->slug . '_version' );
+		delete_option( $this->slug . '_store' );
+		delete_option( $this->slug . '_api_client_id' );
+		delete_option( $this->slug . '_api_client_secret' );
+		delete_option( $this->slug . '_api_access_token' );
+		delete_option( $this->slug . '_api_refresh_token' );
+	}
+	
 	/**
 	 * Initializes the plugin and it's features
 	 * Load necessary plugin files and add action to widget init

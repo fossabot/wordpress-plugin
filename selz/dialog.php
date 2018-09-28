@@ -55,9 +55,9 @@ class Selz_Form {
 		// Only call the API once modal is opened
 		if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			// Only fetch products when necessary
-			if ( $instance['kind'] == 'product' ) {
-				$products = selz()->api->get_products();
-			}
+			// if ( $instance['kind'] == 'product' ) {
+			// 	$products = selz()->api->get_products();
+			// }
 			// Only fetch store when necessary
 			if ( $instance['kind'] == 'store' ) {
 				$store = selz()->api->get_store();
