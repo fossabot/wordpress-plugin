@@ -142,7 +142,7 @@
                     return `
                         <li>
                             <label class="product-list-item">
-                                <input type="radio" name="${this.inputName}" value="${product.short_url}">
+                                <input type="radio" name="${this.inputName}" value="${product.short_url}" required>
                                 <span class="${className}" role="presentation">
                                     <img src='${image}' alt='' class="${loading}">
                                 </span>

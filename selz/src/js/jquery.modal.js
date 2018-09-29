@@ -22,6 +22,8 @@
             this.shown = false;
 
             this.show(type);
+
+            this.listeners();
         }
 
         enforceFocus() {
@@ -32,6 +34,17 @@
                         this.$element.trigger('focus');
                     }
                 });
+        }
+
+        listeners() {
+            this.$form.on('input change click', () => this.checkValidity());
+        }
+
+        checkValidity() {
+            // Because the product list is updated asynchronously, we have to check if there's a checked item manually
+            const valid = Boolean(this.$form.get(0).checkValidity() && this.$form.find('[name="link"]:checked').length);
+
+            this.$submit.prop('disabled', !valid);
         }
 
         hide() {
@@ -69,6 +82,7 @@
                 .attr({
                     type: 'hidden',
                     name: 'kind',
+                    value: type,
                 })
                 .appendTo(this.$form);
 
@@ -76,8 +90,6 @@
             toggle(this.$backdrop, this.shown);
             toggle(this.$element, this.shown);
             this.$close.focus();
-
-            $('input[name="kind"]').val(type);
 
             this.update();
 
@@ -171,9 +183,11 @@
                         data: this.$form.serialize(),
                     },
                     data => {
-                        this.$submit.prop('disabled', false);
                         this.$controls.html(data);
+
                         this.loading = false;
+
+                        this.checkValidity();
 
                         this.$element.trigger('updated.modal');
                     },

@@ -144,13 +144,13 @@
 		</div>
 
 		<div class="tab-panel js-product-list" id="<?php echo $this-slug; ?>-product<?php echo $id ?>" role="tabpanel" aria-labelledby="<?php echo $this-slug; ?>-tab-product<?php echo $id ?>" aria-hidden="true" data-input-name="<?php echo $this->get_field_id( 'link' ); ?>">
-			<form class="search-form product-search">
+			<div class="search-form product-search">
 				<label for="search" class="sr-only">Query</label>
 				<span class="search-control">
 					<?php echo file_get_contents(plugins_url( '../dist/img/svg/zoom.svg?v=' . selz()->version, __FILE__ )); ?>
 					<input type="search" id="<?php echo $this-slug; ?>-search-products" name="search" class="input-control input-control--search input-control--small" placeholder="<?php _e( 'Search', $this->lang ); ?>">
 				</span>
-			</form>
+			</div>
 			<ul class="product-list"></ul>
 			<div class="product-pager" hidden>
 				<button type="button" class="btn-faux-link product-pager__control" data-page="previous" disabled>

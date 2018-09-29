@@ -27,7 +27,7 @@
 		</section>
 
 		<footer class="selz-modal-footer">
-			<button type="submit" class="btn btn-primary btn-block">
+			<button type="submit" class="btn btn-primary btn-block" disabled>
 				<?php esc_attr_e( 'Add Shortcode', selz()->lang ); ?>
 			</button>
 		</footer>
