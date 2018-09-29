@@ -281,7 +281,7 @@ class Selz_API {
 	public function search_products( $query, $page ) {
 
 		$args = array(
-	        'limit' => 2,
+	        'limit' => 20,
 	        'q' => $query,
 	        'page' => $page,
 	    );
