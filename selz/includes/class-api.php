@@ -44,7 +44,7 @@ class Selz_API {
 		// ignore if we don't have a key
 		if ( ! $this->key ){
 			return;
-		}		
+		}
 
 		$fields = array(
 			'key' => $this->key,
@@ -75,7 +75,7 @@ class Selz_API {
 					update_option( $this->slug . '_api_client_id', $body->client_id );
 					update_option( $this->slug . '_api_client_secret', $body->client_secret );
 				}
-			}	
+			}
 		}
 	}
 
@@ -250,10 +250,11 @@ class Selz_API {
 	    }
 	}
 
-	public function get_products() {
+	public function get_products( $starting_after ) {
 
 		$args = array(
-	        'limit' => 100,
+			'limit' => 20,
+			'starting_after' => $starting_after,
 	    );
 
 	    $response = wp_remote_get( add_query_arg( $args, $this->api_url . '/products' ),
@@ -268,14 +269,12 @@ class Selz_API {
 	    if ( is_wp_error( $response ) ) {
 	       $error_message = $response->get_error_message();
 	    } else {
-
-	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
+	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
-	    		if( $body->data ) {
-	    			return $body->data;
+	    		if ( $body ) {
+	    			return $body;
 	    		}
     		}
-
     	}
 	}
 
@@ -338,10 +337,10 @@ class Selz_API {
 	public function get_client_id() {
 		return get_option( $this->slug . '_api_client_id' );
 	}
-	
+
 	public function get_client_secret() {
 		return get_option( $this->slug . '_api_client_secret' );
-	}	
+	}
 
 	public function generate_key() {
 		// ignore if we already have a registered client
@@ -354,7 +353,7 @@ class Selz_API {
 
 		// ignore if we already have a key
 		if ( $this->key )
-			return $this->key;			
+			return $this->key;
 
 	    $response = wp_remote_get( $this->auth_url . '/key?redirect_uri=' . $this->redirect,
 	    	array(
@@ -367,14 +366,14 @@ class Selz_API {
 	    if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
 		 } else {
- 
+
 			 if( isset( $response['body'] ) && $response['body'] != '' ) {
 				 $body = json_decode( $response['body'] );
 				 if( $body->key ) {
 					 return $body->key;
 				 }
 			 }
- 
+
 		 }
-	}	
+	}
 }

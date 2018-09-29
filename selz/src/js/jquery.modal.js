@@ -118,16 +118,27 @@
 
             const getFields = (index, element) => {
                 const $input = $(element);
-                const id = $input.attr('id');
+                let id = $input.attr('id');
+                const name = $input.attr('name');
                 const value = $input.val();
 
-                if (!id) {
+                if (!id && !name) {
                     return;
+                }
+
+                if (!id) {
+                    id = name;
                 }
 
                 if ($input.is(':checkbox')) {
                     const checked = $input.prop('checked');
                     fields += ` ${id}="${checked}"`;
+                } else if ($input.is(':radio')) {
+                    const checked = $input.is(':checked');
+
+                    if (checked) {
+                        fields += ` ${id}="${value}"`;
+                    }
                 } else if (value) {
                     fields += ` ${id}="${value}"`;
                 }

@@ -9,15 +9,24 @@
 		<nav class="nav-tabs">
 			<ul role="tablist">
 				<li class="active">
-					<a href="#selz-general" id="tab-selz-general" role="tab" aria-controls="selz-general<?php echo $id ?>" aria-selected="true"><?php _e( 'General', $this->lang ); ?></a>
+					<a href="#<?php echo $this-slug; ?>-general" id="<?php echo $this-slug; ?>-tab-general" role="tab" aria-controls="<?php echo $this-slug; ?>-general<?php echo $id ?>" aria-selected="true">
+						<?php _e( 'General', $this->lang ); ?>
+					</a>
 				</li>
 				<li>
-					<a href="#selz-colors" id="tab-selz-colors" role="tab" aria-controls="selz-colors<?php echo $id ?>" aria-selected="false"><?php _e( 'Colors', $this->lang ); ?></a>
+					<a href="#<?php echo $this-slug; ?>-product" id="<?php echo $this-slug; ?>-tab-product" role="tab" aria-controls="<?php echo $this-slug; ?>-product<?php echo $id ?>" aria-selected="false">
+						<?php _e( 'Product', $this->lang ); ?>
+					</a>
+				</li>
+				<li>
+					<a href="#<?php echo $this-slug; ?>-colors" id="<?php echo $this-slug; ?>-tab-colors" role="tab" aria-controls="<?php echo $this-slug; ?>-colors<?php echo $id ?>" aria-selected="false">
+						<?php _e( 'Colors', $this->lang ); ?>
+					</a>
 				</li>
 			</ul>
 		</nav>
 
-		<div class="tab-panel" id="selz-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-general<?php echo $id ?>" aria-hidden="false">
+		<div class="tab-panel" id="<?php echo $this-slug; ?>-general<?php echo $id ?>" role="tabpanel" aria-labelledby="<?php echo $this-slug; ?>-tab-general<?php echo $id ?>" aria-hidden="false">
 			<div class="control-group">
 				<div class="control-label">
 					<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Widget type', $this->lang ); ?></label>
@@ -31,15 +40,6 @@
 							<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $instance['type'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 						<?php } ?>
 					</select>
-				</div>
-			</div>
-
-			<div class="control-group">
-				<div class="control-label">
-					<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Product', $this->lang ); ?></label>
-				</div>
-				<div class="controls">
-					<select class="input-control" id="<?php echo $this->get_field_id( 'link' ); ?>"></select>
 				</div>
 			</div>
 
@@ -142,9 +142,34 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="tab-panel js-product-list" id="<?php echo $this-slug; ?>-product<?php echo $id ?>" role="tabpanel" aria-labelledby="<?php echo $this-slug; ?>-tab-product<?php echo $id ?>" aria-hidden="true" data-input-name="<?php echo $this->get_field_id( 'link' ); ?>">
+			<form class="search-form product-search">
+				<label for="search" class="sr-only">Query</label>
+				<span class="search-control">
+					<?php echo file_get_contents(plugins_url( '../dist/img/svg/zoom.svg?v=' . selz()->version, __FILE__ )); ?>
+					<input type="search" id="<?php echo $this-slug; ?>-search-products" name="search" class="input-control input-control--search input-control--small" placeholder="<?php _e( 'Search', $this->lang ); ?>">
+				</span>
+			</form>
+			<ul class="product-list"></ul>
+			<div class="product-pager" hidden>
+				<button type="button" class="btn-faux-link product-pager__control" data-page="previous" disabled>
+					<span>
+						<?php echo file_get_contents(plugins_url( '../dist/img/svg/arrow-left.svg?v=' . selz()->version, __FILE__ )); ?>
+						<?php _e( 'Previous', $this->lang ); ?>
+					</span>
+				</button>
+				<button type="button" class="btn-faux-link product-pager__control" data-page="next" disabled>
+					<span>
+						<?php _e( 'Next', $this->lang ); ?>
+						<?php echo file_get_contents(plugins_url( '../dist/img/svg/arrow-right.svg?v=' . selz()->version, __FILE__ )); ?>
+					</span>
+				</button>
+			</div>
+		</div>
 	<?php endif; ?>
 
-	<div class="tab-panel" id="selz-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-selz-colors<?php echo $id ?>" aria-hidden="<?php echo ('store' != $instance['kind'] ? 'true' : 'false'); ?>">
+	<div class="tab-panel" id="<?php echo $this-slug; ?>-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="<?php echo $this-slug; ?>-tab-colors<?php echo $id ?>" aria-hidden="<?php echo ('store' != $instance['kind'] ? 'true' : 'false'); ?>">
 		<div class="control-group">
 			<div class="control-label">
 				<label for="<?php echo $this->get_field_id( 'background_color' ); ?>"><?php _e( 'Button background', $this->lang ); ?></label>

@@ -369,7 +369,6 @@ final class Selz {
  		return $links;
     }
 
-
     /**
 	 * Load Localisation files.
 	 * @since  1.0.0

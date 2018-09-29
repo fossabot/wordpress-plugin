@@ -70,6 +70,27 @@ button {
     width: 100%;
 }
 
+// Small
+.btn-small {
+    padding: @button-padding-small ceil(@button-padding-small * 2);
+}
+
+// Rounded
+.btn-rounded {
+    border-radius: 50px;
+}
+
+// Faux link
+.btn-faux-link {
+    .cancel-button-styles();
+
+    // Disabled
+    &[disabled] {
+        pointer-events: none;
+        color: fade(@gray-light, 50%);
+    }
+}
+
 // Variants
 // --------------------------------------------------
 .btn-primary,

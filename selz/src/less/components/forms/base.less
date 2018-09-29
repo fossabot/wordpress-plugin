@@ -16,7 +16,7 @@ label,
     display: block;
     width: 100%;
     height: @input-control-height-base;
-    padding: @input-control-padding-vertical @input-control-padding-horizontal;
+    padding: @input-control-padding-base;
 
     // Type
     color: @color-text;
@@ -41,6 +41,11 @@ label,
         border-color: @input-control-border-color-focus;
         .tab-focus();
     }
+}
+
+.input-control--small {
+    height: @input-control-height-small;
+    padding: @input-control-padding-small;
 }
 
 // Make selects look awesome
