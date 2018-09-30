@@ -186,9 +186,6 @@ class Selz_Widget extends WP_Widget {
 		wp_localize_script( $this->slug, $this->slug . 'vars', array(
 			'nonce'		=> wp_create_nonce( $this->slug ),
 			'action'	=> $this->slug . '_widget_form',
-			'spinner'	=> '<div class="text-center padding-6"><span class="loader" aria-hidden="true"></span><p class="margin-0 margin-top-2">' . __('Loading', selz()->lang ) . '&hellip;</p></div>',
-			'slug'		=> selz()->slug,
-			'ajax_url' 	=> admin_url( 'admin-ajax.php' )
 		));
 	}
 

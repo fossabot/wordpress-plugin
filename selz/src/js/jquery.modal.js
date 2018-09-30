@@ -82,7 +82,12 @@
             }
 
             $('.selz-modal-controls .js-tab-container').html();
-            $('.selz-modal-controls').html(window.selzvars.spinner);
+            $('.selz-modal-controls').html(`
+                <div class="text-center padding-6">
+                    <span class="loader" aria-hidden="true"></span>
+                    <p class="margin-0 margin-top-2">Loading&hellip;</p>
+                </div>
+            `);
 
             // add hidden input with the kind
             $('<input>')
@@ -177,13 +182,15 @@
         }
 
         update() {
-            if (!this.loading && typeof window.ajaxurl === 'string' && window.ajaxurl.length) {
+            const { ajaxurl } = window;
+
+            if (!this.loading && $.type(ajaxurl) === 'string' && ajaxurl.length) {
                 this.loading = true;
 
                 this.$submit.prop('disabled', true);
 
                 $.post(
-                    window.ajaxurl,
+                    ajaxurl,
                     {
                         action: window.selzvars.action,
                         nonce: window.selzvars.nonce,
