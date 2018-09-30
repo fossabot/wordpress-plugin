@@ -50,7 +50,6 @@ class Selz_Widget extends WP_Widget {
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-
 	}
 
 	/**
@@ -139,7 +138,6 @@ class Selz_Widget extends WP_Widget {
 		return $instance;
 	}
 
-
 	/**
 	 * Displays the widget control options in the Widgets admin screen.
 	 * @since 0.0.1
@@ -176,8 +174,6 @@ class Selz_Widget extends WP_Widget {
 
 		$onchange = "wpWidgets.save(jQuery(this).closest('div.widget'),0,1,0);";
 
-		$products = selz()->api->get_products();
-
 		$store = selz()->api->get_store();
 
 		include( selz()->dir . '/includes/widget-editor.php' );
@@ -189,7 +185,10 @@ class Selz_Widget extends WP_Widget {
 
 		wp_localize_script( $this->slug, $this->slug . 'vars', array(
 			'nonce'		=> wp_create_nonce( $this->slug ),
-			'action'	=> $this->slug . '_widget_form'
+			'action'	=> $this->slug . '_widget_form',
+			'spinner'	=> '<div class="text-center padding-6"><span class="loader" aria-hidden="true"></span><p class="margin-0 margin-top-2">' . __('Loading', selz()->lang ) . '&hellip;</p></div>',
+			'slug'		=> selz()->slug,
+			'ajax_url' 	=> admin_url( 'admin-ajax.php' )
 		));
 	}
 

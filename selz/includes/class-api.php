@@ -250,7 +250,7 @@ class Selz_API {
 	    }
 	}
 
-	public function get_products( $starting_after ) {
+	public function get_products( $starting_after = null) {
 
 		$args = array(
 			'limit' => 20,
@@ -278,7 +278,7 @@ class Selz_API {
     	}
 	}
 
-	public function search_products( $query, $page ) {
+	public function search_products( $query = "", $page = 1) {
 
 		$args = array(
 	        'limit' => 20,

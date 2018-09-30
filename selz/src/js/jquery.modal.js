@@ -38,6 +38,13 @@
 
         listeners() {
             this.$form.on('input change click', () => this.checkValidity());
+
+            // Slider output value
+            this.$form.on('input change', 'input[type="range"]', event => {
+                const $input = $(event.target);
+                const $output = $(`output[for="${$input.attr('id')}"]`);
+                $output.prop('value', $input.val());
+            });
         }
 
         checkValidity() {
