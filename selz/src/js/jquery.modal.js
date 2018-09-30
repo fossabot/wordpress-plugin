@@ -184,29 +184,31 @@
         update() {
             const { ajaxurl } = window;
 
-            if (!this.loading && $.type(ajaxurl) === 'string' && ajaxurl.length) {
-                this.loading = true;
-
-                this.$submit.prop('disabled', true);
-
-                $.post(
-                    ajaxurl,
-                    {
-                        action: window.selzvars.action,
-                        nonce: window.selzvars.nonce,
-                        data: this.$form.serialize(),
-                    },
-                    data => {
-                        this.$controls.html(data);
-
-                        this.loading = false;
-
-                        this.checkValidity();
-
-                        this.$element.trigger('updated.modal');
-                    },
-                );
+            if (this.loading || $.type(ajaxurl) !== 'string' || !ajaxurl.length) {
+                return;
             }
+
+            this.loading = true;
+
+            this.$submit.prop('disabled', true);
+
+            $.post(
+                ajaxurl,
+                {
+                    action: window.selzvars.action,
+                    nonce: window.selzvars.nonce,
+                    data: this.$form.serialize(),
+                },
+                data => {
+                    this.$controls.html(data);
+
+                    this.loading = false;
+
+                    this.checkValidity();
+
+                    this.$element.trigger('updated.modal');
+                },
+            );
         }
     }
 

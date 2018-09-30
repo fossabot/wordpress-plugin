@@ -199,6 +199,12 @@
         }
 
         fetch() {
+            const { ajaxurl } = window;
+
+            if ($.type(ajaxurl) !== 'string' || !ajaxurl.length) {
+                return;
+            }
+
             // Set the loading state
             this.$list.html(`
                 <li class="padding-6 text-center">
@@ -221,7 +227,7 @@
             // Initiate a new request
             this.request = new Request(
                 {
-                    url: selzvars.ajax_url,
+                    url: ajaxurl,
                     method: 'GET',
                     dataType: 'json',
                     data: {
