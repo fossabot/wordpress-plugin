@@ -20,7 +20,7 @@
 		<section class="selz-modal-controls">
 			<?php if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
-				require_once( selz()->dir . 'dialog.php' );
+				require_once( selz()->dir . 'modal.php' );
 				new Selz_Form();
 
 			} ?>

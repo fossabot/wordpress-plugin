@@ -1,6 +1,6 @@
-<div class="control-group widget-type">
+<div class="control-group embed-type">
     <div class="control-label">
-        <label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Widget type', $this->lang ); ?></label>
+        <label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Type', $this->lang ); ?></label>
     </div>
     <div class="controls">
         <select id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" class="input-control">

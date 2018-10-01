@@ -5,7 +5,7 @@
                 <?php _e( 'General', $this->lang ); ?>
             </a>
         </li>
-        <li>
+        <li data-type="button,widget">
             <a href="#<?php echo $this->slug; ?>-product" id="<?php echo $this->slug; ?>-tab-product" role="tab" aria-controls="<?php echo $this->slug; ?>-product<?php echo $id ?>" aria-selected="false">
                 <?php _e( 'Product', $this->lang ); ?>
             </a>

@@ -1,0 +1,32 @@
+// ==================================================================
+// Widget editor styling
+// ==================================================================
+
+.selz-widget-controls {
+    margin-bottom: (@padding-base / 2);
+    border-bottom: 1px solid @border-color-base;
+
+    .nav-tabs,
+    .product-search,
+    .product-list-item {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .product-search {
+        background: 0;
+    }
+
+    .product-pager {
+        .product-pager__control:first-child span {
+            padding-left: 0;
+        }
+        .product-pager__control:last-child span {
+            padding-right: 0;
+        }
+    }
+
+    .control-group {
+        border: 0;
+    }
+}

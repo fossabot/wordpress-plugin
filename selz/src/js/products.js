@@ -1,5 +1,4 @@
 ($ => {
-    const { selzvars } = window;
     const noop = () => {};
 
     class Request {
@@ -28,8 +27,6 @@
     class ProductList {
         constructor($element, options) {
             this.$element = $element;
-            $element.addClass('product-list--built');
-
             this.$list = $element.find('.product-list');
             this.$search = $element.find('[type="search"]');
             this.$pager = $element.find('.product-pager');
@@ -124,7 +121,8 @@
         map(products) {
             // Handle no results
             if (!products || !products.length) {
-                return '<li class="padding-6 text-center color-light">No results</li>';
+                const message = this.searching ? 'No matches found' : 'No products found';
+                return `<li class="padding-6 text-center color-light">${message}</li>`;
             }
 
             // Map products to list items
@@ -267,40 +265,5 @@
         }
     }
 
-    // The class hook to use
-    const selector = '.js-product-list';
-
-    // Setup a list
-    const setup = $element => {
-        if ($element.hasClass('product-list--built')) {
-            return;
-        }
-
-        const list = new ProductList($element);
-        list.fetch();
-    };
-
-    // Initialise a new observer
-    const observer = new MutationObserver(mutations => {
-        Array.from(mutations).forEach(mutation => {
-            Array.from(mutation.addedNodes).forEach(node => {
-                const $node = $(node);
-
-                // Node is an image
-                if ($node.is(selector)) {
-                    setup($node);
-                } else if ($node.find(selector).length > 0) {
-                    $node.find(selector).each((index, element) => {
-                        setup($(element));
-                    });
-                }
-            });
-        });
-    });
-
-    // Observe for changes in children
-    observer.observe(document, {
-        childList: true,
-        subtree: true,
-    });
+    window.SelzProductList = ProductList;
 })(jQuery);

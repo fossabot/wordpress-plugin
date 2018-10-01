@@ -5,14 +5,15 @@
     "js": {
         "scripts.js": [
             "src/js/vendor/polyfills/array.prototype.includes.js",
-            "src/js/vendor/jquery.ddslick.js",
+            "src/js/vendor/polyfills/array.prototype.find.js",
             "src/js/vendor/webkit-lowerfill.js",
             "src/js/utils.js",
             "src/js/tab-focus.js",
-            "src/js/jquery.modal.js",
-            "src/js/jquery.widgets.js",
-            "src/js/jquery.dialog.js",
-            "src/js/jquery.products.js"
+            "src/js/tabs.js",
+            "src/js/form.js",
+            "src/js/modal.js",
+            "src/js/widgets.js",
+            "src/js/products.js"
         ]
     }
 }

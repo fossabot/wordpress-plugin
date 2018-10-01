@@ -11,17 +11,13 @@
 
 			<?php include(selz()->dir . 'includes/fields/action.php'); ?>
 
-			<?php if ( 'button' == $instance['type'] ) : ?>
-				<?php include(selz()->dir . 'includes/fields/style.php'); ?>
-			<?php endif; ?>
+			<?php include(selz()->dir . 'includes/fields/text.php'); ?>
+
+			<?php include(selz()->dir . 'includes/fields/style.php'); ?>
 
 			<?php include(selz()->dir . 'includes/fields/width.php'); ?>
 
-			<?php include(selz()->dir . 'includes/fields/text.php'); ?>
-
-			<?php if ( 'widget' == $instance['type'] ) : ?>
-				<?php include(selz()->dir . 'includes/fields/description.php'); ?>
-			<?php endif; ?>
+			<?php include(selz()->dir . 'includes/fields/description.php'); ?>
 
 			<?php include(selz()->dir . 'includes/fields/logos.php'); ?>
 

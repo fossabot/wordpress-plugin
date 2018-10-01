@@ -165,7 +165,7 @@ class Selz_Widget extends WP_Widget {
 			'blank'		=> __( 'New tab', $this->lang )
 		);
 
-		$button_positions = array(
+		$button_styles = array(
 			'price-right' 	=> __( 'Price on right', $this->lang ),
 			'price-left' 	=> __( 'Price on left', $this->lang ),
 			'price-above'	=> __( 'Price above', $this->lang ),
@@ -176,7 +176,7 @@ class Selz_Widget extends WP_Widget {
 
 		$store = selz()->api->get_store();
 
-		include( selz()->dir . '/includes/widget-editor.php' );
+		include( selz()->dir . '/includes/widget.php' );
 	}
 
 	function admin_enqueue_scripts($hook) {

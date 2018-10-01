@@ -45,7 +45,7 @@ class Selz_Form {
 			'blank'		=> __( 'New tab', $this->lang )
 		);
 
-		$button_positions = array(
+		$button_styles = array(
 			'price-right' 	=> __( 'Price on right', $this->lang ),
 			'price-left' 	=> __( 'Price on left', $this->lang ),
 			'price-above'	=> __( 'Price above', $this->lang ),

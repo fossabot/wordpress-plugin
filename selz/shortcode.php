@@ -21,11 +21,11 @@ class Selz_Shortcode {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 			add_action( 'admin_print_footer_scripts', array( &$this, 'print_dialog'), 50 );
 			add_action( 'admin_footer', array( &$this, 'admin_footer' ), 1 );
-			add_action( 'wp_ajax_selz_form', array( &$this, 'dialog_ajax' ) );
+			add_action( 'wp_ajax_selz_form', array( &$this, 'modal_ajax' ) );
 			add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
 			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 			add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
-			add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
+			// add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
 
 			add_action( 'wp_ajax_' . selz()->slug . '_search_products', array( &$this, 'search_products' ) );
 			add_action( 'wp_ajax_' . selz()->slug . '_get_products', array( &$this, 'get_products' ) );
@@ -138,7 +138,7 @@ class Selz_Shortcode {
 		wp_enqueue_style('wp-jquery-ui-dialog');
 	}
 
-	function dialog_ajax() {
+	function modal_ajax() {
 		// Check the nonce and if not isset the id, just die.
 		$nonce = $_POST['nonce'];
 		if ( ! wp_verify_nonce( $nonce, selz()->slug ) && ! isset( $_POST['data'] ) )
@@ -146,7 +146,7 @@ class Selz_Shortcode {
 
 		// Set up the default form values and parse
 		parse_str( $_POST['data'], $instance );
-		require_once( selz()->dir . 'dialog.php' );
+		require_once( selz()->dir . 'modal.php' );
 		new Selz_Form( $instance );
 		exit;
 	}
@@ -159,10 +159,10 @@ class Selz_Shortcode {
 		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
 			$product = 'product';
 			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
-			$output .= '<button type="button" id="product" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</button>';
+			$output .= '<button type="button" class="button js-open-modal" data-type="product" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</button>';
 
 			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
-			$output .= '<button type="button" id="store" onclick="openSelzModal(this.id);" class="button" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</button>';
+			$output .= '<button type="button" class="button js-open-modal" data-type="store" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</button>';
 		}
 
 		echo $output;
@@ -194,16 +194,6 @@ class Selz_Shortcode {
 		if (!in_array($hook_suffix, array('post-new.php', 'post.php'))) {
 			return;
 		}
-	}
-
-	function buttons() {
-		?>
-		<script>
-		function openSelzModal(evt) {
-			new SelzModal(evt);
-		}
-		</script>
-		<?php
 	}
 }
 ?>

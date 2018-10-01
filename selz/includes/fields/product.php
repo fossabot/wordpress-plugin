@@ -1,8 +1,8 @@
 <div class="search-form product-search">
-    <label for="search" class="sr-only">Query</label>
+    <label for="<?php echo $this->get_field_id( 'search' ); ?>" class="sr-only">Query</label>
     <span class="search-control">
         <?php echo file_get_contents(plugins_url( '../../dist/img/svg/zoom.svg?v=' . selz()->version, __FILE__ )); ?>
-        <input type="search" id="<?php echo $this-slug; ?>-search-products" name="search" class="input-control input-control--search input-control--small" placeholder="<?php _e( 'Search', $this->lang ); ?>">
+        <input type="search" id="<?php echo $this->get_field_id( 'search' ); ?>" class="input-control input-control--search input-control--small" placeholder="<?php _e( 'Search', $this->lang ); ?>">
     </span>
 </div>
 

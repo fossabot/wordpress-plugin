@@ -66,7 +66,7 @@ final class Selz {
 	public function includes() {
 		require_once( $this->dir . 'shortcode.php' );
 		require_once( $this->dir . 'widget.php' );
-		require_once( $this->dir . 'includes/class-api.php' );
+		require_once( $this->dir . 'lib/class-api.php' );
 	}
 
 	private function init_hooks() {
@@ -230,7 +230,7 @@ final class Selz {
 		// Overwrite "true" to 1, "false" to 0
 		foreach ($args as $k => $v) {
 			$args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
-	    }
+		}
 
 		if ('store' == $args['type'] || $args['type'] == '') {
 			if (!$args['store_link']) {
@@ -263,6 +263,11 @@ final class Selz {
 			<noscript><a href="' . $args['link'] . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
 
 		} elseif ('button' == $args['type']) {
+			if ($args['fluid_width']) {
+				$width = '100%';
+			} else if (!$args['auto_width']) {
+				$width = $args['width'];
+			}
 
 			$html = '<div data-embed="button">
 			    <script type="text/props">
@@ -279,9 +284,10 @@ final class Selz {
 			                "text": "' . $args['chtx_color'] . '"
 			            }
 			        },
-			        '. ( !$args['auto_width'] ? '"width": ' . $args['width'] . ',' : '') . '
+			        '. ( $width ? '"width": ' . $width . ',' : '') . '
 			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-	                "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+					"style": ' . $args['style'] . ',
 	                "text": "' . trim($args['button_text']) . '",
 	                "url": "' . trim( $args['link'] ) . '"
 			    }
@@ -291,6 +297,11 @@ final class Selz {
 	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
 
 		} else {
+			if ($args['fluid_width']) {
+				$width = '100%';
+			} else {
+				$width = $args['width'];
+			}
 
 			$html = '<div data-embed="widget">
 			    <script type="text/props">
@@ -307,9 +318,9 @@ final class Selz {
 			            }
 	                },
 	                "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
-			        '. ( !$args['auto_width'] ? '"width": ' . $args['width'] . ',' : '') . '
+			        "width": ' . $width . ',
 			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-	                "modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
 	                "text": "' . trim($args['button_text']) . '",
 			        "url": "' . $args['link'] . '"
 			    }
@@ -328,18 +339,19 @@ final class Selz {
 	 * @since 1.5.1
 	 */
 	public function default_args() {
+		// TODO: We should get these from the user defaults on Selz
+
 		$defaults = array(
 			'title'				=> esc_attr__( $this->name . ' Widget', $this->lang),
 			'link'				=> '',
 			'store_link'		=> '',
-			'kind'				=> '',
 			'type'				=> '',
 			'interact' 			=> 'modal',
-			'position' 			=> 'default',
+			'style' 			=> 'price-right',
 			'action' 			=> 'add-to-cart',
-			'width' 			=> 240,
-			'auto_width' 		=> false,
-			'button_text'		=> 'Add to cart',
+			'width' 			=> '',
+			'auto_width' 		=> '',
+			'button_text'		=> __('Add to cart', $this->lang),
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#7959c7',
 			'link_color' 		=> '#7959c7',
