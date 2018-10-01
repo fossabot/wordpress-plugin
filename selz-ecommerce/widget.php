@@ -104,7 +104,6 @@ class Selz_Widget extends WP_Widget {
 		echo $after_widget;
 	}
 
-
 	/**
 	 * Updates the widget control options for the particular instance of the widget.
 	 * @since 0.0.1

@@ -34,6 +34,7 @@
             this.$next = this.$pager.find('[data-page="next"]');
             this.searchTimer = null;
             this.inputName = $element.data('input-name');
+            this.selected = $element.data('selected');
             this.request = null;
 
             // Pagination
@@ -77,6 +78,10 @@
 
                     this.fetch();
                 }, 500);
+            });
+
+            this.$list.on('input', ':radio', () => {
+                this.selected = this.$list.find(':checked').val();
             });
 
             this.$previous.on('click', () => this.previous());
@@ -139,10 +144,14 @@
                     const className = 'media-ratio-1-1 media-placeholder product-image';
                     const { loading } = this.config.classNames;
 
+                    const name = this.inputName;
+                    const value = product.short_url;
+                    const checked = this.selected === value ? 'checked' : '';
+
                     return `
                         <li>
                             <label class="product-list-item">
-                                <input type="radio" name="${this.inputName}" value="${product.short_url}" required>
+                                <input type="radio" name="${name}" value="${value}" required ${checked}>
                                 <span class="${className}" role="presentation">
                                     <img src='${image}' alt='' class="${loading}">
                                 </span>
@@ -230,7 +239,7 @@
                     dataType: 'json',
                     data: {
                         action: this.searching ? 'selz_search_products' : 'selz_get_products',
-                        starting_after: this.start,
+                        starting_after: this.page.number !== 1 ? this.start : null,
                         page: this.page.number,
                         q: this.query,
                     },

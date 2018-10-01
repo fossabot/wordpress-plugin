@@ -264,7 +264,7 @@ final class Selz {
 
 		} elseif ('button' == $args['type']) {
 			if ($args['fluid_width']) {
-				$width = '100%';
+				$width = '"100%"';
 			} else if (!$args['auto_width']) {
 				$width = $args['width'];
 			}
@@ -298,7 +298,7 @@ final class Selz {
 
 		} else {
 			if ($args['fluid_width']) {
-				$width = '100%';
+				$width = '"100%"';
 			} else {
 				$width = $args['width'];
 			}

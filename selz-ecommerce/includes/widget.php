@@ -2,36 +2,14 @@
 
 <?php include(selz()->dir . 'includes/fields/store.php'); ?>
 
+<input type="hidden" name="<?php echo $this->get_field_name( 'fluid_width' ); ?>" value="true">
+
 <div class="<?php echo $this->slug; ?> <?php echo $this->slug; ?>-widget-controls js-tab-container">
-	<?php include(selz()->dir . 'includes/fields/tabs.php'); ?>
+	<?php include(selz()->dir . 'includes/tabs.php'); ?>
 
-	<div class="tab-panel" id="<?php echo $this->slug; ?>-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-<?php echo $this->slug; ?>-general<?php echo $id ?>" aria-hidden="false">
-		<?php include(selz()->dir . 'includes/fields/title.php'); ?>
+	<?php include(selz()->dir . 'includes/panes/options-widget.php'); ?>
 
-		<?php include(selz()->dir . 'includes/fields/type.php'); ?>
+	<?php include(selz()->dir . 'includes/panes/product.php'); ?>
 
-		<?php include(selz()->dir . 'includes/fields/action.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/text.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/style.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/description.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/logos.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/window.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/intro.php'); ?>
-
-		<?php include(selz()->dir . 'includes/fields/outro.php'); ?>
-	</div>
-
-	<div class="tab-panel js-product-list" id="<?php echo $this->slug; ?>-product<?php echo $id ?>" role="tabpanel" aria-labelledby="<?php echo $this->slug; ?>-tab-product<?php echo $id ?>" aria-hidden="true" data-input-name="<?php echo $this->get_field_id( 'link' ); ?>">
-		<?php include(selz()->dir . 'includes/fields/product.php'); ?>
-	</div>
-
-	<div class="tab-panel" id="<?php echo $this->slug; ?>-colors<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-<?php echo $this->slug; ?>-colors<?php echo $id ?>" aria-hidden="true">
-		<?php include(selz()->dir . 'includes/fields/colors.php'); ?>
-	</div>
+	<?php include(selz()->dir . 'includes/panes/colors.php'); ?>
 </div>
