@@ -371,12 +371,10 @@ final class Selz {
      * Show row meta on the plugin screen.
      *
      */
-    public function plugin_action_links( $links, $file ) {
+    public function plugin_action_links( $links ) {
         $settings_link = '<a href="' . admin_url( 'admin.php?page=' . $this->slug ) . '">' . esc_html__( 'Settings', $this->lang ) . '</a>';
 
-		if ( $file == $this->slug . '-ecommerce/index.php' ) {
-			array_unshift( $links, $settings_link );
-		}
+		array_unshift( $links, $settings_link );
 
  		return $links;
     }
