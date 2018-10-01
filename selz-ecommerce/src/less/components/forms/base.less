@@ -78,12 +78,14 @@ select.input-control {
         position: absolute;
         z-index: 2;
     }
+
     .color-picker {
         float: left;
         width: 110px;
         text-transform: uppercase;
         margin-right: (@padding-base / 2);
     }
+
     .wp-color-result {
         box-shadow: none;
         transition: all 0.3s ease;
@@ -93,6 +95,11 @@ select.input-control {
             .tab-focus();
         }
     }
+
+    .wp-color-result-text {
+        line-height: 22px; // Restore default
+    }
+
     .iris-picker {
         border-radius: @border-radius-base;
         box-shadow: 0 0 0 1px fade(@gray-dark, 15%), 0 1px 5px fade(@gray-dark, 50%);
