@@ -25,7 +25,7 @@ class Selz_Form {
 
 		$kind = array(
 			'product' 	=> __( 'Product', $this->lang ),
-			'store'		=> __( 'store', $this->lang ),
+			'store'		=> __( 'Store', $this->lang ),
 		);
 
 		$types = array(
@@ -54,10 +54,6 @@ class Selz_Form {
 
 		// Only call the API once modal is opened
 		if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			// Only fetch products when necessary
-			// if ( $instance['kind'] == 'product' ) {
-			// 	$products = selz()->api->get_products();
-			// }
 			// Only fetch store when necessary
 			if ( $instance['kind'] == 'store' ) {
 				$store = selz()->api->get_store();
@@ -67,8 +63,8 @@ class Selz_Form {
 		?>
 
 		<fieldset>
-			<legend class="sr-only">Options</legend>
-			<?php include( selz()->dir . 'includes/fields.php' ); ?>
+			<legend class="sr-only"><?php echo $kind[$instance['kind']]; ?></legend>
+			<?php include( selz()->dir . 'includes/fields-modal.php' ); ?>
 		</fieldset>
 
 		<?php

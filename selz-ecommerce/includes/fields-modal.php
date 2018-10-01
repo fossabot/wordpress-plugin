@@ -4,7 +4,7 @@
 
 <div class="js-tab-container">
 	<?php if ('store' != $instance['kind']) : ?>
-		<?php include(selz()->dir . 'includes/fields/tabs.php'); ?>
+		<?php include(selz()->dir . 'includes/tabs.php'); ?>
 
 		<?php include(selz()->dir . 'includes/panes/options-modal.php'); ?>
 

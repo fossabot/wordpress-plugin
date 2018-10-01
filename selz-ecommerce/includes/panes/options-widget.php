@@ -1,4 +1,4 @@
-<div class="tab-panel" id="<?php echo $this->slug; ?>-general<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-<?php echo $this->slug; ?>-general<?php echo $id ?>" aria-hidden="false">
+<div class="tab-panel" id="<?php echo $this->slug; ?>-options<?php echo $id ?>" role="tabpanel" aria-labelledby="tab-<?php echo $this->slug; ?>-options<?php echo $id ?>" aria-hidden="false">
     <?php include(selz()->dir . 'includes/fields/title.php'); ?>
 
     <?php include(selz()->dir . 'includes/fields/type.php'); ?>

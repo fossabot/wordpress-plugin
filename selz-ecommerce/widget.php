@@ -175,7 +175,7 @@ class Selz_Widget extends WP_Widget {
 
 		$store = selz()->api->get_store();
 
-		include( selz()->dir . '/includes/widget.php' );
+		include( selz()->dir . '/includes/fields-widget.php' );
 	}
 
 	function admin_enqueue_scripts($hook) {

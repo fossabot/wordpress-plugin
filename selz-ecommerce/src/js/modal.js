@@ -110,6 +110,8 @@
                 data => {
                     this.$controls.html(data);
 
+                    this.setTitle(this.$controls.find('legend').html());
+
                     this.loading = false;
 
                     this.form = new window.SelzForm(this.$form);
@@ -117,6 +119,10 @@
                     this.validate();
                 },
             );
+        }
+
+        setTitle(title) {
+            this.$form.find('header h1').html(title);
         }
 
         hide() {
