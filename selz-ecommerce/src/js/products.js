@@ -35,6 +35,7 @@
             this.searchTimer = null;
             this.inputName = $element.data('input-name');
             this.selected = $element.data('selected');
+            this.defaultImage = $element.data('default-image');
             this.request = null;
 
             // Pagination
@@ -98,15 +99,19 @@
                 if (!width || !height) {
                     return '';
                 }
+
                 if (width > height) {
                     return this.config.classNames.landscape;
                 }
+
                 if (height > width) {
                     return this.config.classNames.portrait;
                 }
+
                 if (height === width) {
                     return this.config.classNames.square;
                 }
+
                 return '';
             };
 
@@ -138,7 +143,7 @@
                     if (product.featured_image) {
                         image = product.featured_image.small;
                     } else {
-                        image = 'https://placehold.it/100x100';
+                        image = this.defaultImage;
                     }
 
                     const className = 'media-ratio-1-1 media-placeholder product-image';

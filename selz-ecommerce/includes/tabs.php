@@ -1,12 +1,14 @@
+<?php $isStore = $instance['type'] == 'store'; ?>
+
 <nav class="nav-tabs">
     <ul role="tablist">
         <li class="active" data-type="button,widget">
-            <a href="#<?php echo $this->slug; ?>-product" id="<?php echo $this->slug; ?>-tab-product" role="tab" aria-controls="<?php echo $this->slug; ?>-product<?php echo $id ?>" aria-selected="true">
+            <a href="#<?php echo $this->slug; ?>-product" id="<?php echo $this->slug; ?>-tab-product" role="tab" aria-controls="<?php echo $this->slug; ?>-product<?php echo $id ?>" aria-selected="<?php echo (!$isStore ? "true" : "false"); ?>">
                 <?php _e( 'Product', $this->lang ); ?>
             </a>
         </li>
         <li>
-            <a href="#<?php echo $this->slug; ?>-options" id="<?php echo $this->slug; ?>-tab-options" role="tab" aria-controls="<?php echo $this->slug; ?>-options<?php echo $id ?>" aria-selected="false">
+            <a href="#<?php echo $this->slug; ?>-options" id="<?php echo $this->slug; ?>-tab-options" role="tab" aria-controls="<?php echo $this->slug; ?>-options<?php echo $id ?>" aria-selected="<?php echo ($isStore ? "true" : "false"); ?>">
                 <?php _e( 'Options', $this->lang ); ?>
             </a>
         </li>
