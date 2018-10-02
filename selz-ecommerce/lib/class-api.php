@@ -319,8 +319,12 @@ class Selz_API {
 	}
 
 	public function is_expired() {
-		if( ((int)get_option( $this->slug . '_api_expires_on' )) < current_time( 'timestamp' ) )
+		if(
+			( get_option( $this->slug . '_api_access_token' ) != '' ) &&
+			( ((int)get_option( $this->slug . '_api_expires_on' )) < current_time( 'timestamp' ) ) )
+		{
 			$this->refresh_token();
+		}
 	}
 
 	public function get_token() {
