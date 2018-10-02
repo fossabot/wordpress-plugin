@@ -234,7 +234,7 @@ final class Selz {
 
 		if ('store' == $args['type'] || $args['type'] == '') {
 			if (!$args['store_link']) {
-				return __('Store URL is empty', $this->lang);
+				return '';
 			}
 
 			$parseurl = parse_url($args['store_link']);
@@ -263,6 +263,10 @@ final class Selz {
 			<noscript><a href="' . $args['link'] . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
 
 		} elseif ('button' == $args['type']) {
+			if (!$args['link']) {
+				return '';
+			}
+
 			if ($args['fluid_width']) {
 				$width = '"100%"';
 			} else if (!$args['auto_width']) {
@@ -272,7 +276,6 @@ final class Selz {
 			$html = '<div data-embed="button">
 			    <script type="text/props">
 			    {
-			        "style": "' . $args['position'] . '",
 			        "action": "' . $args['action'] . '",
 			        "colors": {
 			            "buttons": {
@@ -287,7 +290,7 @@ final class Selz {
 			        '. ( $width ? '"width": ' . $width . ',' : '') . '
 			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
 					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-					"style": ' . $args['style'] . ',
+					"style": "' . $args['style'] . '",
 	                "text": "' . trim($args['button_text']) . '",
 	                "url": "' . trim( $args['link'] ) . '"
 			    }
@@ -297,6 +300,10 @@ final class Selz {
 	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
 
 		} else {
+			if (!$args['link']) {
+				return '';
+			}
+
 			if ($args['fluid_width']) {
 				$width = '"100%"';
 			} else {
