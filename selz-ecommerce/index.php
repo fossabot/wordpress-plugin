@@ -352,7 +352,7 @@ final class Selz {
 			'chbg_color' 		=> '#7959c7',
 			'chtx_color' 		=> '#ffffff',
 			'tab_active'		=> array(0 => true, 1 => false, 2 => false),
-	        'show_logos'        => 'false',
+	        'show_logos'        => '',
 	        'show_description'  => 'true',
 			'intro_text' 		=> '',
 			'outro_text' 		=> '',

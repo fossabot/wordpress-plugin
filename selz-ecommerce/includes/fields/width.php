@@ -6,13 +6,13 @@
     </div>
     <div class="controls">
         <label class="control control-checkbox" data-type="button">
-            <input type="checkbox" name="<?php echo $this->get_field_name( 'auto_width' ); ?>" value="true">
+            <input type="checkbox" name="<?php echo $this->get_field_name( 'auto_width' ); ?>" value="true" <?php checked( $instance['auto_width'], 'true' ); ?>>
             <?php _e( 'Automatic', $this->lang ); ?>
         </label>
     </div>
     <div class="controls">
         <label class="control control-checkbox">
-            <input type="checkbox" name="<?php echo $this->get_field_name( 'fluid_width' ); ?>" value="true">
+            <input type="checkbox" name="<?php echo $this->get_field_name( 'fluid_width' ); ?>" value="true" <?php checked( $instance['fluid_width'], 'true' ); ?>>
             <?php _e( 'Fluid (100%)', $this->lang ); ?>
         </label>
     </div>

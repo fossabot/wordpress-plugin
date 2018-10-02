@@ -30,22 +30,18 @@
                 });
         }
 
-        getValue(name) {
-            const input = this.$form.serializeArray().find(i => i.name === name);
 
-            return input ? input.value : null;
-        }
 
         validate() {
             // Check HTML5 validation
             let valid = this.$form.get(0).checkValidity();
 
             // Get inputs in
-            const kind = this.getValue('kind');
+            const kind = this.form.getValue('kind');
 
             // Because the product list is updated asynchronously, we have to check if there's a checked item manually
             if (kind === 'product') {
-                valid = valid && this.getValue('link') !== null;
+                valid = valid && this.form.getValue('link') !== null;
             }
 
             // Toggle the button

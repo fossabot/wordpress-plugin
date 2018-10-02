@@ -4,7 +4,7 @@
     </div>
     <div class="controls">
         <label for="<?php echo $this->get_field_id( 'show_logos' ); ?>" class="control-checkbox">
-            <input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" <?php checked( $instance[ 'show_logos' ], 'on' ); ?>>
+            <input type="checkbox" id="<?php echo $this->get_field_id( 'show_logos' ); ?>" name="<?php echo $this->get_field_name( 'show_logos' ); ?>" value="true" <?php checked( $instance[ 'show_logos' ], 'true' ); ?>>
             <?php _e( 'Show payment logos', $this->lang ); ?>
         </label>
     </div>

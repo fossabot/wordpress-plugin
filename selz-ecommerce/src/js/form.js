@@ -21,7 +21,7 @@
         }
 
         listeners() {
-            this.$form.on('change', this.selectors.type, () => this.setType());
+            this.$form.on('input', this.selectors.type, () => this.setType());
 
             this.$form.on('input', this.selectors.width, () => this.setWidth());
         }
@@ -34,6 +34,11 @@
             this.setupColorPickers();
 
             this.setupProductList();
+        }
+
+        getValue(name) {
+            const input = this.$form.serializeArray().find(i => i.name === name);
+            return input ? input.value : null;
         }
 
         setupColorPickers() {
@@ -64,7 +69,7 @@
         }
 
         setType() {
-            const type = this.$form.find(this.selectors.type).val();
+            const type = this.getValue('type');
 
             this.$form.find('[data-type]').each((index, element) => {
                 const $element = $(element);
@@ -72,11 +77,15 @@
 
                 disable($element, !types.includes(type));
             });
+
+            this.setWidth();
         }
 
         setWidth() {
+            const type = this.getValue('type');
+
             const $auto = this.$form.find('[name="auto_width"]');
-            const isAuto = $auto.is(':checked');
+            const isAuto = type === 'button' && $auto.is(':checked');
 
             const $fluid = this.$form.find('[name="fluid_width"]');
             const isFluid = $fluid.is(':checked');
