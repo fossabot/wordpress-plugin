@@ -30,10 +30,25 @@
                 });
         }
 
-        validate() {
-            // Because the product list is updated asynchronously, we have to check if there's a checked item manually
-            const valid = Boolean(this.$form.get(0).checkValidity() && this.$form.find('[name="link"]:checked').length);
+        getValue(name) {
+            const input = this.$form.serializeArray().find(i => i.name === name);
 
+            return input ? input.value : null;
+        }
+
+        validate() {
+            // Check HTML5 validation
+            let valid = this.$form.get(0).checkValidity();
+
+            // Get inputs in
+            const kind = this.getValue('kind');
+
+            // Because the product list is updated asynchronously, we have to check if there's a checked item manually
+            if (kind === 'product') {
+                valid = valid && this.getValue('link') !== null;
+            }
+
+            // Toggle the button
             this.$submit.prop('disabled', !valid);
 
             return valid;
@@ -175,7 +190,7 @@
             const inputs = this.$form.serializeArray();
 
             // Get the selected embed type
-            const type = inputs.find(element => element.name === 'type');
+            const type = inputs.find(i => i.name === 'type');
 
             // Fields to ignore
             const ignored = ['kind'];
@@ -204,7 +219,7 @@
             }
 
             // Filter out any unneeded fields
-            const filtered = inputs.filter(input => !ignored.includes(input.name));
+            const filtered = inputs.filter(i => !ignored.includes(i.name));
 
             // Build the props list
             const props = filtered
