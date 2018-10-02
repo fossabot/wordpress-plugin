@@ -266,12 +266,6 @@ final class Selz {
 				return '';
 			}
 
-			if ($args['fluid_width']) {
-				$width = '"100%"';
-			} else if (!$args['auto_width']) {
-				$width = $args['width'];
-			}
-
 			$html = '<div data-embed="button">
 			    <script type="text/props">
 			    {
@@ -286,7 +280,7 @@ final class Selz {
 			                "text": "' . $args['chtx_color'] . '"
 			            }
 			        },
-			        '. ( $width ? '"width": ' . $width . ',' : '') . '
+			        '. ( $args['width'] ? '"width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',' : '') . '
 			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
 					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
 					"style": "' . $args['style'] . '",
@@ -301,12 +295,6 @@ final class Selz {
 		} else {
 			if (!$args['link']) {
 				return '';
-			}
-
-			if ($args['fluid_width']) {
-				$width = '"100%"';
-			} else {
-				$width = $args['width'];
 			}
 
 			$html = '<div data-embed="widget">
@@ -324,7 +312,7 @@ final class Selz {
 			            }
 	                },
 	                "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
-			        "width": ' . $width . ',
+			        "width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',
 			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
 					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
 	                "text": "' . trim($args['button_text']) . '",
