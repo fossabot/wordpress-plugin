@@ -181,6 +181,8 @@
             this.$pager.attr('hidden', !this.hasMore && this.page.number === 1);
             this.$next.attr('disabled', !this.hasMore);
             this.$previous.attr('disabled', this.page.number === 1);
+
+            this.$list.trigger('updated.products');
         }
 
         previous() {

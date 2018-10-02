@@ -68,24 +68,24 @@
             }
         }
 
-        setType() {
-            const type = this.getValue('type');
+        get type() {
+            return this.$form.find(this.selectors.type).val();
+        }
 
+        setType() {
             this.$form.find('[data-type]').each((index, element) => {
                 const $element = $(element);
                 const types = $element.data('type').split(',');
 
-                disable($element, !types.includes(type));
+                disable($element, !types.includes(this.type));
             });
 
             this.setWidth();
         }
 
         setWidth() {
-            const type = this.getValue('type');
-
             const $auto = this.$form.find('[name="auto_width"]');
-            const isAuto = type === 'button' && $auto.is(':checked');
+            const isAuto = this.type === 'button' && $auto.is(':checked');
 
             const $fluid = this.$form.find('[name="fluid_width"]');
             const isFluid = $fluid.is(':checked');

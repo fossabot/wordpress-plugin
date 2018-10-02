@@ -16,6 +16,7 @@
 
             this.loading = false;
             this.shown = false;
+            this.updating = false;
 
             this.listeners();
         }
@@ -30,7 +31,12 @@
                 });
         }
 
+        setUpdateMode(toggle) {
+            this.updating = toggle;
 
+            this.$submit.find('.is-update').attr('hidden', !toggle);
+            this.$submit.find('.is-new').attr('hidden', toggle);
+        }
 
         validate() {
             // Check HTML5 validation
@@ -97,9 +103,13 @@
 
                 this.hide();
             });
+
+            this.$element.on('updated.products', () => {
+                this.validate();
+            });
         }
 
-        load() {
+        load(values = {}) {
             const { ajaxurl, selzvars } = window;
             const { action, nonce } = selzvars;
 
@@ -111,12 +121,22 @@
 
             this.$submit.prop('disabled', true);
 
+            // Get the form data and parsed shortcode
+            const data = $.extend(
+                {},
+                this.$form.serializeArray().reduce((m, o) => {
+                    m[o.name] = o.value;
+                    return m;
+                }, {}),
+                values,
+            );
+
             $.post(
                 ajaxurl,
                 {
                     action,
                     nonce,
-                    data: this.$form.serialize(),
+                    data: $.param(data),
                 },
                 data => {
                     this.$controls.html(data);
@@ -154,6 +174,29 @@
 
             this.setKind(kind);
 
+            // Get current selection
+            const editor = window.tinymce.get(window.wpActiveEditor);
+            const node = editor.selection.getNode();
+            const values = {};
+            let update = false;
+
+            if (node) {
+                const shortcode = node.innerHTML;
+
+                if (shortcode.startsWith(`[${window.selzvars.slug}`)) {
+                    shortcode.match(/[\w-_]+=".+?"/g).forEach(attribute => {
+                        const [, key, value] = attribute.match(/([\w-_]+)="(.+?)"/);
+                        values[key] = value;
+                    });
+
+                    // Updating rather than insert
+                    update = true;
+                }
+            }
+
+            // Update UI and flag
+            this.setUpdateMode(update);
+
             // Inject loader
             $('.selz-modal-controls').html(`
                 <div class="text-center padding-6">
@@ -169,13 +212,17 @@
 
             this.$close.focus();
 
-            this.load();
+            this.load(values);
 
             this.enforceFocus();
         }
 
         insert() {
-            if (!window.tinymce || !this.validate()) {
+            // Get the tiny MCE editor instance
+            const editor = window.tinymce.get(window.wpActiveEditor);
+
+            // If no editor or form not valid
+            if (!editor || !this.validate()) {
                 return;
             }
 
@@ -234,16 +281,17 @@
             // Construct the short code
             const shortcode = `[${window.selzvars.slug} ${props}]`;
 
-            // Get the tiny MCE editor instance
-            const editor = window.tinymce.get(window.wpActiveEditor);
+            // Insert code
+            editor.execCommand('mceBeginUndoLevel');
 
-            if (editor) {
-                window.tinymce.execCommand('mceBeginUndoLevel');
-                window.tinymce.execCommand('mceInsertContent', false, shortcode);
-                window.tinymce.execCommand('mceEndUndoLevel');
+            // Replace or insert
+            if (this.updating) {
+                editor.selection.getNode().innerHTML = shortcode;
+            } else {
+                editor.execCommand('mceInsertContent', false, shortcode);
             }
 
-            window.edInsertContent('', shortcode);
+            editor.execCommand('mceEndUndoLevel');
         }
     }
 

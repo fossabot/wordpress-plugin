@@ -28,7 +28,12 @@
 
 		<footer class="selz-modal-footer">
 			<button type="submit" class="btn btn-primary btn-block" disabled>
-				<?php esc_attr_e( 'Add Shortcode', selz()->lang ); ?>
+				<span class="is-update" hidden>
+					<?php esc_attr_e( 'Update Shortcode', selz()->lang ); ?>
+				</span>
+				<span class="is-new">
+					<?php esc_attr_e( 'Add Shortcode', selz()->lang ); ?>
+				</span>
 			</button>
 		</footer>
 	</form>
