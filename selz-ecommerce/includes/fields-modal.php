@@ -6,9 +6,9 @@
 	<?php if ('store' != $instance['kind']) : ?>
 		<?php include(selz()->dir . 'includes/tabs.php'); ?>
 
-		<?php include(selz()->dir . 'includes/panes/options-modal.php'); ?>
-
 		<?php include(selz()->dir . 'includes/panes/product.php'); ?>
+
+		<?php include(selz()->dir . 'includes/panes/options-modal.php'); ?>
 	<?php endif; ?>
 
 	<?php include(selz()->dir . 'includes/panes/colors.php'); ?>

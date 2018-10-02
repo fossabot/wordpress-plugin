@@ -7,9 +7,9 @@
 <div class="<?php echo $this->slug; ?> <?php echo $this->slug; ?>-widget-controls js-tab-container">
 	<?php include(selz()->dir . 'includes/tabs.php'); ?>
 
-	<?php include(selz()->dir . 'includes/panes/options-widget.php'); ?>
-
 	<?php include(selz()->dir . 'includes/panes/product.php'); ?>
+
+	<?php include(selz()->dir . 'includes/panes/options-widget.php'); ?>
 
 	<?php include(selz()->dir . 'includes/panes/colors.php'); ?>
 </div>
