@@ -67,11 +67,11 @@ class Selz_API {
 			$error_message = $response->get_error_message();
 		} else {
 
-			if( isset( $response['body'] ) && $response['body'] != '' ) {
+			if ( isset( $response['body'] ) && $response['body'] != '' ) {
 
 				$body = json_decode( $response['body'] );
 
-				if( $body->client_id && $body->client_secret ) {
+				if ( $body->client_id && $body->client_secret ) {
 					update_option( $this->slug . '_api_client_id', $body->client_id );
 					update_option( $this->slug . '_api_client_secret', $body->client_secret );
 				}
@@ -115,10 +115,10 @@ class Selz_API {
 
 	public function get_first_token( $current_screen ) {
 		// only load on main plugin page
-		if( $current_screen->id != 'toplevel_page_' . selz()->slug )
+		if ( $current_screen->id != 'toplevel_page_' . selz()->slug )
 			return;
 
-		if(
+		if (
 			( isset( $_GET['page'] ) && $_GET['page'] == $this->slug ) &&
 			( isset( $_GET['code'] ) && $_GET['code'] != '' )
 		) {
@@ -148,7 +148,7 @@ class Selz_API {
 		       $error_message = $response->get_error_message();
 		    } else {
 
-		    	if( isset( $response['body'] ) && $response['body'] != '' ) {
+		    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 
 		    		$body = json_decode( $response['body'] );
 
@@ -193,11 +193,11 @@ class Selz_API {
 	       $error_message = $response->get_error_message();
 	    } else {
 
-	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
+	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 
 	    		$body = json_decode( $response['body'] );
 
-	    		if( $body->access_token ) {
+	    		if ( $body->access_token ) {
 	    			update_option( $this->slug . '_api_access_token', $body->access_token );
 	    			update_option( $this->slug . '_api_refresh_token', $body->refresh_token );
 	    			update_option( $this->slug . '_api_expires_on', current_time( 'timestamp' ) + $body->expires_in );
@@ -234,7 +234,7 @@ class Selz_API {
 	    } else {
 	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
-	    		if( $body ) {
+	    		if ( $body ) {
 	    			update_option( $this->slug . '_store', $body );
 	    		}
     		}
@@ -243,10 +243,8 @@ class Selz_API {
 
 	public function get_store() {
 	    $store = get_option( $this->slug . '_store' );
-	    if( $store ) {
+	    if ( $store ) {
 	    	return $store;
-	    } else {
-
 	    }
 	}
 
@@ -299,9 +297,9 @@ class Selz_API {
 	       $error_message = $response->get_error_message();
 	    } else {
 
-	    	if( isset( $response['body'] ) && $response['body'] != '' ) {
+	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
-	    		if( $body ) {
+	    		if ( $body ) {
 	    			return $body;
 	    		}
     		}
@@ -310,7 +308,7 @@ class Selz_API {
 	}
 
 	public function is_connected() {
-		if(
+		if (
 			( get_option( $this->slug . '_api_access_token' ) != '' ) &&
 			( ((int)get_option( $this->slug . '_api_expires_on' )) >= current_time( 'timestamp' ) ) )
 		{
@@ -319,7 +317,7 @@ class Selz_API {
 	}
 
 	public function is_expired() {
-		if(
+		if (
 			( get_option( $this->slug . '_api_access_token' ) != '' ) &&
 			( ((int)get_option( $this->slug . '_api_expires_on' )) < current_time( 'timestamp' ) ) )
 		{
@@ -371,9 +369,9 @@ class Selz_API {
 			$error_message = $response->get_error_message();
 		 } else {
 
-			 if( isset( $response['body'] ) && $response['body'] != '' ) {
+			 if ( isset( $response['body'] ) && $response['body'] != '' ) {
 				 $body = json_decode( $response['body'] );
-				 if( $body->key ) {
+				 if ( $body->key ) {
 					 return $body->key;
 				 }
 			 }

@@ -33,8 +33,6 @@ class Selz_Widget extends WP_Widget {
 
 		// Set up the widget control options
 		$control_options = array(
-			//'width' => 430,
-			//'height' => 350,
 			'id_base' => $this->slug
 		);
 
@@ -43,11 +41,6 @@ class Selz_Widget extends WP_Widget {
 
 		// Load the widget stylesheet for the widgets admin screen
 		add_action( 'load-widgets.php', array(&$this, 'load_widgets') );
-
-		// Print the user costum style sheet and active widget styles/scripts
-		if ( is_active_widget(false, false, $this->id_base, false ) ) {
-			add_action( 'wp_head', array( &$this, 'print_script') );
-		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
@@ -58,18 +51,6 @@ class Selz_Widget extends WP_Widget {
 	 */
 	function load_widgets() {
 		wp_enqueue_media();
-	}
-
-	/**
-	 * Print the custom style and script
-	 * @since 0.0.1
-	 */
-	function print_script() {
-		$settings = $this->get_settings();
-		foreach ( $settings as $key => $setting ){
-			if ( ! empty( $setting['customstylescript'] ) )
-				echo $setting['customstylescript'];
-		}
 	}
 
 	/**
