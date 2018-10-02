@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
 
 						<p><?php printf(
 							__( 'Connected to %s. %s', selz()->lang ),
-							'<strong>' . $store->owner->email . '</strong>',
+							'<strong>' . $store->display_name . '</strong>',
 							'<a href="' . esc_url( selz()->api->disconnect_url() ) . '">' . __( 'Disconnect', selz()->lang ) . '</a>'
 						); ?></p>
 

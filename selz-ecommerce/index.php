@@ -344,7 +344,7 @@ final class Selz {
 			'style' 			=> 'price-right',
 			'action' 			=> 'add-to-cart',
 			'width' 			=> '',
-			'auto_width' 		=> '',
+			'auto_width' 		=> 'true',
 			'button_text'		=> __('Add to cart', $this->lang),
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#7959c7',
