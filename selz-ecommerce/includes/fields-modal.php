@@ -1,7 +1,5 @@
 <?php $id = (strlen($this->id) > 0 ? "-" . $this->id : ""); ?>
 
-<?php include(selz()->dir . 'includes/fields/store.php'); ?>
-
 <div class="js-tab-container">
 	<?php if ('store' != $instance['kind']) : ?>
 		<?php include(selz()->dir . 'includes/tabs.php'); ?>

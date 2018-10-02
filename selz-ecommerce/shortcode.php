@@ -25,7 +25,6 @@ class Selz_Shortcode {
 			add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
 			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 			add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
-			// add_action( 'admin_print_footer_scripts', array( &$this, 'buttons' ) );
 
 			add_action( 'wp_ajax_' . selz()->slug . '_search_products', array( &$this, 'search_products' ) );
 			add_action( 'wp_ajax_' . selz()->slug . '_get_products', array( &$this, 'get_products' ) );

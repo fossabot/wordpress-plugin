@@ -52,8 +52,6 @@ if (!defined('ABSPATH')) {
 							<?php _e( 'Shopping Cart', selz()->lang ); ?>
 							<small class="help-block"><?php _e( 'Display the shopping cart on all pages of your website.', selz()->lang ); ?></small>
 						</label>
-
-						<?php echo "<input type='hidden' name='" . selz()->slug . "_settings[store_id]' value='{$options['store_id']}'>"; ?>
 					</form>
 
 					<div class="alert margin-top-4 padding-top-3 padding-bottom-3 padding-left-4 padding-right-4 text-center">

@@ -1,1 +1,0 @@
-<input type="hidden" id="<?php echo $this->get_field_id( 'store_link' ); ?>" name="<?php echo $this->get_field_name( 'store_link' ); ?>" value="<?php echo esc_attr( 'https://' . $store->name ); ?>">
