@@ -16,9 +16,13 @@ if (!defined('ABSPATH')) {
 
 						<h4 class="margin-top-4"><?php printf( __( 'Connect your %s account to WordPress', selz()->lang ), selz()->name ); ?></h4>
 
-						<a href="<?php echo esc_url( selz()->api->auth_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4"><?php _e( 'Connect', selz()->lang ); ?></a>
+						<a href="<?php echo esc_url( selz()->api->auth_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4">
+							<?php _e( 'Connect', selz()->lang ); ?>
+						</a>
 
-						<small class="help-block margin-top-4"><?php printf( __( 'You will be redirected to sign into your %s account and accept permissions to allow WordPress to access your %s account', selz()->lang ), selz()->name, selz()->name ); ?></small>
+						<small class="help-block margin-top-4">
+							<?php printf( __( 'You will be redirected to sign into your %s account and accept permissions to allow WordPress to access your %s account', selz()->lang ), selz()->name, selz()->name ); ?>
+						</small>
 
 					<?php } else {
 						$store = selz()->api->get_store();
@@ -67,7 +71,7 @@ if (!defined('ABSPATH')) {
 							<h4 class="margin-bottom-1"><?php printf( __( 'Need a %s account?', selz()->lang ), selz()->name ); ?></h4>
 							<p class="margin-0"><?php printf( __( 'Try %s free for 14 days. No risk and no credit card required.', selz()->lang ), selz()->name ); ?></p>
 						</div>
-						<a href="<?php echo esc_url( selz()->home ); ?>" target="_blank" class="btn btn-primary"><?php _e( 'Start free trial', selz()->lang ); ?></a>
+						<a href="<?php echo esc_url( selz()->signup ); ?>" target="_blank" class="btn btn-primary"><?php _e( 'Start free trial', selz()->lang ); ?></a>
 					</aside>
 				<?php } ?>
 			</div>

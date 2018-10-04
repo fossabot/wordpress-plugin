@@ -1,4 +1,4 @@
-<div class="control-group embed-type">
+<div class="control-group">
     <div class="control-label">
         <label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Type', $this->lang ); ?></label>
     </div>

@@ -1,4 +1,4 @@
-<div class="control-group embed-width" data-type="button,widget">
+<div class="control-group" data-type="button,widget">
     <div class="control-label">
         <p class="faux-label"><?php _e( 'Width', $this->lang ); ?></p>
     </div>

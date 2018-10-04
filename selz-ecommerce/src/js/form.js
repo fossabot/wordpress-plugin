@@ -9,8 +9,6 @@
             this.$form = $form;
 
             this.selectors = {
-                type: '.embed-type select',
-                width: '.embed-width :checkbox',
                 colorPicker: '.js-color-picker',
                 productList: '.js-product-list',
             };
@@ -20,25 +18,46 @@
             this.listeners();
         }
 
-        listeners() {
-            this.$form.on('input', this.selectors.type, () => this.setType());
-
-            this.$form.on('input', this.selectors.width, () => this.setWidth());
-        }
-
-        init() {
-            this.setType();
-
-            this.setWidth();
-
-            this.setupColorPickers();
-
-            this.setupProductList();
+        get(name) {
+            return this.$form.serializeArray().find(i => i.name === name || i.name.endsWith(`[${name}]`));
         }
 
         getValue(name) {
-            const input = this.$form.serializeArray().find(i => i.name === name);
+            const input = this.get(name);
             return input ? input.value : null;
+        }
+
+        listeners() {
+            this.$form.on('input', () => this.handleInput());
+        }
+
+        handleInput() {
+            const type = this.getValue('type');
+
+            // Update type
+            this.$form.find('[data-type]').each((index, element) => {
+                const $element = $(element);
+                const types = $element.data('type').split(',');
+
+                disable($element, !types.includes(type));
+            });
+
+            // Update width options (modal only)
+            const $auto = this.$form.find('[name="auto_width"]');
+            const isAuto = type === 'button' && $auto.is(':checked');
+
+            const $fluid = this.$form.find('[name="fluid_width"]');
+            const isFluid = $fluid.is(':checked');
+
+            const $input = this.$form.find('[name="width"]');
+
+            disable($fluid.parent('.control'), isAuto);
+            disable($input.parent('.control'), isAuto || isFluid);
+
+            // Update the window type
+            const action = this.getValue('action');
+            const $window = this.$form.find(`[name="${this.get('interact').name}"]`).parents('.control-group');
+            $window.attr('hidden', action === 'add-to-cart');
         }
 
         setupColorPickers() {
@@ -68,32 +87,10 @@
             }
         }
 
-        get type() {
-            return this.$form.find(this.selectors.type).val();
-        }
-
-        setType() {
-            this.$form.find('[data-type]').each((index, element) => {
-                const $element = $(element);
-                const types = $element.data('type').split(',');
-
-                disable($element, !types.includes(this.type));
-            });
-
-            this.setWidth();
-        }
-
-        setWidth() {
-            const $auto = this.$form.find('[name="auto_width"]');
-            const isAuto = this.type === 'button' && $auto.is(':checked');
-
-            const $fluid = this.$form.find('[name="fluid_width"]');
-            const isFluid = $fluid.is(':checked');
-
-            const $input = this.$form.find('[name="width"]');
-
-            disable($fluid.parent('.control'), isAuto);
-            disable($input.parent('.control'), isAuto || isFluid);
+        init() {
+            this.handleInput();
+            this.setupColorPickers();
+            this.setupProductList();
         }
     }
 

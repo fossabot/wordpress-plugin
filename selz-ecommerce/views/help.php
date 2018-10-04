@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 		<div class="panel margin-top-4 margin-bottom-2">
 			<div class="padding-4">
 				<h1><?php _e( 'Selz Ecommerce', selz()->lang ); ?></h1>
-				<p><?php printf( __( 'Start selling products online or digital downloads from your WordPress site in minutes. If you don\'t already have a %s account, set one up now at %s', selz()->lang ), selz()->name, '<a href="' . esc_url( selz()->home ) . '">' . selz()->home2 . '</a>' ); ?>.</p>
+				<p><?php printf( __( 'Start selling products online or digital downloads from your WordPress site in minutes. If you don\'t already have a %s account, you can %s', selz()->lang ), selz()->name, '<a href="' . esc_url( selz()->signup ) . '" target="_blank">' . _e( 'open an account', selz()->lang ) . '</a>' ); ?>.</p>
 
 				<h2><?php _e( 'Embed options', selz()->lang ); ?></h2>
 				<p><?php _e( 'You can choose from the following options to embed on your WordPress site:', selz()->lang ); ?></p>

@@ -7,6 +7,8 @@
 
     <?php include(selz()->dir . 'includes/fields/action.php'); ?>
 
+    <?php include(selz()->dir . 'includes/fields/window.php'); ?>
+
     <?php include(selz()->dir . 'includes/fields/text.php'); ?>
 
     <?php include(selz()->dir . 'includes/fields/style.php'); ?>
@@ -14,8 +16,6 @@
     <?php include(selz()->dir . 'includes/fields/description.php'); ?>
 
     <?php include(selz()->dir . 'includes/fields/logos.php'); ?>
-
-    <?php include(selz()->dir . 'includes/fields/window.php'); ?>
 
     <?php include(selz()->dir . 'includes/fields/intro.php'); ?>
 
