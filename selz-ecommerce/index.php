@@ -201,7 +201,7 @@ final class Selz {
 
  		if ( isset( $settings['display_cart'] ) && $settings['display_cart'] == 'on' ) {
  			if ( ! $store || ! $store->name ) {
-				echo '';
+				return '';
 			}
 
  			$html = '<div data-embed="cart">

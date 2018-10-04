@@ -14,6 +14,9 @@ class Selz_Shortcode {
 	function __construct() {
 		$this->shortcode = selz()->slug;
 
+		// Always render shortcode
+		add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
+
 		if ( ! selz()->api->is_connected() ) {
 			add_action( 'admin_notices', array( &$this, 'not_connected' ), 11 );
 		} else {
@@ -24,7 +27,6 @@ class Selz_Shortcode {
 			add_action( 'wp_ajax_selz_form', array( &$this, 'modal_ajax' ) );
 			add_action( 'wp_enqueue_scripts', array( &$this, 'shortcode_head' ), 1 );
 			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
-			add_shortcode( selz()->slug, array( &$this, 'add_shortcode' ) );
 
 			add_action( 'wp_ajax_' . selz()->slug . '_search_products', array( &$this, 'search_products' ) );
 			add_action( 'wp_ajax_' . selz()->slug . '_get_products', array( &$this, 'get_products' ) );
