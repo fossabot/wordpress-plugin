@@ -4,15 +4,15 @@
 
 const fs = require('fs');
 const path = require('path');
+const del = require('del');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const less = require('gulp-less');
 const cleancss = require('gulp-clean-css');
 const imagemin = require('gulp-imagemin');
-const run = require('run-sequence');
 const prefix = require('gulp-autoprefixer');
 
 const root = __dirname;
@@ -51,26 +51,41 @@ const loadJSON = path => {
 // Fetch bundles from JSON
 const bundles = loadJSON(path.join(root, 'bundles.json'));
 
+// Clean out /dist
+gulp.task('clean', done => {
+    del(Object.values(paths.dist).map(dir => path.join(dir, '**/*')));
+    done();
+});
+
 const build = {
     js: files => {
         Object.keys(files).forEach(key => {
-            const name = `js-${key}`;
+            const name = `js:${key}`;
             tasks.js.push(name);
 
             gulp.task(name, () =>
                 gulp
                     .src(bundles.js[key])
+                    .on('error', log)
                     .pipe(concat(key))
                     .pipe(
                         babel({
                             sourceType: 'script',
                             babelrc: false,
-                            presets: ['@babel/env', 'minify'],
+                            presets: [
+                                '@babel/env',
+                                [
+                                    'minify',
+                                    {
+                                        builtIns: false, // Temporary fix for https://github.com/babel/minify/issues/904
+                                    },
+                                ],
+                            ],
                         }),
                     )
                     .pipe(
                         uglify().on('error', error => {
-                            console.log(key, error);
+                            log(key, error);
                         }),
                     )
                     .pipe(gulp.dest(paths.dist.js)),
@@ -79,14 +94,14 @@ const build = {
     },
     less: files => {
         Object.keys(files).forEach(key => {
-            const name = `less-${key}`;
+            const name = `less:${key}`;
             tasks.less.push(name);
 
             gulp.task(name, () =>
                 gulp
                     .src(bundles.less[key])
+                    .on('error', log)
                     .pipe(less())
-                    .on('error', gutil.log)
                     .pipe(concat(key))
                     .pipe(prefix({ cascade: false }))
                     .pipe(
@@ -102,7 +117,7 @@ const build = {
         gulp.task(tasks.images[0], () =>
             gulp
                 .src(paths.src.images)
-                .on('error', gutil.log)
+                .on('error', log)
                 .pipe(
                     imagemin([
                         imagemin.gifsicle({ interlaced: true }),
@@ -124,14 +139,12 @@ build.less(bundles.less);
 build.images();
 
 // Watch for file changes
-gulp.task('watch', () => {
-    // Plyr core
-    gulp.watch(paths.src.js, tasks.js);
-    gulp.watch(paths.src.less, tasks.less);
-    gulp.watch(paths.src.images, tasks.images);
+gulp.task('watch', done => {
+    gulp.watch(paths.src.less, gulp.series(tasks.less));
+    gulp.watch(paths.src.images, gulp.series(tasks.images));
+    gulp.watch(paths.src.js, gulp.series(tasks.js));
+    done();
 });
 
 // Default gulp task
-gulp.task('default', () => {
-    run(tasks.js, tasks.less, tasks.images, 'watch');
-});
+gulp.task('default', gulp.series('clean', tasks.js, tasks.less, tasks.images, 'watch'));
