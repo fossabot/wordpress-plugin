@@ -1,0 +1,30 @@
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+& {
+    font-weight: @font-weight-base;
+    font-family: @font-text;
+    line-height: @line-height-base;
+    color: @color-text;
+    .font-size();
+    .font-smoothing(on);
+}
+
+* {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+strong,
+b {
+    font-weight: @font-weight-strong;
+}
+
+small {
+    .font-size(@font-size-small);
+    color: @gray-light;
+}
+

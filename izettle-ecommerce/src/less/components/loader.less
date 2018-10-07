@@ -1,0 +1,27 @@
+// ==========================================================================
+// Loader spinner
+// ==========================================================================
+
+.loader {
+    display: inline-block;
+    width: @loader-size;
+    height: @loader-size;
+    border: @loader-border-width solid currentColor;
+    border-left-color: @loader-track-color;
+    border-bottom-color: @loader-track-color;
+    animation: izettle-loader 0.5s infinite linear;
+    transform-origin: 50%;
+    border-radius: 50%;
+    color: @loader-border-color;
+
+    // Hide text
+    text-indent: 99em;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0;
+}
+
+@keyframes izettle-loader {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}

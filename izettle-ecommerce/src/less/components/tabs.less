@@ -1,0 +1,55 @@
+// Common tab/pill styles
+// --------------------------------------------
+.nav-tabs {
+    border-bottom: 1px solid @nav-tabs-border-color;
+    padding: 0 (@padding-base / 2);
+
+    ul {
+        display: flex;
+        margin: 0 0 -1px;
+    }
+
+    li {
+        flex: 1;
+        margin: 0 ceil(@padding-base / 10) 0 0;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    a {
+        display: block;
+        width: 100%;
+        padding: (@padding-base / 2);
+        border-bottom: 2px solid transparent;
+        color: @nav-tabs-color;
+        text-align: center;
+        user-select: none;
+
+        &:hover,
+        &.tab-focus {
+            color: @nav-tabs-hover-color;
+            border-color: currentColor;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+
+    [aria-selected='true'] {
+        color: @nav-tabs-active-color;
+        border-color: currentColor;
+    }
+}
+
+.tab-panel {
+    display: none;
+    animation: fade-in 0.2s ease;
+
+    &[aria-hidden='false'] {
+        display: block;
+    }
+}

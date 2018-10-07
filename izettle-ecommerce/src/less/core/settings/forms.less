@@ -1,0 +1,35 @@
+// ==========================================================================
+// Form settings
+// ==========================================================================
+
+@form-horizontal-offset: 140px;
+@form-control-group-border: 1px solid lighten(@border-color-base, 3%);
+
+@input-control-bg: #fff;
+@input-control-border-color: @border-color-base;
+@input-control-border-width: 1px;
+@input-control-shadow: inset 0 1px 1px fade(#000, 5%);
+
+@input-control-padding-vertical: (@padding-base / 2) - @input-control-border-width;
+@input-control-padding-horizontal: (@padding-base * 0.75);
+@input-control-height-base: (
+    @line-height-computed + ((@input-control-padding-vertical + @input-control-border-width) * 2)
+);
+
+@input-control-padding-base-vertical: (@padding-base / 2) - @input-control-border-width;
+@input-control-padding-base-horizontal: (@padding-base * 0.75);
+@input-control-padding-base: @input-control-padding-base-vertical @input-control-padding-base-horizontal;
+@input-control-height-base: (
+    @line-height-computed + ((@input-control-padding-base-vertical + @input-control-border-width) * 2)
+);
+
+@input-control-padding-small-vertical: (@padding-base / 4) - @input-control-border-width;
+@input-control-padding-small-horizontal: (@padding-base * 0.75);
+@input-control-padding-small: @input-control-padding-small-vertical @input-control-padding-small-horizontal;
+@input-control-height-small: (
+    @line-height-computed + ((@input-control-padding-small-vertical + @input-control-border-width) * 2)
+);
+
+@input-control-placeholder-color: @gray-light;
+@input-control-bg-disabled: mix(@gray-xxlight, @off-white);
+@input-control-border-color-focus: @tab-focus-shadow-color-default;

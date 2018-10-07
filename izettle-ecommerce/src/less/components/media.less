@@ -1,0 +1,69 @@
+// ==========================================================================
+// Media
+// ==========================================================================
+
+img {
+    vertical-align: middle;
+    max-width: 100%;
+    transition: opacity .2s ease;
+
+    &.is-loading {
+        opacity: 0;
+    }
+}
+
+.media-placeholder {
+    position: relative;
+    min-height: 32px;
+    background: @image-background;
+    z-index: 1;
+}
+
+.media-aspect-ratio(@x, @y) {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        padding-top: (@x / @y) * 100%;
+    }
+
+    img {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        max-width: none;
+        max-height: none;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    img.is-landscape {
+        width: auto;
+    }
+
+    img.is-portrait {
+        height: auto;
+    }
+}
+
+.media-ratio-1-1 {
+    .media-aspect-ratio(1, 1);
+}
+.media-ratio-4-3 {
+    .media-aspect-ratio(4, 3);
+}
+.media-ratio-6-4 {
+    .media-aspect-ratio(6, 4);
+}
+.media-ratio-16-9 {
+    .media-aspect-ratio(16, 9);
+}
+.media-ratio-21-9 {
+    .media-aspect-ratio(21, 9);
+}
