@@ -10,9 +10,9 @@ do
     path=${dir%*/}
     folder=${path##*/}
 
-    # if [ $folder == "Tools" ] || [ $folder == "node_modules" ]; then
-    #    continue
-    # fi
+    if [ $folder == ".git" ] || [ $folder == ".vscode" ] || [ $folder == "src" ] || [ $folder == "node_modules" ]; then
+        continue
+    fi
 
     file=$folder.zip
 
@@ -27,7 +27,7 @@ do
     cd ${path##*/}
 
     # Build the zip
-    zip -qr ../$file * -x "*node_modules*" "*.git*" "*.DS_Store*" "*src*"
+    zip -qr ../$file * -x "*.DS_Store*"
 
     cd ..
 done
