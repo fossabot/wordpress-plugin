@@ -63,7 +63,6 @@ class Selz_Widget extends WP_Widget {
 		// Set up the arguments for
 		$instance = wp_parse_args( (array) $instance, selz()->default_args() );
 
-
 		// Output the theme's widget wrapper
 		echo $before_widget;
 
@@ -163,7 +162,7 @@ class Selz_Widget extends WP_Widget {
 		if( 'widgets.php' != $hook )
 			return;
 
-		wp_localize_script( $this->slug, $this->slug . 'vars', array(
+		wp_localize_script( $this->slug, $this->slug . '_globals', array(
 			'nonce'		=> wp_create_nonce( $this->slug ),
 			'action'	=> $this->slug . '_widget_form',
 		));

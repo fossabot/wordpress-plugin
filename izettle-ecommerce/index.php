@@ -164,7 +164,7 @@ final class iZettle {
 	 */
 	public function enqueue_scripts() {
 		// Load styles
-		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css', __FILE__ ), $this->version);
+		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css', __FILE__ ), null, $this->version);
 		wp_enqueue_style('wp-color-picker');
 
 		// Scripts

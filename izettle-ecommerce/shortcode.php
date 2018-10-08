@@ -160,10 +160,10 @@ class iZettle_Shortcode {
 		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
 			$product = 'product';
 			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
-			$output .= '<button type="button" class="button js-open-modal" data-type="product" style="padding-left: .2em;">' . $img1 . __( 'Add Product', izettle()->lang ) . '</button>';
+			$output .= '<button type="button" class="button js-open-modal" data-type="product" data-namespace="' . izettle()->slug . '" style="padding-left: .2em;">' . $img1 . __( 'Add Product', izettle()->lang ) . '</button>';
 
 			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
-			$output .= '<button type="button" class="button js-open-modal" data-type="store" style="padding-left: .2em;">' . $img2 . __( 'Add Store', izettle()->lang ) . '</button>';
+			$output .= '<button type="button" class="button js-open-modal" data-type="store" data-namespace="' . izettle()->slug . '" style="padding-left: .2em;">' . $img2 . __( 'Add Store', izettle()->lang ) . '</button>';
 		}
 
 		echo $output;
@@ -182,7 +182,7 @@ class iZettle_Shortcode {
 
 		wp_enqueue_script( izettle()->slug, plugins_url('dist/js/scripts.js'), array('jquery', 'wp-color-picker'), izettle()->version);
 
-		wp_localize_script( izettle()->slug, izettle()->slug . 'vars', array(
+		wp_localize_script( izettle()->slug, izettle()->slug . '_globals', array(
 			'nonce'		=> wp_create_nonce( izettle()->slug ),
 			'action'	=> 'izettle_form',
 			'slug'		=> izettle()->slug

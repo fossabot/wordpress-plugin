@@ -1,4 +1,4 @@
-<div class="selz selz-modal" hidden role="dialog" aria-labelledby="selz-modal-title" aria-describedby="selz-modal-description">
+<div class="selz selz-modal js-selz-modal" hidden role="dialog" aria-labelledby="selz-modal-title" aria-describedby="selz-modal-description">
 	<form class="selz-modal-dialog">
 		<header class="selz-modal-header">
 			<h1 id="selz-modal-title"></h1>
@@ -17,7 +17,7 @@
 			</button>
 		</header>
 
-		<section class="selz-modal-controls">
+		<section class="selz-modal-controls js-selz-modal-controls">
 			<?php if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
 				require_once( selz()->dir . 'modal.php' );
@@ -39,4 +39,4 @@
 	</form>
 </div>
 
-<div class="selz-modal-backdrop" aria-hidden="true" hidden></div>
+<div class="selz-modal-backdrop js-selz-modal-backdrop" aria-hidden="true" hidden></div>

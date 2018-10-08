@@ -1,4 +1,4 @@
-<div class="izettle izettle-modal" hidden role="dialog" aria-labelledby="izettle-modal-title" aria-describedby="izettle-modal-description">
+<div class="izettle izettle-modal js-izettle-modal" hidden role="dialog" aria-labelledby="izettle-modal-title" aria-describedby="izettle-modal-description">
 	<form class="izettle-modal-dialog">
 		<header class="izettle-modal-header">
 			<h1 id="izettle-modal-title"></h1>
@@ -17,7 +17,7 @@
 			</button>
 		</header>
 
-		<section class="izettle-modal-controls">
+		<section class="izettle-modal-controls js-izettle-modal-controls">
 			<?php if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
 				require_once( izettle()->dir . 'modal.php' );
@@ -39,4 +39,4 @@
 	</form>
 </div>
 
-<div class="izettle-modal-backdrop" aria-hidden="true" hidden></div>
+<div class="izettle-modal-backdrop js-izettle-modal-backdrop" aria-hidden="true" hidden></div>

@@ -1,47 +1,18 @@
 // ==========================================================================
-// Plugin styles
+// iZettle plugin styles
 // ==========================================================================
 
-// Core
+// Settings
+@import "../../../src/less/core/settings";
 @import "core/settings";
-@import "core/mixins";
+
+// Mixins
+@import "../../../src/less/core/mixins";
+
+// Global bundle
+.izettle {
+    @import "../../../src/less/bundle";
+}
 
 // Type
 @import "type/zent";
-@import "components/icons";
-
-// Opt-in via classname
-.izettle {
-    @import "base";
-
-    // Type
-    @import "type/base";
-    @import "type/headings";
-    @import "type/links";
-
-    // Layouts
-    @import "layout/containers";
-
-    // Components
-    @import "components/alerts";
-    @import "components/buttons";
-    @import "components/forms/base";
-    @import "components/forms/range";
-    @import "components/forms/search";
-    @import "components/media";
-    @import "components/loader";
-    @import "components/panels";
-    @import "components/products";
-    @import "components/tabs";
-
-    // Helpers
-    @import "utils/color";
-    @import "utils/hidden";
-    @import "utils/spacing";
-    @import "utils/type";
-}
-
-@import "custom/modal";
-@import "custom/help";
-@import "custom/settings";
-@import "custom/widget";

@@ -160,10 +160,10 @@ class Selz_Shortcode {
 		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
 			$product = 'product';
 			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
-			$output .= '<button type="button" class="button js-open-modal" data-type="product" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</button>';
+			$output .= '<button type="button" class="button js-open-modal" data-type="product" data-namespace="' . selz()->slug . '" style="padding-left: .2em;">' . $img1 . __( 'Add Product', selz()->lang ) . '</button>';
 
 			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
-			$output .= '<button type="button" class="button js-open-modal" data-type="store" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</button>';
+			$output .= '<button type="button" class="button js-open-modal" data-type="store" data-namespace="' . selz()->slug . '" style="padding-left: .2em;">' . $img2 . __( 'Add Store', selz()->lang ) . '</button>';
 		}
 
 		echo $output;
@@ -182,7 +182,7 @@ class Selz_Shortcode {
 
 		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js'), array('jquery', 'wp-color-picker'), selz()->version);
 
-		wp_localize_script( selz()->slug, selz()->slug . 'vars', array(
+		wp_localize_script( selz()->slug, selz()->slug . '_globals', array(
 			'nonce'		=> wp_create_nonce( selz()->slug ),
 			'action'	=> 'selz_form',
 			'slug'		=> selz()->slug
