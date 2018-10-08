@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
 							'<a href="' . esc_url( izettle()->api->disconnect_url() ) . '">' . __( 'Disconnect', izettle()->lang ) . '</a>'
 						); ?></p>
 
-						<a href="<?php echo esc_url( izettle()->home ); ?>dashboard/" target="_blank" class="btn"><?php _e( 'Go to iZettle dashboard', izettle()->lang ); ?></a>
+						<a href="<?php echo esc_url( izettle()->dashboard ); ?>" target="_blank" class="btn"><?php _e( 'Go to dashboard', izettle()->lang ); ?></a>
 					<?php } ?>
 				</div>
 
@@ -68,7 +68,7 @@ if (!defined('ABSPATH')) {
 				<?php } else { ?>
 					<aside class="padding-top-4">
 						<div>
-							<h4 class="margin-bottom-1"><?php printf( __( 'Need a %s account?', izettle()->lang ), izettle()->name ); ?></h4>
+							<h4 class="margin-bottom-1"><?php printf( __( 'Need an %s account?', izettle()->lang ), izettle()->name ); ?></h4>
 							<p class="margin-0"><?php printf( __( 'Try %s free for 14 days. No risk and no credit card required.', izettle()->lang ), izettle()->name ); ?></p>
 						</div>
 						<a href="<?php echo esc_url( izettle()->signup ); ?>" target="_blank" class="btn btn-primary"><?php _e( 'Start free trial', izettle()->lang ); ?></a>

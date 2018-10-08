@@ -21,20 +21,36 @@
 @gray-xxxlight: #dbe3e8;
 @off-white: #f7f8fa;
 
+// Primary
+@color-magnetic-blue: #283663;
+
+// Secondary
+@color-lilac: #a391e0;
+@color-salmon: #f5826b;
+@color-mint-green: #89d6a3;
+@color-silicon-gray: #dcdcdc;
+
+// Tertiary
+@color-magnetic-blue-light: #2a4b89;
+@color-lilac-light: #b5a8e5;
+@color-salmon-light: #ffa08e;
+@color-mint-green-light: #a6e3ba;
+@color-silicon-gray-light: #ebebeb;
+
 // Brand
-@color-brand-primary: #7959c7;
-@color-brand-secondary: #bc4166;
+@color-brand-primary: @color-magnetic-blue;
+@color-brand-secondary: @color-mint-green;
 
 // UI
-@color-ui-primary: @green;
-@color-ui-secondary: @gray-light;
+@color-ui-primary: #60cb83;
+@color-ui-secondary: @color-magnetic-blue;
 
 // Links
 @color-link: @color-ui-primary;
 
-// Text
-@color-text: @gray-xdark;
-@color-headings: @gray-xxdark;
+// Color
+@color-text: @color-magnetic-blue;
+@color-headings: @color-text;
 
 // Media
 @image-background: @gray-xxxlight;
@@ -44,4 +60,4 @@
 @component-hover-color: @gray-xxdark;
 @component-hover-background: @off-white;
 @component-active-color: #fff;
-@component-active-background: @color-ui-primary;
+@component-active-background: @gray-dark;

@@ -23,15 +23,15 @@ if (!defined('ABSPATH'))
  */
 final class iZettle {
 
-	public $version = '1.9.0';
-	public $dir 	= '';
-	public $url 	= '';
-	public $name 	= 'iZettle';
-	public $slug 	= 'izettle';
-	public $lang 	= 'izettle-ecommerce';
-	public $home 	= 'https://izettle.com/';
-	public $signup 	= 'https://izettle.com/account/signup';
-	public $embed 	= 'https://embeds.izettlestatic.com/1/loader.js';
+	public $version 	= '1.9.0';
+	public $dir 		= '';
+	public $url 		= '';
+	public $name 		= 'iZettle';
+	public $slug 		= 'izettle';
+	public $lang 		= 'izettle-ecommerce';
+	public $dashboard 	= 'https://my.izettle.com/';
+	public $signup 		= 'https://www.izettle.com/';
+	public $embed 		= 'https://embeds.selzstatic.com/1/loader.js';
 
 	/**
 	 * The single instance of the class.
@@ -136,7 +136,7 @@ final class iZettle {
 	        'manage_options',
 	        $this->slug,
 	        array( $this, 'settings_page' ),
-	        plugins_url('dist/img/png/icon.png', __FILE__ ),
+	        plugins_url('dist/img/svg/icon.svg', __FILE__ ),
 	        2
 	    );
 
@@ -348,9 +348,9 @@ final class iZettle {
 			'auto_width' 		=> 'true',
 			'button_text'		=> __('Add to cart', $this->lang),
 			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#7959c7',
-			'link_color' 		=> '#7959c7',
-			'chbg_color' 		=> '#7959c7',
+			'background_color' 	=> '#6aca89',
+			'link_color' 		=> '#6aca89',
+			'chbg_color' 		=> '#6aca89',
 			'chtx_color' 		=> '#ffffff',
 			'tab_active'		=> array(0 => true, 1 => false, 2 => false),
 	        'show_logos'        => '',

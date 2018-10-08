@@ -136,7 +136,7 @@ final class Selz {
 	        'manage_options',
 	        $this->slug,
 	        array( $this, 'settings_page' ),
-	        plugins_url('dist/img/png/icon.png', __FILE__ ),
+	        plugins_url('dist/img/svg/icon.svg', __FILE__ ),
 	        2
 	    );
 
