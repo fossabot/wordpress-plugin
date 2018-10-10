@@ -11,7 +11,7 @@ Easily add ecommerce and a smooth shopping cart to your WordPress site. The most
 
 == Description ==
 
-Add your products to your existing WordPress website by using our simple ecommerce plugin. Embed beautiful and customizable buy buttons, widgets or your whole store. Your visitors won't have to leave your site to purchase. The best part is, you don’t have to mess with any coding.
+Turn your existing WordPress site into a fully featured ecommerce site with our simple, free ecommerce plugin. You can embed beautiful, customizable buy now buttons and product widgets or even embed your whole store. You can display a permanent shopping cart in your site and allow customers to add multiple items as they browse around. Your customers don’t have to leave your site to complete the purchases at the checkout. Best of all, it’s super-simple and requires no coding. Just add the plugin and go.
 
 - Use with any WordPress theme
 - Powerful and easy to use apps and features are also available including a full-featured shopping cart
@@ -19,25 +19,22 @@ Add your products to your existing WordPress website by using our simple ecommer
 - Built-in fully integrated payments, accept all major credit cards
 - Free SSL certificate
 
+### Requirements
+
+An iZettle Go+ account
+
 ### How it works
 
-Check out our video to see how easy it is to add iZettle products to your WordPress site.
+Check out our video to see how easy it is to start selling products from your WordPress site.
 
 [vimeo https://vimeo.com/236647778]
 
 ### Key Features
 
-- Add an online store to your WordPress site with no coding
-- Sell physical products, digital downloads or even services directly from your existing website
-- Automated secure download links for digital items
-- Realtime shipping rates are available for physical products
-- Full-featured Shopping Cart on the Standard and Pro monthly plans
-- Three plans to choose from with pricing starting at just $11.50/month
-- Social commerce
-- App Store
-- One click sharing and selling on Facebook, Twitter and Pinterest
-
-#### Join more than 100,000 sellers
+- Add buy buttons, product widgets or a whole store to your WordPress site with no coding
+- Customers checkout on your site
+- Optional fully featured shopping cart permanently available to the customer with multiple items
+- Synchronised to your iZettle account and inventory
 
 == Installation ==
 
@@ -45,41 +42,39 @@ You can use the built in installer and upgrader, or you can install the plugin m
 
 ### Automatic Installation
 
-1. Install directly from your Dashboard (Plugins > Add New). Just search for "izettle".
+1. Install directly from your Dashboard (Plugins > Add New). Just search for "izettle ecommerce".
 
 ### Manual Installation
 
 1. Download the plugin zip file to your computer
 2. Navigate to to the 'Plugins' page in the WordPress Dashboard
-3. Select 'Add New > Upload > Choose File' and select the iZettle zip file
+3. Select 'Add New > Upload > Choose File' and select the 'izettle-ecommerce.zip' file
 
-Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your Visual editor to add to your post or page.
+Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your visual editor to add to your post or page.
 
 == Frequently Asked Questions ==
 
-### What is iZettle?
+### What is Selz?
 
-Our mission is to make it incredibly simple for you to sell what you do and get paid. iZettle requires no programming skills, we handle all aspects of selling and getting paid and it takes only moments to set up. We are constantly adding new features to help creative entrepreneurs like you realize their potential. For more info visit the [iZettle website](https://izettle.com)
+Our mission is to make it incredibly simple for you to sell what you do and get paid. Selz requires no programming skills, we handle all aspects of selling and getting paid and it takes only moments to set up. We are constantly adding new features to help creative entrepreneurs like you realize their potential. For more info visit the [Selz website](https://selz.com)
 
-### Will iZettle work with my theme?
+### Will it work with my theme?
 
-Yes, iZettle will work with any theme. You can also add a logo to the checkout page and customize your button, widget or store colors to match your website or blog.
-
-### How do I get paid?
-
-No need to use extra accounts or to integrate a payment gateway. We will process all major credit cards for you, plus PayPal transactions, and pay your funds direct to your bank account. Easy.
+Yes, the plugin will work with any theme. You can also customize your button, widget or store colors to match your website or blog.
 
 ### I have more questions, who do I contact?
 
-If you have queries, you can contact us here at [help@izettle.com](mailto:help@izettle.com)
+If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
 
 == Screenshots ==
 
-1. The short code generator
+1. Add products easily
+
+1. Optional shopping cart permanently displayed
 
 == Changelog ==
 = 1.9.0 =
-- Connect your iZettle account to automatically list your products and store details
+- Connect your Selz account to automatically list your products and store details
 = 1.8.2 =
 - Fixed issue with button text not showing correctly
 = 1.8.1 =
@@ -121,7 +116,7 @@ If you have queries, you can contact us here at [help@izettle.com](mailto:help@i
 = 1.6.0 =
 - Compatibility fixes for 4.3, added checkout colors, UI tweaks
 = 1.5.1 =
-- Added the ability to embed your iZettle store
+- Added the ability to embed your Selz store
 = 1.5 =
 - WordPress 3.9 compatibility fixes (note: not backwards compatible)
 = 1.4.1 =
