@@ -157,7 +157,12 @@ const build = {
                             imagemin.jpegtran({ progressive: true }),
                             imagemin.optipng({ optimizationLevel: 5 }),
                             imagemin.svgo({
-                                plugins: [{ removeDesc: true }],
+                                plugins: [
+                                    {
+                                        removeDesc: true,
+                                        removeViewBox: false,
+                                    },
+                                ],
                             }),
                         ]),
                     )
