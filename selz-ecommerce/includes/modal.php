@@ -1,7 +1,7 @@
 <div class="selz selz-modal js-selz-modal" hidden role="dialog" aria-labelledby="selz-modal-title" aria-describedby="selz-modal-description">
 	<form class="selz-modal-dialog">
 		<header class="selz-modal-header">
-			<h1 id="selz-modal-title"></h1>
+			<h1 id="selz-modal-title">&nbsp;</h1>
 
 			<p id="selz-modal-description" class="sr-only">
 				<?php _e('Configure the options for your embed', selz()->lang ); ?>

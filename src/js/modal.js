@@ -13,6 +13,7 @@
             this.$controls = $(`.js-${namespace}-modal-controls`);
             this.$close = this.$element.find('[data-modal="close"]');
 
+            this.form = null;
             this.$form = this.$element.find('form');
             this.$submit = this.$form.find(':submit');
 
@@ -41,6 +42,11 @@
         }
 
         validate() {
+            // IE11 fires this too early
+            if (this.form === null) {
+                return false;
+            }
+
             // Check HTML5 validation
             let valid = this.$form.get(0).checkValidity();
 
@@ -118,6 +124,8 @@
             if (this.loading || $.type(ajaxurl) !== 'string' || !ajaxurl.length) {
                 return;
             }
+
+            this.setTitle('Loading...');
 
             this.loading = true;
 

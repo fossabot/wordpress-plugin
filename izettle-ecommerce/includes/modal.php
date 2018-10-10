@@ -1,7 +1,7 @@
 <div class="izettle izettle-modal js-izettle-modal" hidden role="dialog" aria-labelledby="izettle-modal-title" aria-describedby="izettle-modal-description">
 	<form class="izettle-modal-dialog">
 		<header class="izettle-modal-header">
-			<h1 id="izettle-modal-title"></h1>
+			<h1 id="izettle-modal-title">&nbsp;</h1>
 
 			<p id="izettle-modal-description" class="sr-only">
 				<?php _e('Configure the options for your embed', izettle()->lang ); ?>

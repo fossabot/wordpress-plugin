@@ -6,6 +6,7 @@
         "scripts.js": [
             "src/js/vendor/polyfills/array.prototype.includes.js",
             "src/js/vendor/polyfills/array.prototype.find.js",
+            "src/js/vendor/polyfills/string.prototype.endsWith.js",
             "src/js/vendor/webkit-lowerfill.js",
             "src/js/utils.js",
             "src/js/tab-focus.js",
