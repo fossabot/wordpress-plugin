@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="control-group">
+<div class="control-group" data-type="store">
     <div class="control-label">
         <label for="<?php echo $this->get_field_id( 'link_color' ); ?>"><?php _e( 'Links', $this->lang ); ?></label>
     </div>
