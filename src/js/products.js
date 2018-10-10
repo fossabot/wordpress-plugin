@@ -26,6 +26,20 @@
 
     class ProductList {
         constructor($element, namespace, options) {
+            this.config = $.extend(
+                true,
+                {
+                    limit: 50,
+                    classNames: {
+                        landscape: 'is-landscape',
+                        portrait: 'is-portrait',
+                        square: 'is-square',
+                        loading: 'is-loading',
+                    },
+                },
+                options,
+            );
+
             this.$element = $element;
             this.namespace = namespace;
             this.$list = $element.find('.product-list');
@@ -47,20 +61,6 @@
 
             // Browsing
             this.last = null;
-
-            this.config = $.extend(
-                true,
-                {
-                    limit: 50,
-                    classNames: {
-                        landscape: 'is-landscape',
-                        portrait: 'is-portrait',
-                        square: 'is-square',
-                        loading: 'is-loading',
-                    },
-                },
-                options,
-            );
 
             this.listeners();
         }

@@ -8,6 +8,10 @@
         constructor($form, namespace) {
             this.$form = $form;
 
+            // Don't bind twice
+            if (this.$form.isSetup) return;
+            this.$form.isSetup = true;
+
             this.namespace = namespace;
 
             this.selectors = {

@@ -1,31 +1,17 @@
 ($ => {
-    const openWidget = () => {
+    const setup = () => {
         $('.widgets-sortables > div').each((index, element) => {
             const $widget = $(element);
             const id = $widget.attr('id');
-            const hook = 'is-setup';
+            const namespaces = ['selz', 'izettle'];
 
             if (id !== undefined) {
-                if ($widget.hasClass(hook)) {
-                    return;
-                }
-
-                if (id.indexOf('selz') !== -1) {
-                    // eslint-disable-next-line
-                    new window.PluginForm($widget.find('form'), 'selz');
-                }
-
-                if (id.indexOf('izettle') !== -1) {
-                    // eslint-disable-next-line
-                    new window.PluginForm($widget.find('form'), 'izettle');
-                }
-
-                $widget.addClass(hook);
+                namespaces
+                    .filter(i => id.includes(i))
+                    .forEach(namespace => new window.PluginForm($widget.find('form'), namespace));
             }
         });
     };
 
-    $(document).on('ready widget-added widget-updated', () => {
-        openWidget();
-    });
+    $(document).on('ready widget-added widget-updated', setup);
 })(jQuery);

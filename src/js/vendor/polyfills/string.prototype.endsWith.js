@@ -3,6 +3,7 @@ if (!String.prototype.endsWith) {
         if (this_len === undefined || this_len > this.length) {
             this_len = this.length;
         }
+
         return this.substring(this_len - search.length, this_len) === search;
     };
 }
