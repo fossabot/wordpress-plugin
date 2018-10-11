@@ -18,6 +18,7 @@
             this.$submit = this.$form.find(':submit');
 
             this.loading = false;
+            this.loaded = false;
             this.shown = false;
             this.updating = false;
 
@@ -118,12 +119,25 @@
         }
 
         load(values = {}) {
-            const { ajaxurl } = window;
-            const { action, nonce } = window[`${this.namespace}_globals`];
-
-            if (this.loading || $.type(ajaxurl) !== 'string' || !ajaxurl.length) {
+            if (this.loading || this.loaded) {
                 return;
             }
+
+            // Inject loader
+            $(`.${this.namespace}-modal-controls`).html(`
+                <div class="text-center padding-6">
+                    <span class="loader" aria-hidden="true"></span>
+                    <p class="margin-0 margin-top-2">Loading&hellip;</p>
+                </div>
+            `);
+
+            const { ajaxurl } = window;
+
+            if ($.type(ajaxurl) !== 'string' || !ajaxurl.length) {
+                return;
+            }
+
+            const { action, nonce } = window[`${this.namespace}_globals`];
 
             this.setTitle('Loading...');
 
@@ -154,6 +168,7 @@
                     this.setTitle(this.$controls.find('legend').html());
 
                     this.loading = false;
+                    this.loaded = true;
 
                     this.form = new window.PluginForm(this.$form, this.namespace);
 
@@ -184,37 +199,32 @@
 
             this.setKind(kind);
 
-            // Get current selection
+            // Get current editor and selection values
             const editor = window.tinymce.get(window.wpActiveEditor);
-            const node = editor.selection.getNode();
-            const values = {};
             let update = false;
+            const values = {};
 
-            if (node) {
-                const shortcode = node.innerHTML;
-                const { slug } = window[`${this.namespace}_globals`];
+            if (editor) {
+                const node = editor.selection.getNode();
 
-                if (shortcode.startsWith(`[${slug}`)) {
-                    shortcode.match(/[\w-_]+=".+?"/g).forEach(attribute => {
-                        const [, key, value] = attribute.match(/([\w-_]+)="(.+?)"/);
-                        values[key] = value;
-                    });
+                if (node) {
+                    const shortcode = node.innerHTML;
+                    const { slug } = window[`${this.namespace}_globals`];
 
-                    // Updating rather than insert
-                    update = true;
+                    if (shortcode.startsWith(`[${slug}`)) {
+                        shortcode.match(/[\w-_]+=".+?"/g).forEach(attribute => {
+                            const [, key, value] = attribute.match(/([\w-_]+)="(.+?)"/);
+                            values[key] = value;
+                        });
+
+                        // Updating rather than insert
+                        update = true;
+                    }
                 }
             }
 
             // Update UI and flag
             this.setUpdateMode(update);
-
-            // Inject loader
-            $(`.${this.namespace}-modal-controls`).html(`
-                <div class="text-center padding-6">
-                    <span class="loader" aria-hidden="true"></span>
-                    <p class="margin-0 margin-top-2">Loading&hellip;</p>
-                </div>
-            `);
 
             this.shown = true;
 

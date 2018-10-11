@@ -30,7 +30,7 @@ final class iZettle {
 	public $slug 		= 'izettle';
 	public $lang 		= 'izettle-ecommerce';
 	public $dashboard 	= 'https://my.izettle.com/';
-	public $signup 		= 'https://www.izettle.com/';
+	public $signup 		= 'https://www.izettle.com/gb/sell-online';
 	public $embed 		= 'https://embeds.selzstatic.com/1/loader.js';
 
 	/**
