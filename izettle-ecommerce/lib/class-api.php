@@ -4,8 +4,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class iZettle_API {
-	private $auth_url 		= 'https://izettle.com/wp';
-	private $api_url 		= 'https://api.izettle.com';
+	private $auth_url 		= 'https://selz.com/wp';
+	private $api_url 		= 'https://api.selz.com';
 	private $redirect 		= '';
 
 	public function __construct() {
