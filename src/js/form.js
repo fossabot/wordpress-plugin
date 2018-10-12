@@ -5,11 +5,11 @@
     };
 
     class Form {
-        constructor($form, namespace) {
+        constructor($form, namespace, force = false) {
             this.$form = $form;
 
             // Don't bind twice
-            if (this.$form.isSetup) return;
+            if (!force && this.$form.isSetup) return;
             this.$form.isSetup = true;
 
             this.namespace = namespace;

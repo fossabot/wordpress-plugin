@@ -18,7 +18,6 @@
             this.$submit = this.$form.find(':submit');
 
             this.loading = false;
-            this.loaded = false;
             this.shown = false;
             this.updating = false;
 
@@ -119,7 +118,7 @@
         }
 
         load(values = {}) {
-            if (this.loading || this.loaded) {
+            if (this.loading) {
                 return;
             }
 
@@ -168,9 +167,8 @@
                     this.setTitle(this.$controls.find('legend').html());
 
                     this.loading = false;
-                    this.loaded = true;
 
-                    this.form = new window.PluginForm(this.$form, this.namespace);
+                    this.form = new window.PluginForm(this.$form, this.namespace, true);
 
                     this.validate();
                 },
