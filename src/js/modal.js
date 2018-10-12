@@ -248,43 +248,11 @@
             // Close modal
             this.hide();
 
-            // Get inputs in
-            const inputs = this.$form.serializeArray();
-
-            // Get the selected embed type
-            const type = inputs.find(i => i.name === 'type');
-
-            // Fields to ignore
-            const ignored = ['kind'];
-
-            // Add fields based on type
-            if (type === 'store') {
-                ignored.push(
-                    'action',
-                    'button_text',
-                    'show_description',
-                    'show_logos',
-                    'interact',
-                    'link',
-                    'width',
-                    'auto_width',
-                    'fluid_width',
-                );
-            } else {
-                ignored.push('store_link', 'link_color');
-
-                if (type === 'button') {
-                    ignored.push('show_description');
-                } else if (type === 'widget') {
-                    ignored.push('auto_width');
-                }
-            }
-
-            // Filter out any unneeded fields
-            const filtered = inputs.filter(i => !ignored.includes(i.name));
+            // Get inputs and filter out any ignored
+            const inputs = this.$form.serializeArray().filter(i => !['kind'].includes(i.name));
 
             // Build the props list
-            const props = filtered
+            const props = inputs
                 .map(input => {
                     let { name, value } = input;
 
