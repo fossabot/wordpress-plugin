@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 
 						<h4 class="margin-top-4"><?php printf( __( 'Connect your %s account to WordPress', izettle()->lang ), izettle()->name ); ?></h4>
 
-						<a href="<?php echo esc_url( izettle()->api->auth_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4">
+						<a href="<?php echo esc_url( izettle()->api->connect_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4">
 							<?php _e( 'Connect', izettle()->lang ); ?>
 						</a>
 

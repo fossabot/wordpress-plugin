@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 
 						<h4 class="margin-top-4"><?php printf( __( 'Connect your %s account to WordPress', selz()->lang ), selz()->name ); ?></h4>
 
-						<a href="<?php echo esc_url( selz()->api->auth_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4">
+						<a href="<?php echo esc_url( selz()->api->connect_url() ); ?>" class="btn btn-primary padding-left-4 padding-right-4">
 							<?php _e( 'Connect', selz()->lang ); ?>
 						</a>
 
