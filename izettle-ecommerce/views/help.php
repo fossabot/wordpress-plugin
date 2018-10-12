@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 		<div class="panel margin-top-4 margin-bottom-2">
 			<div class="padding-4">
 				<h1><?php _e( 'iZettle Ecommerce', izettle()->lang ); ?></h1>
-				<p><?php printf( __( 'Start selling products online or digital downloads from your WordPress site in minutes. If you don\'t already have a %s account, you can %s', izettle()->lang ), izettle()->name, '<a href="' . esc_url( izettle()->signup ) . '" target="_blank">' . _e( 'open an account', izettle()->lang ) . '</a>' ); ?>.</p>
+				<p><?php printf( __( 'Start selling products online or digital downloads from your WordPress site in minutes. If you don\'t already have an %s account, you can %s.', izettle()->lang ), izettle()->name, '<a href="' . esc_url( izettle()->signup ) . '" target="_blank">' . __( 'open an account', izettle()->lang ) . '</a>' ); ?></p>
 
 				<h2><?php _e( 'Embed options', izettle()->lang ); ?></h2>
 				<p><?php _e( 'You can choose from the following options to embed on your WordPress site:', izettle()->lang ); ?></p>
