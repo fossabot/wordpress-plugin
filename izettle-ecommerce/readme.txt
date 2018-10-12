@@ -1,4 +1,4 @@
-=== iZettle WordPress Ecommerce ===
+=== iZettle E-commerce ===
 Contributors: iZettle
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 4.0
@@ -42,7 +42,7 @@ You can use the built in installer and upgrader, or you can install the plugin m
 
 ### Automatic Installation
 
-1. Install directly from your Dashboard (Plugins > Add New). Just search for "izettle ecommerce".
+1. Install directly from your Dashboard (Plugins > Add New). Just search for "izettle e-commerce".
 
 ### Manual Installation
 
@@ -53,10 +53,6 @@ You can use the built in installer and upgrader, or you can install the plugin m
 Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your visual editor to add to your post or page.
 
 == Frequently Asked Questions ==
-
-### What is Selz?
-
-Our mission is to make it incredibly simple for you to sell what you do and get paid. Selz requires no programming skills, we handle all aspects of selling and getting paid and it takes only moments to set up. We are constantly adding new features to help creative entrepreneurs like you realize their potential. For more info visit the [Selz website](https://selz.com)
 
 ### Will it work with my theme?
 

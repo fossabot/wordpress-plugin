@@ -53,10 +53,6 @@ Once the plugin has been activated you will have "Add Product" and "Add Store" b
 
 == Frequently Asked Questions ==
 
-### What is Selz?
-
-Our mission is to make it incredibly simple for you to sell what you do and get paid. Selz requires no programming skills, we handle all aspects of selling and getting paid and it takes only moments to set up. We are constantly adding new features to help creative entrepreneurs like you realize their potential. For more info visit the [Selz website](https://selz.com)
-
 ### Will it work with my theme?
 
 Yes, the plugin will work with any theme. You can also customize your button, widget or store colors to match your website or blog.
