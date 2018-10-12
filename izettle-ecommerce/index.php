@@ -3,7 +3,7 @@
     Plugin Name: iZettle E-commerce
     Plugin URI: https://izettle.com/features/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.9.0
+    Version: 1.0.0
     Author: izettle.com
     Author URI: https://izettle.com/features/wordpress-ecommerce
     License: MIT
@@ -23,7 +23,7 @@ if (!defined('ABSPATH'))
  */
 final class iZettle {
 
-	public $version 	= '1.9.0';
+	public $version 	= '1.0.0';
 	public $dir 		= '';
 	public $url 		= '';
 	public $name 		= 'iZettle';
@@ -97,7 +97,7 @@ final class iZettle {
 
 	/**
 	 * Delete plugin data on activation
-	 * @since 1.9.0
+	 * @since 1.0.0
 	 */
 	public function deactivation_hook() {
 		delete_option( $this->slug . '_version' );
