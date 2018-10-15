@@ -2,7 +2,7 @@
 	<div class="izettle-modal-container">
 		<form class="izettle-modal-dialog">
 			<header class="izettle-modal-header">
-				<h1 id="izettle-modal-title"><?php _e( 'Loading', selz()->lang ) ?>&hellip;</h1>
+				<h1 id="izettle-modal-title"><?php _e( 'Loading', izettle()->lang ) ?>&hellip;</h1>
 
 				<p id="izettle-modal-description" class="sr-only">
 					<?php _e('Configure the options for your embed', izettle()->lang ); ?>
