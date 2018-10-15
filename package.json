@@ -4,6 +4,7 @@
     "description": "Ecommerce for WordPress",
     "homepage": "https://selz.com",
     "main": "gulpfile.js",
+    "browserslist": "> 0.25%, not dead",
     "dependencies": {},
     "devDependencies": {
         "@babel/core": "^7.1.2",

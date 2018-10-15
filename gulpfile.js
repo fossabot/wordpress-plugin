@@ -75,7 +75,7 @@ const build = {
             const name = `js:${key}`;
             tasks.js.push(name);
 
-            gulp.task(name, done =>
+            gulp.task(name, () =>
                 gulp
                     .src(bundles.js[key])
                     .on('error', log)
