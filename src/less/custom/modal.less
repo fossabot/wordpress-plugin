@@ -42,6 +42,7 @@
     display: flex;
     align-items: center;
     z-index: (@modal-zindex + 1);
+    overflow: auto;
 
     // Backdrop
     &-backdrop {
@@ -50,11 +51,15 @@
         animation: modal-fadein 0.2s ease;
     }
 
-    &-dialog {
+    &-container {
         position: relative;
         z-index: (@modal-zindex + 1);
-        width: @modal-base-width;
-        margin: @padding-base auto;
+        width: (@modal-base-width + (@padding-base * 2));
+        margin: auto;
+        padding: @padding-base;
+    }
+
+    &-dialog {
         background: #fff;
         border-radius: @border-radius-modal;
         box-shadow: @modal-shadow;
