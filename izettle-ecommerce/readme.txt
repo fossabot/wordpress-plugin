@@ -1,44 +1,38 @@
 === iZettle E-commerce ===
 Contributors: iZettle
-Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
+Tags: izettle, shopping cart, ecommerce, Wordpress ecommerce, e-commerce
 Requires at least: 4.0
 Tested up to: 4.9.8
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
+Connect your iZettle account to your WordPress site and turn it into a fully functioning ecommerce store with synchronised inventory. 
 
 == Description ==
 
-Turn your existing WordPress site into a fully featured ecommerce site with our simple, free ecommerce plugin. You can embed beautiful, customizable buy now buttons and product widgets or even embed your whole store. You can display a permanent shopping cart in your site and allow customers to add multiple items as they browse around. Your customers don’t have to leave your site to complete the purchases at the checkout. Best of all, it’s super-simple and requires no coding. Just add the plugin and go.
+Connect your iZettle account to your WordPress site and turn it into a fully functioning ecommerce store with synchronised inventory. Add your whole store, product widgets and Buy Now buttons to your WordPress site with our free plugin. Comes with an optional navbar shopping cart to offer your customers multiple product purchases. Customers check out on your site and are not diverted.
 
-- Use with any WordPress theme
-- Powerful and easy to use apps and features are also available including a full-featured shopping cart
-- All your sales are recorded and managed through your iZettle dashboard, where you can also manage inventory, promotions and customer relationships
-- Built-in fully integrated payments, accept all major credit cards
+- Directly connected with your existing iZettle account
+- Process all major credit cards and PayPal
+- Synchronised inventory
+- Optional multi-purchase navbar shopping cart
 - Free SSL certificate
 
 ### Requirements
 
 An iZettle Go+ account
 
-### How it works
-
-Check out our video to see how easy it is to start selling products from your WordPress site.
-
-[vimeo https://vimeo.com/236647778]
-
 ### Key Features
 
-- Add buy buttons, product widgets or a whole store to your WordPress site with no coding
+- Synchronised to your iZettle account and inventory
 - Customers checkout on your site
 - Optional fully featured shopping cart permanently available to the customer with multiple items
-- Synchronised to your iZettle account and inventory
+- Add buy buttons, product widgets or a whole store to your WordPress site with no coding
 
 == Installation ==
 
-You can use the built in installer and upgrader, or you can install the plugin manually.
+Install the plugin automatically from your WordPress dashboard or download it as a Zip file and install it manually.
 
 ### Automatic Installation
 
@@ -54,19 +48,19 @@ Once the plugin has been activated you will have "Add Product" and "Add Store" b
 
 == Frequently Asked Questions ==
 
-### Will it work with my theme?
+### Does this plugin work with all themes?
 
-Yes, the plugin will work with any theme. You can also customize your button, widget or store colors to match your website or blog.
+Yes, the plugin works with any theme. The store, product widget and buy now buttons are all fully customisable too to match your brand.
 
 ### I have more questions, who do I contact?
 
-If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
+If you have queries, you can contact us here at [help@izettle.com](mailto:help@izettle.com)
 
 == Screenshots ==
 
-1. Add products easily
+1. Choose the products from your inventory
 
-1. Optional shopping cart permanently displayed
+1. Navbar shopping cart for multiple purchases (optional)
 
 == Changelog ==
 = 1.0.0 =

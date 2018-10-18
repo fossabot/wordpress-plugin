@@ -198,10 +198,11 @@
             this.setKind(kind);
 
             // Get current editor and selection values
-            const editor = window.tinymce.get(window.wpActiveEditor);
+            const editor = window.tinyMCE.get(window.wpActiveEditor);
             let update = false;
             const values = {};
 
+            // If using tinyMCE we can get the selected node
             if (editor) {
                 const node = editor.selection.getNode();
 
@@ -236,12 +237,43 @@
             this.enforceFocus();
         }
 
-        insert() {
-            // Get the tiny MCE editor instance
-            const editor = window.tinymce.get(window.wpActiveEditor);
+        insertShortcode(shortcode) {
+            const activeEditor = window.wpActiveEditor;
 
-            // If no editor or form not valid
-            if (!editor || !this.validate()) {
+            // Try and get the tiny MCE editor instance
+            const editor = window.tinyMCE.get(activeEditor);
+
+            // If tinyMCE (visual editor)
+            if (editor) {
+                editor.execCommand('mceBeginUndoLevel');
+
+                // Replace or insert
+                if (this.updating) {
+                    editor.selection.getNode().innerHTML = shortcode;
+                } else {
+                    editor.execCommand('mceInsertContent', false, shortcode);
+                }
+
+                editor.execCommand('mceEndUndoLevel');
+            }
+            // Basic text editor (just insert at caret position)
+            else {
+                const $textarea = $(`[name='${window.wpActiveEditor}']`);
+                const content = $textarea.val();
+
+                const cursorPosStart = $textarea.prop('selectionStart');
+                const cursorPosEnd = $textarea.prop('selectionEnd');
+
+                const textBefore = content.substring(0, cursorPosStart);
+                const textAfter = content.substring(cursorPosEnd, content.length);
+
+                $textarea.val(`${textBefore}${shortcode}${textAfter}`);
+            }
+        }
+
+        insert() {
+            // Validate form
+            if (!this.validate()) {
                 return;
             }
 
@@ -270,16 +302,7 @@
             const shortcode = `[${slug} ${props}]`;
 
             // Insert code
-            editor.execCommand('mceBeginUndoLevel');
-
-            // Replace or insert
-            if (this.updating) {
-                editor.selection.getNode().innerHTML = shortcode;
-            } else {
-                editor.execCommand('mceInsertContent', false, shortcode);
-            }
-
-            editor.execCommand('mceEndUndoLevel');
+            this.insertShortcode(shortcode);
         }
     }
 
