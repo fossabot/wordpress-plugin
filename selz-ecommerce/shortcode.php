@@ -182,10 +182,12 @@ class Selz_Shortcode {
 
 		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js'), array('jquery', 'wp-color-picker'), selz()->version);
 
+
 		wp_localize_script( selz()->slug, selz()->slug . '_globals', array(
 			'nonce'		=> wp_create_nonce( selz()->slug ),
 			'action'	=> 'selz_form',
-			'slug'		=> selz()->slug
+			'slug'		=> selz()->slug,
+			'resources' => selz()->resources(),
 		));
 	}
 

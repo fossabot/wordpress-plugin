@@ -362,6 +362,17 @@ final class iZettle {
 	}
 
 	/**
+	 * Get localized resources
+	 */
+	public function resources() {
+		return array(
+			'add_to_cart' => __( 'Add to cart', $this->lang ),
+			'buy' => __( 'Buy now', $this->lang ),
+			'view' => __( 'View', $this->lang ),
+		);
+	}
+
+	/**
      * Show row meta on the plugin screen.
      *
      */

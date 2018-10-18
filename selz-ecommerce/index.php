@@ -180,7 +180,7 @@ final class Selz {
 	}
 
 	// Register our settings. Add the settings section, and settings fields
-	public function init_settings(){
+	public function init_settings() {
 		register_setting( $this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ) );
 
 		add_settings_field( $this->slug . '_store_id', '', '', __FILE__ );
@@ -360,6 +360,17 @@ final class Selz {
 		);
 
 		return $defaults;
+	}
+
+	/**
+	 * Get localized resources
+	 */
+	public function resources() {
+		return array(
+			'add_to_cart' => __( 'Add to cart', $this->lang ),
+			'buy' => __( 'Buy now', $this->lang ),
+			'view' => __( 'View', $this->lang ),
+		);
 	}
 
 	/**

@@ -4,6 +4,8 @@
         $element.find(':input').prop('disabled', toggle);
     };
 
+    const replaceAll = (input, find, replace) => input.replace(new RegExp(find, 'g'), replace);
+
     class Form {
         constructor($form, namespace, force = false) {
             this.$form = $form;
@@ -68,6 +70,21 @@
             const action = this.getValue('action');
             const $window = this.$form.find(`[name="${this.get('interact').name}"]`).parents('.control-group');
             $window.attr('hidden', action === 'add-to-cart');
+
+            // Update the text based on action
+            const text = this.getValue('button_text');
+            const { resources } = window[`${this.namespace}_globals`];
+
+            // Update the text if it's not default
+            if (Object.values(resources).includes(text)) {
+                const { name } = this.get('button_text');
+                const $input = this.$form.find(`[name="${name}"]`);
+                const resource = resources[replaceAll(action, '-', '_')];
+
+                if (resource) {
+                    $input.val(resource);
+                }
+            }
         }
 
         setupColorPickers() {

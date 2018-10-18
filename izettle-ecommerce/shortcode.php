@@ -185,7 +185,8 @@ class iZettle_Shortcode {
 		wp_localize_script( izettle()->slug, izettle()->slug . '_globals', array(
 			'nonce'		=> wp_create_nonce( izettle()->slug ),
 			'action'	=> 'izettle_form',
-			'slug'		=> izettle()->slug
+			'slug'		=> izettle()->slug,
+			'resources' => izettle()->resources(),
 		));
 	}
 

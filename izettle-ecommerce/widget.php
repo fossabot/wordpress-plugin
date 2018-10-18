@@ -165,6 +165,7 @@ class iZettle_Widget extends WP_Widget {
 		wp_localize_script( $this->slug, $this->slug . '_globals', array(
 			'nonce'		=> wp_create_nonce( $this->slug ),
 			'action'	=> $this->slug . '_widget_form',
+			'resources' => izettle()->resources(),
 		));
 	}
 
