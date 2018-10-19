@@ -267,6 +267,10 @@ final class Selz {
 				return '';
 			}
 
+			if ($args['fluid_width']) {
+				$args['width'] = '100%';
+			}
+
 			$html = '<div data-embed="button">
 			    <script type="text/props">
 			    {
@@ -296,6 +300,10 @@ final class Selz {
 		} else {
 			if (!$args['link']) {
 				return '';
+			}
+
+			if ($args['fluid_width']) {
+				$args['width'] = '100%';
 			}
 
 			$html = '<div data-embed="widget">
@@ -346,6 +354,7 @@ final class Selz {
 			'action' 			=> 'add-to-cart',
 			'width' 			=> '320',
 			'auto_width' 		=> 'true',
+			'fluid_width' 		=> 'false',
 			'button_text'		=> __('Add to cart', $this->lang),
 			'text_color' 		=> '#ffffff',
 			'background_color' 	=> '#7959c7',

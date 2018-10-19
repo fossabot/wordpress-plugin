@@ -218,6 +218,14 @@
 
                         // Updating rather than insert
                         update = true;
+
+                        // Get input keys
+                        const keys = Object.keys(values);
+
+                        // If width or fluid_width is set, the auto width needs to be off
+                        if (keys.includes('width') || keys.includes('fluid_width')) {
+                            values.auto_width = 'false';
+                        }
                     }
                 }
             }
@@ -284,18 +292,7 @@
             const inputs = this.$form.serializeArray().filter(i => !['kind'].includes(i.name));
 
             // Build the props list
-            const props = inputs
-                .map(input => {
-                    let { name, value } = input;
-
-                    if (name === 'fluid_width') {
-                        name = 'width';
-                        value = '100%';
-                    }
-
-                    return `${name}="${value}"`;
-                })
-                .join(' ');
+            const props = inputs.map(i => `${i.name}="${i.value}"`).join(' ');
 
             // Construct the short code
             const { slug } = window[`${this.namespace}_globals`];
