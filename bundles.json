@@ -8,6 +8,7 @@
             "src/js/vendor/polyfills/array.prototype.find.js",
             "src/js/vendor/polyfills/string.prototype.endsWith.js",
             "src/js/vendor/polyfills/string.prototype.includes.js",
+            "src/js/vendor/polyfills/object.values.js",
             "src/js/vendor/webkit-lowerfill.js",
             "src/js/utils.js",
             "src/js/tab-focus.js",
