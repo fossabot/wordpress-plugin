@@ -158,12 +158,21 @@ class iZettle_Shortcode {
 
 		/** Only run in post/page creation and edit screens */
 		if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
-			$product = 'product';
-			$img1 = '<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>';
-			$output .= '<button type="button" class="button js-open-modal" data-type="product" data-namespace="' . izettle()->slug . '" style="padding-left: .2em;">' . $img1 . __( 'Add Product', izettle()->lang ) . '</button>';
+			// Product button
+			$output .= '<button type="button" class="button js-open-modal" data-type="product" data-namespace="' . izettle()->slug . '" style="padding-left: .2em;">' .
+							'<span class="wp-media-buttons-icon dashicons dashicons-tag" style="padding-right:.2em;font-size:18px"></span>' .
+							'<span class="button-label" data-label-add="' . __( 'Add Product', izettle()->lang ) . '" data-label-update="' . __( 'Update Product', izettle()->lang ) . '">' .
+								__( 'Add Product', izettle()->lang ) .
+							'</span>' .
+						'</button>';
 
-			$img2 = '<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>';
-			$output .= '<button type="button" class="button js-open-modal" data-type="store" data-namespace="' . izettle()->slug . '" style="padding-left: .2em;">' . $img2 . __( 'Add Store', izettle()->lang ) . '</button>';
+			// Store button
+			$output .= '<button type="button" class="button js-open-modal" data-type="store" data-namespace="' . izettle()->slug . '" style="padding-left: .2em;">' .
+							'<span class="wp-media-buttons-icon dashicons dashicons-store" style="padding-right:.2em;font-size:16px"></span>' .
+							'<span class="button-label" data-label-add="' . __( 'Add Store', izettle()->lang ) . '" data-label-update="' . __( 'Update Store', izettle()->lang ) . '">' .
+								__( 'Add Store', izettle()->lang ) .
+							'</span>' .
+						'</button>';
 		}
 
 		echo $output;

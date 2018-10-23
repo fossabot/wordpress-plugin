@@ -1,7 +1,7 @@
 <?php
 /**
  * Shortcode admin form interface
- * @since 1.8.0
+ * @since 1.0.0
 **/
 class iZettle_Form {
 

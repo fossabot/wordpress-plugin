@@ -79,6 +79,114 @@
             this.$kind.val(kind);
         }
 
+        // Get current selection shortcode values
+        getShortCodeValues() {
+            // Get current editor and selection values
+            const editor = window.tinyMCE.get(window.wpActiveEditor);
+            const values = {};
+
+            if (!editor) {
+                return values;
+            }
+
+            // If using tinyMCE we can get the selected node
+            const node = editor.selection.getNode();
+
+            if (node) {
+                const shortcode = node.innerHTML;
+                const { slug } = window[`${this.namespace}_globals`];
+
+                if (shortcode.startsWith(`[${slug}`)) {
+                    shortcode.match(/[\w-_]+=".+?"/g).forEach(attribute => {
+                        const [, key, value] = attribute.match(/([\w-_]+)="(.+?)"/);
+                        values[key] = value;
+                    });
+
+                    // Get input keys
+                    const keys = Object.keys(values);
+
+                    // If width or fluid_width is set, the auto width needs to be off
+                    if (keys.includes('width') || keys.includes('fluid_width')) {
+                        values.auto_width = 'false';
+                    }
+                }
+            }
+
+            return values;
+        }
+
+        // Watch the cursor to see if we're in a shortcode and toggle buttons
+        watchCursor() {
+            // Try and get the tiny MCE editor instance
+            // We have to wait for it to load and there's no event it seems
+            let loadCount = 0;
+            const loadTimer = setInterval(() => {
+                const activeEditor = window.wpActiveEditor;
+                const editor = window.tinyMCE.get(activeEditor);
+                loadCount += 1;
+
+                if (editor) {
+                    clearInterval(loadTimer);
+
+                    const initTimer = setInterval(() => {
+                        if (editor.initialized) {
+                            clearInterval(initTimer);
+
+                            const $buttons = $(`.js-open-modal[data-namespace="${this.namespace}"]`);
+                            const selectors = {
+                                label: '.button-label',
+                            };
+
+                            const reset = () => {
+                                // Reset labels and state
+                                $buttons.each((i, element) => {
+                                    // Enable button
+                                    const $button = $(element);
+                                    $button.prop('disabled', false);
+
+                                    // Reset label to 'add' text
+                                    const $label = $button.find(selectors.label);
+                                    $label.text($label.data('label-add'));
+                                });
+                            };
+
+                            editor.on('nodeChange change click blur focus', event => {
+                                // On blur, reset state
+                                if (event.type === 'blur' && !this.shown) {
+                                    reset();
+                                    return;
+                                }
+
+                                //
+                                setTimeout(() => {
+                                    reset();
+
+                                    // Get shortcode values
+                                    const values = this.getShortCodeValues();
+
+                                    // If we're inside an existing shortcode
+                                    if (Object.keys(values).length) {
+                                        const kind = ['widget', 'button'].includes(values.type) ? 'product' : 'store';
+
+                                        // Update label to 'update' text
+                                        const $label = $buttons.filter(`[data-type="${kind}"]`).find(selectors.label);
+                                        $label.text($label.data('label-update'));
+
+                                        // Disable other buttons
+                                        $buttons
+                                            .filter(`[data-type!="${kind}"]`)
+                                            .each((i, element) => $(element).prop('disabled', true));
+                                    }
+                                }, 0);
+                            });
+                        }
+                    }, 300);
+                } else if (loadCount === 10) {
+                    clearInterval(loadTimer);
+                }
+            }, 500);
+        }
+
         listeners() {
             this.$form.on('input change click', () => {
                 this.validate();
@@ -115,6 +223,8 @@
             this.$element.on('updated.products', () => {
                 this.validate();
             });
+
+            this.watchCursor();
         }
 
         load(values = {}) {
@@ -195,45 +305,15 @@
                 return;
             }
 
+            this.shown = true;
+
             this.setKind(kind);
 
-            // Get current editor and selection values
-            const editor = window.tinyMCE.get(window.wpActiveEditor);
-            let update = false;
-            const values = {};
-
-            // If using tinyMCE we can get the selected node
-            if (editor) {
-                const node = editor.selection.getNode();
-
-                if (node) {
-                    const shortcode = node.innerHTML;
-                    const { slug } = window[`${this.namespace}_globals`];
-
-                    if (shortcode.startsWith(`[${slug}`)) {
-                        shortcode.match(/[\w-_]+=".+?"/g).forEach(attribute => {
-                            const [, key, value] = attribute.match(/([\w-_]+)="(.+?)"/);
-                            values[key] = value;
-                        });
-
-                        // Updating rather than insert
-                        update = true;
-
-                        // Get input keys
-                        const keys = Object.keys(values);
-
-                        // If width or fluid_width is set, the auto width needs to be off
-                        if (keys.includes('width') || keys.includes('fluid_width')) {
-                            values.auto_width = 'false';
-                        }
-                    }
-                }
-            }
+            // Get current shortcode values
+            const values = this.getShortCodeValues();
 
             // Update UI and flag
-            this.setUpdateMode(update);
-
-            this.shown = true;
+            this.setUpdateMode(Boolean(Object.keys(values).length));
 
             this.$backdrop.attr('hidden', !this.shown);
             this.$element.attr('hidden', !this.shown);
@@ -328,7 +408,7 @@
 
                 $trigger
                     .on('click', event => {
-                        modal.show($(event.target).data('type'));
+                        modal.show($(event.delegateTarget).data('type'));
                     })
                     .addClass(hook);
             });

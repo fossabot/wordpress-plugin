@@ -70,6 +70,7 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 == Changelog ==
 = 1.9.0 =
 - Connect your Selz account to automatically list your products and store details
+- Many other small bug fixes
 = 1.8.2 =
 - Fixed issue with button text not showing correctly
 = 1.8.1 =
@@ -128,9 +129,9 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 - Added the option to add payment logos to your button or widget
 - Minor bug fixes
 = 1.0 =
-* Added non JavaScript fallback links
+- Added non JavaScript fallback links
 = 0.0.1 =
-* Released
+- Initial release
 
 == Upgrade Notice ==
 Go to your plugin admin page, and click the update button if available.
