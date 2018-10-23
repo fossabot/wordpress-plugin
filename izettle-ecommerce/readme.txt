@@ -7,7 +7,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connect your iZettle account to your WordPress site and turn it into a fully functioning ecommerce store with synchronised inventory. 
+Connect your iZettle account to your WordPress site and turn it into a fully functioning ecommerce store with synchronised inventory.
 
 == Description ==
 
@@ -63,8 +63,10 @@ If you have queries, you can contact us here at [help@izettle.com](mailto:help@i
 1. Navbar shopping cart for multiple purchases (optional)
 
 == Changelog ==
+= 1.0.1 =
+- An improvement to make updating more obvious
 = 1.0.0 =
-* Initial release
+- Initial release
 
 == Upgrade Notice ==
 Go to your plugin admin page, and click the update button if available.
