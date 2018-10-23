@@ -23,7 +23,7 @@ Turn your existing WordPress site into a fully featured ecommerce site with our 
 
 Check out our video to see how easy it is to start selling products from your WordPress site.
 
-[vimeo https://vimeo.com/236647778]
+[youtube http://www.youtube.com/watch?v=a8Z-W9acOnU]
 
 ### Key Features
 
