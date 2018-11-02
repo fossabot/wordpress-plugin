@@ -11,7 +11,7 @@ Easily add ecommerce and a smooth shopping cart to your WordPress site. The most
 
 == Description ==
 
-Turn your existing WordPress site into a fully featured ecommerce site with our simple, free ecommerce plugin. You can embed beautiful, customizable buy now buttons and product widgets or even embed your whole store. You can display a permanent shopping cart in your site and allow customers to add multiple items as they browse around. Your customers don’t have to leave your site to complete the purchases at the checkout. Best of all, it’s super-simple and requires no coding. Just add the plugin and go.
+Turn your existing WordPress site into a fully featured ecommerce site with our simple, free [WordPress Ecommerce](https://features.selz.com/wordpress-ecommerce) plugin. You can embed beautiful, customizable buy now buttons and product widgets or even embed your whole store. You can display a permanent shopping cart in your site and allow customers to add multiple items as they browse around. Your customers don’t have to leave your site to complete the purchases at the checkout. Best of all, it’s super-simple and requires no coding. Just add the plugin and go.
 
 - Use with any WordPress theme
 - Powerful and easy to use apps and features are also available including a full-featured shopping cart
@@ -23,7 +23,7 @@ Turn your existing WordPress site into a fully featured ecommerce site with our 
 
 Check out our video to see how easy it is to start selling products from your WordPress site.
 
-[youtube http://www.youtube.com/watch?v=a8Z-W9acOnU]
+[youtube http://www.youtube.com/watch?v=gDaN6Sx5ZsE]
 
 ### Key Features
 
