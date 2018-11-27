@@ -38,19 +38,24 @@ class iZettle_API {
 	}
 
 	public function connect() {
+		
+		$url = $this->redirect;
+
 		// Register client first to get credentials (client_id and client_secret)
-		$this->register_client();
+		if ( $this->register_client() ) {
 
-		// Redirect to authorize endpoint to initiate OAuth flow
-		$endpoint = '/authorize';
+			// Redirect to authorize endpoint to initiate OAuth flow
+			$endpoint = '/authorize';
 
-		$args = array(
-	        'client_id' => $this->get_client_id(),
-	        'redirect_uri' => $this->redirect,
-	        'state' => md5( 'test' )
-	    );
+			$args = array(
+				'client_id' => $this->get_client_id(),
+				'redirect_uri' => $this->redirect,
+				'state' => md5( 'test' )
+			);
 
-	    $url = add_query_arg( $args, $this->auth_url . $endpoint );
+			$url = add_query_arg( $args, $this->auth_url . $endpoint );
+
+		}
 
 		wp_redirect( $url );
 
@@ -82,53 +87,62 @@ class iZettle_API {
 		if ( $current_screen->id != 'toplevel_page_' . izettle()->slug )
 			return;
 
-		if (
-			( isset( $_GET['page'] ) && $_GET['page'] == $this->slug ) &&
-			( isset( $_GET['code'] ) && $_GET['code'] != '' )
-		) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->slug ) {
 
-			$code = sanitize_text_field( $_GET['code'] );
+			if ( isset( $_GET['error'] ) && $_GET['error'] != '' ) {
 
-		    $fields = array(
-		    	'grant_type' => 'authorization_code',
-		        'client_id' => $this->get_client_id(),
-		        'client_secret' => $this->get_client_secret(),
-		        'redirect_uri' => $this->redirect,
-		        'code' => $code,
-		    );
+				$this->remove_client();
+				$error_message = $_GET['error'];
 
-		    $response = wp_remote_post( $this->auth_url . '/token',
-		    	array(
-			        'timeout' => 10,
-			        'redirection' => 5,
-			        'httpversion' => '1.0',
-			        'blocking' => true,
-			        'headers' => array( 'Content-Type: application/x-www-form-urlencoded' ),
-			        'body' => $fields,
-		        )
-		    );
-
-		    if ( is_wp_error( $response ) ) {
-		       $error_message = $response->get_error_message();
-		    } else {
-
-		    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
-
-		    		$body = json_decode( $response['body'] );
-
-		    		if ( $body->access_token ) {
-
-		    			//update_option( $this->slug . '_api', $body );
-		    			update_option( $this->slug . '_api_access_token', $body->access_token );
-		    			update_option( $this->slug . '_api_refresh_token', $body->refresh_token );
-		    			update_option( $this->slug . '_api_expires_on', current_time( 'timestamp' ) + $body->expires_in );
-
-		    			wp_redirect( $this->redirect );
-		    			exit;
-
-		    		}
+			} 
+			elseif ( isset( $_GET['code'] ) && $_GET['code'] != '' ) {
+	
+				$code = sanitize_text_field( $_GET['code'] );
+	
+				$fields = array(
+					'grant_type' => 'authorization_code',
+					'client_id' => $this->get_client_id(),
+					'client_secret' => $this->get_client_secret(),
+					'redirect_uri' => $this->redirect,
+					'code' => $code,
+				);
+	
+				$response = $this->send_request( 'POST', $this->auth_url . '/token',
+					array(
+						'timeout' => 120,
+						'redirection' => 5,
+						'httpversion' => '1.0',
+						'blocking' => true,
+						'headers' => array( 'Content-Type: application/x-www-form-urlencoded' ),
+						'body' => $fields,
+					)
+				);
+	
+				if ( is_wp_error( $response ) ) {
+	
+					$this->remove_client();
+					$error_message = $response->get_error_message();
+					
+				} else {
+	
+					if ( isset( $response['body'] ) && $response['body'] != '' ) {
+	
+						$body = json_decode( $response['body'] );
+	
+						if ( $body->access_token ) {
+	
+							//update_option( $this->slug . '_api', $body );
+							update_option( $this->slug . '_api_access_token', $body->access_token );
+							update_option( $this->slug . '_api_refresh_token', $body->refresh_token );
+							update_option( $this->slug . '_api_expires_on', current_time( 'timestamp' ) + $body->expires_in );
+	
+							wp_redirect( $this->redirect );
+							exit;
+	
+						}
+					}
 				}
-		    }
+			}
 		}
 	}
 
@@ -142,9 +156,9 @@ class iZettle_API {
 	        'refresh_token' => $refresh,
 	    );
 
-	    $response = wp_remote_post( $this->auth_url . '/token',
+	    $response = $this->send_request( 'POST', $this->auth_url . '/token',
 	    	array(
-		        'timeout' => 10,
+		        'timeout' => 120,
 		        'redirection' => 5,
 		        'httpversion' => '1.0',
 		        'blocking' => true,
@@ -154,7 +168,10 @@ class iZettle_API {
 	    );
 
 	    if ( is_wp_error( $response ) ) {
-	       $error_message = $response->get_error_message();
+
+			$this->remove_tokens();
+			$error_message = $response->get_error_message();
+			   
 	    } else {
 
 	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
@@ -184,9 +201,9 @@ class iZettle_API {
 		if ( ! $this->is_connected() )
 			return;
 
-	    $response = wp_remote_get( $this->api_url . '/store',
+	    $response = $this->send_request( 'GET', $this->api_url . '/store',
 	    	array(
-		        'timeout' => 10,
+		        'timeout' => 120,
 		        'redirection' => 5,
 		        'httpversion' => '1.0',
 		        'headers' => $this->get_headers(),
@@ -219,9 +236,9 @@ class iZettle_API {
 			'starting_after' => $starting_after,
 	    );
 
-	    $response = wp_remote_get( add_query_arg( $args, $this->api_url . '/products' ),
+	    $response = $this->send_request( 'GET', add_query_arg( $args, $this->api_url . '/products' ),
 	    	array(
-		        'timeout' => 10,
+		        'timeout' => 120,
 		        'redirection' => 5,
 		        'httpversion' => '1.0',
 		        'headers' => $this->get_headers(),
@@ -248,9 +265,9 @@ class iZettle_API {
 	        'page' => $page,
 	    );
 
-	    $response = wp_remote_get( add_query_arg( $args, $this->api_url . '/search/products' ),
+	    $response = $this->send_request( 'GET', add_query_arg( $args, $this->api_url . '/search/products' ),
 	    	array(
-		        'timeout' => 10,
+		        'timeout' => 120,
 		        'redirection' => 5,
 		        'httpversion' => '1.0',
 		        'headers' => $this->get_headers(),
@@ -317,9 +334,9 @@ class iZettle_API {
 		if ( $this->is_connected() )
 			return;
 
-	    $response = wp_remote_get( $this->auth_url . '/key?redirect_uri=' . $this->redirect,
+	    $response = $this->send_request( 'GET', $this->auth_url . '/key?redirect_uri=' . $this->redirect,
 	    	array(
-		        'timeout' => 10,
+		        'timeout' => 120,
 		        'redirection' => 5,
 		        'httpversion' => '1.0'
 	        )
@@ -345,11 +362,7 @@ class iZettle_API {
 	public function register_client() {
 		// ignore if we already have a registered client
 		if ( $this->get_client_secret() )
-			return;
-
-		// ignore if we are already connected
-		if ( $this->is_connected() )
-			return;
+			return true;
 
 		// if we don't have client id yet, get one now
 		if ( ! $this->get_client_id() ){
@@ -362,9 +375,9 @@ class iZettle_API {
 			'redirect_uri' => $this->redirect
 		);
 
-		$response = wp_remote_post( $this->auth_url . '/register',
+		$response = $this->send_request( 'POST', $this->auth_url . '/register',
 			array(
-				'timeout' => 10,
+				'timeout' => 120,
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'blocking' => true,
@@ -374,17 +387,52 @@ class iZettle_API {
 		);
 
 		if ( is_wp_error( $response ) ) {
+
+			$this->remove_client();
 			$error_message = $response->get_error_message();
+
 		} else {
 
 			if ( isset( $response['body'] ) && $response['body'] != '' ) {
 
 				$body = json_decode( $response['body'] );
 
-				if ( $body->client_secret ) {
+				if ( $body->client_id && $body->client_secret ) {
+					update_option( $this->slug . '_api_client_id', $body->client_id );
 					update_option( $this->slug . '_api_client_secret', $body->client_secret );
+					return true;
 				}
 			}
 		}
-	}	
+
+		return false;
+	}
+	
+	function remove_client() {
+		delete_option( $this->slug . '_api_client_id' );
+		delete_option( $this->slug . '_api_client_secret' );		
+	}
+
+	function remove_tokens() {
+		delete_option( $this->slug . '_api_access_token' );
+		delete_option( $this->slug . '_api_refresh_token' );
+		delete_option( $this->slug . '_api_expires_on' );			
+	}
+
+	function send_request($method, $url, $args = array()) {
+
+		$response = $method == 'POST' ? wp_remote_post( $url, $args ) : wp_remote_get( $url, $args );
+
+		// Check the response code
+		$response_code = wp_remote_retrieve_response_code( $response );
+		$response_message = wp_remote_retrieve_response_message( $response );
+	
+		if ( 200 != $response_code && ! empty( $response_message ) ) {
+			return new WP_Error( $response_code, $response_message );
+		} elseif ( 200 != $response_code ) {
+			return new WP_Error( $response_code, 'Unknown error occurred' );
+		} else {
+			return $response;
+		}
+	}
 }
