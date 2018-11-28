@@ -23,8 +23,6 @@ class iZettle_API {
 
 		add_action( 'admin_post_connect_' . $this->slug, array( $this, 'connect' ) );
 		add_action( 'admin_post_disconnect_' . $this->slug, array( $this, 'disconnect' ) );
-
-		add_action( 'admin_init', array( $this, 'is_expired' ) );
 	}
 
 	public function connect_url() {
@@ -200,6 +198,11 @@ class iZettle_API {
 		if ( ! $this->is_connected() )
 			return;
 
+		// if access token has expired, refresh token
+		if ( $this->is_expired() ) {
+			$this->refresh_token();
+		}
+
 	    $response = $this->send_request( 'GET', $this->api_url . '/store',
 	    	array(
 		        'timeout' => 120,
@@ -232,6 +235,15 @@ class iZettle_API {
 	}
 
 	public function get_products( $starting_after = null) {
+
+		// ignore if we aren't connected
+		if ( ! $this->is_connected() )
+			return;
+
+		// if access token has expired, refresh token
+		if ( $this->is_expired() ) {
+			$this->refresh_token();
+		}
 
 		$args = array(
 			'limit' => 20,
@@ -266,6 +278,15 @@ class iZettle_API {
 
 	public function search_products( $query = "", $page = 1) {
 
+		// ignore if we aren't connected
+		if ( ! $this->is_connected() )
+			return;
+
+		// if access token has expired, refresh token
+		if ( $this->is_expired() ) {
+			$this->refresh_token();
+		}
+
 		$args = array(
 	        'limit' => 20,
 	        'q' => $query,
@@ -299,20 +320,14 @@ class iZettle_API {
 	}
 
 	public function is_connected() {
-		if (
-			( get_option( $this->slug . '_api_access_token' ) != '' ) &&
-			( ((int)get_option( $this->slug . '_api_expires_on' )) >= current_time( 'timestamp' ) ) )
-		{
+		if ( $this->get_access_token() != '' ) {
 			return true;
 		}
 	}
 
 	public function is_expired() {
-		if (
-			( get_option( $this->slug . '_api_access_token' ) != '' ) &&
-			( ((int)get_option( $this->slug . '_api_expires_on' )) < current_time( 'timestamp' ) ) )
-		{
-			$this->refresh_token();
+		if ( ((int)$this -> get_expires_on()) < current_time( 'timestamp' ) ) {
+			return true;
 		}
 	}
 
@@ -329,7 +344,11 @@ class iZettle_API {
 
 	public function get_refresh_token() {
 		return get_option( $this->slug . '_api_refresh_token' );
-	}	
+	}
+
+	public function get_expires_on() {
+		return get_option( $this->slug . '_api_expires_on' );
+	}		
 
 	public function get_client_id() {
 		return get_option( $this->slug . '_api_client_id' );
@@ -342,10 +361,6 @@ class iZettle_API {
 	public function generate_client_id() {
 		// ignore if we already have a client id
 		if ( $this->get_client_id() )
-			return;
-
-		// ignore if we are already connected
-		if ( $this->is_connected() )
 			return;
 
 	    $response = $this->send_request( 'GET', $this->auth_url . '/key?redirect_uri=' . $this->redirect,
