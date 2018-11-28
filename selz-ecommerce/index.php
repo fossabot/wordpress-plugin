@@ -100,12 +100,13 @@ final class Selz {
 	 * @since 1.9.0
 	 */
 	public function deactivation_hook() {
+
+		$api = new Selz_API();
+
+		$api->remove_tokens();
+		$api->remove_client();
+
 		delete_option( $this->slug . '_version' );
-		delete_option( $this->slug . '_store' );
-		delete_option( $this->slug . '_api_client_id' );
-		delete_option( $this->slug . '_api_client_secret' );
-		delete_option( $this->slug . '_api_access_token' );
-		delete_option( $this->slug . '_api_refresh_token' );
 	}
 
 	/**

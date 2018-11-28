@@ -73,10 +73,10 @@ class iZettle_API {
 	}
 
 	public function disconnect() {
-		delete_option( $this->slug . '_api_access_token' );
-		delete_option( $this->slug . '_api_refresh_token' );
-		delete_option( $this->slug . '_api_expires_on' );
-		delete_option( $this->slug . '_store' );
+
+		$this->remove_tokens();
+		$this->remove_client();
+
 		wp_redirect( $this->redirect );
 
 		exit;
@@ -131,7 +131,6 @@ class iZettle_API {
 	
 						if ( $body->access_token ) {
 	
-							//update_option( $this->slug . '_api', $body );
 							update_option( $this->slug . '_api_access_token', $body->access_token );
 							update_option( $this->slug . '_api_refresh_token', $body->refresh_token );
 							update_option( $this->slug . '_api_expires_on', current_time( 'timestamp' ) + $body->expires_in );
@@ -147,13 +146,12 @@ class iZettle_API {
 	}
 
 	public function refresh_token() {
-		$refresh = get_option( $this->slug . '_api_refresh_token' );
 
 	    $fields = array(
 	    	'grant_type' => 'refresh_token',
 	        'client_id' => $this->get_client_id(),
 	        'client_secret' => $this->get_client_secret(),
-	        'refresh_token' => $refresh,
+	        'refresh_token' => $this->get_refresh_token()
 	    );
 
 	    $response = $this->send_request( 'POST', $this->auth_url . '/token',
@@ -189,6 +187,7 @@ class iZettle_API {
 	}
 
 	public function set_store( $current_screen ) {
+
 		// only load on main plugin page
 		if ( $current_screen->id != 'toplevel_page_' . izettle()->slug )
 			return;
@@ -211,7 +210,10 @@ class iZettle_API {
 	    );
 
 	    if ( is_wp_error( $response ) ) {
-	       	$error_message = $response->get_error_message();
+
+			$this->remove_tokens();
+			$error_message = $response->get_error_message();			
+
 	    } else {
 	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
@@ -246,14 +248,19 @@ class iZettle_API {
 	    );
 
 	    if ( is_wp_error( $response ) ) {
-	       $error_message = $response->get_error_message();
+
+			$this->remove_tokens();
+			$error_message = $response->get_error_message();			
+
 	    } else {
+
 	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
 	    		$body = json_decode( $response['body'] );
 	    		if ( $body ) {
 	    			return $body;
 	    		}
-    		}
+			}
+			
     	}
 	}
 
@@ -275,7 +282,10 @@ class iZettle_API {
 	    );
 
 	    if ( is_wp_error( $response ) ) {
-	       $error_message = $response->get_error_message();
+
+			$this->remove_tokens();
+			$error_message = $response->get_error_message();			
+
 	    } else {
 
 	    	if ( isset( $response['body'] ) && $response['body'] != '' ) {
@@ -306,16 +316,20 @@ class iZettle_API {
 		}
 	}
 
-	public function get_token() {
-		return get_option( $this->slug . '_api_access_token' );
-	}
-
 	public function get_headers() {
 		return array(
-			'Authorization' => 'Bearer ' . $this->get_token(),
+			'Authorization' => 'Bearer ' . $this->get_access_token(),
 			'Accept' => 'application/json',
 		);
 	}
+
+	public function get_access_token() {
+		return get_option( $this->slug . '_api_access_token' );
+	}
+
+	public function get_refresh_token() {
+		return get_option( $this->slug . '_api_refresh_token' );
+	}	
 
 	public function get_client_id() {
 		return get_option( $this->slug . '_api_client_id' );
@@ -343,7 +357,9 @@ class iZettle_API {
 	    );
 
 	    if ( is_wp_error( $response ) ) {
+
 			$error_message = $response->get_error_message();
+
 		 } else {
 
 			 if ( isset( $response['body'] ) && $response['body'] != '' ) {
@@ -407,17 +423,66 @@ class iZettle_API {
 
 		return false;
 	}
-	
-	function remove_client() {
+
+	public function remove_client() {
+
+		$fields = array(
+			'client_id' => $this->get_client_id(),
+			'client_secret' => $this->get_client_secret()
+		);
+
+		$response = $this->send_request( 'POST', $this->auth_url . '/unregister',
+			array(
+				'timeout' => 120,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking' => true,
+				'headers' => array( 'Content-Type: application/x-www-form-urlencoded' ),
+				'body' => $fields,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+
+			$error_message = $response->get_error_message();
+
+		}
+
 		delete_option( $this->slug . '_api_client_id' );
-		delete_option( $this->slug . '_api_client_secret' );		
+		delete_option( $this->slug . '_api_client_secret' );
 	}
 
-	function remove_tokens() {
+	public function remove_tokens() {
+
+		$fields = array(
+			'client_id' => $this->get_client_id(),
+			'client_secret' => $this->get_client_secret(),
+			'token' => $this->get_access_token(),
+			'token' => $this->get_refresh_token()
+		);
+
+		$response = $this->send_request( 'POST', $this->auth_url . '/revoke',
+			array(
+				'timeout' => 120,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking' => true,
+				'headers' => array( 'Content-Type: application/x-www-form-urlencoded' ),
+				'body' => $fields,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+
+			$error_message = $response->get_error_message();
+
+		}
+
 		delete_option( $this->slug . '_api_access_token' );
 		delete_option( $this->slug . '_api_refresh_token' );
-		delete_option( $this->slug . '_api_expires_on' );			
-	}
+		delete_option( $this->slug . '_api_expires_on' );
+		delete_option( $this->slug . '_store' );
+	}	
 
 	function send_request($method, $url, $args = array()) {
 
