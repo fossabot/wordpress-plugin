@@ -3,7 +3,7 @@ Contributors: iZettle
 Tags: izettle, shopping cart, ecommerce, Wordpress ecommerce, e-commerce
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,8 @@ If you have queries, you can contact us here at [help@izettle.com](mailto:help@i
 1. Navbar shopping cart for multiple purchases (optional)
 
 == Changelog ==
+= 1.0.2 =
+- Bug fixes with OAuth and API integration
 = 1.0.1 =
 - An improvement to make updating more obvious
 = 1.0.0 =
