@@ -1,6 +1,6 @@
 {
     "name": "wordpress-plugin",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "description": "Ecommerce for WordPress",
     "homepage": "https://selz.com",
     "main": "gulpfile.js",

@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Easily add ecommerce and a smooth shopping cart to your WordPress site. The most
 
 == Description ==
 
-Turn your existing WordPress site into a fully featured ecommerce site with our simple, free ecommerce plugin. You can embed beautiful, customizable buy now buttons and product widgets or even embed your whole store. You can display a permanent shopping cart in your site and allow customers to add multiple items as they browse around. Your customers don’t have to leave your site to complete the purchases at the checkout. Best of all, it’s super-simple and requires no coding. Just add the plugin and go.
+Turn your existing WordPress site into a fully featured ecommerce site with our simple, free [WordPress Ecommerce](https://features.selz.com/wordpress-ecommerce) plugin. You can embed beautiful, customizable buy now buttons and product widgets or even embed your whole store. You can display a permanent shopping cart in your site and allow customers to add multiple items as they browse around. Your customers don’t have to leave your site to complete the purchases at the checkout. Best of all, it’s super-simple and requires no coding. Just add the plugin and go.
 
 - Use with any WordPress theme
 - Powerful and easy to use apps and features are also available including a full-featured shopping cart
@@ -23,7 +23,7 @@ Turn your existing WordPress site into a fully featured ecommerce site with our 
 
 Check out our video to see how easy it is to start selling products from your WordPress site.
 
-[youtube http://www.youtube.com/watch?v=a8Z-W9acOnU]
+[youtube http://www.youtube.com/watch?v=gDaN6Sx5ZsE]
 
 ### Key Features
 
@@ -68,6 +68,8 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 1. Optional shopping cart permanently displayed
 
 == Changelog ==
+= 1.9.1 =
+- Bug fixes with OAuth and API integration
 = 1.9.0 =
 - Connect your Selz account to automatically list your products and store details
 - Many other small bug fixes
