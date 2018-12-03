@@ -3,7 +3,7 @@
     Plugin Name: Selz WordPress Ecommerce
     Plugin URI: https://features.selz.com/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.9.1
+    Version: 1.9.2
     Author: Selz
     Author URI: https://features.selz.com/wordpress-ecommerce
     License: MIT

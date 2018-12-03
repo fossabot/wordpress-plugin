@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,8 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 1. Optional shopping cart permanently displayed
 
 == Changelog ==
+= 1.9.2 =
+- Minor UI bug fix
 = 1.9.1 =
 - Bug fixes with OAuth and API integration
 = 1.9.0 =
