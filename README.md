@@ -4,7 +4,7 @@ Embed your Selz items directly into your WordPress site.
 
 ## Local development
 
-The easiest way to develop on WordPress locally is to use "Local by Flywheel". To get setup:
+The easiest way to develop on WordPress locally is to use "Local by Flywheel" which uses Docker behind the scenes and provides a super easy UI to get setup. To get started:
 
 -   Install [Local by Flywheel](https://local.getflywheel.com)
 -   Create a new WordPress site in Local
