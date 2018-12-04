@@ -22,7 +22,7 @@ if (!defined('ABSPATH'))
  */
 final class iZettle {
 
-	public $version 	= '1.0.2';
+	public $version 	= '1.0.3';
 	public $dir 		= '';
 	public $url 		= '';
 	public $name 		= 'iZettle';
