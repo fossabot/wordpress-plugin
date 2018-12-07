@@ -29,7 +29,9 @@ To build the plugin zip file for manual installation run `build.sh` (MacOS/Unix 
 
 ## Deploying to WordPress plugins SVN
 
-To actually publish/deploy the WordPress plugin, it must be committed via SVN. Some things to remember:
+To actually publish/deploy the WordPress plugin, it must be committed via SVN. You can do this by running `update.sh` if you've checked out the SVN repo to the same directory as the Git repo. It will copy all but the `/src` directory as the source files aren't needed for the plugin to function so just add extra download size for users.
+
+Some things to remember:
 
 -   The version in index.php must be updated (using the SemVer system - e.g. `1.0.0`)
 -   The stable version must be updated in the top of the readme.txt to match the above
