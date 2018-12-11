@@ -60,7 +60,7 @@ class Selz_Shortcode {
 		if ($screen->base === 'post') {
 		    ?>
 		    <div class="notice notice-info">
-		        <p><?php printf( __( 'Please %s', selz()->lang ), '<a href="' . admin_url( 'admin.php?page=' . selz()->slug ) . '">connect your ' . selz()->name . ' account' ); ?></p>
+		        <p><?php printf( __( 'Please %s', selz()->lang ), '<a href="' . admin_url( 'admin.php?page=' . selz()->slug ) . '">connect your ' . selz()->name . ' account</a>' ); ?></p>
 		    </div>
 		    <?php
 		}

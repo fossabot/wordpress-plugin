@@ -69,7 +69,7 @@ if (!defined('ABSPATH')) {
 					<aside class="padding-top-4">
 						<div>
 							<h4 class="margin-bottom-1"><?php printf( __( 'Need an %s account?', izettle()->lang ), izettle()->name ); ?></h4>
-							<p class="margin-0"><?php printf( __( 'Try %s free for 14 days. No risk and no credit card required.', izettle()->lang ), izettle()->name ); ?></p>
+							<p class="margin-0"><?php printf( __( 'Try %s free for 14 days.', izettle()->lang ), izettle()->name ); ?></p>
 						</div>
 						<a href="<?php echo esc_url( izettle()->signup ); ?>" target="_blank" class="btn btn-primary"><?php _e( 'Start free trial', izettle()->lang ); ?></a>
 					</aside>

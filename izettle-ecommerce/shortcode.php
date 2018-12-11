@@ -60,7 +60,7 @@ class iZettle_Shortcode {
 		if ($screen->base === 'post') {
 		    ?>
 		    <div class="notice notice-info">
-		        <p><?php printf( __( 'Please %s', izettle()->lang ), '<a href="' . admin_url( 'admin.php?page=' . izettle()->slug ) . '">connect your ' . izettle()->name . ' account' ); ?></p>
+		        <p><?php printf( __( 'Please %s', izettle()->lang ), '<a href="' . admin_url( 'admin.php?page=' . izettle()->slug ) . '">connect your ' . izettle()->name . ' account</a>' ); ?></p>
 		    </div>
 		    <?php
 		}
