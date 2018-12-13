@@ -36,3 +36,19 @@ add_action('enqueue_block_editor_assets', function () {
     'wp-edit-blocks'
   ]);
 });
+
+add_action('admin_enqueue_scripts', function ($hook) {
+  // if ($hook !== 'edit.php') {
+  //   return;
+  // }
+
+  wp_enqueue_script('selz/foo', 'https://embeds.selzstatic.com/1/loader.js');
+});
+
+add_filter('script_loader_tag', function ($tag, $handle, $src) {
+  if ($handle === 'selz/foo') {
+    $tag = '<script async src="' . esc_url( $src ) . '"></script>';
+  }
+
+  return $tag;
+}, 10, 3);
