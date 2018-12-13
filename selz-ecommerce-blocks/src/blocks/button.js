@@ -49,6 +49,13 @@ registerBlockType('selz-ecommerce-blocks/button', {
             type: 'string',
             default: 'button',
         },
+        width: {
+            type: 'string',
+        },
+        automatic: {
+            type: 'boolean',
+            default: true,
+        },
     },
     edit: (props) => [
         <Embed {...props} />,

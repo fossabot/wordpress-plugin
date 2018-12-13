@@ -1,34 +1,59 @@
-const { PanelBody, TextControl, ToggleControl, SelectControl } = wp.components;
+const {
+    CheckboxControl,
+    PanelBody,
+    RangeControl,
+    TextControl,
+    ToggleControl,
+    SelectControl
+} = wp.components;
 const { InspectorControls } = wp.editor;
 const { Component } = wp.element;
 const { __ } = wp.i18n;
 
-export default ({ attributes, setAttributes, ...rest }) => {
+export default ({ attributes, setAttributes }) => {
+    const { action, width, text, logos, automatic } = attributes;
+
     return (
         <InspectorControls key="inspector">
             <PanelBody title={__('Button Settings')}>
-                <SelectControl
-                    label="Action"
-                    value={attributes.action}
-                    options={[
-                        { label: 'Add to cart', value: 'addToCart' },
-                        { label: 'Buy now', value: 'buyNow' },
-                        { label: 'View', value: 'view' }
-                    ]}
-                    onChange={value => setAttributes({ action: value })}
-                />
-
                 <TextControl
                     label={__('Text')}
-                    onChange={value => setAttributes({ text: value })}
-                    value={attributes.text}
+                    onChange={text => setAttributes({ text })}
+                    value={text}
+                />
+
+                <SelectControl
+                    label="Action"
+                    value={action}
+                    options={[
+                        { label: 'Add to cart', value: 'add-to-cart' },
+                        { label: 'Buy now', value: 'buy-now' },
+                        { label: 'View', value: 'view' }
+                    ]}
+                    onChange={action => setAttributes({ action })}
                 />
 
                 <ToggleControl
                     label={__('Show payment logos')}
-                    checked={attributes.logos}
-                    onChange={() => setAttributes({ logos: !attributes.logos })}
+                    checked={logos}
+                    onChange={() => setAttributes({ logos: !logos })}
                 />
+            </PanelBody>
+            <PanelBody title={__('Width')}>
+                <CheckboxControl
+                    label={__('Automatic')}
+                    checked={automatic}
+                    onChange={() => setAttributes({ automatic: !automatic })}
+                />
+
+                {!automatic &&
+                    <RangeControl
+                        value={Number(width)}
+                        onChange={width => setAttributes({ width: width.toString() })}
+                        min={160}
+                        max={1000}
+                    />
+                }
             </PanelBody>
         </InspectorControls>
     );

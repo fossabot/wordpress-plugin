@@ -10,7 +10,7 @@ export default class Embed extends Component {
         this.forceUpdate();
     }
 
-    style() {
+    getStyle() {
         const { className } = this.props;
 
         if (!className.split(' ')[1]) {
@@ -21,7 +21,7 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { action, logos, text } = this.props.attributes;
+        const { action, logos, text, width } = this.props.attributes;
         const props = {
             "type": "button",
             "action": action,
@@ -36,10 +36,10 @@ export default class Embed extends Component {
                 }
             },
             "logos": logos,
-            "modal": true,
             "url": "http://selz.co/1rvb96h",
             "text": text,
-            "style": this.style()
+            "style": this.getStyle(),
+            "width": width
         };
 
         // Force update of entire component by setting random number on key attribute
