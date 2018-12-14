@@ -1,0 +1,19 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+// `<PanelBody />`
+
+.components-panel__body.is-loading {
+    text-align: center;
+}
+
+.components-panel__body .components-spinner {
+    float: none;
+}
+
+// Utils
+
+.is-filter { margin-bottom: 8px !important; }

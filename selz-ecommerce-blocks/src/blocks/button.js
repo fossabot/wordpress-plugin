@@ -52,7 +52,7 @@ registerBlockType('selz-ecommerce-blocks/button', {
         width: {
             type: 'string',
         },
-        automatic: {
+        modal: {
             type: 'boolean',
             default: true,
         },

@@ -21,7 +21,7 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { action, logos, text, width } = this.props.attributes;
+        const { action, logos, text, width, modal } = this.props.attributes;
         const props = {
             "type": "button",
             "action": action,
@@ -39,7 +39,8 @@ export default class Embed extends Component {
             "url": "http://selz.co/1rvb96h",
             "text": text,
             "style": this.getStyle(),
-            "width": width
+            "width": width,
+            "modal": modal
         };
 
         // Force update of entire component by setting random number on key attribute
