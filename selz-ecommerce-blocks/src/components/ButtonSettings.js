@@ -32,11 +32,16 @@ export default class ButtonSettings extends Component {
 
     render() {
         const { attributes, setAttributes } = this.props;
-        const { action, width, text, logos } = attributes;
+        const { action, width, text, logos, isLoading, products } = attributes;
 
         return (
             <InspectorControls key="inspector">
-                <ProductList />
+                <ProductList
+                    isLoading={isLoading}
+                    products={products}
+                    attributes={attributes}
+                    setAttributes={setAttributes}
+                />
 
                 <PanelBody title={__('Button Settings')} opened={false}>
                     <TextControl
@@ -74,7 +79,7 @@ export default class ButtonSettings extends Component {
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Width')} opened={false}>
+                <PanelBody title={__('Width')}>
                     <CheckboxControl
                         label={__('Automatic')}
                         checked={this.state.autoWidth}

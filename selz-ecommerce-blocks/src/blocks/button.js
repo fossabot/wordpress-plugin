@@ -56,12 +56,27 @@ registerBlockType('selz-ecommerce-blocks/button', {
             type: 'boolean',
             default: true,
         },
+        url: {
+            type: 'string',
+        },
+        isLoading: {
+            type: 'boolean',
+            default: true,
+        },
+        products: {
+            type: 'array',
+            default: [],
+        },
+        hasMore: {
+            type: 'boolean',
+            default: false,
+        },
     },
-    edit: (props) => [
+    edit: props => [
         <Embed {...props} />,
         <ButtonSettings {...props} />
     ],
-    save: (props) => (
+    save: props => (
         <Embed {...props} />
     ),
 });

@@ -1,13 +1,12 @@
 const { Component } = wp.element;
+const { Placeholder } = wp.components;
+
+// TODO: There's several UI settings that don't need to reload the embed, try
+// to update UI manually
 
 export default class Embed extends Component {
     constructor(props) {
-        super(...arguments);
-    }
-
-    // Not sure why, but our embed won't render without an update here
-    componentDidMount() {
-        this.forceUpdate();
+        super(props);
     }
 
     getStyle() {
@@ -17,11 +16,11 @@ export default class Embed extends Component {
             return 'price-right';
         }
 
-        return this.props.className.split(' ')[1].replace('is-style-', '');
+        return className.split(' ')[1].replace('is-style-', '');
     }
 
     render() {
-        const { action, logos, text, width, modal } = this.props.attributes;
+        const { isLoading, action, logos, text, width, modal, url } = this.props.attributes;
         const props = {
             "type": "button",
             "action": action,
@@ -36,16 +35,35 @@ export default class Embed extends Component {
                 }
             },
             "logos": logos,
-            "url": "http://selz.co/1rvb96h",
+            "url": url,
             "text": text,
             "style": this.getStyle(),
             "width": width,
             "modal": modal
         };
 
-        // Force update of entire component by setting random number on key attribute
+        if (isLoading) {
+            return (
+                <Placeholder icon="wordpress-alt" label="Selz eCommerce">
+                    Hold tight while we load your products…
+                </Placeholder>
+            );
+        }
+        
+        if (!url) {
+            return (
+                <Placeholder icon="wordpress-alt" label="Selz eCommerce">
+                    Please select the product you'd like to sell…
+                </Placeholder>
+            );
+        }
+
+        // Give the container a key based on the props coming in, so that the embed
+        // only ever updates when props change - sure fire!!!
+        //
+        // Note: This is due to only the inner node updating (in React).
         return (
-            <div data-embed="embed" key={Math.random()}>
+            <div data-embed="embed" key={JSON.stringify(props)} style={{ textAlign: 'center' }}>
                 <script type="text/props">
                     {JSON.stringify(props)}
                 </script>
