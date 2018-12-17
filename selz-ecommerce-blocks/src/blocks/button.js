@@ -1,5 +1,5 @@
 import Embed from '../components/Embed';
-import ButtonSettings from '../components/ButtonSettings';
+import ButtonInspector from '../components/ButtonInspector';
 
 const { registerBlockType } = wp.blocks;
 const { __ } = wp.i18n;
@@ -71,10 +71,26 @@ registerBlockType('selz-ecommerce-blocks/button', {
             type: 'boolean',
             default: false,
         },
+        query: {
+            type: 'string',
+            default: '',
+        },
+        request: {
+            type: 'object',
+            default: {
+                data: {
+                    page: 1,
+                },
+            },
+        },
+        pageNumber: {
+            type: 'integer',
+            default: 1,
+        },
     },
     edit: props => [
         <Embed {...props} />,
-        <ButtonSettings {...props} />
+        <ButtonInspector {...props} />
     ],
     save: props => (
         <Embed {...props} />

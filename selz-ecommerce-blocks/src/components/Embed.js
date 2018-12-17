@@ -20,7 +20,7 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { isLoading, action, logos, text, width, modal, url } = this.props.attributes;
+        const { action, logos, text, width, modal, url } = this.props.attributes;
         const props = {
             "type": "button",
             "action": action,
@@ -42,18 +42,10 @@ export default class Embed extends Component {
             "modal": modal
         };
 
-        if (isLoading) {
-            return (
-                <Placeholder icon="wordpress-alt" label="Selz eCommerce">
-                    Hold tight while we load your products…
-                </Placeholder>
-            );
-        }
-        
         if (!url) {
             return (
                 <Placeholder icon="wordpress-alt" label="Selz eCommerce">
-                    Please select the product you'd like to sell…
+                    Hold tight while we load your products…
                 </Placeholder>
             );
         }

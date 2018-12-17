@@ -17,3 +17,10 @@
 
 .is-filter {
   margin-bottom: 8px !important; }
+
+.pager {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  margin-top: 12px; }

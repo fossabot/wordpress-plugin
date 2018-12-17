@@ -17,3 +17,11 @@
 // Utils
 
 .is-filter { margin-bottom: 8px !important; }
+
+// Misc
+
+.pager {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
