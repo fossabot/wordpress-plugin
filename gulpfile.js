@@ -178,12 +178,12 @@ build.less(bundles.less);
 build.images();
 
 // Watch for file changes
-gulp.task('watch', done => {
+/* gulp.task('watch', done => {
     // gulp.watch(paths.src.less, gulp.series(tasks.less));
     // gulp.watch(paths.src.images, gulp.series(tasks.images));
     // gulp.watch(paths.src.js, gulp.series(tasks.js));
     done();
-});
+}); */
 
 // Default gulp task
-gulp.task('default', gulp.series('clean', gulp.parallel(tasks.js, tasks.less, tasks.images), 'watch'));
+gulp.task('default', gulp.series('clean', gulp.parallel(tasks.js, tasks.less, tasks.images)));
