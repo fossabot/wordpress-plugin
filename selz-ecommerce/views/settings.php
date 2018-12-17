@@ -5,7 +5,12 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="selz selz-settings">
+<form action="options.php" method="post" id="settings" class="selz selz-settings">
+	<?php
+	settings_fields( selz()->slug . '_settings' );
+	$options = get_option( selz()->slug . '_settings' );
+	?>
+
 	<div class="container container--narrow">
 		<div class="panel margin-top-4 margin-bottom-2">
 			<div class="padding-6">
@@ -39,24 +44,17 @@ if (!defined('ABSPATH')) {
 				</div>
 
 				<?php if (selz()->api->is_connected()) { ?>
-					<form action="options.php" method="post" id="settings" class="padding-top-4">
+					<label for="<?php echo selz()->slug . "_display_cart" ?>" class="padding-top-4">
 						<?php
-						settings_fields( selz()->slug . '_settings' );
-						$options = get_option( selz()->slug . '_settings');
+						$checked = '';
+						if ( isset( $options['display_cart'] ) && $options['display_cart'] == 'on' ) {
+							$checked = 'checked';
+						}
+						echo "<input type='checkbox' id='" . selz()->slug . "_display_cart' name='" . selz()->slug . "_settings[display_cart]' ".$checked." onchange='document.forms.settings.submit()'>";
 						?>
-
-						<label for="<?php echo selz()->slug . "_display_cart" ?>">
-							<?php
-							$checked = '';
-							if ( isset( $options['display_cart'] ) && $options['display_cart'] == 'on' ) {
-								$checked = 'checked';
-							}
-							echo "<input type='checkbox' id='" . selz()->slug . "_display_cart' name='" . selz()->slug . "_settings[display_cart]' ".$checked." onchange='document.forms.settings.submit()'>";
-							?>
-							<?php _e( 'Shopping Cart', selz()->lang ); ?>
-							<small class="help-block"><?php _e( 'Display the shopping cart on all pages of your website.', selz()->lang ); ?></small>
-						</label>
-					</form>
+						<?php _e( 'Shopping Cart', selz()->lang ); ?>
+						<small class="help-block"><?php _e( 'Display the shopping cart on all pages of your website.', selz()->lang ); ?></small>
+					</label>
 
 					<div class="alert margin-top-4 padding-top-3 padding-bottom-3 padding-left-4 padding-right-4 text-center">
 						<?php printf(
@@ -76,7 +74,7 @@ if (!defined('ABSPATH')) {
 				<?php } ?>
 			</div>
 		</div>
-
+		<?php include( selz()->dir . '/includes/env.php' ); ?>
 		<?php include( selz()->dir . '/includes/version.php' ); ?>
 	</div>
-</div>
+</form>

@@ -3,7 +3,7 @@
     Plugin Name: Selz WordPress Ecommerce
     Plugin URI: https://features.selz.com/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.9.3
+    Version: 1.9.4
     Author: Selz
     Author URI: https://features.selz.com/wordpress-ecommerce
     License: MIT
@@ -23,7 +23,7 @@ if (!defined('ABSPATH'))
  */
 final class Selz {
 
-	public $version = '1.9.3';
+	public $version = '1.9.4';
 	public $dir 	= '';
 	public $url 	= '';
 	public $name 	= 'Selz';
@@ -32,6 +32,16 @@ final class Selz {
 	public $home 	= 'https://selz.com/';
 	public $signup 	= 'https://selz.com/account/signup';
 	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
+	public $developer = false;
+
+	// Available environments
+	public $envs = array(
+		"" 		=> "Production (default)",
+		"stage" => "Stage/Release",
+		"z" 	=> "iZettle",
+		"dev" 	=> "Develop",
+		"local" => "Local"
+	);
 
 	/**
 	 * The single instance of the class.
@@ -181,16 +191,42 @@ final class Selz {
 	}
 
 	// Register our settings. Add the settings section, and settings fields
-	public function init_settings() {
+	public function init_settings(){
 		register_setting( $this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ) );
 
-		add_settings_field( $this->slug . '_store_id', '', '', __FILE__ );
-		add_settings_field( $this->slug . '_display_cart', '', '', __FILE__ );
+		if ( $_GET['developer'] == 'true' ) {
+			setcookie(selz()->slug . '_developer', 'true', time() + 315360000);
+		}
+
+		if ( $_GET['developer'] == 'true' || $_COOKIE[selz()->slug . '_developer'] == 'true' ) {
+			$this->developer = true;
+		}
 	}
 
 	public function settings_validate( $input ) {
-		$input['store_id'] = trim(sanitize_text_field( $input['store_id'] ));
 		$input['display_cart'] = sanitize_text_field( $input['display_cart'] );
+
+		$env = sanitize_text_field( $input['env'] );
+		$envs = array_keys( $this->envs );
+
+		if ( in_array( $env, $envs ) ) {
+			$input['env'] = $env;
+		} else {
+			$input['env'] = $envs[0];
+		}
+
+		// On change of environment, we need to reset the API
+		$options = get_option( selz()->slug . '_settings' );
+
+		if ( $options['env'] != $input['env'] ) {
+			$api = new Selz_API();
+
+			if ( $api->is_connected() ) {
+				$api->remove_tokens();
+				$api->remove_client();
+			}
+		}
+
 		return $input;
 	}
 
