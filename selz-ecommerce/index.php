@@ -260,10 +260,12 @@ final class Selz {
 			$args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
 		}
 
-		if ('store' == $args['type'] || $args['type'] == '') {
+		$env = get_option( $this->slug . '_settings' )['env'];
+
+		if ( 'store' == $args['type'] || $args['type'] == '' ) {
 			$store = get_option( $this->slug . '_store' );
 
- 			if ( ! $store || ! $store->name )
+ 			if ( !$store || !$store->name )
 			{
 				return '';
 			}
@@ -271,6 +273,7 @@ final class Selz {
 			$html = '<div data-embed="store">
 			    <script type="text/props">
 			    {
+					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
 			        "colors": {
 			            "buttons": {
 			                "background": "' . $args['background_color'] . '",
@@ -289,18 +292,19 @@ final class Selz {
 			<script async src="' . esc_url( $this->embed ) . '"></script>
 			<noscript><a href="' . esc_url_raw( $store->name ) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
 
-		} elseif ('button' == $args['type']) {
-			if (!$args['link']) {
+		} elseif ( 'button' == $args['type'] ) {
+			if ( !$args['link'] ) {
 				return '';
 			}
 
-			if ($args['fluid_width']) {
+			if ( $args['fluid_width'] ) {
 				$args['width'] = '100%';
 			}
 
 			$html = '<div data-embed="button">
 			    <script type="text/props">
 			    {
+					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
 			        "action": "' . $args['action'] . '",
 			        "colors": {
 			            "buttons": {
@@ -325,17 +329,18 @@ final class Selz {
 	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
 
 		} else {
-			if (!$args['link']) {
+			if ( !$args['link'] ) {
 				return '';
 			}
 
-			if ($args['fluid_width']) {
+			if ( $args['fluid_width'] ) {
 				$args['width'] = '100%';
 			}
 
 			$html = '<div data-embed="widget">
 			    <script type="text/props">
 			    {
+					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
 			        "action": "' . $args['action'] . '",
 			        "colors": {
 			            "buttons": {
