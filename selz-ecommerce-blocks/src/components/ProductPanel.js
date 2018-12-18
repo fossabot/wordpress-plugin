@@ -2,17 +2,17 @@ import { debounce } from 'lodash';
 import ProductList from './ProductList';
 
 const { Component } = wp.element;
-const { PanelBody, RadioControl, TextControl } = wp.components;
+const { PanelBody, TextControl } = wp.components;
 const { __ } = wp.i18n;
 
 export default class ProductPanel extends Component {
     constructor(props) {
         super(props);
-        this.debouncedSearchProducts = debounce(this.searchProducts, 200);
+        this.debouncedSearchProducts = debounce(this.searchProducts, 500);
     }
 
     componentDidMount() {
-        this.fetchProducts();
+        this.fetchProducts(this.props.attributes.currentPage);
     }
 
     componentWillUnmount() {
@@ -20,9 +20,9 @@ export default class ProductPanel extends Component {
     }
 
     // TODO: Properly handle errors
-    fetchProducts(data) {
-        const { attributes: { url }, setAttributes } = this.props;
-        const request = this.getRequest(data);
+    fetchProducts(pageNumber = 1) {
+        const { attributes: { pages, url }, setAttributes } = this.props;
+        const request = this.getRequest(pageNumber);
 
         setAttributes({ request });
         fetch(request.url)
@@ -34,13 +34,26 @@ export default class ProductPanel extends Component {
                         return;
                     }
 
-                    setAttributes({
-                        request,
+                    const attributes = {
                         isLoading: false,
                         products: data,
                         hasMore: has_more,
-                        ...(data.length ? { url: url || data[0].short_url } : {}),
-                    });
+                    };
+
+                    if (data && data.length) {
+                        attributes.url = url || data[0].short_url;
+                        attributes.pages = {
+                            ...pages,
+                            [pageNumber]: {
+                                number: pageNumber,
+                                start: data[0].id,
+                                end: data[data.length - 1].id,
+                            },
+                        };
+                        attributes.currentPage = pageNumber;
+                    }
+
+                    setAttributes(attributes);
                 },
                 error => {
                     setAttributes({
@@ -51,13 +64,13 @@ export default class ProductPanel extends Component {
             );
     }
 
-    getRequest(data) {
-        const { query, request: { data: { page } } } = this.props.attributes;
-        data = {
+    getRequest(pageNumber) {
+        const { pages, query } = this.props.attributes;
+        const data = {
             action: `selz_${query ? 'search' : 'get'}_products`,
-            page,
+            starting_after: pageNumber !== 1 ? pages[pageNumber - 1].end : null,
+            page: pageNumber,
             q: query,
-            ...data,
         };
 
         return {
@@ -82,26 +95,16 @@ export default class ProductPanel extends Component {
     }
 
     next() {
-        const { pageNumber, products, query } = this.props.attributes;
-        const data = query
-            ? { page: pageNumber + 1 }
-            : { starting_after: products[products.length - 1].id };
-
-        this.searchProducts(data);
+        this.searchProducts(this.props.attributes.currentPage + 1);
     }
 
     previous() {
-        const { pageNumber, products, query } = this.props.attributes;
-        const data = query
-            ? { page: pageNumber - 1 }
-            : { ending_before: products[0].id };
-
-        this.searchProducts(data);
+        this.searchProducts(this.props.attributes.currentPage - 1);
     }
 
-    searchProducts(data) {
+    searchProducts(pageNumber) {
         this.props.setAttributes({ isLoading: true });
-        this.fetchProducts(data);
+        this.fetchProducts(pageNumber);
     }
 
     render() {

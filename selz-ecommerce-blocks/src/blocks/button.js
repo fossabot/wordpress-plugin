@@ -77,15 +77,22 @@ registerBlockType('selz-ecommerce-blocks/button', {
         },
         request: {
             type: 'object',
+        },
+        pages: {
+            type: 'object',
+            default: {},
+        },
+        page: {
+            type: 'object',
             default: {
-                data: {
-                    page: 1,
-                },
+                number: 1,
             },
         },
-        pageNumber: {
+        currentPage: {
             type: 'integer',
-            default: 1,
+        },
+        color: {
+            type: 'string',
         },
     },
     edit: props => [

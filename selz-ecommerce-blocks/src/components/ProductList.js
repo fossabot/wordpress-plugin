@@ -1,47 +1,44 @@
 import Scroll from './Scroll';
 
-const { Component, Fragment } = wp.element;
+const { Fragment } = wp.element;
 const { Button, RadioControl, Spinner } = wp.components;
 const { __ } = wp.i18n;
 
-// TODO: Convert to stateless functional component
-export default class ProductList extends Component {
-    constructor(props) {
-        super(props);
+export default ({ attributes, next, previous, setAttributes }) => {
+    const { currentPage, hasMore, isLoading, products, query, url } = attributes;
+
+    if (isLoading) {
+        return <Spinner />;
     }
 
-    render() {
-        const { attributes: { isLoading, products, request, url }, setAttributes } = this.props;
-
-        if (isLoading) {
-            return <Spinner />;
-        } else if (!products.length) {
-            return <p>{__('No matches found')}</p>;
-        } else {
-            const options = products.map(({ title, short_url }) => ({
-                label: title,
-                value: short_url,
-            }));
-
-            return (
-                <Fragment>
-                    <Scroll ariaLabel={__('Products')}>
-                        <RadioControl
-                            selected={url}
-                            options={options}
-                            onChange={url => setAttributes({ url })}
-                        />
-                    </Scroll>
-                    <div className="pager">
-                        <Button isLink onClick={this.props.previous} disabled={request.data.page === 1}>
-                            {__('Prev')}
-                        </Button>
-                        <Button isLink onClick={this.props.next}>
-                            {__('Next')}
-                        </Button>
-                    </div>
-                </Fragment>
-            );
-        }
+    if (!products || !products.length) {
+        const message = query ? __('No matches found') : __('No products found');
+        return <p>{message}</p>;
     }
+
+    return (
+        <Fragment>
+            <Scroll ariaLabel={__('Products')}>
+                <RadioControl
+                    selected={url}
+                    options={products.map(({ title, short_url }) => ({
+                        label: title,
+                        value: short_url,
+                    }))}
+                    onChange={url => setAttributes({ url })}
+                />
+            </Scroll>
+
+            {(currentPage !== 1 || hasMore) && (
+                <div className="pager">
+                    <Button isLink onClick={previous} disabled={currentPage === 1}>
+                        {__('Prev')}
+                    </Button>
+                    <Button isLink onClick={next} disabled={!hasMore}>
+                        {__('Next')}
+                    </Button>
+                </div>
+            )}
+        </Fragment>
+    );
 };
