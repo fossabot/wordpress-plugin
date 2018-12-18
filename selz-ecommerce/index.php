@@ -34,15 +34,6 @@ final class Selz {
 	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
 	public $developer = false;
 
-	// Available environments
-	public $envs = array(
-		"" 		=> "Production (default)",
-		"stage" => "Stage/Release",
-		"z" 	=> "iZettle",
-		"dev" 	=> "Develop",
-		"local" => "Local"
-	);
-
 	/**
 	 * The single instance of the class.
 	 *
@@ -207,12 +198,11 @@ final class Selz {
 		$input['display_cart'] = sanitize_text_field( $input['display_cart'] );
 
 		$env = sanitize_text_field( $input['env'] );
-		$envs = array_keys( $this->envs );
 
-		if ( in_array( $env, $envs ) ) {
+		if ( strpos($env, 'selz.com') !== false ) {
 			$input['env'] = $env;
 		} else {
-			$input['env'] = $envs[0];
+			$input['env'] = '';
 		}
 
 		// On change of environment, we need to reset the API

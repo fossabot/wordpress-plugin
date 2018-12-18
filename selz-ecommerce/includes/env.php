@@ -6,14 +6,11 @@ if (!defined('ABSPATH')) {
 ?>
 
 <?php if ( selz()->developer ) { ?>
-    <label for="<?php echo selz()->slug . "_env" ?>" style="float: left;">
-        <span class="sr-only"><?php _e( 'Environment', selz()->lang ); ?></span>
-        <select id="<?php echo selz()->slug; ?>_env" name="<?php echo selz()->slug; ?>_settings[env]" onchange="document.forms.settings.submit()">
-            <?php foreach ( selz()->envs as $key => $value ) { ?>
-                <option value="<?php echo $key; ?>" <?php if ( isset( $options['env'] ) && $options['env'] == $key ) { echo 'selected'; } ?>>
-                    <?php echo $value; ?>
-                </option>
-            <?php } ?>
-        </select>
-    </label>
+    <div style="float: left;">
+        <label for="<?php echo selz()->slug . "_env" ?>" style="float: left;">
+            <span class="sr-only"><?php _e( 'Environment', selz()->lang ); ?></span>
+            <input type="text" id="<?php echo selz()->slug; ?>_env" name="<?php echo selz()->slug; ?>_settings[env]" class="input-control input-control--small" placeholder="selz.com" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="<?php echo $options['env']; ?>">
+        </label>
+        <button type="submit" class="btn btn-small btn-secondary">Save</button>
+    </div>
 <?php } ?>
