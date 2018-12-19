@@ -102,18 +102,23 @@ registerBlockType('selz-ecommerce-blocks/button', {
         },
         btnBg: {
             type: 'string',
+            default: '#7959C7',
         },
         btnText: {
             type: 'string',
+            default: '#FFFFFF',
         },
         checkoutHeader: {
             type: 'string',
+            default: '#7959C7',
         },
         checkoutHeaderText: {
             type: 'string',
+            default: '#FFFFFF',
         },
         linksColor: {
             type: 'string',
+            default: '#7959C7',
         },
         textWasSet: {
             type: 'boolean',
