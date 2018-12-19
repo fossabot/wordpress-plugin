@@ -89,7 +89,7 @@ export default class ProductPanel extends Component {
         return url;
     }
 
-    handleChange(query) {
+    handleQueryChange(query) {
         this.props.setAttributes({ query });
         this.debouncedSearchProducts();
     }
@@ -117,7 +117,7 @@ export default class ProductPanel extends Component {
                     type="search"
                     value={props.attributes.query}
                     className="is-filter"
-                    onChange={query => this.handleChange(query)}
+                    onChange={query => this.handleQueryChange(query)}
                 />
                 <ProductList {...props}
                     next={() => this.next()}

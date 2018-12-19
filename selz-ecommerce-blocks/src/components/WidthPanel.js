@@ -1,50 +1,58 @@
+import { debounce } from 'lodash';
+
 const { Component } = wp.element;
-const { CheckboxControl, PanelBody, RangeControl } = wp.components;
+const { PanelBody, RangeControl, ToggleControl } = wp.components;
 const { __ } = wp.i18n;
 
 export default class Width extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            autoWidth: true,
-            fluidWidth: false
-        };
+        this.debouncedSetWidth = debounce(this.setWidth, 200);
     }
 
-    handleAutoWidth() {
-        this.setState(({ autoWidth }) => ({ autoWidth: !autoWidth }));
+    handleWidthChange(width) {
+        this.props.setAttributes({ _width: width });
+        this.debouncedSetWidth(width);
     }
 
-    handleFluidWidth() {
-        this.setState(({ fluidWidth }) => ({ fluidWidth: !fluidWidth }));
+    setWidth(width) {
+        this.props.setAttributes({ width });
     }
 
     render() {
-        const { width } = this.props.attributes;
+        const { attributes: { _width, autoWidth, fluidWidth, type }, setAttributes } = this.props;
 
         return (
             <PanelBody title={__('Width')} initialOpen={false}>
-                <CheckboxControl
-                    label={__('Automatic')}
-                    checked={this.state.autoWidth}
-                    onChange={() => this.handleAutoWidth()}
-                />
-
-                {!this.state.autoWidth && (
-                    <CheckboxControl
-                        label={__('Fluid')}
-                        checked={this.state.fluidWidth}
-                        onChange={() => this.handleFluidWidth()}
+                {type === 'button' && (
+                    <ToggleControl
+                        label={__('Automatic')}
+                        checked={autoWidth}
+                        onChange={() => setAttributes({
+                            autoWidth: !autoWidth,
+                            width: autoWidth ? _width : null,
+                        })}
                     />
                 )}
 
-                {!this.state.fluidWidth && (
+                {!autoWidth && (
+                    <ToggleControl
+                        label={__('Fluid (100%)')}
+                        checked={fluidWidth}
+                        onChange={() => setAttributes({
+                            fluidWidth: !fluidWidth,
+                            width: fluidWidth ? _width : '100%',
+                        })}
+                    />
+                )}
+
+                {!autoWidth && !fluidWidth && (
                     <RangeControl
-                        value={Number(width)}
-                        onChange={width => setAttributes({ width: width.toString() })}
+                        value={_width}
+                        onChange={width => this.handleWidthChange(width)}
                         min={160}
                         max={1000}
+                        step={5}
                     />
                 )}
             </PanelBody>

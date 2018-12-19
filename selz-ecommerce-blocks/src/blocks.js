@@ -1,5 +1,5 @@
 // Blocks
-import './blocks/button';
+import './blocks/button/';
 
 // Styles
 import './style.scss';
