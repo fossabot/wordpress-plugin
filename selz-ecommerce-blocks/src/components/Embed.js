@@ -1,9 +1,6 @@
 const { Component } = wp.element;
 const { Placeholder } = wp.components;
 
-// TODO: There's several UI settings that don't need to reload the embed, try
-// to update UI manually
-
 export default class Embed extends Component {
     constructor(props) {
         super(props);
@@ -50,8 +47,8 @@ export default class Embed extends Component {
             );
         }
 
-        // Give the container a key based on the props coming in, so that the embed
-        // only ever updates when props change - sure fire!!!
+        // Give the container a key based on the props coming in, so that the embed only ever updates when props
+        // change - sure fire!!!
         //
         // Note: This is due to only the inner node updating (in React).
         return (
