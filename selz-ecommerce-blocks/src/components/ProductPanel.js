@@ -19,7 +19,6 @@ export default class ProductPanel extends Component {
         this.debouncedSearchProducts.cancel();
     }
 
-    // TODO: Properly handle errors
     fetchProducts(pageNumber = 1) {
         const { attributes: { pages, url }, setAttributes } = this.props;
         const request = this.getRequest(pageNumber);
@@ -90,7 +89,7 @@ export default class ProductPanel extends Component {
     }
 
     handleQueryChange(query) {
-        this.props.setAttributes({ query });
+        this.props.setAttributes({ query, error: false });
         this.debouncedSearchProducts();
     }
 

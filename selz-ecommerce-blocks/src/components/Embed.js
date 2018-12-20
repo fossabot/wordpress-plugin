@@ -1,44 +1,55 @@
 const { Component } = wp.element;
 const { Placeholder } = wp.components;
 
+// TODO: Move this out as util
+const getStyle = className => {
+    if (!className.split(' ')[1]) {
+        return 'price-right';
+    }
+    return className.split(' ')[1].replace('is-style-', '');
+};
+
 export default class Embed extends Component {
     constructor(props) {
         super(props);
     }
 
-    getStyle() {
-        const { className } = this.props;
-
-        if (!className.split(' ')[1]) {
-            return 'price-right';
+    // Re-renders the style options
+    componentDidMount() {
+        if (!this.props.clientId) {
+            this.forceUpdate();
         }
-
-        return className.split(' ')[1].replace('is-style-', '');
     }
 
     render() {
-        const { action, logos, text, width, modal, url } = this.props.attributes;
+        const { btnBg, btnText, checkoutHeader, checkoutHeaderText, logos, text, width, url } = this.props.attributes;
         const props = {
             "type": "button",
-            "action": action,
             "colors": {
                 "buttons": {
-                    "background": "#f9b642",
-                    "text": "#ffffff"
+                    "background": btnBg,
+                    "text": btnText,
                 },
                 "checkout": {
-                    "background": "#f9b642",
-                    "text": "#ffffff"
-                }
+                    "background": checkoutHeader,
+                    "text": checkoutHeaderText,
+                },
             },
             "logos": logos,
             "url": url,
             "text": text,
-            "style": this.getStyle(),
+            "style": getStyle(this.props.className),
             "width": width,
-            "modal": modal
         };
+        const key = this.props.clientId ? JSON.stringify(props) : Math.random();
 
+        if (!url && !this.props.clientId) {
+            return (
+                <Placeholder />
+            );
+        }
+
+        // TODO: Make this not ugly
         if (!url) {
             return (
                 <Placeholder icon="wordpress-alt" label="Selz eCommerce">
@@ -47,12 +58,9 @@ export default class Embed extends Component {
             );
         }
 
-        // Give the container a key based on the props coming in, so that the embed only ever updates when props
-        // change - sure fire!!!
-        //
-        // Note: This is due to only the inner node updating (in React).
+        // TODO: Better explain usage of `key`
         return (
-            <div data-embed="embed" key={JSON.stringify(props)} style={{ textAlign: 'center' }}>
+            <div data-embed="embed" key={key} style={{ textAlign: 'center' }}>
                 <script type="text/props">
                     {JSON.stringify(props)}
                 </script>

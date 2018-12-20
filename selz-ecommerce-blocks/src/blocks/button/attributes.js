@@ -1,10 +1,13 @@
+import { actionOptions, colors } from '../../config';
+
 export default {
     action: {
         type: 'string',
-        default: 'view'
+        default: actionOptions[0].value,
     },
     text: {
         type: 'string',
+        default: actionOptions[0].label,
     },
     logos: {
         type: 'boolean',
@@ -59,23 +62,23 @@ export default {
     },
     btnBg: {
         type: 'string',
-        default: '#7959C7',
+        default: colors.primary,
     },
     btnText: {
         type: 'string',
-        default: '#FFFFFF',
+        default: colors.white,
     },
     checkoutHeader: {
         type: 'string',
-        default: '#7959C7',
+        default: colors.primary,
     },
     checkoutHeaderText: {
         type: 'string',
-        default: '#FFFFFF',
+        default: colors.white,
     },
     linksColor: {
         type: 'string',
-        default: '#7959C7',
+        default: colors.primary,
     },
     textWasSet: {
         type: 'boolean',
@@ -91,10 +94,14 @@ export default {
     },
     _text: {
         type: 'string',
-        default: '',
+        default: actionOptions[0].label,
     },
     _width: {
         type: 'integer',
         default: 320,
+    },
+    error: {
+        type: 'boolean',
+        default: false,
     },
 };

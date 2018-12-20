@@ -1,19 +1,34 @@
 import Scroll from './Scroll';
 
 const { Fragment } = wp.element;
-const { Button, RadioControl, Spinner } = wp.components;
+const { Button, Notice, RadioControl, Spinner } = wp.components;
 const { __ } = wp.i18n;
 
 export default ({ attributes, next, previous, setAttributes }) => {
-    const { currentPage, hasMore, isLoading, products, query, url } = attributes;
+    const { currentPage, error, hasMore, isLoading, products, request, url } = attributes;
+
+    if (error) {
+        return (
+            <Notice status="error" isDismissible={false}>
+                {__('Failed to load products. Please try again.')}
+            </Notice>
+        );
+    }
 
     if (isLoading) {
-        return <Spinner />;
+        return (
+            <div style={{ textAlign: 'center' }}>
+                <Spinner />
+            </div>
+        );
     }
 
     if (!products || !products.length) {
-        const message = query ? __('No matches found') : __('No products found');
-        return <p>{message}</p>;
+        return (
+            <Notice status="info" isDismissible={false}>
+                {request.data.q ? __('No matches found') : __('No products found')}
+            </Notice>
+        );
     }
 
     return (

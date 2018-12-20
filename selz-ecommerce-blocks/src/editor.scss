@@ -17,3 +17,12 @@
 #selz-cart {
     display: none;
 }
+
+.product-list {
+    max-height: 14em;
+    overflow: auto;
+}
+
+[data-embed='embed'] {
+    pointer-events: none;
+}

@@ -1,4 +1,5 @@
 import { debounce } from 'lodash';
+import { actionOptions } from '../config';
 
 const { Component } = wp.element;
 const { PanelBody, SelectControl, TextControl, ToggleControl } = wp.components;
@@ -15,8 +16,10 @@ export default class OptionsPanel extends Component {
         const attributes = { action };
 
         if (!textWasSet) {
-            attributes._text = action;
-            attributes.text = action;
+            const { label } = actionOptions.find(option => option.value === action);
+
+            attributes._text = label;
+            attributes.text = label;
         }
 
         setAttributes(attributes);
@@ -39,11 +42,7 @@ export default class OptionsPanel extends Component {
                 <SelectControl
                     label={__('Action')}
                     value={action}
-                    options={[
-                        { label: 'Add to Cart', value: 'add-to-cart' },
-                        { label: 'Buy Now', value: 'buy-now' },
-                        { label: 'View', value: 'view' },
-                    ]}
+                    options={actionOptions}
                     onChange={action => this.handleActionChange(action)}
                 />
 
@@ -52,8 +51,8 @@ export default class OptionsPanel extends Component {
                         label={__('Window Type')}
                         value={modal}
                         options={[
-                            { label: 'Overlay', value: true },
-                            { label: 'New Tab', value: false },
+                            { label: __('Overlay'), value: true },
+                            { label: __('New Tab'), value: false },
                         ]}
                         onChange={modal => setAttributes({ modal })}
                     />
