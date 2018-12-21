@@ -81,15 +81,16 @@ export default class ProductPanel extends Component {
 
     getUrl(data) {
         const { ajaxurl } = window;
-        const url = Object.keys(data).reduce((url, param) => {
-            return data[param] ? `${url}${url === ajaxurl ? '?' : '&'}${param}=${data[param]}` : url;
-        }, ajaxurl);
+        const url = Object.keys(data).reduce(
+            (url, param) => data[param] ? `${url}${url === ajaxurl ? '?' : '&'}${param}=${data[param]}` : url,
+            ajaxurl
+        );
 
         return url;
     }
 
     handleQueryChange(query) {
-        this.props.setAttributes({ query, error: false });
+        this.props.setAttributes({ query, error: null });
         this.debouncedSearchProducts();
     }
 

@@ -17,7 +17,6 @@ export default class OptionsPanel extends Component {
 
         if (!textWasSet) {
             const { label } = actionOptions.find(option => option.value === action);
-
             attributes._text = label;
             attributes.text = label;
         }

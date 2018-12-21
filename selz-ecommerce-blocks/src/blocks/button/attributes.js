@@ -5,40 +5,56 @@ export default {
         type: 'string',
         default: actionOptions[0].value,
     },
-    text: {
-        type: 'string',
-        default: actionOptions[0].label,
-    },
-    logos: {
-        type: 'boolean',
-        default: false,
-    },
-    type: {
-        type: 'string',
-        default: 'button',
-    },
-    width: {
-        type: 'string',
-        default: null,
-    },
-    modal: {
+    autoWidth: {
         type: 'boolean',
         default: true,
     },
-    url: {
+    buttonBackgroundColor: {
         type: 'string',
+        default: colors.primary,
+    },
+    buttonTextColor: {
+        type: 'string',
+        default: colors.white,
+    },
+    checkoutBackgroundColor: {
+        type: 'string',
+        default: colors.primary,
+    },
+    checkoutTextColor: {
+        type: 'string',
+        default: colors.white,
+    },
+    currentPage: {
+        type: 'number',
+    },
+    error: {
+        type: 'object',
+    },
+    fluidWidth: {
+        type: 'boolean',
+        default: false,
+    },
+    hasMore: {
+        type: 'boolean',
     },
     isLoading: {
         type: 'boolean',
         default: true,
     },
-    products: {
-        type: 'array',
-        default: [],
-    },
-    hasMore: {
+    logos: {
         type: 'boolean',
         default: false,
+    },
+    modal: {
+        type: 'boolean',
+        default: true,
+    },
+    pages: {
+        type: 'object',
+    },
+    products: {
+        type: 'array',
     },
     query: {
         type: 'string',
@@ -47,61 +63,30 @@ export default {
     request: {
         type: 'object',
     },
-    pages: {
-        type: 'object',
-        default: {},
-    },
-    page: {
-        type: 'object',
-        default: {
-            number: 1,
-        },
-    },
-    currentPage: {
-        type: 'integer',
-    },
-    btnBg: {
+    text: {
         type: 'string',
-        default: colors.primary,
-    },
-    btnText: {
-        type: 'string',
-        default: colors.white,
-    },
-    checkoutHeader: {
-        type: 'string',
-        default: colors.primary,
-    },
-    checkoutHeaderText: {
-        type: 'string',
-        default: colors.white,
-    },
-    linksColor: {
-        type: 'string',
-        default: colors.primary,
+        default: actionOptions[0].label,
     },
     textWasSet: {
         type: 'boolean',
         default: false,
     },
-    autoWidth: {
-        type: 'boolean',
-        default: true,
+    type: {
+        type: 'string',
+        default: 'button',
     },
-    fluidWidth: {
-        type: 'boolean',
-        default: false,
+    url: {
+        type: 'string',
+    },
+    width: {
+        type: 'string',
     },
     _text: {
         type: 'string',
         default: actionOptions[0].label,
     },
     _width: {
-        type: 'integer',
+        type: 'number',
         default: 320,
-    },
-    error: {
-        type: 'boolean',
-        default: false,
     },
 };
