@@ -2,7 +2,7 @@ const { ContrastChecker, PanelColorSettings } = wp.editor;
 const { __ } = wp.i18n;
 
 export default ({ attributes, setAttributes }) => {
-    const { checkoutHeader, checkoutHeaderText } = attributes;
+    const { checkoutBackgroundColor, checkoutTextColor } = attributes;
 
     return (
         <PanelColorSettings
@@ -10,20 +10,20 @@ export default ({ attributes, setAttributes }) => {
             initialOpen={false}
             colorSettings={[
                 {
-                    value: checkoutHeader,
-                    onChange: checkoutHeader => setAttributes({ checkoutHeader }),
+                    value: checkoutBackgroundColor,
+                    onChange: checkoutBackgroundColor => setAttributes({ checkoutBackgroundColor }),
                     label: __('Background Color'),
                 },
                 {
-                    value: checkoutHeaderText,
-                    onChange: checkoutHeaderText => setAttributes({ checkoutHeaderText }),
+                    value: checkoutTextColor,
+                    onChange: checkoutTextColor => setAttributes({ checkoutTextColor }),
                     label: __('Text Color'),
                 }
             ]}
         >
             <ContrastChecker
-                backgroundColor={checkoutHeader}
-                textColor={checkoutHeaderText}
+                backgroundColor={checkoutBackgroundColor}
+                textColor={checkoutTextColor}
             />
         </PanelColorSettings>
     );

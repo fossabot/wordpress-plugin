@@ -22,17 +22,17 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { btnBg, btnText, checkoutHeader, checkoutHeaderText, logos, text, width, url } = this.props.attributes;
+        const { buttonBackgroundColor, buttonTextColor, checkoutBackgroundColor, checkoutTextColor, logos, text, width, url } = this.props.attributes;
         const props = {
             "type": "button",
             "colors": {
                 "buttons": {
-                    "background": btnBg,
-                    "text": btnText,
+                    "background": buttonBackgroundColor,
+                    "text": buttonTextColor,
                 },
                 "checkout": {
-                    "background": checkoutHeader,
-                    "text": checkoutHeaderText,
+                    "background": checkoutBackgroundColor,
+                    "text": checkoutTextColor,
                 },
             },
             "logos": logos,
