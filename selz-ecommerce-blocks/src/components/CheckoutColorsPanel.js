@@ -18,7 +18,7 @@ export default ({ attributes, setAttributes }) => {
                     value: checkoutTextColor,
                     onChange: checkoutTextColor => setAttributes({ checkoutTextColor }),
                     label: __('Text Color'),
-                }
+                },
             ]}
         >
             <ContrastChecker

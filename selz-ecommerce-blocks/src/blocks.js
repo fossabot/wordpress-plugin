@@ -1,3 +1,7 @@
+// TODO:
+// - Transforms
+// - Clean up Embed and this
+
 import button from './blocks/button/';
 import store from './blocks/store/';
 import widget from './blocks/widget/';
@@ -8,6 +12,7 @@ import './editor.scss';
 const { dispatch } = wp.data;
 const { registerBlockType } = wp.blocks;
 const { __ } = wp.i18n;
+
 const { createInfoNotice } = dispatch('core/notices');
 
 if (window.selz_globals) {

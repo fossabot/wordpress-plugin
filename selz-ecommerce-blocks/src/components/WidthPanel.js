@@ -20,7 +20,7 @@ export default class Width extends Component {
     }
 
     render() {
-        const { attributes: { _width, autoWidth, fluidWidth, type }, setAttributes } = this.props;
+        const { attributes: { autoWidth, fluidWidth, type, _width }, setAttributes } = this.props;
 
         return (
             <PanelBody title={__('Width')} initialOpen={false}>

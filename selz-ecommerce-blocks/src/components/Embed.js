@@ -58,12 +58,12 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { attributes, className } = this.props;
+        const { attributes, className, clientId } = this.props;
         const { url } = attributes;
         const props = getProps({ attributes, className });
-        const key = this.props.clientId ? JSON.stringify(props) : Math.random();
+        const key = clientId ? JSON.stringify(props) : Math.random();
 
-        if (!url && !this.props.clientId) {
+        if (!url && !clientId) {
             return (
                 <Placeholder />
             );
@@ -72,7 +72,7 @@ export default class Embed extends Component {
         // TODO: Make this not ugly
         if (!url) {
             return (
-                <Placeholder icon="wordpress-alt" label="Selz eCommerce">
+                <Placeholder icon="wordpress-alt" label="Selz Ecommerce">
                     Hold tight while we load your products…
                 </Placeholder>
             );
@@ -80,7 +80,7 @@ export default class Embed extends Component {
 
         // TODO: Better explain usage of `key`
         return (
-            <div data-embed="embed" key={key} style={{ textAlign: 'center' }}>
+            <div data-embed="embed" key={key}>
                 <script type="text/props">
                     {JSON.stringify(props)}
                 </script>

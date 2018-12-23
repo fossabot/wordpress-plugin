@@ -15,5 +15,5 @@ export default props => [
         <WidthPanel {...props} />
         <ButtonColorsPanel {...props} />
         <CheckoutColorsPanel {...props} />
-    </InspectorControls>
+    </InspectorControls>,
 ];

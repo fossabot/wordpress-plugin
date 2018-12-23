@@ -17,8 +17,8 @@ export default class OptionsPanel extends Component {
 
         if (!textWasSet) {
             const { label } = actionOptions.find(option => option.value === action);
-            attributes._text = label;
             attributes.text = label;
+            attributes._text = label;
         }
 
         setAttributes(attributes);
@@ -34,7 +34,7 @@ export default class OptionsPanel extends Component {
     }
 
     render() {
-        const { attributes: { _text, action, description, logos, modal, type }, setAttributes } = this.props;
+        const { attributes: { action, description, logos, modal, type, _text }, setAttributes } = this.props;
 
         return (
             <PanelBody title={__('Options')} initialOpen={false}>

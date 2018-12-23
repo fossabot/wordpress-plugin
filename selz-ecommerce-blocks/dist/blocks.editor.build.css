@@ -26,4 +26,5 @@
   overflow: auto; }
 
 [data-embed='embed'] {
-  pointer-events: none; }
+  pointer-events: none;
+  text-align: center; }
