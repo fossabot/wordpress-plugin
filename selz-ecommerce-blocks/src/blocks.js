@@ -1,5 +1,6 @@
 import button from './blocks/button/';
 import store from './blocks/store/';
+import widget from './blocks/widget/';
 
 import './style.scss';
 import './editor.scss';
@@ -10,8 +11,8 @@ const { __ } = wp.i18n;
 const { createInfoNotice } = dispatch('core/notices');
 
 if (window.selz_globals) {
-    [button, store].forEach(({ name, settings }) =>
-        registerBlockType(`selz/${name}`, settings)
+    [button, store, widget].forEach(({ name, settings }) =>
+        registerBlockType(name, settings)
     );
 } else {
     createInfoNotice(__('Please connect your Selz account'));

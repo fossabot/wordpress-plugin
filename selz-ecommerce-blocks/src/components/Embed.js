@@ -1,12 +1,48 @@
 const { Component } = wp.element;
 const { Placeholder } = wp.components;
 
-// TODO: Move this out as util
+// TODO: Move these out as utils
 const getStyle = className => {
     if (!className.split(' ')[1]) {
         return 'price-right';
     }
     return className.split(' ')[1].replace('is-style-', '');
+};
+const getProps = ({ attributes, className }) => {
+    const {
+        buttonBackgroundColor,
+        buttonTextColor,
+        checkoutBackgroundColor,
+        checkoutTextColor,
+        description,
+        linksColor,
+        logos,
+        text,
+        type,
+        width,
+        url,
+    } = attributes;
+
+    return {
+        colors: {
+            buttons: {
+                background: buttonBackgroundColor,
+                text: buttonTextColor,
+            },
+            checkout: {
+                background: checkoutBackgroundColor,
+                text: checkoutTextColor,
+            },
+            links: linksColor,
+        },
+        description,
+        logos,
+        style: getStyle(className),
+        text,
+        type,
+        url,
+        width,
+    };
 };
 
 export default class Embed extends Component {
@@ -22,25 +58,9 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { buttonBackgroundColor, buttonTextColor, checkoutBackgroundColor, checkoutTextColor, logos, text, width, url } = this.props.attributes;
-        const props = {
-            "type": "button",
-            "colors": {
-                "buttons": {
-                    "background": buttonBackgroundColor,
-                    "text": buttonTextColor,
-                },
-                "checkout": {
-                    "background": checkoutBackgroundColor,
-                    "text": checkoutTextColor,
-                },
-            },
-            "logos": logos,
-            "url": url,
-            "text": text,
-            "style": getStyle(this.props.className),
-            "width": width,
-        };
+        const { attributes, className } = this.props;
+        const { url } = attributes;
+        const props = getProps({ attributes, className });
         const key = this.props.clientId ? JSON.stringify(props) : Math.random();
 
         if (!url && !this.props.clientId) {

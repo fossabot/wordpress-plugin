@@ -1,4 +1,9 @@
-// TODO: Look into why styles preview isn't working
+// TODO:
+// - Look into why styles preview isn't working
+// - Transforms
+// - Re-order attrs inside components
+// - Add Links Color panel to Store block
+// - Look at Widget description
 
 const { Path, SVG } = wp.components;
 

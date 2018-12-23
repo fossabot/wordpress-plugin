@@ -35,6 +35,8 @@ add_action('enqueue_block_editor_assets', function () {
     wp_enqueue_style('selz/blocks.editor.css', plugins_url('dist/blocks.editor.build.css', dirname(__FILE__)), [
         'wp-edit-blocks'
     ]);
+
+    wp_localize_script('selz/blocks.js', 'selz', ['store' => get_option('selz_store')]);
 });
 
 add_action('admin_enqueue_scripts', function ($hook) {
@@ -62,7 +64,7 @@ add_filter('block_categories', function ($categories, $post) {
         array(
             array(
                 'slug'  => 'selz-ecommerce',
-                'title' => __('Selz eCommerce', 'my-plugin'),
+                'title' => __('Selz Ecommerce', 'selz'),
                 // 'icon'  => 'wordpress',
             ),
         )

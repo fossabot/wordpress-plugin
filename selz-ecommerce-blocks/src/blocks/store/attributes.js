@@ -17,11 +17,16 @@ export default {
         type: 'string',
         default: colors.white,
     },
+    linksColor: {
+        type: 'string',
+        default: colors.primary,
+    },
     type: {
         type: 'string',
         default: 'store',
     },
-    // url: {
-    //     type: 'string',
-    // },
+    url: {
+        type: 'string',
+        default: `http://${window.selz.store.name}`,
+    },
 };
