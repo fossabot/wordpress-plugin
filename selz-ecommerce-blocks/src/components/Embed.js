@@ -71,8 +71,17 @@ export default class Embed extends Component {
 
         // TODO: Make this not ugly
         if (!url) {
+            const SelzIcon = () => (
+                <div className="dashicon" style={{
+                    backgroundColor: 'white',
+                    backgroundImage: 'url(https://cdn.selzstatic.com/app-icons/generic/48x48.png)',
+                    backgroundSize: 20,
+                    width: 20, height: 20,
+                }}></div>
+            );
+
             return (
-                <Placeholder icon="wordpress-alt" label="Selz Ecommerce">
+                <Placeholder icon={<SelzIcon />} label="Selz Ecommerce">
                     Hold tight while we load your products…
                 </Placeholder>
             );

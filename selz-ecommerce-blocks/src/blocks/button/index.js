@@ -3,6 +3,7 @@ import attributes from './attributes';
 import edit from './edit';
 
 const { Path, SVG } = wp.components;
+const { createBlock, getBlockAttributes } = wp.blocks;
 const { __ } = wp.i18n;
 
 export default {
@@ -32,6 +33,24 @@ export default {
             },
         ],
         attributes,
+        transforms: {
+            to: [
+                {
+                    type: 'block',
+                    blocks: ['selz/widget'],
+                    transform: ({ autoWidth, ...attributes }) => {
+                        const { description, type, width } = getBlockAttributes('selz/widget');
+
+                        return createBlock('selz/widget', {
+                            ...attributes,
+                            description,
+                            type,
+                            width,
+                        });
+                    },
+                },
+            ],
+        },
         edit,
         save: props => <Embed {...props} />,
     },
