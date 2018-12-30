@@ -1,26 +1,26 @@
-/**
- * #.# Common SCSS
- *
- * Can include things like variables and mixins
- * that are used across the project.
-*/
-/**
- * #.# Styles
- *
- * CSS for both Frontend+Backend.
- */
-.components-panel__body .components-spinner {
-  float: none; }
+[data-embed='embed'] {
+  pointer-events: none;
+  text-align: center; }
 
-.components-panel__body .components-notice {
-  margin: 0; }
+#selz-cart {
+  display: none; }
 
-.is-filter {
-  margin-bottom: 8px !important; }
-
-.pager {
+.components-pager {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: justify;
       justify-content: space-between;
   margin-top: 12px; }
+
+.components-scroll {
+  max-height: 14em;
+  overflow: auto; }
+
+.components-panel__body .components-notice {
+  margin: 0; }
+
+.components-panel__body .components-spinner {
+  float: none; }
+
+.is-filter {
+  margin-bottom: 8px !important; }

@@ -1,6 +1,14 @@
 import { actionOptions, colors } from '../../config';
 
 export default {
+    _text: {
+        type: 'string',
+        default: actionOptions[0].label,
+    },
+    _width: {
+        type: 'number',
+        default: 320,
+    },
     action: {
         type: 'string',
         default: actionOptions[0].value,
@@ -80,14 +88,6 @@ export default {
     },
     width: {
         type: 'string',
-        default: 320,
-    },
-    _text: {
-        type: 'string',
-        default: actionOptions[0].label,
-    },
-    _width: {
-        type: 'number',
         default: 320,
     },
 };

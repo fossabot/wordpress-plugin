@@ -30,11 +30,6 @@ const blocksCSSPlugin = new ExtractTextPlugin( {
 	filename: './dist/blocks.style.build.css',
 } );
 
-// Extract editor.css for editor styles.
-const editBlocksCSSPlugin = new ExtractTextPlugin( {
-	filename: './dist/blocks.editor.build.css',
-} );
-
 // Configuration for the ExtractTextPlugin — DRY rule.
 const extractConfig = {
 	use: [
@@ -61,8 +56,6 @@ const extractConfig = {
 		{
 			loader: 'sass-loader',
 			options: {
-				// Add common CSS file for variables and mixins.
-				data: '@import "./src/common.scss";\n',
 				outputStyle: 'nested',
 			},
 		},
@@ -105,18 +98,13 @@ module.exports = {
 				use: blocksCSSPlugin.extract( extractConfig ),
 			},
 			{
-				test: /editor\.s?css$/,
-				exclude: /(node_modules|bower_components)/,
-				use: editBlocksCSSPlugin.extract( extractConfig ),
-			},
-			{
 				test: /\.(jpg|jpeg|svg)$/,
 				use: [{ loader: 'file-loader' }],
 			},
 		],
 	},
 	// Add plugins.
-	plugins: [ blocksCSSPlugin, editBlocksCSSPlugin ],
+	plugins: [ blocksCSSPlugin ],
 	stats: 'minimal',
 	// stats: 'errors-only',
 	// Add externals.

@@ -1,8 +1,8 @@
 import { debounce } from 'lodash';
 import ProductList from './ProductList';
 
-const { Component } = wp.element;
 const { PanelBody, TextControl } = wp.components;
+const { Component } = wp.element;
 const { __ } = wp.i18n;
 
 export default class ProductPanel extends Component {

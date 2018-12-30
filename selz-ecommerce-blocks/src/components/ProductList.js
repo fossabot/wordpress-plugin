@@ -1,7 +1,7 @@
 import Scroll from './Scroll';
 
-const { Fragment } = wp.element;
 const { Button, Notice, RadioControl, Spinner } = wp.components;
+const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
 export default ({ attributes, next, previous, setAttributes }) => {
@@ -45,7 +45,7 @@ export default ({ attributes, next, previous, setAttributes }) => {
             </Scroll>
 
             {(currentPage !== 1 || hasMore) && (
-                <div className="pager">
+                <div className="components-pager">
                     <Button isLink onClick={previous} disabled={currentPage === 1}>
                         {__('Prev')}
                     </Button>

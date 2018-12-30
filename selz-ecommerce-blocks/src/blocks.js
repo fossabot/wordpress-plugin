@@ -1,25 +1,28 @@
-// TODO: Clean up Embed and this
-
+import './filters';
 import button from './blocks/button/';
 import store from './blocks/store/';
 import widget from './blocks/widget/';
-
 import './style.scss';
-import './editor.scss';
 
-const { dispatch } = wp.data;
 const { registerBlockType } = wp.blocks;
-const { __ } = wp.i18n;
-const { removeFilter } = wp.hooks;
-
-const { createInfoNotice } = dispatch('core/notices');
+const { dispatch } = wp.data;
+const { __, sprintf } = wp.i18n;
+const { addQueryArgs } = wp.url;
 
 if (window.selz_globals) {
-    [button, store, widget].forEach(({ name, settings }) =>
-        registerBlockType(name, settings)
-    );
+    [button, store, widget].forEach(({ name, settings }) => {
+        registerBlockType(name, settings);
+    });
 } else {
-    createInfoNotice(__('Please connect your Selz account'));
+    dispatch('core/notices').createInfoNotice(
+        sprintf(__('%s blocks require a connection to your account.'), 'Selz Ecommerce'),
+        {
+            actions: [
+                {
+                    label: sprintf(__('Connect your %s account'), 'Selz'),
+                    url: addQueryArgs('admin-post.php', { action: 'connect_selz' }),
+                },
+            ],
+        }
+    );
 }
-
-removeFilter('editor.BlockEdit', 'core/editor/custom-class-name/with-inspector-control');

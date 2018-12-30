@@ -34,11 +34,6 @@ const blocksCSSPlugin = new ExtractTextPlugin( {
 	filename: './dist/blocks.style.build.css',
 } );
 
-// Extract editor.css for editor styles.
-const editBlocksCSSPlugin = new ExtractTextPlugin( {
-	filename: './dist/blocks.editor.build.css',
-} );
-
 // Configuration for the ExtractTextPlugin — DRY rule.
 const extractConfig = {
 	use: [
@@ -65,8 +60,6 @@ const extractConfig = {
 		{
 			loader: 'sass-loader',
 			options: {
-				// Add common CSS file for variables and mixins.
-				data: '@import "./src/common.scss";\n',
 				outputStyle: 'compressed',
 			},
 		},
@@ -109,11 +102,6 @@ module.exports = {
 				use: blocksCSSPlugin.extract( extractConfig ),
 			},
 			{
-				test: /editor\.s?css$/,
-				exclude: /(node_modules|bower_components)/,
-				use: editBlocksCSSPlugin.extract( extractConfig ),
-			},
-			{
 				test: /\.(jpg|jpeg)$/,
 				use: [{ loader: 'file-loader' }],
 			},
@@ -122,7 +110,6 @@ module.exports = {
 	// Add plugins.
 	plugins: [
 		blocksCSSPlugin,
-		editBlocksCSSPlugin,
 		// Minify the code.
 		new webpack.optimize.UglifyJsPlugin( {
 			compress: {

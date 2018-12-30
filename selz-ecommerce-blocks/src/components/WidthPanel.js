@@ -1,7 +1,7 @@
 import { debounce } from 'lodash';
 
-const { Component } = wp.element;
 const { PanelBody, RangeControl, ToggleControl } = wp.components;
+const { Component } = wp.element;
 const { __ } = wp.i18n;
 
 export default class Width extends Component {
@@ -20,7 +20,7 @@ export default class Width extends Component {
     }
 
     render() {
-        const { attributes: { autoWidth, fluidWidth, type, _width }, setAttributes } = this.props;
+        const { attributes: { _width, autoWidth, fluidWidth, type }, setAttributes } = this.props;
 
         return (
             <PanelBody title={__('Width')} initialOpen={false}>

@@ -1,0 +1,29 @@
+// ============================================================================
+// Components
+// ============================================================================
+
+// Embed
+
+[data-embed='embed'] {
+    pointer-events: none;
+    text-align: center;
+}
+
+#selz-cart {
+    display: none;
+}
+
+// Pager
+
+.components-pager {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+// Scroll
+
+.components-scroll {
+    max-height: 14em;
+    overflow: auto;
+}
