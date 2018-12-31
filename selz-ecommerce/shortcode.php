@@ -21,7 +21,6 @@ class Selz_Shortcode {
 			add_action( 'admin_notices', array( &$this, 'not_connected' ), 11 );
 		} else {
 			add_action( 'media_buttons', array( &$this, 'add_buttons' ), 11 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 			add_action( 'admin_print_footer_scripts', array( &$this, 'print_dialog'), 50 );
 			add_action( 'admin_footer', array( &$this, 'admin_footer' ), 1 );
 			add_action( 'wp_ajax_selz_form', array( &$this, 'modal_ajax' ) );
@@ -176,28 +175,6 @@ class Selz_Shortcode {
 		}
 
 		echo $output;
-	}
-
-	/**
-	 * Load custom style or script to the current page admin
-	 * Enqueue the jQuery library including UI, colorpicker,
-	 * the popup window and some custom styles/scripts
-	 * @param string $hook.
-	 * @since 1.1
-	**/
-	function admin_enqueue_scripts($hook) {
-		if ( 'post.php' != $hook && 'post-new.php' != $hook )
-			return;
-
-		wp_enqueue_script( selz()->slug, plugins_url('dist/js/scripts.js'), array('jquery', 'wp-color-picker'), selz()->version);
-
-
-		wp_localize_script( selz()->slug, selz()->slug . '_globals', array(
-			'nonce'		=> wp_create_nonce( selz()->slug ),
-			'action'	=> 'selz_form',
-			'slug'		=> selz()->slug,
-			'resources' => selz()->resources(),
-		));
 	}
 
 	function enqueue_styles() {
