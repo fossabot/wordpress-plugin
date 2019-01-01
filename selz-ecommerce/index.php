@@ -78,17 +78,19 @@ final class Selz {
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_footer', array( $this, 'admin_footer' ) );
 		add_action( 'admin_init', array( $this, 'init_settings' ) );
 		add_action( 'wp_footer', array( $this, 'show_cart' ) );
 
 		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
-		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
-		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action( 'admin_footer', array( $this, 'admin_footer' ) );
+
+		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
+		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
 	}
 
 	/**
@@ -164,25 +166,6 @@ final class Selz {
 	}
 
 	/**
-	 * Append the Selz gradient to the DOM -- to be referenced by block icons, etc.
-	 *
-	 * @example `<Path fill="url(#logo-gradient-a)" />`
-	 * @since 2.0.0
-	 */
-	public function admin_footer() {
-		?>
-		<svg xmlns="http://www.w3.org/2000/svg" width="720" height="409" viewBox="0 0 720 409">
-			<defs>
-				<linearGradient id="logo-gradient-a" x1="100%" x2="0%" y1="100%" y2="0%">
-					<stop offset="0%" stop-color="#C8318C"/>
-					<stop offset="100%" stop-color="#602BC6"/>
-				</linearGradient>
-			</defs>
-		</svg>
-		<?php
-	}
-
-	/**
 	 * Enqueue scripts and styles
 	 * @since 1.7.2
 	 */
@@ -193,34 +176,6 @@ final class Selz {
 
 		// Scripts
 		wp_enqueue_script( $this->slug . '-main', plugins_url('dist/js/scripts.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
-	}
-
-	public function asset_path( $asset ) {
-		return plugins_url( '../selz-ecommerce-blocks/dist/' . $asset, __FILE__ );
-	}
-
-	/**
-	 * Enqueue block editor assets
-	 * @since 2.0.0
-	 */
-	public function enqueue_block_editor_assets() {
-		wp_enqueue_style( $this->slug . '-blocks', $this->asset_path( 'blocks.style.build.css' ), array( 'wp-edit-blocks' ), $this->version );
-		wp_enqueue_script( $this->slug . '-blocks', $this->asset_path( 'blocks.build.js' ), array(
-			'wp-blocks',
-			'wp-editor',
-			'wp-element',
-			'wp-i18n',
-		), $this->version );
-
-		// Load the embed loader
-		wp_enqueue_script( $this->slug . '-loader', $this->embed );
-
-		wp_localize_script( $this->slug . '-blocks', selz()->slug . '_globals', array(
-			'nonce'     => wp_create_nonce( $this->slug ),
-			'resources' => $this->resources(),
-			'slug'      => $this->slug,
-			'store'     => get_option( $this->slug . '_store' ),
-		) );
 	}
 
 	public function settings_page() {
@@ -448,6 +403,64 @@ final class Selz {
  		return $links;
 	}
 
+    /**
+	 * Load Localisation files.
+	 * @since  1.0.0
+	 */
+	public function load_plugin_textdomain() {
+		$locale = apply_filters( 'plugin_locale', get_locale(), $this->lang );
+
+		load_textdomain( $this->lang, WP_LANG_DIR . '/' . $this->lang . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	}
+
+	public function asset_path( $asset ) {
+		return plugins_url( '../selz-ecommerce-blocks/dist/' . $asset, __FILE__ );
+	}
+
+	/**
+	 * Enqueue block editor assets
+	 * @since 2.0.0
+	 */
+	public function enqueue_block_editor_assets() {
+		wp_enqueue_style( $this->slug . '-blocks', $this->asset_path( 'blocks.style.build.css' ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_script( $this->slug . '-blocks', $this->asset_path( 'blocks.build.js' ), array(
+			'wp-blocks',
+			'wp-editor',
+			'wp-element',
+			'wp-i18n',
+		), $this->version );
+
+		// Load the embed loader
+		wp_enqueue_script( $this->slug . '-loader', $this->embed );
+
+		wp_localize_script( $this->slug . '-blocks', selz()->slug . '_globals', array(
+			'nonce'     => wp_create_nonce( $this->slug ),
+			'resources' => $this->resources(),
+			'slug'      => $this->slug,
+			'store'     => get_option( $this->slug . '_store' ),
+		) );
+	}
+
+	/**
+	 * Append the Selz gradient to the DOM -- to be referenced by block icons, etc.
+	 *
+	 * @example `<Path fill="url(#logo-gradient-a)" />`
+	 * @since 2.0.0
+	 */
+	public function admin_footer() {
+		?>
+		<svg xmlns="http://www.w3.org/2000/svg" width="720" height="409" viewBox="0 0 720 409">
+			<defs>
+				<linearGradient id="logo-gradient-a" x1="100%" x2="0%" y1="100%" y2="0%">
+					<stop offset="0%" stop-color="#C8318C"/>
+					<stop offset="100%" stop-color="#602BC6"/>
+				</linearGradient>
+			</defs>
+		</svg>
+		<?php
+	}
+
 	/**
 	 * Add a block category for ecommerce blocks
 	 * @since 2.0.0
@@ -474,17 +487,6 @@ final class Selz {
 		}
 
 		return $tag;
-	}
-
-    /**
-	 * Load Localisation files.
-	 * @since  1.0.0
-	 */
-	public function load_plugin_textdomain() {
-		$locale = apply_filters( 'plugin_locale', get_locale(), $this->lang );
-
-		load_textdomain( $this->lang, WP_LANG_DIR . '/' . $this->lang . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 }
 
