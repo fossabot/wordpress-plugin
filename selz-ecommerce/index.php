@@ -188,11 +188,11 @@ final class Selz {
 	 */
 	public function enqueue_scripts() {
 		// Load styles
-		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css', __FILE__ ), null, $this->version);
+		wp_enqueue_style( $this->slug . '-main', plugins_url( 'dist/css/styles.css', __FILE__ ), null, $this->version);
 		wp_enqueue_style('wp-color-picker');
 
 		// Scripts
-		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
+		wp_enqueue_script( $this->slug . '-main', plugins_url('dist/js/scripts.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
 	}
 
 	public function asset_path( $asset ) {
@@ -204,8 +204,8 @@ final class Selz {
 	 * @since 2.0.0
 	 */
 	public function enqueue_block_editor_assets() {
-		wp_enqueue_style( $this->slug . '-blocks', $this->asset_path('blocks.style.build.css'), array( 'wp-edit-blocks' ), $this->version );
-		wp_enqueue_script( $this->slug . '-blocks', $this->asset_path('blocks.build.js'), array(
+		wp_enqueue_style( $this->slug . '-blocks', $this->asset_path( 'blocks.style.build.css' ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_script( $this->slug . '-blocks', $this->asset_path( 'blocks.build.js' ), array(
 			'wp-blocks',
 			'wp-editor',
 			'wp-element',
@@ -449,7 +449,7 @@ final class Selz {
 	}
 
 	/**
-	 * Add a custom block category for ecommerce blocks
+	 * Add a block category for ecommerce blocks
 	 * @since 2.0.0
 	 */
 	public function block_categories( $categories, $post ) {
@@ -465,7 +465,7 @@ final class Selz {
 	}
 
 	/**
-	 * Load the embeds loader asynchronously
+	 * Load the embed loader asynchronously
 	 * @since 2.0.0
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {

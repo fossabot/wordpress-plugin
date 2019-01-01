@@ -1,5 +1,6 @@
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
+const { BlockIcon } = wp.editor;
 const { Component } = wp.element;
 const { __ } = wp.i18n;
 
@@ -78,7 +79,7 @@ export default class Embed extends Component {
             const { icon: { src }, title } = getBlockType(this.props.name);
 
             return (
-                <Placeholder icon={src} label={title}>
+                <Placeholder icon={<BlockIcon icon={src} />} label={title}>
                     {__('Hold tight while we load your products …')}
                 </Placeholder>
             );
