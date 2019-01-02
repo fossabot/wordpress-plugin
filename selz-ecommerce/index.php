@@ -419,7 +419,7 @@ final class Selz {
 	 * @since 2.0.0
 	 */
 	public function enqueue_block_editor_assets() {
-		wp_enqueue_style( $this->slug . '-blocks', plugins_url( 'dist/css/blocks.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_style( $this->slug . '-blocks', plugins_url( 'dist/css/block-editor.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
 		wp_enqueue_script( $this->slug . '-blocks', plugins_url( 'dist/js/blocks.js', __FILE__ ), array(
 			'wp-blocks',
 			'wp-editor',
