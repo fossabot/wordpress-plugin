@@ -4,6 +4,10 @@
     "description": "Ecommerce for WordPress",
     "homepage": "https://selz.com",
     "main": "gulpfile.js",
+    "scripts": {
+        "start": "node scripts/start.js",
+        "build": "node scripts/build.js"
+    },
     "browserslist": "> 0.25%, not dead",
     "dependencies": {},
     "devDependencies": {
