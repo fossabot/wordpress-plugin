@@ -414,17 +414,13 @@ final class Selz {
 		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
-	public function asset_path( $asset ) {
-		return plugins_url( '../selz-ecommerce-blocks/dist/' . $asset, __FILE__ );
-	}
-
 	/**
 	 * Enqueue block editor assets
 	 * @since 2.0.0
 	 */
 	public function enqueue_block_editor_assets() {
-		wp_enqueue_style( $this->slug . '-blocks', $this->asset_path( 'blocks.style.build.css' ), array( 'wp-edit-blocks' ), $this->version );
-		wp_enqueue_script( $this->slug . '-blocks', $this->asset_path( 'blocks.build.js' ), array(
+		wp_enqueue_style( $this->slug . '-blocks', plugins_url( 'dist/css/blocks.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_script( $this->slug . '-blocks', plugins_url( 'dist/js/blocks.js', __FILE__ ), array(
 			'wp-blocks',
 			'wp-editor',
 			'wp-element',
