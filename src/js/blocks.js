@@ -2,7 +2,7 @@ import './filters';
 import button from './blocks/button/';
 import store from './blocks/store/';
 import widget from './blocks/widget/';
-import './style.scss';
+import '../scss/blocks.scss';
 
 const { registerBlockType } = wp.blocks;
 const { dispatch } = wp.data;

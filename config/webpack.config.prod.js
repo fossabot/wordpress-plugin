@@ -29,14 +29,14 @@ const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
 
-// Extract style.css for both editor and frontend styles.
-const blocksCSSPlugin = new ExtractTextPlugin( {
-	filename: './dist/blocks.style.build.css',
+// Extract blocks.css for both editor and frontend styles.
+const extractBlocksCSS = new ExtractTextPlugin( {
+	filename: '[name]/dist/css/blocks.css',
 } );
 
-// Extract editor.css for editor styles.
-const editBlocksCSSPlugin = new ExtractTextPlugin( {
-	filename: './dist/blocks.editor.build.css',
+// Extract block-editor.css for editor styles.
+const extractBlockEditorCSS = new ExtractTextPlugin( {
+	filename: '[name]/dist/css/block-editor.css',
 } );
 
 // Configuration for the ExtractTextPlugin — DRY rule.
@@ -65,8 +65,6 @@ const extractConfig = {
 		{
 			loader: 'sass-loader',
 			options: {
-				// Add common CSS file for variables and mixins.
-				data: '@import "./src/common.scss";\n',
 				outputStyle: 'compressed',
 			},
 		},
@@ -76,14 +74,12 @@ const extractConfig = {
 // Export configuration.
 module.exports = {
 	entry: {
-		'./dist/blocks.build': paths.pluginBlocksJs, // 'name' : 'path/file.ext'.
+		'./izettle-ecommerce': paths.pluginBlocksJs,
+		'./selz-ecommerce': paths.pluginBlocksJs,
 	},
 	output: {
-		// Add /* filename */ comments to generated require()s in the output.
-		pathinfo: true,
-		// The dist folder.
 		path: paths.pluginDist,
-		filename: '[name].js', // [name] = './dist/blocks.build' as defined above.
+		filename: '[name]/dist/js/blocks.js',
 	},
 	// You may want 'eval' instead if you prefer to see the compiled output in DevTools.
 	devtool: shouldUseSourceMap ? 'source-map' : false,
@@ -104,21 +100,21 @@ module.exports = {
 				},
 			},
 			{
-				test: /style\.s?css$/,
+				test: /blocks\.s?css$/,
 				exclude: /(node_modules|bower_components)/,
-				use: blocksCSSPlugin.extract( extractConfig ),
+				use: extractBlocksCSS.extract( extractConfig ),
 			},
 			{
-				test: /editor\.s?css$/,
+				test: /block-editor\.s?css$/,
 				exclude: /(node_modules|bower_components)/,
-				use: editBlocksCSSPlugin.extract( extractConfig ),
+				use: extractBlockEditorCSS.extract( extractConfig ),
 			},
 		],
 	},
 	// Add plugins.
 	plugins: [
-		blocksCSSPlugin,
-		editBlocksCSSPlugin,
+		extractBlocksCSS,
+		extractBlockEditorCSS,
 		// Minify the code.
 		new webpack.optimize.UglifyJsPlugin( {
 			compress: {
