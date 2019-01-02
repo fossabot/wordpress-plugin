@@ -1,9 +1,9 @@
 {
     "less": {
-        "styles.css": "src/less/bundle.less"
+        "main.css": "src/less/bundle.less"
     },
     "js": {
-        "scripts.js": [
+        "main.js": [
             "src/js/vendor/polyfills/array.prototype.includes.js",
             "src/js/vendor/polyfills/array.prototype.find.js",
             "src/js/vendor/polyfills/string.prototype.endsWith.js",
