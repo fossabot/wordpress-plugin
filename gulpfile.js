@@ -64,10 +64,7 @@ const loadJSON = path => JSON.parse(fs.readFileSync(path));
 const bundles = loadJSON(path.join(root, 'bundles.json'));
 
 // Clean out /dist
-gulp.task('clean', done => {
-    del(Object.values(paths.dist).map(dir => path.join(dir, '**/*')));
-    done();
-});
+gulp.task('clean', () => del(Object.values(paths.dist).map(dir => path.join(dir, '**/*'))));
 
 const build = {
     js: files => {
@@ -178,12 +175,11 @@ build.less(bundles.less);
 build.images();
 
 // Watch for file changes
-gulp.task('watch', done => {
-    // gulp.watch(paths.src.less, gulp.series(tasks.less));
-    // gulp.watch(paths.src.images, gulp.series(tasks.images));
-    // gulp.watch(paths.src.js, gulp.series(tasks.js));
-    done();
+gulp.task('watch', () => {
+    gulp.watch(paths.src.less, gulp.parallel(...tasks.less));
+    gulp.watch(paths.src.images, gulp.parallel(...tasks.images));
+    gulp.watch(paths.src.js, gulp.parallel(...tasks.js));
 });
 
 // Default gulp task
-gulp.task('default', gulp.series('clean', gulp.parallel(tasks.js, tasks.less, tasks.images), 'watch'));
+gulp.task('default', gulp.series('clean', gulp.parallel(...tasks.js, ...tasks.less, ...tasks.images), 'watch'));

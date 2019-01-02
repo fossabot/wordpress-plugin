@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,8 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 1. Optional shopping cart permanently displayed
 
 == Changelog ==
+= 1.9.4 =
+- Minor bug fixes
 = 1.9.3 =
 - Fixed a compatibility issue with WordPress 5.0. Please note: to use this plugin with WordPress 5.0, the "Classic Editor" plugin is required. Full support for 5.0 and the new Gutenburg editor is coming soon.
 = 1.9.2 =

@@ -32,6 +32,7 @@ final class Selz {
 	public $home 	= 'https://selz.com/';
 	public $signup 	= 'https://selz.com/account/signup';
 	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
+	public $developer = false;
 
 	/**
 	 * The single instance of the class.
@@ -187,16 +188,41 @@ final class Selz {
 	}
 
 	// Register our settings. Add the settings section, and settings fields
-	public function init_settings() {
+	public function init_settings(){
 		register_setting( $this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ) );
 
-		add_settings_field( $this->slug . '_store_id', '', '', __FILE__ );
-		add_settings_field( $this->slug . '_display_cart', '', '', __FILE__ );
+		if ( $_GET['developer'] == 'true' ) {
+			setcookie(selz()->slug . '_developer', 'true', time() + 315360000);
+		}
+
+		if ( $_GET['developer'] == 'true' || $_COOKIE[selz()->slug . '_developer'] == 'true' ) {
+			$this->developer = true;
+		}
 	}
 
 	public function settings_validate( $input ) {
-		$input['store_id'] = trim(sanitize_text_field( $input['store_id'] ));
 		$input['display_cart'] = sanitize_text_field( $input['display_cart'] );
+
+		$env = sanitize_text_field( $input['env'] );
+
+		if ( strpos($env, 'selz.com') !== false ) {
+			$input['env'] = $env;
+		} else {
+			$input['env'] = '';
+		}
+
+		// On change of environment, we need to reset the API
+		$options = get_option( selz()->slug . '_settings' );
+
+		if ( $options['env'] != $input['env'] ) {
+			$api = new Selz_API();
+
+			if ( $api->is_connected() ) {
+				$api->remove_tokens();
+				$api->remove_client();
+			}
+		}
+
 		return $input;
 	}
 
@@ -240,10 +266,12 @@ final class Selz {
 			$args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
 		}
 
-		if ('store' == $args['type'] || $args['type'] == '') {
+		$env = get_option( $this->slug . '_settings' )['env'];
+
+		if ( 'store' == $args['type'] || $args['type'] == '' ) {
 			$store = get_option( $this->slug . '_store' );
 
- 			if ( ! $store || ! $store->name )
+ 			if ( !$store || !$store->name )
 			{
 				return '';
 			}
@@ -251,6 +279,7 @@ final class Selz {
 			$html = '<div data-embed="store">
 			    <script type="text/props">
 			    {
+					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
 			        "colors": {
 			            "buttons": {
 			                "background": "' . $args['background_color'] . '",
@@ -269,18 +298,19 @@ final class Selz {
 			<script async src="' . esc_url( $this->embed ) . '"></script>
 			<noscript><a href="' . esc_url_raw( $store->name ) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
 
-		} elseif ('button' == $args['type']) {
-			if (!$args['link']) {
+		} elseif ( 'button' == $args['type'] ) {
+			if ( !$args['link'] ) {
 				return '';
 			}
 
-			if ($args['fluid_width']) {
+			if ( $args['fluid_width'] ) {
 				$args['width'] = '100%';
 			}
 
 			$html = '<div data-embed="button">
 			    <script type="text/props">
 			    {
+					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
 			        "action": "' . $args['action'] . '",
 			        "colors": {
 			            "buttons": {
@@ -305,17 +335,18 @@ final class Selz {
 	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
 
 		} else {
-			if (!$args['link']) {
+			if ( !$args['link'] ) {
 				return '';
 			}
 
-			if ($args['fluid_width']) {
+			if ( $args['fluid_width'] ) {
 				$args['width'] = '100%';
 			}
 
 			$html = '<div data-embed="widget">
 			    <script type="text/props">
 			    {
+					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
 			        "action": "' . $args['action'] . '",
 			        "colors": {
 			            "buttons": {
