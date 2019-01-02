@@ -17,11 +17,19 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 
 ### Building all plugin JavaScript / CSS
 
-If you make changes to the LESS or JavaScript you'll need to run gulp
+For any LESS changes you'll need to run `gulp`. For any JavaScript or SCSS changes you'll need to run `gulp` _along with_ our Webpack build. This is because currently, `gulp` is handling our old (v1) JavaScript, while Webpack is handling our new Gutenberg stuff.
 
 -   First install node
--   Run `npm install` or `yarn` in the `selz-ecommerce` folder to install the packages
+-   Run `npm install` or `yarn` in the root folder to install the packages
+
+#### Gulp:
+
 -   Run `gulp` which will run the default tasks and watch for changes
+
+#### Webpack (for Gutenberg):
+
+-   Run `npm start` to compile/run in dev mode and watch for changes
+-   Run `npm run build` to build production-ready code
 
 ### Building the plugin zips
 

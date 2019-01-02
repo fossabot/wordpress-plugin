@@ -444,7 +444,7 @@ final class Selz {
 		}
 
  		return $links;
-	}
+    }
 
     /**
 	 * Load Localisation files.
@@ -502,7 +502,7 @@ final class Selz {
 	}
 
 	/**
-	 * Add a block category for ecommerce blocks
+	 * Add a block category for Selz blocks
 	 * @since 2.0.0
 	 */
 	public function block_categories( $categories, $post ) {
