@@ -18,7 +18,9 @@ export default class Embed extends Component {
     }
 
     getEmbedProps() {
+        const { attributes, isPreview } = this.props;
         const {
+            action,
             buttonBackgroundColor,
             buttonTextColor,
             checkoutBackgroundColor,
@@ -26,13 +28,14 @@ export default class Embed extends Component {
             description,
             linksColor,
             logos,
+            modal,
             text,
             type,
             width,
             url,
-        } = this.props.attributes;
+        } = attributes;
 
-        return JSON.stringify({
+        let embedProps = {
             colors: {
                 buttons: {
                     background: buttonBackgroundColor,
@@ -51,7 +54,17 @@ export default class Embed extends Component {
             type,
             url,
             width,
-        });
+        };
+
+        if (!isPreview) {
+            embedProps = {
+                ...props,
+                action,
+                modal,
+            };
+        }
+
+        return JSON.stringify(embedProps);
     }
 
     getEmbedStyle() {

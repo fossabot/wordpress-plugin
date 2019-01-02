@@ -6,7 +6,7 @@ import LinksColorPanel from '../../components/LinksColorPanel';
 const { InspectorControls } = wp.editor;
 
 export default props => [
-    <Embed {...props} />,
+    <Embed {...props} isPreview />,
     <InspectorControls>
         <ButtonColorsPanel {...props} />
         <LinksColorPanel {...props} />

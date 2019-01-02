@@ -8,7 +8,7 @@ import WidthPanel from '../../components/WidthPanel';
 const { InspectorControls } = wp.editor;
 
 export default props => [
-    <Embed {...props} />,
+    <Embed {...props} isPreview />,
     <InspectorControls>
         <ProductPanel {...props} />
         <OptionsPanel {...props} />

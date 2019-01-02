@@ -376,6 +376,18 @@ final class Selz {
 	}
 
 	/**
+	 * Return common colors
+	 * TODO: Along with `default_args`, should be gotten from Selz
+	 * @since 2.0.0
+	 */
+	public function colors() {
+		return array(
+			'primary' => '#7959c7',
+			'white'   => '#fff',
+		);
+	}
+
+	/**
 	 * Return default arguments for widgets or shortcodes
 	 * @since 1.5.1
 	 */
@@ -394,11 +406,11 @@ final class Selz {
 			'auto_width' 		=> 'true',
 			'fluid_width' 		=> 'false',
 			'button_text'		=> __('Add to cart', $this->lang),
-			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#7959c7',
-			'link_color' 		=> '#7959c7',
-			'chbg_color' 		=> '#7959c7',
-			'chtx_color' 		=> '#ffffff',
+			'text_color' 		=> $this->colors['white'],
+			'background_color' 	=> $this->colors['primary'],
+			'link_color' 		=> $this->colors['primary'],
+			'chbg_color' 		=> $this->colors['primary'],
+			'chtx_color' 		=> $this->colors['white'],
 			'tab_active'		=> array(0 => true, 1 => false, 2 => false),
 	        'show_logos'        => '',
 	        'show_description'  => 'true',
@@ -462,6 +474,7 @@ final class Selz {
 		wp_enqueue_script( $this->slug . '-loader', $this->embed );
 
 		wp_localize_script( $this->slug . '-blocks', selz()->slug . '_globals', array(
+			'colors'    => $this->colors(),
 			'nonce'     => wp_create_nonce( $this->slug ),
 			'resources' => $this->resources(),
 			'slug'      => $this->slug,

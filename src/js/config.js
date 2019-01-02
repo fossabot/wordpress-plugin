@@ -1,12 +1,8 @@
-const { __ } = wp.i18n;
+const { colors, resources } = window.selz_globals;
 
-export const actionOptions = [
-    { label: __('Add to cart'), value: 'add-to-cart' },
-    { label: __('Buy now'), value: 'buy-now' },
-    { label: __('View'), value: 'view' },
-];
+export const actionOptions = Object.keys(resources).map(key => ({
+    label: resources[key],
+    value: resources[key].replace(/ /g, '-').toLowerCase(),
+}));
 
-export const colors = {
-    primary: '#7959c7',
-    white: '#fff',
-};
+export { colors };
