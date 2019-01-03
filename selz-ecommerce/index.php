@@ -87,7 +87,7 @@ final class Selz {
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ), 99 );
 		add_action( 'admin_footer', array( $this, 'admin_footer' ) );
 
 		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
@@ -475,6 +475,7 @@ final class Selz {
 
 		wp_localize_script( $this->slug . '-blocks', selz()->slug . '_globals', array(
 			'colors'    => $this->colors(),
+			'embed'     => $this->embed,
 			'nonce'     => wp_create_nonce( $this->slug ),
 			'resources' => $this->resources(),
 			'slug'      => $this->slug,

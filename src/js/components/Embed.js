@@ -113,7 +113,12 @@ export default class Embed extends Component {
                 </div>
 
                 {!isPreview && (
-                    <noscript><a href={url} target="_blank">{type === 'store' ? __('Shop now') : text}</a></noscript>
+                    <Fragment>
+                        <script async src={window.selz_globals.embed}></script>
+                        <noscript>
+                            <a href={url} target="_blank">{type === 'store' ? __('Shop now') : text}</a>
+                        </noscript>
+                    </Fragment>
                 )}
             </Fragment>
         );
