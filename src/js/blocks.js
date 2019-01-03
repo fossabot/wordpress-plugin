@@ -9,7 +9,7 @@ const { dispatch } = wp.data;
 const { __, sprintf } = wp.i18n;
 const { addQueryArgs } = wp.url;
 
-if (window.selz_globals) {
+if (window.selz_block_globals) {
     [button, store, widget].forEach(({ name, settings }) => {
         registerBlockType(name, settings);
     });

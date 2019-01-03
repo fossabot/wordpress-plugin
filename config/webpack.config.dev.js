@@ -70,8 +70,8 @@ const extractConfig = {
 // Export configuration.
 module.exports = {
 	entry: {
-		'./izettle-ecommerce': paths.pluginBlocksJs,
 		'./selz-ecommerce': paths.pluginBlocksJs,
+		'./izettle-ecommerce': paths.pluginBlocksJs,
 	},
 	output: {
 		path: paths.pluginDist,

@@ -1,4 +1,4 @@
-const { colors, resources } = window.selz_globals;
+const { colors, resources } = window.selz_block_globals;
 
 export const actionOptions = Object.keys(resources).map(key => ({
     label: resources[key],

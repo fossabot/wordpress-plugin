@@ -27,6 +27,6 @@ export default {
     },
     url: {
         type: 'string',
-        default: `http://${window.selz_globals.store.name}`,
+        default: `http://${window.selz_block_globals.store.name}`,
     },
 };

@@ -94,7 +94,7 @@
 
             if (node) {
                 const shortcode = node.innerHTML;
-                const { slug } = window[`${this.namespace}_globals`];
+                const { slug } = window[`${this.namespace}_main_globals`];
 
                 if (shortcode.startsWith(`[${slug}`)) {
                     shortcode.match(/[\w-_]+=".+?"/g).forEach(attribute => {
@@ -246,7 +246,7 @@
                 return;
             }
 
-            const { action, nonce } = window[`${this.namespace}_globals`];
+            const { action, nonce } = window[`${this.namespace}_main_globals`];
 
             this.setTitle('Loading...');
 
@@ -375,7 +375,7 @@
             const props = inputs.map(i => `${i.name}="${i.value}"`).join(' ');
 
             // Construct the short code
-            const { slug } = window[`${this.namespace}_globals`];
+            const { slug } = window[`${this.namespace}_main_globals`];
             const shortcode = `[${slug} ${props}]`;
 
             // Insert code

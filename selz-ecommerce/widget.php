@@ -162,7 +162,7 @@ class Selz_Widget extends WP_Widget {
 		if( 'widgets.php' != $hook )
 			return;
 
-		wp_localize_script( $this->slug . '-main', $this->slug . '_globals', array(
+		wp_localize_script( $this->slug . '-main', $this->slug . '_main_globals', array(
 			'nonce'		=> wp_create_nonce( $this->slug ),
 			'action'	=> $this->slug . '_widget_form',
 			'resources' => selz()->resources(),

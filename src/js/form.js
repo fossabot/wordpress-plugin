@@ -73,7 +73,7 @@
 
             // Update the text based on action
             const text = this.getValue('button_text');
-            const { resources } = window[`${this.namespace}_globals`];
+            const { resources } = window[`${this.namespace}_main_globals`];
 
             // Update the text if it's not default
             if (Object.values(resources).includes(text)) {
