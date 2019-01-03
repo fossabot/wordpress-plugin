@@ -100,6 +100,9 @@ export default class Embed extends Component {
 
         const embedProps = this.getEmbedProps();
 
+        // TODO: Remove this!!!
+        console.log(JSON.parse(embedProps));
+
         // Embeds normally update when props change using the MutationObserver, but because React, we trigger the
         // update by setting the `key` attribute. This ensures the parent node is updated rather than just the child.
         // For style previews, we trigger an update for each render by supplying a random number. Otherwise, we only

@@ -54,6 +54,42 @@ export default {
                     },
                 },
             ],
+            from: [
+                {
+                    type: 'shortcode',
+                    tag: 'selz',
+                    attributes: {
+                        buttonBackgroundColor: {
+                            type: 'string',
+                            shortcode: ({ named: { background_color } }) => background_color,
+                        },
+                        buttonTextColor: {
+                            type: 'string',
+                            shortcode: ({ named: { text_color } }) => text_color,
+                        },
+                        checkoutBackgroundColor: {
+                            type: 'string',
+                            shortcode: ({ named: { chbg_color } }) => chbg_color,
+                        },
+                        checkoutTextColor: {
+                            type: 'string',
+                            shortcode: ({ named: { chtx_color } }) => chtx_color,
+                        },
+                        modal: {
+                            type: 'boolean',
+                            shortcode: ({ named: { interact } }) => !!interact,
+                        },
+                        text: {
+                            type: 'string',
+                            shortcode: ({ named: { button_text } }) => button_text,
+                        },
+                        url: {
+                            type: 'string',
+                            shortcode: ({ named: { link } }) => link,
+                        },
+                    },
+                },
+            ],
         },
         edit,
         save: props => <Embed {...props} />,
