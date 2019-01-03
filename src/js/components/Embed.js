@@ -58,7 +58,7 @@ export default class Embed extends Component {
 
         if (!isPreview) {
             embedProps = {
-                ...props,
+                ...embedProps,
                 action,
                 modal,
             };
