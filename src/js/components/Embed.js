@@ -1,7 +1,7 @@
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
 const { BlockIcon } = wp.editor;
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
 
 export default class Embed extends Component {
@@ -78,7 +78,7 @@ export default class Embed extends Component {
     }
 
     render() {
-        const { attributes: { url }, clientId } = this.props;
+        const { attributes: { text, type, url }, clientId, isPreview, name } = this.props;
 
         // Render a blank placeholder for style previews only
         if (!url && !clientId) {
@@ -89,7 +89,7 @@ export default class Embed extends Component {
 
         // Render a loading screen while we wait for `url` to be set
         if (!url) {
-            const { icon: { src }, title } = getBlockType(this.props.name);
+            const { icon: { src }, title } = getBlockType(name);
 
             return (
                 <Placeholder icon={<BlockIcon icon={src} />} label={title}>
@@ -105,11 +105,17 @@ export default class Embed extends Component {
         // For style previews, we trigger an update for each render by supplying a random number. Otherwise, we only
         // trigger an update per prop change -- we do this by supplying the stringified props instead.
         return (
-            <div data-embed="embed" key={clientId ? embedProps : Math.random()}>
-                <script type="text/props">
-                    {embedProps}
-                </script>
-            </div>
+            <Fragment>
+                <div data-embed="embed" key={clientId ? embedProps : Math.random()}>
+                    <script type="text/props">
+                        {embedProps}
+                    </script>
+                </div>
+
+                {!isPreview && (
+                    <noscript><a href={url} target="_blank">{type === 'store' ? __('Shop now') : text}</a></noscript>
+                )}
+            </Fragment>
         );
     }
 }
