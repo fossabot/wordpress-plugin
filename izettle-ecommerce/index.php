@@ -2,7 +2,7 @@
 /*
     Plugin Name: iZettle E-commerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.0.4
+    Version: 2.0.0
     Author: iZettle
     Author URI: https://izettle.com
     License: MIT
@@ -22,7 +22,7 @@ if (!defined('ABSPATH'))
  */
 final class iZettle {
 
-	public $version 	= '1.0.4';
+	public $version 	= '2.0.0';
 	public $dir 		= '';
 	public $url 		= '';
 	public $name 		= 'iZettle';
@@ -84,6 +84,12 @@ final class iZettle {
 		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action( 'admin_footer', array( $this, 'admin_footer' ) );
+
+		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
+		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
 	}
 
 	/**
@@ -164,11 +170,11 @@ final class iZettle {
 	 */
 	public function enqueue_scripts() {
 		// Load styles
-		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css', __FILE__ ), null, $this->version);
+		wp_enqueue_style( $this->slug . '-main', plugins_url( 'dist/css/main.css', __FILE__ ), null, $this->version);
 		wp_enqueue_style('wp-color-picker');
 
 		// Scripts
-		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
+		wp_enqueue_script( $this->slug . '-main', plugins_url('dist/js/main.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
 	}
 
 	public function settings_page() {
@@ -338,6 +344,18 @@ final class iZettle {
 	}
 
 	/**
+	 * Return common colors
+	 * TODO: Along with `default_args`, should be gotten from iZettle
+	 * @since 2.0.0
+	 */
+	public function colors() {
+		return array(
+			'primary' => '#6aca89',
+			'white'   => '#fff',
+		);
+	}
+
+	/**
 	 * Return default arguments for widgets or shortcodes
 	 * @since 1.5.1
 	 */
@@ -356,11 +374,11 @@ final class iZettle {
 			'auto_width' 		=> 'true',
 			'fluid_width' 		=> 'false',
 			'button_text'		=> __('Add to cart', $this->lang),
-			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#6aca89',
-			'link_color' 		=> '#6aca89',
-			'chbg_color' 		=> '#6aca89',
-			'chtx_color' 		=> '#ffffff',
+			'text_color' 		=> $this->colors['white'],
+			'background_color' 	=> $this->colors['primary'],
+			'link_color' 		=> $this->colors['primary'],
+			'chbg_color' 		=> $this->colors['primary'],
+			'chtx_color' 		=> $this->colors['white'],
 			'tab_active'		=> array(0 => true, 1 => false, 2 => false),
 	        'show_logos'        => '',
 	        'show_description'  => 'true',
@@ -405,6 +423,60 @@ final class iZettle {
 
 		load_textdomain( $this->lang, WP_LANG_DIR . '/' . $this->lang . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	}
+
+	/**
+	 * Enqueue block editor assets
+	 * @since 2.0.0
+	 */
+	public function enqueue_block_editor_assets() {
+		wp_enqueue_style( $this->slug . '-blocks', plugins_url( 'dist/css/block-editor.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_script( $this->slug . '-blocks', plugins_url( 'dist/js/blocks.js', __FILE__ ), array(
+			'wp-blocks',
+			'wp-editor',
+			'wp-element',
+			'wp-i18n',
+		), $this->version );
+
+		// Load the embed loader
+		wp_enqueue_script( $this->slug . '-loader', $this->embed );
+
+		wp_localize_script( $this->slug . '-blocks', $this->slug . '_block_globals', array(
+			'colors'    => $this->colors(),
+			'embed'     => $this->embed,
+			'nonce'     => wp_create_nonce( $this->slug ),
+			'resources' => $this->resources(),
+			'slug'      => $this->slug,
+			'store'     => get_option( $this->slug . '_store' ),
+		) );
+	}
+
+	/**
+	 * Add a block category for iZettle blocks
+	 * @since 2.0.0
+	 */
+	public function block_categories( $categories, $post ) {
+		return array_merge(
+			$categories,
+			array(
+				array(
+					'slug'  => $this->slug . '-ecommerce',
+					'title' => __( 'iZettle Ecommerce', $this->lang ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Load the embed loader asynchronously
+	 * @since 2.0.0
+	 */
+	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( $handle == $this->slug . '-loader' ) {
+			$tag = '<script async src="' . esc_url( $src ) . '"></script>';
+		}
+
+		return $tag;
 	}
 }
 

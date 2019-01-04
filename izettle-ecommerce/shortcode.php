@@ -189,9 +189,9 @@ class iZettle_Shortcode {
 		if ( 'post.php' != $hook && 'post-new.php' != $hook )
 			return;
 
-		wp_enqueue_script( izettle()->slug, plugins_url('dist/js/scripts.js'), array('jquery', 'wp-color-picker'), izettle()->version);
+		wp_enqueue_script( izettle()->slug . '-main', plugins_url('dist/js/main.js'), array('jquery', 'wp-color-picker'), izettle()->version);
 
-		wp_localize_script( izettle()->slug, izettle()->slug . '_globals', array(
+		wp_localize_script( izettle()->slug . '-main', izettle()->slug . '_main_globals', array(
 			'nonce'		=> wp_create_nonce( izettle()->slug ),
 			'action'	=> 'izettle_form',
 			'slug'		=> izettle()->slug,
