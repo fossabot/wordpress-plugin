@@ -21,9 +21,11 @@
  */
 
 const paths = require( './paths' );
+const webpack = require( 'webpack' );
 const externals = require( './externals' );
 const autoprefixer = require( 'autoprefixer' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const FriendlyErrorsWebpackPlugin = require( 'friendly-errors-webpack-plugin' );
 
 // Extract blocks.css for both editor and frontend styles.
 const extractBlocksCSS = new ExtractTextPlugin( {
@@ -68,10 +70,9 @@ const extractConfig = {
 };
 
 // Export configuration.
-module.exports = {
+module.exports = ( { namespace } ) => ( {
 	entry: {
-		'./selz-ecommerce': paths.pluginBlocksJs,
-		'./izettle-ecommerce': paths.pluginBlocksJs,
+		[ `./${ namespace }-ecommerce` ]: paths.pluginBlocksJs,
 	},
 	output: {
 		path: paths.pluginDist,
@@ -108,9 +109,16 @@ module.exports = {
 		],
 	},
 	// Add plugins.
-	plugins: [ extractBlocksCSS, extractBlockEditorCSS ],
+	plugins: [
+		extractBlocksCSS,
+		extractBlockEditorCSS,
+		new webpack.DefinePlugin( {
+			namespace: JSON.stringify( namespace ),
+		} ),
+		new FriendlyErrorsWebpackPlugin(),
+	],
 	stats: 'minimal',
 	// stats: 'errors-only',
 	// Add externals.
 	externals: externals,
-};
+} );

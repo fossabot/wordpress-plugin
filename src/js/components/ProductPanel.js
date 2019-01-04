@@ -66,7 +66,7 @@ export default class ProductPanel extends Component {
     getRequest(pageNumber) {
         const { pages, query } = this.props.attributes;
         const data = {
-            action: `selz_${query ? 'search' : 'get'}_products`,
+            action: `${namespace}_${query ? 'search' : 'get'}_products`,
             starting_after: pageNumber !== 1 ? pages[pageNumber - 1].end : null,
             page: pageNumber,
             q: query,

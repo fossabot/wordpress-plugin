@@ -25,6 +25,7 @@ const webpack = require( 'webpack' );
 const externals = require( './externals' );
 const autoprefixer = require( 'autoprefixer' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const FriendlyErrorsWebpackPlugin = require( 'friendly-errors-webpack-plugin' );
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
@@ -72,10 +73,9 @@ const extractConfig = {
 };
 
 // Export configuration.
-module.exports = {
+module.exports = ( { namespace } ) => ( {
 	entry: {
-		'./selz-ecommerce': paths.pluginBlocksJs,
-		'./izettle-ecommerce': paths.pluginBlocksJs,
+		[ `./${ namespace }-ecommerce` ]: paths.pluginBlocksJs,
 	},
 	output: {
 		path: paths.pluginDist,
@@ -115,6 +115,10 @@ module.exports = {
 	plugins: [
 		extractBlocksCSS,
 		extractBlockEditorCSS,
+		new webpack.DefinePlugin( {
+			namespace: JSON.stringify( namespace ),
+		} ),
+		new FriendlyErrorsWebpackPlugin(),
 		// Minify the code.
 		new webpack.optimize.UglifyJsPlugin( {
 			compress: {
@@ -141,4 +145,4 @@ module.exports = {
 	// stats: 'errors-only',
 	// Add externals.
 	externals: externals,
-};
+} );

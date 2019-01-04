@@ -12,14 +12,14 @@ const { __ } = wp.i18n;
 removeFilter('editor.BlockEdit', 'core/editor/custom-class-name/with-inspector-control');
 
 /**
- * Add custom class name controls back in for all but Selz blocks
+ * Add custom class name controls back in for all but custom blocks
  */
-addFilter('editor.BlockEdit', 'selz/with-inspector-controls', createHigherOrderComponent(BlockEdit => props => {
+addFilter('editor.BlockEdit', `${namespace}/with-inspector-controls`, createHigherOrderComponent(BlockEdit => props => {
     const { attributes: { className }, isSelected, name, setAttributes } = props;
     const hasCustomClassName = hasBlockSupport(name, 'customClassName', true);
-    const isSelzBlock = name.substring(0, 4) === 'selz';
+    const isCustomBlock = name.substring(0, 4) === namespace;
 
-    if (hasCustomClassName && isSelected && !isSelzBlock) {
+    if (hasCustomClassName && isSelected && !isCustomBlock) {
         return (
             <Fragment>
                 <BlockEdit {...props} />
