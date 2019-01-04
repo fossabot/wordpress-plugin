@@ -28,8 +28,9 @@ For any LESS changes you'll need to run `gulp`. For any JavaScript or SCSS chang
 
 #### Webpack (for Gutenberg):
 
--   Run `npm start` to compile/run in dev mode and watch for changes
--   Run `npm run build` to build production-ready code
+-   Run `npm run start:selz` or `npm run start:izettle` to compile/run in dev mode and watch for changes
+-   Run `npm run build:selz` or `npm run build:izettle` to build production-ready code
+-   Run `npm run build` to build production-ready code _for both plugins_
 
 ### Building the plugin zips
 
