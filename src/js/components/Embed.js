@@ -36,6 +36,7 @@ export default class Embed extends Component {
         } = attributes;
 
         let embedProps = {
+            action,
             colors: {
                 buttons: {
                     background: buttonBackgroundColor,
@@ -49,6 +50,7 @@ export default class Embed extends Component {
             },
             description,
             logos,
+            modal,
             style: this.getEmbedStyle(),
             text,
             type,
@@ -56,12 +58,9 @@ export default class Embed extends Component {
             width,
         };
 
-        if (!isPreview) {
-            embedProps = {
-                ...embedProps,
-                action,
-                modal,
-            };
+        if (isPreview) {
+            const { action, modal, ...rest } = embedProps;
+            embedProps = { ...rest };
         }
 
         return JSON.stringify(embedProps);
@@ -99,9 +98,6 @@ export default class Embed extends Component {
         }
 
         const embedProps = this.getEmbedProps();
-
-        // TODO: Remove this!!!
-        console.log(JSON.parse(embedProps));
 
         // Embeds normally update when props change using the MutationObserver, but because React, we trigger the
         // update by setting the `key` attribute. This ensures the parent node is updated rather than just the child.
