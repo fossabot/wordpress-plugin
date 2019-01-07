@@ -1,0 +1,73 @@
+// ==========================================================================
+// Forms
+// ==========================================================================
+
+// Form controls
+// ---------------------------------------------
+label {
+    display: block;
+    // margin: 0 0 (@padding-base / 4);
+}
+
+// Shared size and type resets
+.input-control {
+    // Layout
+    display: block;
+    width: 100%;
+    height: @input-control-height-base;
+    padding: @input-control-padding-base;
+
+    // Type
+    color: @color-text;
+    line-height: @line-height-base;
+    .font-size(@font-size-base);
+
+    // Styling
+    background: @input-control-bg;
+    border: @input-control-border-width solid @input-control-border-color;
+    border-radius: @border-radius-input;
+    transition: border 0.25s ease, width 0.25s ease, box-shadow 0.25s ease;
+    .input-shadow();
+    .placeholder();
+
+    // Reset appearance
+    // iOS/Webkit won't allow all styling unless this is there.
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    // Focus state
+    &:focus {
+        border-color: @input-control-border-color-focus;
+        .tab-focus();
+    }
+}
+
+.input-control--small {
+    height: @input-control-height-small;
+    padding: @input-control-padding-small;
+    .font-size(@font-size-small);
+}
+
+// Make selects look awesome
+select.input-control {
+    // padding-right: ((@padding-base / 2) + @input-control-padding-horizontal);
+
+    // IE
+    &::-ms-expand {
+        display: none;
+    }
+
+    // Styling
+    // background-color: @input-control-bg;
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxuczpza2V0Y2g9Imh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaC9ucyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjVweCIgd2lkdGg9IjI2cHgiIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAyNiA1Ij4gPHRpdGxlPmFycm93PC90aXRsZT4gPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+IDxnIGlkPSJQYWdlLTEiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc2tldGNoOnR5cGU9Ik1TUGFnZSIgZmlsbD0ibm9uZSI+ICA8cGF0aCBpZD0iU2hhcGUiIHNrZXRjaDp0eXBlPSJNU1NoYXBlR3JvdXAiIGZpbGw9IiM2QTcwODMiIGQ9Im0wIDBsNS41IDUgNS41LTVoLTExeiIvPiA8L2c+PC9zdmc+);
+    background-size: 22px;
+    box-shadow: 0 1px 1px fade(#000, 5%);
+}
+
+// Help text
+.help-block {
+    display: block;
+    // margin-top: (@padding-base / 4);
+}
