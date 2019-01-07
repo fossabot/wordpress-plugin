@@ -17,17 +17,8 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 
 ### Building all plugin JavaScript / CSS
 
-For any LESS changes you'll need to run `gulp`. For any JavaScript or SCSS changes you'll need to run `gulp` _along with_ our Webpack build. This is because currently, `gulp` is handling our old (v1) JavaScript, while Webpack is handling our new Gutenberg stuff.
-
 -   First install node
 -   Run `npm install` or `yarn` in the root folder to install the packages
-
-#### Gulp:
-
--   Run `gulp` which will run the default tasks and watch for changes
-
-#### Webpack (for Gutenberg):
-
 -   Run `npm run start:selz` or `npm run start:izettle` to compile/run in dev mode and watch for changes
 -   Run `npm run build:selz` or `npm run build:izettle` to build production-ready code
 -   Run `npm run build` to build production-ready code _for both plugins_
