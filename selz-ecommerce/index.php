@@ -159,12 +159,7 @@ final class Selz {
 	 * @since 1.7.2
 	 */
 	public function enqueue_scripts() {
-		// Load styles
 		wp_enqueue_style( $this->slug . '-main', plugins_url( 'dist/css/main.css', __FILE__ ), null, $this->version);
-		wp_enqueue_style('wp-color-picker');
-
-		// Scripts
-		wp_enqueue_script( $this->slug . '-main', plugins_url('dist/js/main.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
 	}
 
 	public function settings_page() {
