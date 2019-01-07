@@ -3,7 +3,7 @@ import './filters';
 import button from './blocks/button/';
 import store from './blocks/store/';
 import widget from './blocks/widget/';
-import '../scss/block-editor.scss';
+import '../scss/index.scss';
 
 const { connectAccount, connectAccountNotice } = translations[namespace];
 const { registerBlockType } = wp.blocks;

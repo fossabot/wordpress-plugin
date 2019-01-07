@@ -1,23 +1,8 @@
 /**
- * Webpack Configuration
- *
- * Working of a Webpack can be very simple or complex. This is an intenally simple
- * build configuration.
- *
- * Webpack basics — If you are new the Webpack here's all you need to know:
- *     1. Webpack is a module bundler. It bundles different JS modules together.
- *     2. It needs and entry point and an ouput to process file(s) and bundle them.
- *     3. By default it only understands common JavaScript but you can make it
- *        understand other formats by way of adding a Webpack loader.
- *     4. In the file below you will find an entry point, an ouput, and a babel-loader
- *        that tests all .js files excluding the ones in node_modules to process the
- *        ESNext and make it compatible with older browsers i.e. it converts the
- *        ESNext (new standards of JavaScript) into old JavaScript through a loader
- *        by Babel.
- *
- * TODO: Instructions.
- *
- * @since 1.0.0
+ * Webpack config
+ * TODO: Speaking of DRY, these configs aren't DRY at all -- would be nice to consolidate common config into
+ * `webpack.config.common.js` to extend from
+ * @since 2.0.0
  */
 
 const paths = require( './paths' );
@@ -27,18 +12,13 @@ const autoprefixer = require( 'autoprefixer' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 const FriendlyErrorsWebpackPlugin = require( 'friendly-errors-webpack-plugin' );
 
-// Extract blocks.css for both editor and frontend styles.
-const extractBlocksCSS = new ExtractTextPlugin( {
-	filename: '[name]/dist/css/blocks.css',
-} );
-
 // Extract block-editor.css for editor styles.
 const extractBlockEditorCSS = new ExtractTextPlugin( {
 	filename: '[name]/dist/css/block-editor.css',
 } );
 
 // Configuration for the ExtractTextPlugin — DRY rule.
-const extractConfig = {
+const extractConfig = namespace => ({
 	use: [
 		// "postcss" loader applies autoprefixer to our CSS.
 		{ loader: 'raw-loader' },
@@ -63,11 +43,12 @@ const extractConfig = {
 		{
 			loader: 'sass-loader',
 			options: {
+				data: `@import '../../${namespace}-ecommerce/src/scss/custom.scss';\n`,
 				outputStyle: 'nested',
 			},
 		},
 	],
-};
+});
 
 // Export configuration.
 module.exports = ( { namespace } ) => ( {
@@ -97,20 +78,13 @@ module.exports = ( { namespace } ) => ( {
 				},
 			},
 			{
-				test: /blocks\.s?css$/,
+				test: /index\.s?css$/,
 				exclude: /(node_modules|bower_components)/,
-				use: extractBlocksCSS.extract( extractConfig ),
-			},
-			{
-				test: /block-editor\.s?css$/,
-				exclude: /(node_modules|bower_components)/,
-				use: extractBlockEditorCSS.extract( extractConfig ),
+				use: extractBlockEditorCSS.extract( extractConfig( namespace ) ),
 			},
 		],
 	},
-	// Add plugins.
 	plugins: [
-		extractBlocksCSS,
 		extractBlockEditorCSS,
 		new webpack.DefinePlugin( {
 			namespace: JSON.stringify( namespace ),
@@ -118,7 +92,5 @@ module.exports = ( { namespace } ) => ( {
 		new FriendlyErrorsWebpackPlugin(),
 	],
 	stats: 'minimal',
-	// stats: 'errors-only',
-	// Add externals.
 	externals: externals,
 } );
