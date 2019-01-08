@@ -73,7 +73,6 @@ final class Selz {
 
 		add_action( 'plugins_loaded', array( $this, 'plugin_loaded' ), 9 );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'init_settings' ) );
 		add_action( 'wp_footer', array( $this, 'show_cart' ) );
@@ -152,14 +151,6 @@ final class Selz {
 	        $this->slug . '_help',
 	        array( $this, 'help_page' )
 	   	);
-	}
-
-	/**
-	 * Enqueue scripts and styles
-	 * @since 1.7.2
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_style( $this->slug . '-main', plugins_url( 'dist/css/main.css', __FILE__ ), null, $this->version);
 	}
 
 	public function settings_page() {
