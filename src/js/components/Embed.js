@@ -7,6 +7,7 @@ const { __ } = wp.i18n;
 export default class Embed extends Component {
     constructor(props) {
         super(props);
+        this.state = { didRender: false };
     }
 
     componentDidMount() {
@@ -77,6 +78,10 @@ export default class Embed extends Component {
     }
 
     render() {
+        if (!this.state.didRender) {
+            this.setState({ didRender: true });
+        }
+
         const { attributes: { text, type, url }, clientId, isPreview, name } = this.props;
 
         // Render a blank placeholder for style previews only
@@ -105,7 +110,7 @@ export default class Embed extends Component {
         // trigger an update per prop change -- we do this by supplying the stringified props instead.
         return (
             <Fragment>
-                <div data-embed="embed" key={clientId ? embedProps : Math.random()}>
+                <div data-embed="embed" key={clientId && this.state.didRender ? embedProps : Math.random()}>
                     <script type="text/props">
                         {embedProps}
                     </script>
