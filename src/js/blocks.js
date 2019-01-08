@@ -3,7 +3,7 @@ import './filters';
 import button from './blocks/button/';
 import store from './blocks/store/';
 import widget from './blocks/widget/';
-import '../scss/index.scss';
+import '~/src/less/bundle.less';
 
 const { connectAccount, connectAccountNotice } = translations[namespace];
 const { registerBlockType } = wp.blocks;

@@ -21,7 +21,7 @@ const extractBlockEditorCSS = new ExtractTextPlugin( {
 } );
 
 // Configuration for the ExtractTextPlugin — DRY rule.
-const extractConfig = namespace => ({
+const extractConfig = {
 	use: [
 		// "postcss" loader applies autoprefixer to our CSS.
 		{ loader: 'raw-loader' },
@@ -42,16 +42,12 @@ const extractConfig = namespace => ({
 				],
 			},
 		},
-		// "sass" loader converts SCSS to CSS.
+		// "less" loader converts LESS to CSS.
 		{
-			loader: 'sass-loader',
-			options: {
-				data: `@import '../../${ namespace }-ecommerce/src/scss/custom.scss';\n`,
-				outputStyle: 'compressed',
-			},
+			loader: 'less-loader',
 		},
 	],
-});
+};
 
 // Export configuration.
 module.exports = ( { namespace } ) => ( {
@@ -81,9 +77,9 @@ module.exports = ( { namespace } ) => ( {
 				},
 			},
 			{
-				test: /index\.s?css$/,
+				test: /bundle\.less$/,
 				exclude: /(node_modules|bower_components)/,
-				use: extractBlockEditorCSS.extract( extractConfig( namespace ) ),
+				use: extractBlockEditorCSS.extract( extractConfig ),
 			},
 		],
 	},
@@ -117,4 +113,9 @@ module.exports = ( { namespace } ) => ( {
 	],
 	stats: 'minimal',
 	externals: externals,
+	resolve: {
+		alias: {
+			'~': `../../${ namespace }-ecommerce`,
+		},
+	},
 } );
