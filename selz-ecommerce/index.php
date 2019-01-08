@@ -30,7 +30,7 @@ final class Selz {
 	public $lang 	= 'selz-ecommerce';
 	public $home 	= 'https://selz.com/';
 	public $signup 	= 'https://selz.com/account/signup';
-	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
+	public $embed 	= 'https://embeds.selzstatic.com/1.1.0-beta.13/loader.js';
 	public $developer = false;
 
 	/**
