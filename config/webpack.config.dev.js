@@ -74,7 +74,7 @@ module.exports = ( { namespace } ) => ( {
 				},
 			},
 			{
-				test: /bundle\.less$/,
+				test: /main\.less$/,
 				exclude: /(node_modules|bower_components)/,
 				use: extractBlockEditorCSS.extract( extractConfig ),
 			},
