@@ -608,3 +608,6 @@
   font-weight: 600;
   font-display: swap;
 }
+#selz-cart {
+  display: none;
+}

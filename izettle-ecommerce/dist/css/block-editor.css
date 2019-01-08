@@ -607,3 +607,6 @@
   font-weight: 900;
   font-display: swap;
 }
+#izettle-cart {
+  display: none;
+}
