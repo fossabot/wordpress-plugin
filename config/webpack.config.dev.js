@@ -5,11 +5,14 @@
  * @since 2.0.0
  */
 
+const path = require( 'path' );
 const paths = require( './paths' );
 const webpack = require( 'webpack' );
 const externals = require( './externals' );
 const autoprefixer = require( 'autoprefixer' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
+const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const FriendlyErrorsWebpackPlugin = require( 'friendly-errors-webpack-plugin' );
 
 // Extract block-editor.css for editor styles.
@@ -82,6 +85,23 @@ module.exports = ( { namespace } ) => ( {
 	},
 	plugins: [
 		extractBlockEditorCSS,
+		new CleanWebpackPlugin( [ 'dist' ], {
+			root: path.resolve( `${ namespace }-ecommerce` ),
+			verbose: false,
+		} ),
+		new CopyWebpackPlugin(
+			[
+				{
+					from: 'src/img',
+					to: `${ namespace }-ecommerce/dist/img`,
+				},
+				{
+					from: `${ namespace }-ecommerce/src/img`,
+					to: `${ namespace }-ecommerce/dist/img`,
+				},
+			],
+			{ ignore: [ '.gitkeep' ] },
+		),
 		new webpack.DefinePlugin( {
 			namespace: JSON.stringify( namespace ),
 		} ),
