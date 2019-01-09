@@ -4,6 +4,7 @@ import button from './blocks/button/';
 import store from './blocks/store/';
 import widget from './blocks/widget/';
 import '~/src/less/main.less';
+import '~/src/less/block-editor.less';
 
 const { connectAccount, connectAccountNotice } = translations[namespace];
 const { registerBlockType } = wp.blocks;

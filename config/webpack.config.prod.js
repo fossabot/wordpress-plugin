@@ -20,7 +20,10 @@ const imageminMozjpeg = require( 'imagemin-mozjpeg' );
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
 
-// Extract block-editor.css for editor styles.
+const extractMainCSS = new ExtractTextPlugin( {
+	filename: '[name]/dist/css/main.css',
+} );
+
 const extractBlockEditorCSS = new ExtractTextPlugin( {
 	filename: '[name]/dist/css/block-editor.css',
 } );
@@ -84,11 +87,17 @@ module.exports = ( { namespace } ) => ( {
 			{
 				test: /main\.less$/,
 				exclude: /(node_modules|bower_components)/,
+				use: extractMainCSS.extract( extractConfig ),
+			},
+			{
+				test: /block-editor\.less$/,
+				exclude: /(node_modules|bower_components)/,
 				use: extractBlockEditorCSS.extract( extractConfig ),
 			},
 		],
 	},
 	plugins: [
+		extractMainCSS,
 		extractBlockEditorCSS,
 		new CleanWebpackPlugin( [ 'dist' ], {
 			root: path.resolve( `${ namespace }-ecommerce` ),

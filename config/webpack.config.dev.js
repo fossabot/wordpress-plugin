@@ -15,7 +15,10 @@ const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const FriendlyErrorsWebpackPlugin = require( 'friendly-errors-webpack-plugin' );
 
-// Extract block-editor.css for editor styles.
+const extractMainCSS = new ExtractTextPlugin( {
+	filename: '[name]/dist/css/main.css',
+} );
+
 const extractBlockEditorCSS = new ExtractTextPlugin( {
 	filename: '[name]/dist/css/block-editor.css',
 } );
@@ -79,11 +82,17 @@ module.exports = ( { namespace } ) => ( {
 			{
 				test: /main\.less$/,
 				exclude: /(node_modules|bower_components)/,
+				use: extractMainCSS.extract( extractConfig ),
+			},
+			{
+				test: /block-editor\.less$/,
+				exclude: /(node_modules|bower_components)/,
 				use: extractBlockEditorCSS.extract( extractConfig ),
 			},
 		],
 	},
 	plugins: [
+		extractMainCSS,
 		extractBlockEditorCSS,
 		new CleanWebpackPlugin( [ 'dist' ], {
 			root: path.resolve( `${ namespace }-ecommerce` ),

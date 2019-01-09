@@ -71,6 +71,7 @@ final class iZettle {
 
 		add_action( 'plugins_loaded', array( $this, 'plugin_loaded' ), 9 );
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'init_settings' ) );
 		add_action( 'wp_footer', array( $this, 'show_cart' ) );
@@ -148,6 +149,14 @@ final class iZettle {
 	        $this->slug . '_help',
 	        array( $this, 'help_page' )
 	   	);
+	}
+
+	/**
+	 * Enqueue scripts and styles
+	 * @since 1.7.2
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( $this->slug . '-main', plugins_url( 'dist/css/main.css', __FILE__ ), null, $this->version);
 	}
 
 	public function settings_page() {
@@ -282,7 +291,7 @@ final class iZettle {
 	 * @since 2.0.0
 	 */
 	public function enqueue_block_editor_assets() {
-		wp_enqueue_style( $this->slug . '-blocks', plugins_url( 'dist/css/block-editor.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_style( $this->slug . '-block-editor', plugins_url( 'dist/css/block-editor.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
 		wp_enqueue_script( $this->slug . '-blocks', plugins_url( 'dist/js/blocks.js', __FILE__ ), array(
 			'wp-blocks',
 			'wp-editor',
