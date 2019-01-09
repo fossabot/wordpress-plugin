@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 				</ul>
 
 				<h2><?php _e( 'Shopping cart', izettle()->lang ); ?></h2>
-				<p><?php printf( __( 'By default, the shopping cart will only show on pages containing a %s block that you\'ve added. You can also enable a global shopping cart on all pages by enabling it in <a href="?page=%s">settings</a>.', izettle()->lang ), izettle()->name, izettle()->slug ); ?></p>
+				<p><?php printf( __( 'By default, the shopping cart will only show on pages containing an %s block that you\'ve added. You can also enable a global shopping cart on all pages by enabling it in <a href="?page=%s">settings</a>.', izettle()->lang ), izettle()->name, izettle()->slug ); ?></p>
 
 				<h2><?php _e( 'Widgets', izettle()->lang ); ?></h2>
 				<p><?php _e( 'To embed any of our blocks from the Widgets menu, we recommend installing <a href="https://wordpress.org/plugins/reusable-gutenberg-blocks-widget/" target="_blank">Reusable Gutenberg Blocks Widget</a>.', izettle()->lang ); ?></p>
