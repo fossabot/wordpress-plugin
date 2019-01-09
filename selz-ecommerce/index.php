@@ -321,7 +321,7 @@ final class Selz {
 		// Load the embed loader
 		wp_enqueue_script( $this->slug . '-loader', $this->embed );
 
-		wp_localize_script( $this->slug . '-blocks', $this->slug . '_block_globals', array(
+		wp_localize_script( $this->slug . '-blocks', $this->slug . '_globals', array(
 			'colors'    => $this->colors(),
 			'embed'     => $this->embed,
 			'nonce'     => wp_create_nonce( $this->slug ),

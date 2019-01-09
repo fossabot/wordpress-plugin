@@ -1,4 +1,4 @@
-const { colors, resources } = window[`${namespace}_block_globals`];
+const { colors, resources } = window[`${namespace}_globals`];
 const { __, sprintf } = wp.i18n;
 
 export const actionOptions = Object.keys(resources).map(key => ({
