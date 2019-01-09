@@ -117,9 +117,7 @@ final class Selz {
 	public function plugin_loaded() {
 		$this->api = new Selz_API();
 
-		if ( ! $this->api->is_connected() ) {
-			add_action( 'admin_notices', array( &$this, 'not_connected' ), 11 );
-		} else {
+		if ( $this->api->is_connected() ) {
 			add_action( 'wp_ajax_' . $this->slug . '_search_products', array( &$this, 'search_products' ) );
 			add_action( 'wp_ajax_' . $this->slug . '_get_products', array( &$this, 'get_products' ) );
 		}
@@ -301,17 +299,6 @@ final class Selz {
 		}
 
 		exit;
-	}
-
-	public function not_connected() {
-		$screen = get_current_screen();
-		if ($screen->base === 'post') {
-		    ?>
-		    <div class="notice notice-info">
-		        <p><?php printf( __( 'Please %s', $this->lang ), '<a href="' . admin_url( 'admin.php?page=' . $this->slug ) . '">connect your ' . $this->name . ' account</a>' ); ?></p>
-		    </div>
-		    <?php
-		}
 	}
 
 	/**
