@@ -287,7 +287,7 @@ final class iZettle {
 		), $this->version );
 
 		// Load the embed loader
-		wp_enqueue_script( $this->slug . '-loader', $this->embed );
+		wp_enqueue_script( $this->slug . '-embed', $this->embed );
 
 		wp_localize_script( $this->slug . '-blocks', $this->slug . '_globals', array(
 			'colors'    => $this->colors(),
@@ -320,7 +320,7 @@ final class iZettle {
 	 * @since 2.0.0
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
-		if ( $handle == $this->slug . '-loader' ) {
+		if ( $handle == $this->slug . '-embed' ) {
 			$tag = '<script async src="' . esc_url( $src ) . '"></script>';
 		}
 

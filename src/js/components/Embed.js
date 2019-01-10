@@ -1,3 +1,4 @@
+const { embed, env } = window[`${namespace}_globals`];
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
 const { BlockIcon } = wp.editor;
@@ -67,6 +68,10 @@ export default class Embed extends Component {
             width,
         };
 
+        if (env) {
+            embedProps.env = env;
+        }
+
         if (isPreview) {
             const { action, modal, ...rest } = embedProps;
             embedProps = { ...rest };
@@ -126,7 +131,7 @@ export default class Embed extends Component {
 
                 {!isPreview && (
                     <Fragment>
-                        <script async src={window[`${namespace}_globals`].embed}></script>
+                        <script async src={embed}></script>
                         <noscript>
                             <a href={url} target="_blank">{type === 'store' ? __('Shop now') : text}</a>
                         </noscript>
