@@ -21,6 +21,22 @@ export default {
         type: 'string',
         default: colors.primary,
     },
+    showCategories: {
+        type: 'boolean',
+        default: true,
+    },
+    showPagination: {
+        type: 'boolean',
+        default: true,
+    },
+    showSearch: {
+        type: 'boolean',
+        default: true,
+    },
+    square: {
+        type: 'boolean',
+        default: true,
+    },
     type: {
         type: 'string',
         default: 'store',

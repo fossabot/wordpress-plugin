@@ -15,7 +15,7 @@ export default class OptionsPanel extends Component {
         const { attributes: { textWasSet }, setAttributes } = this.props;
         const attributes = { action };
 
-        if (!textWasSet) {
+        if (textWasSet === false) {
             const { label } = actionOptions.find(option => option.value === action);
             attributes._text = label;
             attributes.text = label;
@@ -34,10 +34,10 @@ export default class OptionsPanel extends Component {
     }
 
     render() {
-        const { attributes: { _text, action, description, logos, modal, type }, setAttributes } = this.props;
+        const { attributes: { _text, action, description, logos, modal, square, type }, setAttributes } = this.props;
 
         return (
-            <PanelBody title={__('Options')} initialOpen={false}>
+            <PanelBody title={__('Options')} initialOpen={type === 'store'}>
                 <SelectControl
                     label={__('Action')}
                     value={action}
@@ -57,11 +57,21 @@ export default class OptionsPanel extends Component {
                     />
                 )}
 
-                <TextControl
-                    label={__('Text')}
-                    value={_text}
-                    onChange={text => this.handleTextChange(text)}
-                />
+                {type === 'store' && (
+                    <ToggleControl
+                        label={__('Square Tiles')}
+                        checked={square}
+                        onChange={() => setAttributes({ square: !square })}
+                    />
+                )}
+
+                {type !== 'store' && (
+                    <TextControl
+                        label={__('Text')}
+                        value={_text}
+                        onChange={text => this.handleTextChange(text)}
+                    />
+                )}
 
                 {type === 'widget' && (
                     <ToggleControl
@@ -71,11 +81,13 @@ export default class OptionsPanel extends Component {
                     />
                 )}
 
-                <ToggleControl
-                    label={__('Show Payment Logos')}
-                    checked={logos}
-                    onChange={() => setAttributes({ logos: !logos })}
-                />
+                {type !== 'store' && (
+                    <ToggleControl
+                        label={__('Show Payment Logos')}
+                        checked={logos}
+                        onChange={() => setAttributes({ logos: !logos })}
+                    />
+                )}
             </PanelBody>
         );
     }
