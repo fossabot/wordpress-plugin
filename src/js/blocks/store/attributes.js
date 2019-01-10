@@ -1,6 +1,10 @@
 import { colors } from '../../config';
 
 export default {
+    action: {
+        type: 'string',
+        default: actionOptions[0].value,
+    },
     buttonBackgroundColor: {
         type: 'string',
         default: colors.primary,
@@ -20,6 +24,10 @@ export default {
     linksColor: {
         type: 'string',
         default: colors.primary,
+    },
+    modal: {
+        type: 'boolean',
+        default: true,
     },
     showCategories: {
         type: 'boolean',
