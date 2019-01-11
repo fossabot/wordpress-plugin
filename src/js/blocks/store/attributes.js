@@ -1,4 +1,4 @@
-import { colors } from '../../config';
+import { actionOptions, colors } from '../../config';
 
 export default {
     action: {
