@@ -7,36 +7,36 @@
  *
  * @return {string} Camel-cased string.
  */
-const camelCaseDash = string => string.replace( /-([a-z])/g, ( match, letter ) => letter.toUpperCase() );
+const camelCaseDash = string => string.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
 
 /**
  * Define externals to load components through the wp global.
  */
 const externals = [
-	'components',
-	'edit-post',
-	'element',
-	'plugins',
-	'editor',
-	'blocks',
-	'hooks',
-	'utils',
-	'date',
-	'data',
-	'i18n',
+    'components',
+    'edit-post',
+    'element',
+    'plugins',
+    'editor',
+    'blocks',
+    'hooks',
+    'utils',
+    'date',
+    'data',
+    'i18n',
 ].reduce(
-	( externals, name ) => ( {
-		...externals,
-		[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,
-	} ),
-	{
-		wp: 'wp',
-		ga: 'ga', // Old Google Analytics.
-		gtag: 'gtag', // New Google Analytics.
-		react: 'React', // React itself is there in Gutenberg.
-		jquery: 'jQuery', // import $ from 'jquery' // Use the WordPress version after enqueuing it.
-		'react-dom': 'ReactDOM',
-	}
+    (externals, name) => ({
+        ...externals,
+        [`@wordpress/${name}`]: `wp.${camelCaseDash(name)}`,
+    }),
+    {
+        wp: 'wp',
+        ga: 'ga', // Old Google Analytics.
+        gtag: 'gtag', // New Google Analytics.
+        react: 'React', // React itself is there in Gutenberg.
+        jquery: 'jQuery', // import $ from 'jquery' // Use the WordPress version after enqueuing it.
+        'react-dom': 'ReactDOM',
+    }
 );
 
 module.exports = externals;
