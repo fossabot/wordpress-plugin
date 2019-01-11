@@ -34,7 +34,7 @@ export default class OptionsPanel extends Component {
     }
 
     render() {
-        const { attributes: { _text, action, description, logos, modal, square, type }, setAttributes } = this.props;
+        const { attributes: { _text, action, description, logos, modal, squareImages, type }, setAttributes } = this.props;
 
         return (
             <PanelBody title={__('Options')} initialOpen={type === 'store'}>
@@ -59,9 +59,9 @@ export default class OptionsPanel extends Component {
 
                 {type === 'store' && (
                     <ToggleControl
-                        label={__('Square Tiles')}
-                        checked={square}
-                        onChange={() => setAttributes({ square: !square })}
+                        label={__('Square Images')}
+                        checked={squareImages}
+                        onChange={() => setAttributes({ squareImages: !squareImages })}
                     />
                 )}
 

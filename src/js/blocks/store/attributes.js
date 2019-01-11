@@ -41,7 +41,7 @@ export default {
         type: 'boolean',
         default: true,
     },
-    square: {
+    squareImages: {
         type: 'boolean',
         default: true,
     },
