@@ -43,6 +43,7 @@ export default {
                 {
                     type: 'block',
                     blocks: [`${namespace}/widget`],
+                    // eslint-disable-next-line no-unused-vars
                     transform: ({ autoWidth, ...attributes }) => {
                         const { description, type, width } = getBlockAttributes(`${namespace}/widget`);
 

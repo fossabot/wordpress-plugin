@@ -73,6 +73,7 @@ export default class Embed extends Component {
         }
 
         if (isPreview) {
+            // eslint-disable-next-line no-unused-vars
             const { action, modal, ...rest } = embedProps;
             embedProps = { ...rest };
         }
@@ -133,7 +134,7 @@ export default class Embed extends Component {
                     <Fragment>
                         <script async src={embed}></script>
                         <noscript>
-                            <a href={url} target="_blank">{type === 'store' ? __('Shop now') : text}</a>
+                            <a href={url} target="_blank" rel="noopener noreferrer">{type === 'store' ? __('Shop now') : text}</a>
                         </noscript>
                     </Fragment>
                 )}

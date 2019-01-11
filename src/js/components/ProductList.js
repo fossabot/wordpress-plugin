@@ -36,6 +36,7 @@ export default ({ attributes, next, previous, setAttributes }) => {
             <Scroll ariaLabel={__('Products')}>
                 <RadioControl
                     selected={url}
+                    // eslint-disable-next-line camelcase
                     options={products.map(({ title, short_url }) => ({
                         label: title,
                         value: short_url,

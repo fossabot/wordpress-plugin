@@ -24,6 +24,7 @@ export default {
                 {
                     type: 'block',
                     blocks: [`${namespace}/button`],
+                    // eslint-disable-next-line no-unused-vars
                     transform: ({ description, ...attributes }) => {
                         const { autoWidth, type, width } = getBlockAttributes(`${namespace}/button`);
 

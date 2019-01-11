@@ -1,6 +1,7 @@
 import { debounce } from 'lodash';
 import ProductList from './ProductList';
 
+const { ajaxurl, fetch } = window;
 const { PanelBody, TextControl } = wp.components;
 const { Component } = wp.element;
 const { __ } = wp.i18n;
@@ -27,6 +28,7 @@ export default class ProductPanel extends Component {
         fetch(request.url)
             .then(res => res.json())
             .then(
+                // eslint-disable-next-line camelcase
                 ({ data, has_more }) => {
                     // Only re-render for the most recent request
                     if (this.props.attributes.request.timestamp !== request.timestamp) {
@@ -80,13 +82,10 @@ export default class ProductPanel extends Component {
     }
 
     getUrl(data) {
-        const { ajaxurl } = window;
-        const url = Object.keys(data).reduce(
+        return Object.keys(data).reduce(
             (url, param) => data[param] ? `${url}${url === ajaxurl ? '?' : '&'}${param}=${data[param]}` : url,
             ajaxurl
         );
-
-        return url;
     }
 
     handleQueryChange(query) {
@@ -126,4 +125,4 @@ export default class ProductPanel extends Component {
             </PanelBody>
         );
     }
-};
+}

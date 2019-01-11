@@ -6,14 +6,17 @@ import LinksColorPanel from '../../components/LinksColorPanel';
 import OptionsPanel from '../../components/OptionsPanel';
 
 const { InspectorControls } = wp.editor;
+const { Fragment } = wp.element;
 
-export default props => [
-    <Embed {...props} isPreview />,
-    <InspectorControls>
-        <OptionsPanel {...props} />
-        <DisplayPanel {...props} />
-        <ButtonColorsPanel {...props} />
-        <LinksColorPanel {...props} />
-        <CheckoutColorsPanel {...props} />
-    </InspectorControls>,
-];
+export default props => (
+    <Fragment>
+        <Embed {...props} isPreview />
+        <InspectorControls>
+            <OptionsPanel {...props} />
+            <DisplayPanel {...props} />
+            <ButtonColorsPanel {...props} />
+            <LinksColorPanel {...props} />
+            <CheckoutColorsPanel {...props} />
+        </InspectorControls>
+    </Fragment>
+);

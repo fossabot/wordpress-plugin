@@ -91,4 +91,4 @@ export default class OptionsPanel extends Component {
             </PanelBody>
         );
     }
-};
+}
