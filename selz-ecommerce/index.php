@@ -84,7 +84,6 @@ final class Selz {
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
-		add_action( 'admin_footer', array( $this, 'admin_footer' ) );
 
 		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
 		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
