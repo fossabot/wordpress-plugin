@@ -18,10 +18,10 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 ### Building all plugin JavaScript / CSS
 
 -   First install node
--   Run `npm install` or `yarn` in the root folder to install the packages
--   Run `npm run start:selz` or `npm run start:izettle` to compile/run in dev mode and watch for changes
--   Run `npm run build:selz` or `npm run build:izettle` to build production-ready code
--   Run `npm run build` to build production-ready code _for both plugins_
+-   Run `yarn` or `npm install` in the root folder to install the packages
+-   Run `yarn start:selz` or `yarn start:izettle` to compile/run in dev mode and watch for changes
+-   Run `yarn build:selz` or `yarn build:izettle` to build production-ready code
+-   Run `yarn build` to build production-ready code _for both plugins_
 
 ### Building the plugin zips
 
