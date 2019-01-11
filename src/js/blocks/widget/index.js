@@ -3,7 +3,7 @@ import attributes from './attributes';
 import edit from './edit';
 import { translations } from '../../config';
 
-const { Path, SVG } = wp.components;
+const { G, Path, Rect, SVG } = wp.components;
 const { createBlock, getBlockAttributes } = wp.blocks;
 const { __ } = wp.i18n;
 
@@ -13,11 +13,7 @@ export default {
         title: translations[namespace].widget,
         description: __('Feature a store item by displaying a preview with a call to action.'),
         category: `${namespace}-ecommerce`,
-        icon: (
-            <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <Path fill={namespace === 'selz' ? 'url(#logo-gradient-a)' : 'currentColor'} d="M21.4508203,10.8258203 L13.1741797,2.54917969 C12.822551,2.19754838 12.3456393,2.0000026 11.8483594,2 L3.875,2 C2.83945312,2 2,2.83945312 2,3.875 L2,11.8483594 C1.99999402,12.345641 2.19754111,12.8225558 2.54917969,13.1741797 L10.8258203,21.4508203 C11.5580469,22.1830469 12.7452344,22.1830859 13.4774609,21.4508203 L21.4508203,13.4774609 C22.1830469,12.7452344 22.1830469,11.5580469 21.4508203,10.8258203 Z M12.1517969,20.1248437 L3.875,11.8483594 L3.875,3.875 L11.8483594,3.875 L20.125,12.1516406 L12.1517969,20.1248437 Z M9.5,7.625 C9.5,8.66054687 8.66054687,9.5 7.625,9.5 C6.58945313,9.5 5.75,8.66054687 5.75,7.625 C5.75,6.58945312 6.58945312,5.75 7.625,5.75 C8.66054687,5.75 9.5,6.58945312 9.5,7.625 Z" />
-            </SVG>
-        ),
+        icon: <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><G fill="none" fill-rule="evenodd" transform="translate(2 2)"><Rect width="19" height="19" x=".5" y=".5" stroke="#DBE3E8" rx="2" /><Path fill="#DBE3E8" fill-opacity=".5" fill-rule="nonzero" d="M2,0 L18,0 C19.1045695,-2.02906125e-16 20,0.8954305 20,2 L20,7 L0,7 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z" /><G fill-rule="nonzero" transform="translate(3 12)"><Rect width="14" height="5" fill="#7959C7" rx="1" /><Rect width="5.6" height="1" x="1.4" y="2" fill="#FFF" rx=".5" /><Rect width="4" height="1" x="8.6" y="2" fill="#FFF" rx=".5" /></G><G fill="#DBE3E8" fill-rule="nonzero" transform="translate(3 9)"><Rect width="3" height="1" rx=".5" /><Rect width="2" height="1" x="4" rx=".5" /><Rect width="3" height="1" x="7" rx=".5" /><Rect width="3" height="1" x="11" rx=".5" /></G></G></SVG>,
         attributes,
         transforms: {
             to: [

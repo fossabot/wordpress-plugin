@@ -330,25 +330,6 @@ final class Selz {
 	}
 
 	/**
-	 * Append the Selz gradient to the DOM -- to be referenced by block icons, etc.
-	 *
-	 * @example `<Path fill="url(#logo-gradient-a)" />`
-	 * @since 2.0.0
-	 */
-	public function admin_footer() {
-		?>
-		<svg xmlns="http://www.w3.org/2000/svg" width="720" height="409" viewBox="0 0 720 409">
-			<defs>
-				<linearGradient id="logo-gradient-a" x1="100%" x2="0%" y1="100%" y2="0%">
-					<stop offset="0%" stop-color="#C8318C"/>
-					<stop offset="100%" stop-color="#602BC6"/>
-				</linearGradient>
-			</defs>
-		</svg>
-		<?php
-	}
-
-	/**
 	 * Add a block category for Selz blocks
 	 * @since 2.0.0
 	 */
