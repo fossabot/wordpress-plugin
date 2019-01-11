@@ -24,7 +24,8 @@
 		"wp": true,
 		"wpApiSettings": true,
 		"window": true,
-		"document": true
+		"document": true,
+		"namespace": true
 	},
 	"plugins": ["react", "jsx-a11y", "jest"],
 	"settings": {
@@ -33,19 +34,19 @@
 		}
 	},
 	"rules": {
-		"array-bracket-spacing": ["error", "always"],
+		"array-bracket-spacing": ["error", "never"],
 		"brace-style": ["error", "1tbs"],
 		"camelcase": ["error", { "properties": "never" }],
 		"comma-dangle": ["error", "always-multiline"],
 		"comma-spacing": "error",
 		"comma-style": "error",
-		"computed-property-spacing": ["error", "always"],
-		"constructor-super": "error",
+		"computed-property-spacing": ["error", "never"],
+		"constructor-super": "warn",
 		"dot-notation": "error",
 		"eol-last": "error",
-		"eqeqeq": "error",
+		"eqeqeq": ["error", "always"],
 		"func-call-spacing": "error",
-		"indent": ["error", "tab", { "SwitchCase": 1 }],
+		"indent": ["error", 4, { "SwitchCase": 1 }],
 		"jsx-a11y/label-has-for": [
 			"error",
 			{
@@ -63,7 +64,7 @@
 		"no-bitwise": "error",
 		"no-caller": "error",
 		"no-console": "error",
-		"no-const-assign": "error",
+		"no-const-assign": "warn",
 		"no-debugger": "error",
 		"no-dupe-args": "error",
 		"no-dupe-class-members": "error",
@@ -82,7 +83,9 @@
 		"no-multi-str": "off",
 		"no-negated-in-lhs": "error",
 		"no-nested-ternary": "error",
+		"no-param-reassign": ["error", { "props": false }],
 		"no-redeclare": "error",
+		"no-restricted-globals": "error",
 		"no-restricted-syntax": [
 			"error",
 			{
@@ -138,55 +141,59 @@
 				"message": "Translate function arguments must be string literals."
 			}
 		],
-		"no-shadow": "error",
-		"no-undef": "error",
+		"no-shadow": "off",
+		"no-this-before-super": "warn",
+		"no-undef": "warn",
 		"no-undef-init": "error",
-		"no-unreachable": "error",
+		"no-unreachable": "warn",
 		"no-unsafe-negation": "error",
 		"no-unused-expressions": "error",
-		"no-unused-vars": "error",
+		"no-unused-vars": "warn",
 		"no-useless-computed-key": "error",
 		"no-useless-constructor": "error",
 		"no-useless-return": "error",
 		"no-var": "error",
 		"no-whitespace-before-property": "error",
 		"object-curly-spacing": ["error", "always"],
+		"one-var": ["error", "never"],
 		"padded-blocks": ["error", "never"],
 		"prefer-const": "error",
 		"quote-props": ["error", "as-needed"],
+		"quotes": ["error", "single", "avoid-escape"],
 		"react/display-name": "off",
 		"react/jsx-curly-spacing": [
 			"error",
 			{
-				"when": "always",
+				"when": "never",
 				"children": true
 			}
 		],
 		"react/jsx-equals-spacing": "error",
-		"react/jsx-indent": ["error", "tab"],
-		"react/jsx-indent-props": ["error", "tab"],
+		"react/jsx-indent": ["error", 4],
+		"react/jsx-indent-props": ["error", 4],
 		"react/jsx-key": "error",
 		"react/jsx-tag-spacing": "error",
 		"react/no-children-prop": "off",
 		"react/no-find-dom-node": "warn",
 		"react/prop-types": "off",
-		"semi": "error",
+		"semi": ["error", "always"],
 		"semi-spacing": "error",
 		"space-before-blocks": ["error", "always"],
 		"space-before-function-paren": ["error", "never"],
-		"space-in-parens": ["error", "always"],
+		"space-in-parens": ["error", "never"],
 		"space-infix-ops": ["error", { "int32Hint": false }],
 		"space-unary-ops": [
 			"error",
 			{
 				"overrides": {
-					"!": true
+					"!": false
 				}
 			}
 		],
-		"template-curly-spacing": ["error", "always"],
+		"spaced-comment": ["error", "always"],
+		"template-curly-spacing": ["error", "never"],
 		"valid-jsdoc": ["error", { "requireReturn": false }],
-		"valid-typeof": "error",
+		"valid-typeof": "warn",
 		"yoda": "off"
 	}
 }
