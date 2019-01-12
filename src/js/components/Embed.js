@@ -96,18 +96,24 @@ export default class Embed extends Component {
             this.setState({ didRender: true });
         }
 
-        const { attributes: { text, type, url }, clientId, isPreview, name } = this.props;
+        const {
+            attributes: { text, type, url },
+            clientId,
+            isPreview,
+            name,
+        } = this.props;
 
         // Render a blank placeholder for style previews only
         if (!url && !clientId) {
-            return (
-                <Placeholder />
-            );
+            return <Placeholder />;
         }
 
         // Render a loading screen while we wait for `url` to be set
         if (!url) {
-            const { icon: { src }, title } = getBlockType(name);
+            const {
+                icon: { src },
+                title,
+            } = getBlockType(name);
 
             return (
                 <Placeholder icon={<BlockIcon icon={src} />} label={title}>
@@ -125,16 +131,16 @@ export default class Embed extends Component {
         return (
             <Fragment>
                 <div data-embed="embed" key={clientId && this.state.didRender ? embedProps : Math.random()}>
-                    <script type="text/props">
-                        {embedProps}
-                    </script>
+                    <script type="text/props">{embedProps}</script>
                 </div>
 
                 {!isPreview && (
                     <Fragment>
-                        <script async src={embed}></script>
+                        <script async src={embed} />
                         <noscript>
-                            <a href={url} target="_blank" rel="noopener noreferrer">{type === 'store' ? __('Shop now') : text}</a>
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                                {type === 'store' ? __('Shop now') : text}
+                            </a>
                         </noscript>
                     </Fragment>
                 )}

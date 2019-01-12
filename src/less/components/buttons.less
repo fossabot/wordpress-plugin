@@ -33,7 +33,12 @@ button {
     background-image: linear-gradient(fade(#fff, @button-gradient-tint), fade(#fff, 0));
 
     // Default button style
-    .button-styles(@button-bg-default, darken(@button-bg-default, 10%), 8%, @focus-background: darken(@button-bg-default, 10%));
+    .button-styles(
+        @button-bg-default,
+        darken(@button-bg-default, 10%),
+        8%,
+        @focus-background: darken(@button-bg-default, 10%)
+    );
 
     // States
     // --------------------------------------------------

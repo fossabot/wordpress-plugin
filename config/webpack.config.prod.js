@@ -76,7 +76,6 @@ module.exports = ({ namespace }) => ({
                 use: {
                     loader: 'babel-loader',
                     options: {
-
                         // This is a feature of `babel-loader` for webpack (not Babel itself).
                         // It enables caching results in ./node_modules/.cache/babel-loader/
                         // directory for faster rebuilds.
@@ -125,11 +124,7 @@ module.exports = ({ namespace }) => ({
             gifsicle: { optimizationLevel: 3 },
             pngquant: { quality: '65-90', speed: 4 },
             svgo: {
-                plugins: [
-                    { removeUnknownsAndDefaults: false },
-                    { cleanupIDs: false },
-                    { removeViewBox: false },
-                ],
+                plugins: [{ removeUnknownsAndDefaults: false }, { cleanupIDs: false }, { removeViewBox: false }],
             },
             plugins: [imageminMozjpeg({ quality: 75 })],
         }),

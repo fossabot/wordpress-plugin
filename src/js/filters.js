@@ -14,25 +14,37 @@ removeFilter('editor.BlockEdit', 'core/editor/custom-class-name/with-inspector-c
 /**
  * Add custom class name controls back in for all but custom blocks
  */
-addFilter('editor.BlockEdit', `${namespace}/with-inspector-controls`, createHigherOrderComponent(BlockEdit => props => {
-    const { attributes: { className }, isSelected, name, setAttributes } = props;
-    const hasCustomClassName = hasBlockSupport(name, 'customClassName', true);
-    const isCustomBlock = name.substring(0, 4) === namespace;
+addFilter(
+    'editor.BlockEdit',
+    `${namespace}/with-inspector-controls`,
+    createHigherOrderComponent(
+        BlockEdit => props => {
+            const {
+                attributes: { className },
+                isSelected,
+                name,
+                setAttributes,
+            } = props;
+            const hasCustomClassName = hasBlockSupport(name, 'customClassName', true);
+            const isCustomBlock = name.substring(0, 4) === namespace;
 
-    if (hasCustomClassName && isSelected && !isCustomBlock) {
-        return (
-            <Fragment>
-                <BlockEdit {...props} />
-                <InspectorAdvancedControls>
-                    <TextControl
-                        label={__('Additional CSS Class')}
-                        value={className || ''}
-                        onChange={className => setAttributes({ className })}
-                    />
-                </InspectorAdvancedControls>
-            </Fragment>
-        );
-    }
+            if (hasCustomClassName && isSelected && !isCustomBlock) {
+                return (
+                    <Fragment>
+                        <BlockEdit {...props} />
+                        <InspectorAdvancedControls>
+                            <TextControl
+                                label={__('Additional CSS Class')}
+                                value={className || ''}
+                                onChange={className => setAttributes({ className })}
+                            />
+                        </InspectorAdvancedControls>
+                    </Fragment>
+                );
+            }
 
-    return <BlockEdit {...props} />;
-}, 'withInspectorControls'));
+            return <BlockEdit {...props} />;
+        },
+        'withInspectorControls',
+    ),
+);

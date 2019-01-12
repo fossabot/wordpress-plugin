@@ -12,7 +12,10 @@ export default class OptionsPanel extends Component {
     }
 
     handleActionChange(action) {
-        const { attributes: { textWasSet }, setAttributes } = this.props;
+        const {
+            attributes: { textWasSet },
+            setAttributes,
+        } = this.props;
         const attributes = { action };
 
         if (textWasSet === false) {
@@ -34,7 +37,10 @@ export default class OptionsPanel extends Component {
     }
 
     render() {
-        const { attributes: { _text, action, description, logos, modal, squareImages, type }, setAttributes } = this.props;
+        const {
+            attributes: { _text, action, description, logos, modal, squareImages, type },
+            setAttributes,
+        } = this.props;
 
         return (
             <PanelBody title={__('Options')} initialOpen={type === 'store'}>
@@ -49,10 +55,7 @@ export default class OptionsPanel extends Component {
                     <SelectControl
                         label={__('Window Type')}
                         value={modal}
-                        options={[
-                            { label: __('Overlay'), value: true },
-                            { label: __('New Tab'), value: false },
-                        ]}
+                        options={[{ label: __('Overlay'), value: true }, { label: __('New Tab'), value: false }]}
                         onChange={modal => setAttributes({ modal })}
                     />
                 )}
@@ -66,11 +69,7 @@ export default class OptionsPanel extends Component {
                 )}
 
                 {type !== 'store' && (
-                    <TextControl
-                        label={__('Text')}
-                        value={_text}
-                        onChange={text => this.handleTextChange(text)}
-                    />
+                    <TextControl label={__('Text')} value={_text} onChange={text => this.handleTextChange(text)} />
                 )}
 
                 {type === 'widget' && (

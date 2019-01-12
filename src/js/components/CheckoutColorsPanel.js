@@ -21,10 +21,7 @@ export default ({ attributes, setAttributes }) => {
                 },
             ]}
         >
-            <ContrastChecker
-                backgroundColor={checkoutBackgroundColor}
-                textColor={checkoutTextColor}
-            />
+            <ContrastChecker backgroundColor={checkoutBackgroundColor} textColor={checkoutTextColor} />
         </PanelColorSettings>
     );
 };

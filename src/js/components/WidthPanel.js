@@ -20,7 +20,10 @@ export default class Width extends Component {
     }
 
     render() {
-        const { attributes: { _width, autoWidth, fluidWidth, type }, setAttributes } = this.props;
+        const {
+            attributes: { _width, autoWidth, fluidWidth, type },
+            setAttributes,
+        } = this.props;
 
         return (
             <PanelBody title={__('Width')} initialOpen={false}>
@@ -28,10 +31,12 @@ export default class Width extends Component {
                     <ToggleControl
                         label={__('Automatic')}
                         checked={autoWidth}
-                        onChange={() => setAttributes({
-                            autoWidth: !autoWidth,
-                            width: autoWidth ? _width : null,
-                        })}
+                        onChange={() =>
+                            setAttributes({
+                                autoWidth: !autoWidth,
+                                width: autoWidth ? _width : null,
+                            })
+                        }
                     />
                 )}
 
@@ -39,10 +44,12 @@ export default class Width extends Component {
                     <ToggleControl
                         label={__('Fluid (100%)')}
                         checked={fluidWidth}
-                        onChange={() => setAttributes({
-                            fluidWidth: !fluidWidth,
-                            width: fluidWidth ? _width : '100%',
-                        })}
+                        onChange={() =>
+                            setAttributes({
+                                fluidWidth: !fluidWidth,
+                                width: fluidWidth ? _width : '100%',
+                            })
+                        }
                     />
                 )}
 

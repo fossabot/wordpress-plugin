@@ -21,10 +21,7 @@ export default ({ attributes, setAttributes }) => {
                 },
             ]}
         >
-            <ContrastChecker
-                backgroundColor={buttonBackgroundColor}
-                textColor={buttonTextColor}
-            />
+            <ContrastChecker backgroundColor={buttonBackgroundColor} textColor={buttonTextColor} />
         </PanelColorSettings>
     );
 };
