@@ -1,7 +1,8 @@
+import BehaviorPanel from '../../components/BehaviorPanel';
 import ButtonColorsPanel from '../../components/ButtonColorsPanel';
 import CheckoutColorsPanel from '../../components/CheckoutColorsPanel';
+import DisplayPanel from '../../components/DisplayPanel';
 import Embed from '../../components/Embed';
-import OptionsPanel from '../../components/OptionsPanel';
 import ProductPanel from '../../components/ProductPanel';
 import WidthPanel from '../../components/WidthPanel';
 
@@ -13,8 +14,9 @@ export default props => (
         <Embed {...props} isPreview />
         <InspectorControls>
             <ProductPanel {...props} />
-            <OptionsPanel {...props} />
+            <BehaviorPanel {...props} />
             <WidthPanel {...props} />
+            <DisplayPanel {...props} />
             <ButtonColorsPanel {...props} />
             <CheckoutColorsPanel {...props} />
         </InspectorControls>

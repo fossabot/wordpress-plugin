@@ -1,9 +1,13 @@
 import { actionOptions, colors } from '../../config';
 
+const { label, text, value: defaultAction } = actionOptions[0];
+const defaultText = text || label;
+const { primary: primaryColor, white } = colors;
+
 export default {
     _text: {
         type: 'string',
-        default: actionOptions[0].label,
+        default: defaultText,
     },
     _width: {
         type: 'number',
@@ -11,23 +15,23 @@ export default {
     },
     action: {
         type: 'string',
-        default: actionOptions[0].value,
+        default: defaultAction,
     },
     buttonBackgroundColor: {
         type: 'string',
-        default: colors.primary,
+        default: primaryColor,
     },
     buttonTextColor: {
         type: 'string',
-        default: colors.white,
+        default: white,
     },
     checkoutBackgroundColor: {
         type: 'string',
-        default: colors.primary,
+        default: primaryColor,
     },
     checkoutTextColor: {
         type: 'string',
-        default: colors.white,
+        default: white,
     },
     currentPage: {
         type: 'number',
@@ -73,7 +77,7 @@ export default {
     },
     text: {
         type: 'string',
-        default: actionOptions[0].label,
+        default: defaultText,
     },
     textWasSet: {
         type: 'boolean',
@@ -85,6 +89,10 @@ export default {
     },
     url: {
         type: 'string',
+    },
+    useDefaultText: {
+        type: 'boolean',
+        default: false,
     },
     width: {
         type: 'string',

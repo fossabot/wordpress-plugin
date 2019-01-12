@@ -1,10 +1,22 @@
-const { colors, resources } = window[`${namespace}_globals`];
+const { colors } = window[`${namespace}_globals`];
 const { __, sprintf } = wp.i18n;
 
-export const actionOptions = Object.keys(resources).map(key => ({
-    label: resources[key],
-    value: resources[key].replace(/ /g, '-').toLowerCase(),
-}));
+export const actionOptions = [
+    {
+        label: __('Add to cart'),
+        value: 'add-to-cart',
+    },
+    {
+        label: __('Buy'),
+        value: 'buy-now',
+        text: __('Buy it now'),
+    },
+    {
+        label: __('View'),
+        value: 'view',
+        text: __('Buy it now'),
+    },
+];
 
 export { colors };
 

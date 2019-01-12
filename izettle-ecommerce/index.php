@@ -217,17 +217,6 @@ final class iZettle {
 	}
 
 	/**
-	 * Get localized resources
-	 */
-	public function resources() {
-		return array(
-			'add_to_cart' => __( 'Add to cart', $this->lang ),
-			'buy' => __( 'Buy now', $this->lang ),
-			'view' => __( 'View', $this->lang ),
-		);
-	}
-
-	/**
      * Show row meta on the plugin screen.
      */
     public function plugin_action_links( $links, $file ) {
@@ -290,12 +279,10 @@ final class iZettle {
 		wp_enqueue_script( $this->slug . '-embed', $this->embed );
 
 		wp_localize_script( $this->slug . '-blocks', $this->slug . '_globals', array(
-			'colors'    => $this->colors(),
-			'embed'     => $this->embed,
-			'nonce'     => wp_create_nonce( $this->slug ),
-			'resources' => $this->resources(),
-			'slug'      => $this->slug,
-			'store'     => get_option( $this->slug . '_store' ),
+			'colors' => $this->colors(),
+			'embed'  => $this->embed,
+			'nonce'  => wp_create_nonce( $this->slug ),
+			'store'  => get_option( $this->slug . '_store' ),
 		) );
 	}
 

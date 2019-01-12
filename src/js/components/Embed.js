@@ -20,7 +20,6 @@ export default class Embed extends Component {
     }
 
     getEmbedProps() {
-        const { attributes, isPreview } = this.props;
         const {
             action,
             buttonBackgroundColor,
@@ -36,12 +35,13 @@ export default class Embed extends Component {
             showSearch,
             squareImages,
             text,
+            truncateTitles,
             type,
             width,
             url,
-        } = attributes;
+        } = this.props.attributes;
 
-        let embedProps = {
+        const embedProps = {
             action,
             colors: {
                 buttons: {
@@ -63,6 +63,7 @@ export default class Embed extends Component {
             squareImages,
             style: this.getEmbedStyle(),
             text,
+            truncateTitles,
             type,
             url,
             width,
@@ -70,12 +71,6 @@ export default class Embed extends Component {
 
         if (env) {
             embedProps.env = env;
-        }
-
-        if (isPreview) {
-            // eslint-disable-next-line no-unused-vars
-            const { action, modal, ...rest } = embedProps;
-            embedProps = { ...rest };
         }
 
         return JSON.stringify(embedProps);
