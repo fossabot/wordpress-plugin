@@ -1,7 +1,6 @@
 import { debounce } from 'lodash';
 import ProductList from './ProductList';
 
-const { ajaxurl, fetch } = window;
 const { PanelBody, TextControl } = wp.components;
 const { Component } = wp.element;
 const { __ } = wp.i18n;
@@ -21,7 +20,10 @@ export default class ProductPanel extends Component {
     }
 
     fetchProducts(pageNumber = 1) {
-        const { attributes: { pages, url }, setAttributes } = this.props;
+        const {
+            attributes: { pages, url },
+            setAttributes,
+        } = this.props;
         const request = this.getRequest(pageNumber);
 
         setAttributes({ request });
@@ -61,7 +63,7 @@ export default class ProductPanel extends Component {
                         isLoading: false,
                         error,
                     });
-                }
+                },
             );
     }
 
@@ -82,10 +84,13 @@ export default class ProductPanel extends Component {
     }
 
     getUrl(data) {
-        return Object.keys(data).reduce(
-            (url, param) => data[param] ? `${url}${url === ajaxurl ? '?' : '&'}${param}=${data[param]}` : url,
-            ajaxurl
+        const { ajaxurl } = window;
+        const url = Object.keys(data).reduce(
+            (url, param) => (data[param] ? `${url}${url === ajaxurl ? '?' : '&'}${param}=${data[param]}` : url),
+            ajaxurl,
         );
+
+        return url;
     }
 
     handleQueryChange(query) {
@@ -118,10 +123,7 @@ export default class ProductPanel extends Component {
                     className="is-filter"
                     onChange={query => this.handleQueryChange(query)}
                 />
-                <ProductList {...props}
-                    next={() => this.next()}
-                    previous={() => this.previous()}
-                />
+                <ProductList {...props} next={() => this.next()} previous={() => this.previous()} />
             </PanelBody>
         );
     }
