@@ -1,6 +1,6 @@
 .selz {
   font-weight: 400;
-  font-family: Circular, "Circular Std", BlinkMacSystemFont, -apple-system, Avenir, "Helvetica Neue", "Segoe UI", sans-serif;
+  font-family: Circular, 'Circular Std', BlinkMacSystemFont, -apple-system, Avenir, 'Helvetica Neue', 'Segoe UI', sans-serif;
   line-height: 1.6;
   color: #333b3f;
   font-size: 16px;
@@ -552,30 +552,6 @@
         flex-shrink: 0;
     margin-left: auto;
   }
-}
-[data-embed='embed'] {
-  pointer-events: none;
-  text-align: center;
-}
-.components-pager {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: justify;
-      justify-content: space-between;
-  margin-top: 12px;
-}
-.components-scroll {
-  max-height: 14em;
-  overflow: auto;
-}
-.components-panel__body .components-notice {
-  margin: 0;
-}
-.components-panel__body .components-spinner {
-  float: none;
-}
-.is-filter {
-  margin-bottom: 8px !important;
 }
 /*
  * Legal Disclaimer
