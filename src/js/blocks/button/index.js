@@ -1,7 +1,7 @@
 import Embed from '../../components/Embed';
 import attributes from './attributes';
 import edit from './edit';
-import { translations } from '../../config';
+import { colors, translations } from '../../config';
 
 const { G, Rect, SVG } = wp.components;
 const { createBlock, getBlockAttributes } = wp.blocks;
@@ -14,7 +14,7 @@ export default {
         description: __('Prompt visitors to add to cart, buy now or view a store item.'),
         category: `${namespace}-ecommerce`,
         // prettier-ignore
-        icon: <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><G fill="none" transform="translate(2 6)"><Rect width="20" height="11" fill="#7959C7" rx="2" /><Rect width="7" height="3" x="3" y="4" fill="#FFF" rx="1.5" /><Rect width="5" height="3" x="12" y="4" fill="#FFF" rx="1.5" /></G></SVG>,
+        icon: <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><G fill="none" transform="translate(2 6)"><Rect width="20" height="11" fill={colors.primary} rx="2" /><Rect width="7" height="3" x="3" y="4" fill="#FFF" rx="1.5" /><Rect width="5" height="3" x="12" y="4" fill="#FFF" rx="1.5" /></G></SVG>,
         styles: [
             {
                 name: 'price-right',
