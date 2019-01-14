@@ -2,7 +2,6 @@
   display: none;
 }
 [data-embed='embed'] {
-  pointer-events: none;
   text-align: center;
 }
 .components-pager {
