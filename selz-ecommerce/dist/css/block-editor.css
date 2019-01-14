@@ -1,7 +1,7 @@
 #embedded-cart {
   display: none;
 }
-[data-embed='embed'] {
+[data-embed] {
   text-align: center;
 }
 .components-pager {
