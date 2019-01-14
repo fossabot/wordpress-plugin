@@ -1,21 +1,33 @@
 const { embed, env } = window[`${namespace}_globals`];
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
+const { compose } = wp.compose;
+const { withDispatch, withSelect } = wp.data;
 const { BlockIcon } = wp.editor;
 const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
 
-export default class Embed extends Component {
+class Embed extends Component {
     constructor(props) {
         super(props);
         this.state = { didRender: false };
     }
 
     componentDidMount() {
+        const {
+            forceUpdate,
+            props: { clientId, isEditorSidebarOpened, openGeneralSidebar },
+        } = this;
+
         // Style previews for embeds don't display properly without a re-render. We're able to force one here -- for
         // style previews only -- by checking for the `clientId` prop.
-        if (!this.props.clientId) {
-            this.forceUpdate();
+        if (!clientId) {
+            forceUpdate();
+        }
+
+        // Open the sidebar so products can load
+        if (!isEditorSidebarOpened) {
+            openGeneralSidebar();
         }
     }
 
@@ -36,7 +48,6 @@ export default class Embed extends Component {
             squareImages,
             text,
             truncateTitles,
-            type,
             width,
             url,
         } = this.props.attributes;
@@ -64,7 +75,6 @@ export default class Embed extends Component {
             style: this.getEmbedStyle(),
             text,
             truncateTitles,
-            type,
             url,
             width,
         };
@@ -125,7 +135,7 @@ export default class Embed extends Component {
         // trigger an update per prop change -- we do this by supplying the stringified props instead.
         return (
             <Fragment>
-                <div data-embed="embed" key={clientId && this.state.didRender ? embedProps : Math.random()}>
+                <div data-embed={type} key={clientId && this.state.didRender ? embedProps : Math.random()}>
                     <script type="text/props">{embedProps}</script>
                 </div>
 
@@ -143,3 +153,12 @@ export default class Embed extends Component {
         );
     }
 }
+
+export default compose(
+    withDispatch(dispatch => ({
+        openGeneralSidebar: dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
+    })),
+    withSelect(select => ({
+        isEditorSidebarOpened: select('core/edit-post').isEditorSidebarOpened(),
+    })),
+)(Embed);
