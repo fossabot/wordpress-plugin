@@ -31,7 +31,7 @@ final class Selz {
 	public $home 	= 'https://selz.com/';
 	public $signup 	= 'https://selz.com/account/signup';
 	public $embeds 	= 'https://selz.com/embeds';
-	public $embed 	= 'https://embeds.selzstatic.com/1.1.0-beta.36/loader.js';
+	public $embed 	= 'https://embeds.selzstatic.com/1.1.0-beta.38/loader.js';
 	public $developer = false;
 
 	/**
