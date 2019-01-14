@@ -1,10 +1,3 @@
-/**
- * Webpack config
- * TODO: Speaking of DRY, these configs aren't DRY at all -- would be nice to consolidate common config into
- * `webpack.config.common.js` to extend from
- * @since 2.0.0
- */
-
 const path = require('path');
 const paths = require('./paths');
 const webpack = require('webpack');
@@ -53,7 +46,7 @@ const extractConfig = {
 };
 
 // Export configuration.
-module.exports = ({ namespace }) => ({
+module.exports = namespace => ({
     entry: {
         [`./${namespace}-ecommerce`]: paths.pluginBlocksJs,
     },
@@ -61,8 +54,6 @@ module.exports = ({ namespace }) => ({
         path: paths.pluginDist,
         filename: '[name]/dist/js/blocks.js',
     },
-    // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
-    devtool: 'cheap-eval-source-map',
     module: {
         rules: [
             {

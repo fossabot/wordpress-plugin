@@ -5,10 +5,10 @@
     "homepage": "https://selz.com",
     "scripts": {
         "build": "npm run build:selz && npm run build:izettle",
-        "build:selz": "webpack --env.namespace=selz --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
-        "build:izettle": "webpack --env.namespace=izettle --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
-        "start:selz": "webpack --env.namespace=selz --hide-modules --watch --config config/webpack.config.dev.js",
-        "start:izettle": "webpack --env.namespace=izettle --hide-modules --watch --config config/webpack.config.dev.js"
+        "build:selz": "webpack --env.namespace=selz --env.NODE_ENV=production --progress --config config/webpack.prod.js",
+        "build:izettle": "webpack --env.namespace=izettle --env.NODE_ENV=production --progress --config config/webpack.prod.js",
+        "start:selz": "webpack --env.namespace=selz --hide-modules --watch --config config/webpack.dev.js",
+        "start:izettle": "webpack --env.namespace=izettle --hide-modules --watch --config config/webpack.dev.js"
     },
     "browserslist": "> 0.25%, not dead",
     "dependencies": {},
@@ -36,7 +36,8 @@
         "postcss-loader": "^2.0.10",
         "raw-loader": "^0.5.1",
         "style-loader": "^0.19.1",
-        "webpack": "^3.1.0"
+        "webpack": "^3.1.0",
+        "webpack-merge": "^4.2.1"
     },
     "keywords": [
         "Ecommerce",
