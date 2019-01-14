@@ -11,7 +11,7 @@ const { registerBlockType } = wp.blocks;
 const { dispatch } = wp.data;
 const { addQueryArgs } = wp.url;
 
-if (window[`${namespace}_globals`]) {
+if (window[`${namespace}_globals`].store) {
     [button, store, widget].forEach(({ name, settings }) => {
         registerBlockType(name, settings);
     });
