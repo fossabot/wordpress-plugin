@@ -26,7 +26,7 @@ addFilter(
                 setAttributes,
             } = props;
             const hasCustomClassName = hasBlockSupport(name, 'customClassName', true);
-            const isCustomBlock = name.substring(0, 4) === namespace;
+            const isCustomBlock = name.startsWith(namespace);
 
             if (hasCustomClassName && isSelected && !isCustomBlock) {
                 return (
