@@ -156,7 +156,7 @@ class Embed extends Component {
 
 export default compose(
     withDispatch(dispatch => ({
-        openGeneralSidebar: dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
+        openGeneralSidebar: () => dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
     })),
     withSelect(select => ({
         isEditorSidebarOpened: select('core/edit-post').isEditorSidebarOpened(),
