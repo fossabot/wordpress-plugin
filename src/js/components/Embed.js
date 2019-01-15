@@ -2,7 +2,7 @@ const { embed, env } = window[`${namespace}_globals`];
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
 const { compose } = wp.compose;
-const { withDispatch, withSelect } = wp.data;
+const { withDispatch } = wp.data;
 const { BlockIcon } = wp.editor;
 const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
@@ -14,21 +14,16 @@ class Embed extends Component {
     }
 
     componentDidMount() {
-        const {
-            forceUpdate,
-            props: { clientId, isEditorSidebarOpened, openGeneralSidebar },
-        } = this;
+        const { clientId, openGeneralSidebar } = this.props;
 
         // Style previews for embeds don't display properly without a re-render. We're able to force one here -- for
         // style previews only -- by checking for the `clientId` prop.
         if (!clientId) {
-            forceUpdate();
+            this.forceUpdate();
         }
 
         // Open the sidebar so products can load
-        if (!isEditorSidebarOpened) {
-            openGeneralSidebar();
-        }
+        openGeneralSidebar();
     }
 
     getEmbedProps() {
@@ -157,8 +152,5 @@ class Embed extends Component {
 export default compose(
     withDispatch(dispatch => ({
         openGeneralSidebar: () => dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
-    })),
-    withSelect(select => ({
-        isEditorSidebarOpened: select('core/edit-post').isEditorSidebarOpened(),
     })),
 )(Embed);
