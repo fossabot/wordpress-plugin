@@ -1,7 +1,6 @@
 const { embed, env } = window[`${namespace}_globals`];
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
-const { compose } = wp.compose;
 const { withDispatch } = wp.data;
 const { BlockIcon } = wp.editor;
 const { Component, Fragment } = wp.element;
@@ -149,8 +148,6 @@ class Embed extends Component {
     }
 }
 
-export default compose(
-    withDispatch(dispatch => ({
-        openGeneralSidebar: () => dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
-    })),
-)(Embed);
+export default withDispatch(dispatch => ({
+    openGeneralSidebar: () => dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
+}))(Embed);
