@@ -1,11 +1,12 @@
+import ProductItem from './ProductItem';
 import Scroll from './Scroll';
 
-const { Button, Notice, RadioControl, Spinner } = wp.components;
+const { Button, Notice, Spinner } = wp.components;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
-export default ({ attributes, next, previous, setAttributes }) => {
-    const { currentPage, error, hasMore, isLoading, products, request, url } = attributes;
+export default ({ attributes, next, previous }) => {
+    const { currentPage, error, hasMore, isLoading, products, request } = attributes;
 
     if (error) {
         return (
@@ -34,15 +35,9 @@ export default ({ attributes, next, previous, setAttributes }) => {
     return (
         <Fragment>
             <Scroll ariaLabel={__('Products')}>
-                <RadioControl
-                    selected={url}
-                    // eslint-disable-next-line camelcase
-                    options={products.map(({ title, short_url }) => ({
-                        label: title,
-                        value: short_url,
-                    }))}
-                    onChange={url => setAttributes({ url })}
-                />
+                {products.map((product, index) => (
+                    <ProductItem key={index} product={product} />
+                ))}
             </Scroll>
 
             {(currentPage !== 1 || hasMore) && (
