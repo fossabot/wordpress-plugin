@@ -38,6 +38,7 @@ export default class ProductPanel extends Component {
                     }
 
                     // Filter out unpublished products
+                    // TODO: Should be done server-side
                     // eslint-disable-next-line camelcase
                     const products = data.filter(({ is_published }) => is_published);
 
