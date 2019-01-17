@@ -37,20 +37,25 @@ export default class ProductPanel extends Component {
                         return;
                     }
 
+                    // Filter out unpublished products
+                    // TODO: Should be done server-side
+                    // eslint-disable-next-line camelcase
+                    const products = data.filter(({ is_published }) => is_published);
+
                     const attributes = {
                         isLoading: false,
-                        products: data,
+                        products,
                         hasMore: has_more,
                     };
 
-                    if (data && data.length) {
-                        attributes.url = url || data[0].short_url;
+                    if (products && products.length) {
+                        attributes.url = url || products[0].short_url;
                         attributes.pages = {
                             ...pages,
                             [pageNumber]: {
                                 number: pageNumber,
-                                start: data[0].id,
-                                end: data[data.length - 1].id,
+                                start: products[0].id,
+                                end: products[products.length - 1].id,
                             },
                         };
                         attributes.currentPage = pageNumber;
