@@ -11,7 +11,9 @@
         "start:izettle": "webpack --env.namespace=izettle --hide-modules --watch --config config/webpack.dev.js"
     },
     "browserslist": "> 0.25%, not dead",
-    "dependencies": {},
+    "dependencies": {
+        "classnames": "^2.2.6"
+    },
     "devDependencies": {
         "autoprefixer": "^7.2.4",
         "babel-core": "^6.25.0",

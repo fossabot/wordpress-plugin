@@ -1,12 +1,12 @@
-import ProductItem from './ProductItem';
+import ProductControl from './ProductControl';
 import Scroll from './Scroll';
 
 const { Button, Notice, Spinner } = wp.components;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
-export default ({ attributes, next, previous }) => {
-    const { currentPage, error, hasMore, isLoading, products, request } = attributes;
+export default ({ attributes, next, previous, setAttributes }) => {
+    const { currentPage, error, hasMore, isLoading, products, request, url } = attributes;
 
     if (error) {
         return (
@@ -35,9 +35,17 @@ export default ({ attributes, next, previous }) => {
     return (
         <Fragment>
             <Scroll ariaLabel={__('Products')}>
-                {products.map((product, index) => (
-                    <ProductItem key={index} product={product} />
-                ))}
+                <ProductControl
+                    selected={url}
+                    /* eslint-disable camelcase */
+                    options={products.map(({ title, short_url, featured_image }) => ({
+                        label: title,
+                        value: short_url,
+                        image: featured_image && featured_image.small,
+                    }))}
+                    /* eslint-enable camelcase */
+                    onChange={url => setAttributes({ url })}
+                />
             </Scroll>
 
             {(currentPage !== 1 || hasMore) && (

@@ -37,10 +37,10 @@ export default class ProductPanel extends Component {
                         return;
                     }
 
-                    // Filter out unpublished products
-                    // TODO: Should be done server-side
+                    // Filter out unpublished products and products without a short URL
+                    // TODO: The former should be done server-side
                     // eslint-disable-next-line camelcase
-                    const products = data.filter(({ is_published }) => is_published);
+                    const products = data.filter(({ is_published, short_url }) => is_published && short_url);
 
                     const attributes = {
                         isLoading: false,
