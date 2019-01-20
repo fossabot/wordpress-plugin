@@ -1,6 +1,7 @@
+import ProductControl from './ProductControl';
 import Scroll from './Scroll';
 
-const { Button, Notice, RadioControl, Spinner } = wp.components;
+const { Button, Notice, Spinner } = wp.components;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
@@ -34,13 +35,15 @@ export default ({ attributes, next, previous, setAttributes }) => {
     return (
         <Fragment>
             <Scroll ariaLabel={__('Products')}>
-                <RadioControl
+                <ProductControl
                     selected={url}
-                    // eslint-disable-next-line camelcase
-                    options={products.map(({ title, short_url }) => ({
+                    /* eslint-disable camelcase */
+                    options={products.map(({ title, short_url, featured_image }) => ({
                         label: title,
                         value: short_url,
+                        image: featured_image && featured_image.small,
                     }))}
+                    /* eslint-enable camelcase */
                     onChange={url => setAttributes({ url })}
                 />
             </Scroll>

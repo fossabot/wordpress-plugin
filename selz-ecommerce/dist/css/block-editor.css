@@ -18,6 +18,16 @@
 .components-panel__body .components-notice {
   margin: 0;
 }
+.components-panel__body .components-product-item__option,
+.components-panel__body .components-product-item__option label {
+  -ms-flex-align: center;
+      align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+}
+.components-panel__body .components-product-item__input {
+  margin-top: 0;
+}
 .components-panel__body .components-spinner {
   float: none;
 }
