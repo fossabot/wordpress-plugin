@@ -30,7 +30,7 @@ function ProductControl({ label, className, selected, help, instanceId, onChange
                             aria-describedby={!!help ? `${id}__help` : undefined}
                         />
                         <label htmlFor={`${id}-${index}`}>
-                            <ProductImage src={option.image} alt="" /> {option.label}
+                            <ProductImage src={option.image} /> {option.label}
                         </label>
                     </div>
                 ))}
