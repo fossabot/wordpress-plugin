@@ -75,6 +75,10 @@ export default {
     request: {
         type: 'object',
     },
+    showCart: {
+        type: 'boolean',
+        default: false,
+    },
     text: {
         type: 'string',
         default: defaultText,

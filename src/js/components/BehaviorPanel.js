@@ -5,7 +5,7 @@ const { PanelBody, SelectControl, TextControl, ToggleControl } = wp.components;
 const { Component } = wp.element;
 const { __ } = wp.i18n;
 
-export default class OptionsPanel extends Component {
+export default class BehaviorPanel extends Component {
     constructor(props) {
         super(props);
         this.debouncedSetText = debounce(this.setText, 500);

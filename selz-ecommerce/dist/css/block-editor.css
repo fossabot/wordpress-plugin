@@ -1,4 +1,4 @@
-#embedded-cart {
+body:not(.cart-visible) #embedded-cart {
   display: none;
 }
 [data-embed] {

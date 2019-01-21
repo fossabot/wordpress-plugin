@@ -1,3 +1,5 @@
+import CartControl from './CartControl';
+
 const { PanelBody, ToggleControl } = wp.components;
 const { __ } = wp.i18n;
 
@@ -21,6 +23,7 @@ export default ({ attributes, setAttributes }) => {
                 checked={showPagination}
                 onChange={() => setAttributes({ showPagination: !showPagination })}
             />
+            <CartControl {...{ ...attributes, setAttributes }} />
         </PanelBody>
     );
 };

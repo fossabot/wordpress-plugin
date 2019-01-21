@@ -37,6 +37,10 @@ export default {
         type: 'boolean',
         default: true,
     },
+    showCart: {
+        type: 'boolean',
+        default: false,
+    },
     showCategories: {
         type: 'boolean',
         default: true,
