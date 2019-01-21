@@ -1,9 +1,9 @@
 === Selz WordPress Ecommerce ===
 Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
-Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 1.9.4
+Requires at least: 5.0
+Tested up to: 5.0.3
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,8 @@ If you have queries, you can contact us here at [help@selz.com](mailto:help@selz
 1. Optional shopping cart permanently displayed
 
 == Changelog ==
+= 2.0.0 =
+- Fully compatible with WordPress 5.0; embeds are now fully featured Gutenberg blocks. Please note: if you previously installed the "Classic Editor" plugin, you'll need to deactivate upon upgrading.
 = 1.9.4 =
 - Minor bug fixes
 = 1.9.3 =
