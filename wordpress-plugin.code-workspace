@@ -19,6 +19,7 @@
         "scss.validate": false,
         "javascript.validate.enable": false,
         // Prettier
+        "prettier.eslintIntegration": true,
         "prettier.stylelintIntegration": true,
         // Formatting
         "editor.insertSpaces": true,
