@@ -276,7 +276,7 @@ final class iZettle {
 		), $this->version );
 
 		// Load the embed loader
-		wp_enqueue_script( $this->slug . '-embed', $this->embed );
+		wp_enqueue_script( $this->slug . '-embed', $this->embed, array(), false, true );
 
 		wp_localize_script( $this->slug . '-blocks', $this->slug . '_globals', array(
 			'colors' => $this->colors(),
