@@ -21,7 +21,7 @@ export default ({ attributes, setAttributes }) => {
                 checked={logos}
                 onChange={() => setAttributes({ logos: !logos })}
             />
-            <CartControl {...{ ...attributes, setAttributes }} />
+            <CartControl {...{ attributes, setAttributes }} />
         </PanelBody>
     );
 };

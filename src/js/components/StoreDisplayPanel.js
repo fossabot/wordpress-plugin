@@ -23,7 +23,7 @@ export default ({ attributes, setAttributes }) => {
                 checked={showPagination}
                 onChange={() => setAttributes({ showPagination: !showPagination })}
             />
-            <CartControl {...{ ...attributes, setAttributes }} />
+            <CartControl {...{ attributes, setAttributes }} />
         </PanelBody>
     );
 };
