@@ -8,7 +8,7 @@ export const actionOptions = [
     },
     {
         label: __('Buy'),
-        value: 'buy-now',
+        value: 'buy',
         text: __('Buy it now'),
     },
     {
