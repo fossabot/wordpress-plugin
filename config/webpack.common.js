@@ -1,12 +1,12 @@
 const path = require('path');
-const paths = require('./paths');
 const webpack = require('webpack');
-const externals = require('./externals');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const paths = require('./paths');
+const externals = require('./externals');
 
 const extractMainCSS = new ExtractTextPlugin({
     filename: '[name]/dist/css/main.css',
@@ -107,7 +107,7 @@ module.exports = namespace => ({
         new FriendlyErrorsWebpackPlugin(),
     ],
     stats: 'minimal',
-    externals: externals,
+    externals,
     resolve: {
         alias: {
             '~': `../../${namespace}-ecommerce`,

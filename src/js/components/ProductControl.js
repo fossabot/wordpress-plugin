@@ -27,7 +27,7 @@ function ProductControl({ label, className, selected, help, instanceId, onChange
                             value={option.value}
                             onChange={onChangeValue}
                             checked={option.value === selected}
-                            aria-describedby={!!help ? `${id}__help` : undefined}
+                            aria-describedby={help ? `${id}__help` : undefined}
                         />
                         <label htmlFor={`${id}-${index}`}>
                             <ProductImage src={option.image} /> {option.label}

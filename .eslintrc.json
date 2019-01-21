@@ -2,6 +2,7 @@
     "root": true,
     "parser": "babel-eslint",
     "extends": [
+        "airbnb-base",
         "wordpress",
         "plugin:react/recommended",
         "plugin:jsx-a11y/recommended",
@@ -32,10 +33,16 @@
     "settings": {
         "react": {
             "pragma": "wp"
+        },
+        "import/resolver": {
+            "webpack": {
+                "config": "config/webpack.common.js"
+            }
         }
     },
     "rules": {
         "camelcase": ["error", { "properties": "never" }],
+        "class-methods-use-this": "off",
         "constructor-super": "warn",
         "dot-notation": "error",
         "eqeqeq": ["error", "always"],
@@ -120,6 +127,7 @@
         "no-this-before-super": "warn",
         "no-undef": "warn",
         "no-undef-init": "error",
+        "no-underscore-dangle": "off",
         "no-unreachable": "warn",
         "no-unsafe-negation": "error",
         "no-unused-expressions": "error",

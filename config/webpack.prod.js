@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
 const { default: ImageminPlugin } = require('imagemin-webpack-plugin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
+const common = require('./webpack.common.js');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
