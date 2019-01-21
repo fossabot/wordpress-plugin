@@ -14,7 +14,12 @@
             "**/dist": true
         },
         // Linting
+        "css.validate": false,
+        "less.validate": false,
+        "scss.validate": false,
         "javascript.validate.enable": false,
+        // Prettier
+        "prettier.stylelintIntegration": true,
         // Formatting
         "editor.insertSpaces": true,
         "editor.formatOnSave": true
