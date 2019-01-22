@@ -31,16 +31,11 @@ export default class ProductPanel extends Component {
             .then(res => res.json())
             .then(
                 // eslint-disable-next-line camelcase
-                ({ data, has_more }) => {
+                ({ data: products, has_more }) => {
                     // Only re-render for the most recent request
                     if (this.props.attributes.request.timestamp !== request.timestamp) {
                         return;
                     }
-
-                    // Filter out unpublished products and products without a short URL
-                    // TODO: The former should be done server-side
-                    // eslint-disable-next-line camelcase
-                    const products = data.filter(({ is_published, short_url }) => is_published && short_url);
 
                     const attributes = {
                         isLoading: false,
