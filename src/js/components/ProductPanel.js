@@ -31,11 +31,15 @@ export default class ProductPanel extends Component {
             .then(res => res.json())
             .then(
                 // eslint-disable-next-line camelcase
-                ({ data: products, has_more }) => {
+                ({ data, has_more }) => {
                     // Only re-render for the most recent request
                     if (this.props.attributes.request.timestamp !== request.timestamp) {
                         return;
                     }
+
+                    // Filter out products without a short URL
+                    // eslint-disable-next-line camelcase
+                    const products = data.filter(({ short_url }) => short_url);
 
                     const attributes = {
                         isLoading: false,
