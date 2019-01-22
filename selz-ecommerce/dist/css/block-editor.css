@@ -4,6 +4,9 @@ body:not(.cart-visible) #embedded-cart {
 [data-embed] {
   text-align: center;
 }
+.editor-block-styles__item-preview .editor-block-preview__content [data-embed='button'] {
+  white-space: nowrap;
+}
 img {
   vertical-align: middle;
   max-width: 100%;
