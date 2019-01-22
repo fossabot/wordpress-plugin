@@ -37,7 +37,10 @@ export default class ProductPanel extends Component {
                         return;
                     }
 
-                    // Filter out products without a short URL
+                    /**
+                     * Filter out products without a short URL. Short URLs are required when embedding products.
+                     * @see https://developer.selz.com/embeds#props
+                     */
                     // eslint-disable-next-line camelcase
                     const products = data.filter(({ short_url }) => short_url);
 
