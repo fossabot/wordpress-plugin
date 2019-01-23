@@ -49,7 +49,7 @@ You can use the built in installer and upgrader, or you can install the plugin m
 2. Navigate to to the 'Plugins' page in the WordPress Dashboard
 3. Select 'Add New > Upload > Choose File' and select the 'selz-ecommerce.zip' file
 
-Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your visual editor to add to your post or page.
+Once the plugin has been activated you will see the new Gutenberg blocks available under 'Selz Ecommerce'.
 
 == Frequently Asked Questions ==
 
@@ -60,12 +60,6 @@ Yes, the plugin will work with any theme. You can also customize your button, wi
 ### I have more questions, who do I contact?
 
 If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
-
-== Screenshots ==
-
-1. Add products easily
-
-1. Optional shopping cart permanently displayed
 
 == Changelog ==
 = 2.0.0 =

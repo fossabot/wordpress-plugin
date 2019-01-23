@@ -1,9 +1,9 @@
 === iZettle E-commerce ===
 Contributors: iZettle
 Tags: izettle, shopping cart, ecommerce, Wordpress ecommerce, e-commerce
-Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 1.0.4
+Requires at least: 5.0
+Tested up to: 5.0.3
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,7 +44,7 @@ Install the plugin automatically from your WordPress dashboard or download it as
 2. Navigate to to the 'Plugins' page in the WordPress Dashboard
 3. Select 'Add New > Upload > Choose File' and select the 'izettle-ecommerce.zip' file
 
-Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your visual editor to add to your post or page.
+Once the plugin has been activated you will see the new Gutenberg blocks available under 'iZettle Ecommerce'.
 
 == Frequently Asked Questions ==
 
@@ -56,13 +56,9 @@ Yes, the plugin works with any theme. The store, product widget and buy now butt
 
 If you have queries, you can contact us here at [help@izettle.com](mailto:help@izettle.com)
 
-== Screenshots ==
-
-1. Choose the products from your inventory
-
-1. Navbar shopping cart for multiple purchases (optional)
-
 == Changelog ==
+= 2.0.0 =
+- Fully compatible with WordPress 5.0; embeds are now fully featured Gutenberg blocks. Please note: if you previously installed the "Classic Editor" plugin, you'll need to deactivate upon upgrading.
 = 1.0.4 =
 - Fixed a compatibility issue with WordPress 5.0. Please note: to use this plugin with WordPress 5.0, the "Classic Editor" plugin is required. Full support for 5.0 and the new Gutenburg editor is coming soon.
 = 1.0.3 =
