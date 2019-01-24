@@ -83,6 +83,7 @@ final class Selz {
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
+		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 
 		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
@@ -288,6 +289,20 @@ final class Selz {
 		}
 
 		exit;
+	}
+
+	/**
+	 * Prompt users with notice to setup plugin on activation
+	 * @since 2.2.0
+	 */
+	public function admin_notices() {
+		?>
+		<div class="notice notice-success is-dismissible">
+			<h3><?php _e('Awesome! Your new Selz plugin is now active.', 'selz'); ?></h3>
+			<p><?php _e('Take a few simple steps to complete your store setup.', 'selz'); ?></p>
+			<p><a href="#" class="button button-primary"><?php _e('Setup Selz', 'selz'); ?></a></p>
+		</div>
+		<?php
 	}
 
 	/**
