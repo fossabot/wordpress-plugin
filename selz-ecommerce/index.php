@@ -103,6 +103,10 @@ final class Selz
     public function activation_hook()
     {
         add_option($this->slug . '_version', $this->version);
+
+        // Store temporary data
+        // @see https://codex.wordpress.org/Transients_API
+        set_transient('plugin_did_activate', true, 5);
     }
 
     /**
@@ -318,13 +322,17 @@ final class Selz
      */
     public function admin_notices()
     {
-        ?>
-        <div class="notice notice-success is-dismissible">
-            <h3><?php _e('Awesome! Your new Selz plugin is now active.', 'selz'); ?></h3>
-            <p><?php _e('Take a few simple steps to complete your store setup.', 'selz'); ?></p>
-            <p><a href="#" class="button button-primary"><?php _e('Setup Selz', 'selz'); ?></a></p>
-        </div>
-        <?php
+        if (get_transient('plugin_did_activate')) {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <h3><?php _e('Awesome! Your new Selz plugin is now active.', 'selz'); ?></h3>
+                <p><?php _e('Take a few simple steps to complete your store setup.', 'selz'); ?></p>
+                <p><a href="#" class="button button-primary"><?php _e('Setup Selz', 'selz'); ?></a></p>
+            </div>
+            <?php
+            // Delete the transient so the notice only displays once
+            delete_transient('plugin_did_activate');
+        }
     }
 
     /**
