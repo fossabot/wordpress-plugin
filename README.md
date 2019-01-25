@@ -23,6 +23,11 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 -   Run `yarn build:selz` or `yarn build:izettle` to build production-ready code
 -   Run `yarn build` to build production-ready code _for both plugins_
 
+### PHP linting
+
+-   [Install Composer](https://getcomposer.org/)
+-   Run `composer install` to install the packages
+
 ### Building the plugin zips
 
 To build the plugin zip file for manual installation run `build.sh` (MacOS/Unix Bash) or `build.ps1` (Windows Powershell)
