@@ -511,7 +511,7 @@ class iZettle_API
         delete_option($this->slug . '_store');
     }
 
-    function send_request($method, $url, $args = array())
+    public function send_request($method, $url, $args = array())
     {
 
         $response = $method == 'POST' ? wp_remote_post($url, $args) : wp_remote_get($url, $args);

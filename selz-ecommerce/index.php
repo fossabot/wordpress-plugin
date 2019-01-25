@@ -39,7 +39,7 @@ final class Selz
     /**
      * The single instance of the class.
      */
-    protected static $_instance = null;
+    protected static $instance = null;
 
     /**
      * Main Instance.
@@ -47,10 +47,10 @@ final class Selz
      */
     public static function instance()
     {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
         }
-        return self::$_instance;
+        return self::$instance;
     }
 
     public function __construct()
@@ -237,13 +237,13 @@ final class Selz
             }
 
             $html = '<div data-embed="cart">
-			    <script type="text/props">
-			    {
-			        "store": "' . $store->name . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>';
+                <script type="text/props">
+                {
+                    "store": "' . $store->name . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>';
 
             echo $html;
         }
