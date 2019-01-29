@@ -17,24 +17,26 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-
 /**
- * Main Class.
+ * Main class
+ * TODO: Colors should be gotten from Selz
  */
 final class Selz
 {
 
-    public $version   = '2.0.0';
-    public $dir       = '';
-    public $url       = '';
-    public $name      = 'Selz';
-    public $slug      = 'selz';
-    public $lang      = 'selz-ecommerce';
-    public $home      = 'https://selz.com/';
-    public $signup    = 'https://selz.com/account/signup';
-    public $embeds    = 'https://selz.com/embeds';
-    public $embed     = 'https://embeds.selzstatic.com/1/loader.js';
-    public $developer = false;
+    public $version       = '2.0.0';
+    public $dir           = '';
+    public $url           = '';
+    public $name          = 'Selz';
+    public $slug          = 'selz';
+    public $lang          = 'selz-ecommerce';
+    public $home          = 'https://selz.com/';
+    public $signup        = 'https://selz.com/account/signup';
+    public $embeds        = 'https://selz.com/embeds';
+    public $embed         = 'https://embeds.selzstatic.com/1/loader.js';
+    public $developer     = false;
+    public $primary_color = '#7959c7';
+    public $white         = '#fff';
 
     /**
      * The single instance of the class.
@@ -265,19 +267,6 @@ final class Selz
     }
 
     /**
-     * Return common colors
-     * TODO: Should be gotten from Selz
-     * @since 2.0.0
-     */
-    public function colors()
-    {
-        return array(
-            'primary' => '#7959c7',
-            'white'   => '#fff',
-        );
-    }
-
-    /**
      * Show row meta on the plugin screen.
      */
     public function plugin_action_links($links, $file)
@@ -410,11 +399,14 @@ final class Selz
         wp_enqueue_script($this->slug . '-embed', $this->embed, array(), false, true);
 
         wp_localize_script($this->slug . '-blocks', $this->slug . '_globals', array(
-            'colors' => $this->colors(),
-            'embed'  => $this->embed,
-            'env'    => get_option($this->slug . '_settings')['env'],
-            'nonce'  => wp_create_nonce($this->slug),
-            'store'  => get_option($this->slug . '_store'),
+            'colors' => array(
+                'primary' => $this->primary_color,
+                'white' => $this->white,
+            ),
+            'embed' => $this->embed,
+            'env' => get_option($this->slug . '_settings')['env'],
+            'nonce' => wp_create_nonce($this->slug),
+            'store' => get_option($this->slug . '_store'),
         ));
     }
 
@@ -477,19 +469,25 @@ final class Selz
      */
     public function get_store_markup($props = array())
     {
+        $store = get_option($this->slug . '_store');
+
+        if (!$store || !$store->name) {
+            return '';
+        }
+
         // TODO: Merge incoming props with defaults
         $defaults = array(
             'action' => 'add-to-cart',
             'colors' => array(
                 'buttons' => array(
-                    'background' => '#7959c7',
-                    'text' => '#fff',
+                    'background' => $this->primary_color,
+                    'text' => $this->white,
                 ),
                 'checkout' => array(
-                    'background' => '#7959c7',
-                    'text' => '#fff',
+                    'background' => $this->primary_color,
+                    'text' => $this->white,
                 ),
-                'links' => '#7959c7',
+                'links' => $this->primary_color,
             ),
             'modal' => true,
             'showCategories' => true,
@@ -499,15 +497,15 @@ final class Selz
             'style' => 'price-right',
             'text' => 'Add to cart',
             'truncateTitles' => true,
-            'url' => 'http://michael48.selz.com',
+            'url' => $store,
         );
 
         return '<!-- wp:selz/store -->
             <div data-embed="store">
                 <script type="text/props">' . json_encode($defaults) . '</script>
             </div>
-            <script async src="https://embeds.selzstatic.com/1/loader.js"></script>
-            <noscript><a href="http://michael48.selz.com" target="_blank" rel="noopener noreferrer">Shop now</a></noscript>
+            <script async src="' . $this->embed . '"></script>
+            <noscript><a href="' . $store . '" target="_blank" rel="noopener noreferrer">Shop now</a></noscript>
             <!-- /wp:selz/store -->';
     }
 }
