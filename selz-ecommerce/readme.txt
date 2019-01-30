@@ -62,6 +62,8 @@ Yes, the plugin will work with any theme. You can also customize your button, wi
 If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
 
 == Changelog ==
+= 2.0.1 =
+- Added: Backward compatibility for shortcodes. Previously, shortcodes weren't rendering on the front-end.
 = 2.0.0 =
 - Fully compatible with WordPress 5.0; embeds are now fully featured Gutenberg blocks. Please note: if you previously installed the "Classic Editor" plugin, you'll need to deactivate upon upgrading.
 = 1.9.4 =
