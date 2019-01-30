@@ -57,6 +57,8 @@ Yes, the plugin works with any theme. The store, product widget and buy now butt
 If you have queries, you can contact us here at [help@izettle.com](mailto:help@izettle.com)
 
 == Changelog ==
+= 2.0.1 =
+- Added: Backward compatibility for shortcodes. Previously, shortcodes weren't rendering on the front-end.
 = 2.0.0 =
 - Fully compatible with WordPress 5.0; embeds are now fully featured Gutenberg blocks. Please note: if you previously installed the "Classic Editor" plugin, you'll need to deactivate upon upgrading.
 = 1.0.4 =
