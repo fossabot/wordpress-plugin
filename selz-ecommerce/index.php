@@ -23,7 +23,6 @@ if (!defined('ABSPATH')) {
  */
 final class Selz
 {
-
     public $version       = '2.0.1';
     public $dir           = '';
     public $url           = '';
@@ -57,7 +56,6 @@ final class Selz
 
     public function __construct()
     {
-
         $this->dir = plugin_dir_path(__FILE__);
         $this->url = plugin_dir_url(__FILE__);
 
@@ -118,7 +116,6 @@ final class Selz
      */
     public function deactivation_hook()
     {
-
         $api = new Selz_API();
 
         $api->remove_tokens();
@@ -296,26 +293,26 @@ final class Selz
             }
 
             $html = '<div data-embed="store">
-			    <script type="text/props">
-			    {
-					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            },
-			            "links": "' . $args['link_color'] . '"
-			        },
-			        "url": "' . esc_url_raw($store->name) . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>
-			<noscript><a href="' . esc_url_raw($store->name) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
+                <script type="text/props">
+                {
+                    ' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
+                    "colors": {
+                        "buttons": {
+                            "background": "' . $args['background_color'] . '",
+                            "text": "' . $args['text_color'] . '"
+                        },
+                        "checkout": {
+                            "background": "' . $args['chbg_color'] . '",
+                            "text": "' . $args['chtx_color'] . '"
+                        },
+                        "links": "' . $args['link_color'] . '"
+                    },
+                    "url": "' . esc_url_raw($store->name) . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>
+            <noscript><a href="' . esc_url_raw($store->name) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
         } elseif ('button' == $args['type']) {
             if (!$args['link']) {
                 return '';
@@ -326,31 +323,31 @@ final class Selz
             }
 
             $html = '<div data-embed="button">
-			    <script type="text/props">
-			    {
-					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
-			        "action": "' . $args['action'] . '",
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            }
-			        },
-			        '. ( $args['width'] ? '"width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',' : '') . '
-			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-					"modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-					"style": "' . $args['style'] . '",
-	                "text": "' . trim($args['button_text']) . '",
-	                "url": "' . trim($args['link']) . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>
-	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
+                <script type="text/props">
+                {
+                    ' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
+                    "action": "' . $args['action'] . '",
+                    "colors": {
+                        "buttons": {
+                            "background": "' . $args['background_color'] . '",
+                            "text": "' . $args['text_color'] . '"
+                        },
+                        "checkout": {
+                            "background": "' . $args['chbg_color'] . '",
+                            "text": "' . $args['chtx_color'] . '"
+                        }
+                    },
+                    '. ( $args['width'] ? '"width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',' : '') . '
+                    "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
+                    "modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+                    "style": "' . $args['style'] . '",
+                    "text": "' . trim($args['button_text']) . '",
+                    "url": "' . trim($args['link']) . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>
+            <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
         } else {
             if (!$args['link']) {
                 return '';
@@ -361,31 +358,31 @@ final class Selz
             }
 
             $html = '<div data-embed="widget">
-			    <script type="text/props">
-			    {
-					' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
-			        "action": "' . $args['action'] . '",
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            }
-	                },
-	                "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
-			        "width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',
-			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-					"modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-	                "text": "' . trim($args['button_text']) . '",
-			        "url": "' . $args['link'] . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>
-	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
+                <script type="text/props">
+                {
+                    ' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
+                    "action": "' . $args['action'] . '",
+                    "colors": {
+                        "buttons": {
+                            "background": "' . $args['background_color'] . '",
+                            "text": "' . $args['text_color'] . '"
+                        },
+                        "checkout": {
+                            "background": "' . $args['chbg_color'] . '",
+                            "text": "' . $args['chtx_color'] . '"
+                        }
+                    },
+                    "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
+                    "width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',
+                    "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
+                    "modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+                    "text": "' . trim($args['button_text']) . '",
+                    "url": "' . $args['link'] . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>
+            <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
         }
 
         return $html;
@@ -393,34 +390,33 @@ final class Selz
 
     /**
      * Return default arguments for widgets or shortcodes
+     * TODO: We should get these from the user defaults on Selz
      * @since 1.5.1
      */
     public function default_args()
     {
-        // TODO: We should get these from the user defaults on Selz
-
         $defaults = array(
-            'title'             => esc_attr__($this->name . ' Widget', $this->lang),
-            'link'              => '',
-            'store_link'        => '',
-            'type'              => '',
-            'interact'          => 'modal',
-            'style'             => 'price-right',
-            'action'            => 'add-to-cart',
-            'width'             => '320',
-            'auto_width'        => 'true',
-            'fluid_width'       => 'false',
-            'button_text'       => __('Add to cart', $this->lang),
-            'text_color'        => $this->colors['white'],
-            'background_color'  => $this->colors['primary'],
-            'link_color'        => $this->colors['primary'],
-            'chbg_color'        => $this->colors['primary'],
-            'chtx_color'        => $this->colors['white'],
-            'tab_active'        => array(0 => true, 1 => false, 2 => false),
-            'show_logos'        => '',
-            'show_description'  => 'true',
-            'intro_text'        => '',
-            'outro_text'        => '',
+            'title'            => esc_attr__('Selz Widget', 'selz'),
+            'link'             => '',
+            'store_link'       => '',
+            'type'             => '',
+            'interact'         => 'modal',
+            'style'            => 'price-right',
+            'action'           => 'add-to-cart',
+            'width'            => '320',
+            'auto_width'       => 'true',
+            'fluid_width'      => 'false',
+            'button_text'      => __('Add to cart', 'selz'),
+            'text_color'       => $this->colors['white'],
+            'background_color' => $this->colors['primary'],
+            'link_color'       => $this->colors['primary'],
+            'chbg_color'       => $this->colors['primary'],
+            'chtx_color'       => $this->colors['white'],
+            'tab_active'       => array(0 => true, 1 => false, 2 => false),
+            'show_logos'       => '',
+            'show_description' => 'true',
+            'intro_text'       => '',
+            'outro_text'       => '',
         );
 
         return $defaults;
