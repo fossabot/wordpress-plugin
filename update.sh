@@ -15,7 +15,7 @@ do
 
     echo "Copying $folder"
 
-    rsync -av --progress $folder/* ../$folder/trunk --exclude src
+    rsync -av --progress --delete $folder/* ../$folder/trunk --exclude src
 done
 
 echo "Done!"
