@@ -21,6 +21,9 @@ export default {
         type: 'string',
         default: white,
     },
+    categories: {
+        type: 'array',
+    },
     checkoutBackgroundColor: {
         type: 'string',
         default: primaryColor,
@@ -29,6 +32,13 @@ export default {
         type: 'string',
         default: white,
     },
+    error: {
+        type: 'object',
+    },
+    isLoading: {
+        type: 'boolean',
+        default: true,
+    },
     linksColor: {
         type: 'string',
         default: primaryColor,
@@ -36,6 +46,10 @@ export default {
     modal: {
         type: 'boolean',
         default: true,
+    },
+    query: {
+        type: 'string',
+        default: '',
     },
     showCart: {
         type: 'boolean',

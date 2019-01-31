@@ -46,12 +46,12 @@ export default class BehaviorPanel extends Component {
 
     render() {
         const {
-            attributes: { _text, action, modal, type, useDefaultText },
+            attributes: { _text, action, modal, useDefaultText },
             setAttributes,
         } = this.props;
 
         return (
-            <PanelBody title={__('Behavior')} initialOpen={type === 'store'}>
+            <PanelBody title={__('Behavior')} initialOpen={false}>
                 <SelectControl
                     label={__('Action')}
                     value={action}
