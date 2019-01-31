@@ -338,7 +338,7 @@ final class iZettle
         if ('store' == $args['type'] || $args['type'] == '') {
             $store = get_option($this->slug . '_store');
 
-            if (! $store || ! $store->name) {
+            if (!$store || !$store->name) {
                 return '';
             }
 
