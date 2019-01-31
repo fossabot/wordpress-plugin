@@ -109,7 +109,7 @@ final class Selz
     public function activation_hook()
     {
         add_option($this->slug . '_version', $this->version);
-        set_transient('plugin_did_activate', true, 5);
+        set_transient($this->slug . '_did_activate', true, 5);
     }
 
     /**
@@ -310,12 +310,12 @@ final class Selz
      */
     public function redirect()
     {
-        if (!get_transient('plugin_did_activate')) {
+        if (!get_transient($this->slug . '_did_activate')) {
             return;
         }
 
         // Delete transient so `redirect` is only called once (after activation)
-        delete_transient('plugin_did_activate');
+        delete_transient($this->slug . '_did_activate');
 
         wp_redirect(admin_url('admin.php?page=' . $this->slug));
         exit;
