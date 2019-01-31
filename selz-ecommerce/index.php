@@ -213,8 +213,8 @@ final class Selz
             $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID));
         }
 
-        if (selz()->api->is_connected()) {
-            $this->admin_bar_menu_item('Manage store', esc_url(selz()->home . 'dashboard/'));
+        if ($this->api->is_connected()) {
+            $this->admin_bar_menu_item('Manage store', esc_url($this->home . 'dashboard/'));
         }
 
         $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=' . $this->slug));
@@ -245,7 +245,7 @@ final class Selz
     {
         $current_screen = get_current_screen();
 
-        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !selz()->api->is_connected()) {
+        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !$this->api->is_connected()) {
             ?>
             <div class="notice notice-success is-dismissible">
                 <p>
@@ -592,7 +592,7 @@ final class Selz
             return;
         }
 
-        // `guid` is required for some reason /shrug
+        // `guid` is required when inserting a page /shrug
         wp_insert_post(array(
             'post_title'   => $this->store_title,
             'post_content' => $this->get_store_block($store->name),
@@ -644,13 +644,13 @@ final class Selz
             'url' => esc_url_raw($store_url),
         );
 
-        return '<!-- wp:selz/store -->
+        return '<!-- wp:' . $this->slug . '/store -->
             <div data-embed="store">
                 <script type="text/props">' . json_encode($props) . '</script>
             </div>
             <script async src="' . esc_url_raw($this->embed) . '"></script>
             <noscript><a href="' . esc_url($store_url) . '" target="_blank" rel="noopener noreferrer">' . __('Shop now', 'selz') . '</a></noscript>
-            <!-- /wp:selz/store -->';
+            <!-- /wp:' . $this->slug . '/store -->';
     }
 
     /**
@@ -684,10 +684,10 @@ final class Selz
 
         wp_localize_script($this->slug . '-blocks', $this->slug . '_globals', array(
             'colors' => $this->colors(),
-            'embed' => $this->embed,
-            'env' => get_option($this->slug . '_settings')['env'],
-            'nonce' => wp_create_nonce($this->slug),
-            'store' => get_option($this->slug . '_store'),
+            'embed'  => $this->embed,
+            'env'    => get_option($this->slug . '_settings')['env'],
+            'nonce'  => wp_create_nonce($this->slug),
+            'store'  => get_option($this->slug . '_store'),
         ));
     }
 
@@ -742,4 +742,3 @@ if (!function_exists('pp')) {
         echo '</pre>' . "\n";
     }
 }
-
