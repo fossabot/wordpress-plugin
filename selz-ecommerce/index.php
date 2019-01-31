@@ -203,8 +203,9 @@ final class Selz
     {
         $wp_admin_bar->add_node(array(
             'id'    => $this->slug,
-            'title' => '<img src="' . plugins_url('dist/img/svg/icon.svg', __FILE__) . '" alt="">',
+            'title' => '<img src="' . plugins_url('dist/img/svg/icon.svg', __FILE__) . '" alt=""><span class="screen-reader-text">' . $this->name . '</span>',
             'href'  => admin_url('admin.php?page=' . $this->slug),
+            'meta'  => array('class' => 'with-icon-only'),
         ));
 
         $store_page = $this->get_store_page();

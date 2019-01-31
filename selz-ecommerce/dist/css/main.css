@@ -1,4 +1,4 @@
-#wpadminbar .quicklinks > ul > li.has-icon > a {
+#wpadminbar .quicklinks > ul > li.with-icon-only > a {
   display: flex;
 }
 .selz {
