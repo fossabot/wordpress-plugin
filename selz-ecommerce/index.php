@@ -230,7 +230,7 @@ final class Selz
         global $wp_admin_bar;
 
         $wp_admin_bar->add_node(array(
-            'id'     => $this->slug . '-' . sanitize_key($title),
+            'id'     => $this->slug . '-' . sanitize_title($title),
             'title'  => $title,
             'href'   => $href,
             'parent' => $this->slug,
