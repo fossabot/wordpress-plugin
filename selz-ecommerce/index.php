@@ -80,6 +80,8 @@ final class Selz
 
         add_action('admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10);
         add_action('admin_menu', array( $this, 'admin_menu' ));
+        add_action('admin_bar_menu', array( $this, 'admin_bar_menu' ), 99);
+        add_action('admin_notices', array( $this, 'admin_notices' ));
         add_action('admin_init', array( $this, 'init_settings' ));
         add_action('wp_footer', array( $this, 'show_cart' ));
 
@@ -87,8 +89,6 @@ final class Selz
 
         add_action('init', array( $this, 'load_plugin_textdomain' ));
 
-        add_action('admin_bar_menu', array( $this, 'admin_bar_menu' ), 999);
-        add_action('admin_notices', array( $this, 'admin_notices' ));
         add_action('enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ));
 
         add_filter('block_categories', array( $this, 'block_categories' ), 10, 2);
@@ -105,7 +105,7 @@ final class Selz
 
         // Store temporary data
         // @see https://codex.wordpress.org/Transients_API
-        set_transient('plugin_did_activate', true, 5);
+        set_transient('plugin_did_activate', true, 1);
     }
 
     /**
@@ -131,14 +131,24 @@ final class Selz
         $this->api = new Selz_API();
 
         if ($this->api->is_connected()) {
-            add_action('wp_ajax_' . $this->slug . '_search_products', array(&$this, 'search_products'));
             add_action('wp_ajax_' . $this->slug . '_get_products', array(&$this, 'get_products'));
+            add_action('wp_ajax_' . $this->slug . '_search_products', array(&$this, 'search_products'));
+            add_action('wp_ajax_' . $this->slug . '_get_categories', array(&$this, 'get_categories'));
 
             $this->add_store_page();
         }
 
         // Always render shortcode
         add_shortcode($this->slug, array(&$this, 'add_shortcode'));
+    }
+
+    /**
+     * Enqueue scripts and styles
+     * @since 1.7.2
+     */
+    public function enqueue_scripts()
+    {
+        wp_enqueue_style($this->slug . '-main', plugins_url('dist/css/main.css', __FILE__), null, $this->version);
     }
 
     public function admin_menu()
@@ -171,15 +181,6 @@ final class Selz
         );
     }
 
-    /**
-     * Enqueue scripts and styles
-     * @since 1.7.2
-     */
-    public function enqueue_scripts()
-    {
-        wp_enqueue_style($this->slug . '-main', plugins_url('dist/css/main.css', __FILE__), null, $this->version);
-    }
-
     public function settings_page()
     {
         include($this->dir .  '/views/settings.php');
@@ -190,18 +191,83 @@ final class Selz
         include($this->dir .  '/views/help.php');
     }
 
+    /**
+     * Provide toolbar menu to users for easy navigation back to Selz pages
+     * @since 2.1.0
+     */
+    public function admin_bar_menu($wp_admin_bar)
+    {
+        $this->admin_bar_menu_item('Selz', admin_url('admin.php?page=selz'), '', array(), plugins_url('dist/img/svg/icon.svg', __FILE__));
+
+        $store_page = $this->get_store_page();
+        if ($store_page) {
+            $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID), 'Selz');
+        }
+
+        if (selz()->api->is_connected()) {
+            $this->admin_bar_menu_item('Manage store', esc_url(selz()->home) . 'dashboard/', 'Selz');
+        }
+
+        $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=selz'), 'Selz');
+        $this->admin_bar_menu_item('Help', admin_url('admin.php?page=selz_help'), 'Selz');
+    }
+
+    /**
+     * @since 2.1.0
+     */
+    public function admin_bar_menu_item($name, $href = '', $parent = '', $meta = array(), $icon_url = '')
+    {
+        global $wp_admin_bar;
+
+        $id = sanitize_key(basename(__FILE__, '.php') . '-' . $name);
+
+        if ($parent) {
+            $parent = sanitize_key(basename(__FILE__, '.php') . '-' . $parent);
+        }
+
+        $title = $icon_url && $parent === '' ? '<img src="' . $icon_url . '" alt="' . $name . '">' : $name;
+
+        if ($icon_url) {
+            $meta = array_merge($meta, array('class' => 'has-icon'));
+        }
+
+        $wp_admin_bar->add_node(array(
+            'parent' => $parent,
+            'id' => $id,
+            'title' => $title,
+            'href' => $href,
+            'meta' => $meta,
+        ));
+    }
+
+    /**
+     * Prompt users to complete store setup on activation
+     * @since 2.1.0
+     */
+    public function admin_notices()
+    {
+        $current_screen = get_current_screen();
+
+        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !selz()->api->is_connected()) {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p>
+                    <?php
+                    printf(
+                        __('<strong>Awesome! Your new Selz plugin is now active.</strong> Take a few simple steps to <a href="%s">complete your store setup</a>.', 'selz'),
+                        admin_url('admin.php?page=' . $this->slug)
+                    );
+                    ?>
+                </p>
+            </div>
+            <?php
+        }
+    }
+
     // Register our settings. Add the settings section, and settings fields
     public function init_settings()
     {
         register_setting($this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ));
-
-        if (get_transient('plugin_did_activate')) {
-            // Delete the transient so the redirection only occurs once
-            delete_transient('plugin_did_activate');
-
-            wp_redirect(admin_url('admin.php?page=' . $this->slug));
-            exit;
-        }
 
         if ($_GET['developer'] == 'true') {
             setcookie($this->slug . '_developer', 'true', time() + 315360000);
@@ -210,6 +276,8 @@ final class Selz
         if ($_GET['developer'] == 'true' || $_COOKIE[$this->slug . '_developer'] == 'true') {
             $this->developer = true;
         }
+
+        $this->redirect();
     }
 
     public function settings_validate($input)
@@ -237,6 +305,23 @@ final class Selz
         }
 
         return $input;
+    }
+
+    /**
+     * Redirect user to settings page on plugin activation
+     * @since 2.1.0
+     */
+    public function redirect()
+    {
+        if (!get_transient('plugin_did_activate')) {
+            return;
+        }
+
+        // Delete transient so `redirect` is only called once (after activation)
+        delete_transient('plugin_did_activate');
+
+        wp_redirect(admin_url('admin.php?page=' . $this->slug));
+        exit;
     }
 
     /*
@@ -458,18 +543,6 @@ final class Selz
         load_plugin_textdomain($this->lang, false, plugin_basename(dirname(__FILE__)) . '/languages');
     }
 
-    public function search_products()
-    {
-        $api = new Selz_API();
-        $results = $api->search_products(sanitize_text_field($_REQUEST['q']), sanitize_text_field($_REQUEST['page']));
-
-        if ($results) {
-            wp_send_json($results);
-        }
-
-        exit;
-    }
-
     public function get_products()
     {
         $api = new Selz_API();
@@ -482,6 +555,107 @@ final class Selz
         exit;
     }
 
+    public function search_products()
+    {
+        $api = new Selz_API();
+        $results = $api->search_products(sanitize_text_field($_REQUEST['q']), sanitize_text_field($_REQUEST['page']));
+
+        if ($results) {
+            wp_send_json($results);
+        }
+
+        exit;
+    }
+
+    /**
+     * @since 2.1.0
+     */
+    public function get_categories()
+    {
+        $api = new Selz_API();
+        $results = $api->get_categories();
+
+        if ($results) {
+            wp_send_json($results);
+        }
+
+        exit;
+    }
+
+    /**
+     * Add new store page containing merchant's store
+     * @since 2.1.0
+     */
+    public function add_store_page()
+    {
+        $store = $this->api->get_store();
+
+        // Check for store URL and make sure page doesn't already exist
+        if (!$store || !$store->name || $this->get_store_page()) {
+            return;
+        }
+
+        // `guid` is required for some reason /shrug
+        wp_insert_post(array(
+            'post_title'   => $this->store_title,
+            'post_content' => $this->get_store_block($store->name),
+            'post_status'  => 'publish',
+            'post_author'  => 1,
+            'post_type'    => 'page',
+            'guid'         => site_url('store'),
+        ));
+    }
+
+    /**
+     * Get store page if it exists
+     * @since 2.1.0
+     * @return WP_Post|null
+     */
+    public function get_store_page()
+    {
+        return get_page_by_title($this->store_title);
+    }
+
+    /**
+     * Get store block markup
+     * @since 2.1.0
+     * @return HTML
+     */
+    public function get_store_block($store_url)
+    {
+        $props = array(
+            'action' => 'add-to-cart',
+            'colors' => array(
+                'buttons' => array(
+                    'background' => $this->colors()['primary'],
+                    'text' => $this->colors()['white'],
+                ),
+                'checkout' => array(
+                    'background' => $this->colors()['primary'],
+                    'text' => $this->colors()['white'],
+                ),
+                'links' => $this->colors()['primary'],
+            ),
+            'modal' => true,
+            'showCategories' => true,
+            'showPagination' => true,
+            'showSearch' => true,
+            'squareImages' => true,
+            'style' => 'price-right',
+            'text' => 'Add to cart',
+            'truncateTitles' => true,
+            'url' => esc_url_raw($store_url),
+        );
+
+        return '<!-- wp:selz/store -->
+            <div data-embed="store">
+                <script type="text/props">' . json_encode($props) . '</script>
+            </div>
+            <script async src="' . esc_url_raw($this->embed) . '"></script>
+            <noscript><a href="' . esc_url($store_url) . '" target="_blank" rel="noopener noreferrer">' . __('Shop now', 'selz') . '</a></noscript>
+            <!-- /wp:selz/store -->';
+    }
+
     /**
      * Shortcode function
      * Uses `add_shortcode`
@@ -492,75 +666,6 @@ final class Selz
     {
         $atts = shortcode_atts($this->default_args(), $atts);
         return $this->embed($atts);
-    }
-
-    /**
-     * Provide toolbar menu to users for easy navigation back to Selz pages
-     * @since 2.2.0
-     */
-    public function admin_bar_menu($wp_admin_bar)
-    {
-        $this->admin_bar_menu_item('Selz', admin_url('admin.php?page=selz'), '', array(), plugins_url('dist/img/svg/icon.svg', __FILE__));
-
-        $store_page = $this->get_store_page();
-        if ($store_page) {
-            $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID), 'Selz');
-        }
-
-        if (selz()->api->is_connected()) {
-            $this->admin_bar_menu_item('Manage store', esc_url(selz()->home) . 'dashboard/', 'Selz');
-        }
-
-        $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=selz'), 'Selz');
-        $this->admin_bar_menu_item('Help', admin_url('admin.php?page=selz_help'), 'Selz');
-    }
-
-    /**
-     * @since 2.2.0
-     */
-    public function admin_bar_menu_item($name, $href = '', $parent = '', $meta = array(), $icon_url = '')
-    {
-        global $wp_admin_bar;
-
-        $id = sanitize_key(basename(__FILE__, '.php') . '-' . $name);
-
-        if ($parent) {
-            $parent = sanitize_key(basename(__FILE__, '.php') . '-' . $parent);
-        }
-
-        $title = $icon_url && $parent === '' ? '<img src="' . $icon_url . '" alt="' . $name . '">' : $name;
-
-        if ($icon_url) {
-            $meta = array_merge($meta, array('class' => 'has-icon'));
-        }
-
-        $wp_admin_bar->add_node(array(
-            'parent' => $parent,
-            'id' => $id,
-            'title' => $title,
-            'href' => $href,
-            'meta' => $meta,
-        ));
-    }
-
-    /**
-     * Prompt users with notice to setup plugin on activation
-     * @since 2.2.0
-     */
-    public function admin_notices()
-    {
-        $current_screen = get_current_screen();
-
-        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !selz()->api->is_connected()) {
-            ?>
-            <div class="notice notice-success is-dismissible">
-                <p>
-                    <strong><?php _e('Awesome! Your new Selz plugin is now active.', 'selz'); ?></strong>
-                    <?php _e('Take a few simple steps to <a href="#">complete your store setup</a>.', 'selz'); ?>
-                </p>
-            </div>
-            <?php
-        }
     }
 
     /**
@@ -617,84 +722,6 @@ final class Selz
         }
 
         return $tag;
-    }
-
-    /**
-     * Add page with store block
-     * @since 2.1.0
-     */
-    public function add_store_page($title = 'Store')
-    {
-        $store = get_option($this->slug . '_store');
-
-        // Check for store URL and make sure page doesn't already exist
-        if (!$store || !$store->name || $this->get_store_page()) {
-            return;
-        }
-
-        $args = array(
-            'post_title' => $title,
-            'post_content' => $this->get_store_block($store->name),
-            'post_status' => 'publish',
-            'post_type' => 'page',
-            'guid' => 'foo',
-        );
-        $post_id = wp_insert_post($args);
-
-        // TODO: Add WP error notice
-        if (is_wp_error($post_id)) {
-            print_r($post_id->get_error_message());
-        }
-    }
-
-    /**
-     * Get store block markup
-     * @since 2.1.0
-     * @return HTML
-     */
-    public function get_store_block($url)
-    {
-        $props = array(
-            'action' => 'add-to-cart',
-            'colors' => array(
-                'buttons' => array(
-                    'background' => $this->colors()['primary'],
-                    'text' => $this->colors()['white'],
-                ),
-                'checkout' => array(
-                    'background' => $this->colors()['primary'],
-                    'text' => $this->colors()['white'],
-                ),
-                'links' => $this->colors()['primary'],
-            ),
-            'modal' => true,
-            'showCategories' => true,
-            'showPagination' => true,
-            'showSearch' => true,
-            'squareImages' => true,
-            'style' => 'price-right',
-            'text' => 'Add to cart',
-            'truncateTitles' => true,
-            'url' => esc_url_raw($url),
-        );
-
-        return '<!-- wp:selz/store -->
-            <div data-embed="store">
-                <script type="text/props">' . json_encode($props) . '</script>
-            </div>
-            <script async src="' . esc_url($this->embed) . '"></script>
-            <noscript><a href="' . esc_url_raw($url) . '" target="_blank" rel="noopener noreferrer">' . __('Shop now', 'selz') . '</a></noscript>
-            <!-- /wp:selz/store -->';
-    }
-
-    /**
-     * Get store page if it exists
-     * @since 2.1.0
-     * @return object|null
-     */
-    public function get_store_page()
-    {
-        return get_page_by_title($this->store_title);
     }
 }
 
