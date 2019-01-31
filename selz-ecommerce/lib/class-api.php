@@ -328,6 +328,43 @@ class Selz_API
         }
     }
 
+    /**
+     * @since 2.1.0
+     */
+    public function get_categories()
+    {
+        // Ignore if we aren't connected
+        if (!$this->is_connected()) {
+            return;
+        }
+
+        // If access token has expired, refresh token
+        if ($this->is_expired()) {
+            $this->refresh_token();
+        }
+
+        $args = array();
+
+        $response = $this->send_request('GET', add_query_arg($args, $this->api_url . '/categories'), array(
+            'timeout' => 120,
+            'redirection' => 5,
+            'httpversion' => '1.0',
+            'headers' => $this->get_headers(),
+        ));
+
+        if (is_wp_error($response)) {
+            $this->remove_tokens();
+            $error_message = $response->get_error_message();
+        } else {
+            if (isset($response['body']) && $response['body'] != '') {
+                $body = json_decode($response['body']);
+                if ($body) {
+                    return $body;
+                }
+            }
+        }
+    }
+
     public function is_connected()
     {
         if ($this->get_access_token() != '') {
