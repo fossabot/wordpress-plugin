@@ -97,14 +97,18 @@ final class Selz
 
     /**
      * Save plugin version on activation
+     *
+     * This hook performs an instant redirect after it fires, meaning it's impossible to use `add_action` or
+     * `add_filter` type calls until after it has occurred. Our workaround is to store temporary data using the
+     * Transients API to check-for-and-delete later.
+     *
+     * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
+     * @see https://codex.wordpress.org/Transients_API
      * @since 0.0.1
      */
     public function activation_hook()
     {
         add_option($this->slug . '_version', $this->version);
-
-        // Store temporary data
-        // @see https://codex.wordpress.org/Transients_API
         set_transient('plugin_did_activate', true, 5);
     }
 
@@ -601,8 +605,8 @@ final class Selz
 
     /**
      * Get store page if it exists
-     * @since 2.1.0
      * @return WP_Post|null
+     * @since 2.1.0
      */
     public function get_store_page()
     {
@@ -611,8 +615,8 @@ final class Selz
 
     /**
      * Get store block markup
-     * @since 2.1.0
      * @return HTML
+     * @since 2.1.0
      */
     public function get_store_block($store_url)
     {
