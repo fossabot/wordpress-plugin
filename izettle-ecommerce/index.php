@@ -2,7 +2,7 @@
 /*
     Plugin Name: iZettle E-commerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 2.0.1
+    Version: 2.1.0
     Author: iZettle
     Author URI: https://izettle.com
     License: MIT
@@ -16,14 +16,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-
 /**
- * Main Class.
+ * Main class
  */
 final class iZettle
 {
-
-    public $version     = '2.0.1';
+    public $version     = '2.1.0';
     public $dir         = '';
     public $url         = '';
     public $name        = 'iZettle';
@@ -32,6 +30,7 @@ final class iZettle
     public $dashboard   = 'https://my.izettle.com/';
     public $signup      = 'https://www.izettle.com/gb/sell-online';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
+    public $store_title = 'Store';
 
     /**
      * The single instance of the class.
@@ -52,7 +51,6 @@ final class iZettle
 
     public function __construct()
     {
-
         $this->dir = plugin_dir_path(__FILE__);
         $this->url = plugin_dir_url(__FILE__);
 
@@ -79,6 +77,8 @@ final class iZettle
 
         add_action('admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10);
         add_action('admin_menu', array( $this, 'admin_menu' ));
+        add_action('admin_bar_menu', array( $this, 'admin_bar_menu' ), 99);
+        add_action('admin_notices', array( $this, 'admin_notices' ));
         add_action('admin_init', array( $this, 'init_settings' ));
         add_action('wp_footer', array( $this, 'show_cart' ));
 
@@ -94,11 +94,19 @@ final class iZettle
 
     /**
      * Save plugin version on activation
+     *
+     * This hook performs an instant redirect after it fires, meaning it's impossible to use `add_action` or
+     * `add_filter` type calls until after it has occurred. Our workaround is to store temporary data using the
+     * Transients API to check-for-and-delete later.
+     *
+     * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
+     * @see https://codex.wordpress.org/Transients_API
      * @since 0.0.1
      */
     public function activation_hook()
     {
         add_option($this->slug . '_version', $this->version);
+        set_transient($this->slug . '_did_activate', true, 5);
     }
 
     /**
@@ -107,7 +115,6 @@ final class iZettle
      */
     public function deactivation_hook()
     {
-
         $api = new iZettle_API();
 
         $api->remove_tokens();
@@ -125,12 +132,24 @@ final class iZettle
         $this->api = new iZettle_API();
 
         if ($this->api->is_connected()) {
-            add_action('wp_ajax_' . $this->slug . '_search_products', array( &$this, 'search_products' ));
-            add_action('wp_ajax_' . $this->slug . '_get_products', array( &$this, 'get_products' ));
+            add_action('wp_ajax_' . $this->slug . '_get_products', array(&$this, 'get_products'));
+            add_action('wp_ajax_' . $this->slug . '_search_products', array(&$this, 'search_products'));
+            add_action('wp_ajax_' . $this->slug . '_get_categories', array(&$this, 'get_categories'));
+
+            $this->add_store_page();
         }
 
         // Always render shortcode
         add_shortcode($this->slug, array(&$this, 'add_shortcode'));
+    }
+
+    /**
+     * Enqueue scripts and styles
+     * @since 1.7.2
+     */
+    public function enqueue_scripts()
+    {
+        wp_enqueue_style($this->slug . '-main', plugins_url('dist/css/main.css', __FILE__), null, $this->version);
     }
 
     public function admin_menu()
@@ -163,15 +182,6 @@ final class iZettle
         );
     }
 
-    /**
-     * Enqueue scripts and styles
-     * @since 1.7.2
-     */
-    public function enqueue_scripts()
-    {
-        wp_enqueue_style($this->slug . '-main', plugins_url('dist/css/main.css', __FILE__), null, $this->version);
-    }
-
     public function settings_page()
     {
         include($this->dir .  '/views/settings.php');
@@ -182,6 +192,72 @@ final class iZettle
         include($this->dir .  '/views/help.php');
     }
 
+    /**
+     * Provide toolbar menu to users for easy navigation back to iZettle pages
+     * @since 2.1.0
+     */
+    public function admin_bar_menu($wp_admin_bar)
+    {
+        $wp_admin_bar->add_node(array(
+            'id'    => $this->slug,
+            'title' => '<img src="' . plugins_url('dist/img/svg/icon.svg', __FILE__) . '" alt="">',
+            'href'  => admin_url('admin.php?page=' . $this->slug),
+        ));
+
+        $store_page = $this->get_store_page();
+
+        if ($store_page) {
+            $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID));
+        }
+
+        if ($this->api->is_connected()) {
+            $this->admin_bar_menu_item('Manage store', esc_url($this->dashboard));
+        }
+
+        $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=' . $this->slug));
+        $this->admin_bar_menu_item('Help', admin_url('admin.php?page=' . $this->slug . '_help'));
+    }
+
+    /**
+     * Helper for adding items to the toolbar menu
+     * @since 2.1.0
+     */
+    public function admin_bar_menu_item($title, $href)
+    {
+        global $wp_admin_bar;
+
+        $wp_admin_bar->add_node(array(
+            'id'     => $this->slug . '-' . sanitize_title($title),
+            'title'  => $title,
+            'href'   => $href,
+            'parent' => $this->slug,
+        ));
+    }
+
+    /**
+     * Prompt users to complete store setup on activation
+     * @since 2.1.0
+     */
+    public function admin_notices()
+    {
+        $current_screen = get_current_screen();
+
+        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !$this->api->is_connected()) {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p>
+                    <?php
+                    printf(
+                        __('<strong>Awesome! Your new iZettle plugin is now active.</strong> Take a few simple steps to <a href="%s">complete your store setup</a>.', 'izettle'),
+                        admin_url('admin.php?page=' . $this->slug)
+                    );
+                    ?>
+                </p>
+            </div>
+            <?php
+        }
+    }
+
     // Register our settings. Add the settings section, and settings fields
     public function init_settings()
     {
@@ -189,6 +265,8 @@ final class iZettle
 
         add_settings_field($this->slug . '_store_id', '', '', __FILE__);
         add_settings_field($this->slug . '_display_cart', '', '', __FILE__);
+
+        $this->redirect();
     }
 
     public function settings_validate($input)
@@ -196,6 +274,23 @@ final class iZettle
         $input['store_id'] = trim(sanitize_text_field($input['store_id']));
         $input['display_cart'] = sanitize_text_field($input['display_cart']);
         return $input;
+    }
+
+    /**
+     * Redirect user to settings page on plugin activation
+     * @since 2.1.0
+     */
+    public function redirect()
+    {
+        if (!get_transient($this->slug . '_did_activate')) {
+            return;
+        }
+
+        // Delete transient so `redirect` is only called once (after activation)
+        delete_transient($this->slug . '_did_activate');
+
+        wp_redirect(admin_url('admin.php?page=' . $this->slug));
+        exit;
     }
 
     /*
@@ -248,25 +343,25 @@ final class iZettle
             }
 
             $html = '<div data-embed="store">
-			    <script type="text/props">
-			    {
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            },
-			            "links": "' . $args['link_color'] . '"
-			        },
-			        "url": "' . esc_url_raw($store->name) . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>
-			<noscript><a href="' . esc_url_raw($store->name) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
+                <script type="text/props">
+                {
+                    "colors": {
+                        "buttons": {
+                            "background": "' . $args['background_color'] . '",
+                            "text": "' . $args['text_color'] . '"
+                        },
+                        "checkout": {
+                            "background": "' . $args['chbg_color'] . '",
+                            "text": "' . $args['chtx_color'] . '"
+                        },
+                        "links": "' . $args['link_color'] . '"
+                    },
+                    "url": "' . esc_url_raw($store->name) . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>
+            <noscript><a href="' . esc_url_raw($store->name) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
         } elseif ('button' == $args['type']) {
             if (!$args['link']) {
                 return '';
@@ -277,30 +372,30 @@ final class iZettle
             }
 
             $html = '<div data-embed="button">
-			    <script type="text/props">
-			    {
-			        "action": "' . $args['action'] . '",
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            }
-			        },
-			        '. ( $args['width'] ? '"width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',' : '') . '
-			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-					"modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-					"style": "' . $args['style'] . '",
-	                "text": "' . trim($args['button_text']) . '",
-	                "url": "' . trim($args['link']) . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>
-	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
+                <script type="text/props">
+                {
+                    "action": "' . $args['action'] . '",
+                    "colors": {
+                        "buttons": {
+                            "background": "' . $args['background_color'] . '",
+                            "text": "' . $args['text_color'] . '"
+                        },
+                        "checkout": {
+                            "background": "' . $args['chbg_color'] . '",
+                            "text": "' . $args['chtx_color'] . '"
+                        }
+                    },
+                    '. ( $args['width'] ? '"width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',' : '') . '
+                    "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
+                    "modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+                    "style": "' . $args['style'] . '",
+                    "text": "' . trim($args['button_text']) . '",
+                    "url": "' . trim($args['link']) . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>
+            <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
         } else {
             if (!$args['link']) {
                 return '';
@@ -311,38 +406,71 @@ final class iZettle
             }
 
             $html = '<div data-embed="widget">
-			    <script type="text/props">
-			    {
-			        "action": "' . $args['action'] . '",
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            }
-	                },
-	                "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
-			        "width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',
-			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-					"modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-	                "text": "' . trim($args['button_text']) . '",
-			        "url": "' . $args['link'] . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url($this->embed) . '"></script>
-	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
+                <script type="text/props">
+                {
+                    "action": "' . $args['action'] . '",
+                    "colors": {
+                        "buttons": {
+                            "background": "' . $args['background_color'] . '",
+                            "text": "' . $args['text_color'] . '"
+                        },
+                        "checkout": {
+                            "background": "' . $args['chbg_color'] . '",
+                            "text": "' . $args['chtx_color'] . '"
+                        }
+                    },
+                    "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
+                    "width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',
+                    "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
+                    "modal": ' . ( isset($args['interact']) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
+                    "text": "' . trim($args['button_text']) . '",
+                    "url": "' . $args['link'] . '"
+                }
+                </script>
+            </div>
+            <script async src="' . esc_url($this->embed) . '"></script>
+            <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
         }
 
         return $html;
     }
 
     /**
+     * Return default arguments for widgets or shortcodes
+     * TODO: We should get these from the user defaults on iZettle
+     * @since 1.5.1
+     */
+    public function default_args()
+    {
+        $defaults = array(
+            'title'            => esc_attr__('iZettle Widget', 'izettle'),
+            'link'             => '',
+            'store_link'       => '',
+            'type'             => '',
+            'interact'         => 'modal',
+            'style'            => 'price-right',
+            'action'           => 'add-to-cart',
+            'width'            => '320',
+            'auto_width'       => 'true',
+            'fluid_width'      => 'false',
+            'button_text'      => __('Add to cart', 'izettle'),
+            'text_color'       => $this->colors()['white'],
+            'background_color' => $this->colors()['primary'],
+            'link_color'       => $this->colors()['primary'],
+            'chbg_color'       => $this->colors()['primary'],
+            'chtx_color'       => $this->colors()['white'],
+            'tab_active'       => array(0 => true, 1 => false, 2 => false),
+            'show_logos'       => '',
+            'show_description' => 'true',
+            'intro_text'       => '',
+            'outro_text'       => '',
+        );
+
+        return $defaults;
+    }
+
+    /**
      * Return common colors
-     * TODO: Along with `default_args`, should be gotten from iZettle
      * @since 2.0.0
      */
     public function colors()
@@ -351,41 +479,6 @@ final class iZettle
             'primary' => '#6aca89',
             'white'   => '#fff',
         );
-    }
-
-    /**
-     * Return default arguments for widgets or shortcodes
-     * @since 1.5.1
-     */
-    public function default_args()
-    {
-        // TODO: We should get these from the user defaults on iZettle
-
-        $defaults = array(
-            'title'             => esc_attr__($this->name . ' Widget', $this->lang),
-            'link'              => '',
-            'store_link'        => '',
-            'type'              => '',
-            'interact'          => 'modal',
-            'style'             => 'price-right',
-            'action'            => 'add-to-cart',
-            'width'             => '320',
-            'auto_width'        => 'true',
-            'fluid_width'       => 'false',
-            'button_text'       => __('Add to cart', $this->lang),
-            'text_color'        => $this->colors['white'],
-            'background_color'  => $this->colors['primary'],
-            'link_color'        => $this->colors['primary'],
-            'chbg_color'        => $this->colors['primary'],
-            'chtx_color'        => $this->colors['white'],
-            'tab_active'        => array(0 => true, 1 => false, 2 => false),
-            'show_logos'        => '',
-            'show_description'  => 'true',
-            'intro_text'        => '',
-            'outro_text'        => '',
-        );
-
-        return $defaults;
     }
 
     /**
@@ -414,6 +507,18 @@ final class iZettle
         load_plugin_textdomain($this->lang, false, plugin_basename(dirname(__FILE__)) . '/languages');
     }
 
+    public function get_products()
+    {
+        $api = new iZettle_API();
+        $results = $api->get_products(sanitize_text_field($_REQUEST['starting_after']));
+
+        if ($results) {
+            wp_send_json($results);
+        }
+
+        exit;
+    }
+
     public function search_products()
     {
         $api = new iZettle_API();
@@ -426,16 +531,93 @@ final class iZettle
         exit;
     }
 
-    public function get_products()
+    /**
+     * @since 2.1.0
+     */
+    public function get_categories()
     {
         $api = new iZettle_API();
-        $results = $api->get_products(sanitize_text_field($_REQUEST['starting_after']));
+        $results = $api->get_categories();
 
         if ($results) {
             wp_send_json($results);
         }
 
         exit;
+    }
+
+    /**
+     * Add new store page containing merchant's store
+     * @since 2.1.0
+     */
+    public function add_store_page()
+    {
+        $store = $this->api->get_store();
+
+        // Check for store URL and make sure page doesn't already exist
+        if (!$store || !$store->name || $this->get_store_page()) {
+            return;
+        }
+
+        // `guid` is required when inserting a page /shrug
+        wp_insert_post(array(
+            'post_title'   => $this->store_title,
+            'post_content' => $this->get_store_block($store->name),
+            'post_status'  => 'publish',
+            'post_author'  => 1,
+            'post_type'    => 'page',
+            'guid'         => site_url('store'),
+        ));
+    }
+
+    /**
+     * Get store page if it exists
+     * @return WP_Post|null
+     * @since 2.1.0
+     */
+    public function get_store_page()
+    {
+        return get_page_by_title($this->store_title);
+    }
+
+    /**
+     * Get store block markup
+     * @return HTML
+     * @since 2.1.0
+     */
+    public function get_store_block($store_url)
+    {
+        $props = array(
+            'action' => 'add-to-cart',
+            'colors' => array(
+                'buttons' => array(
+                    'background' => $this->colors()['primary'],
+                    'text' => $this->colors()['white'],
+                ),
+                'checkout' => array(
+                    'background' => $this->colors()['primary'],
+                    'text' => $this->colors()['white'],
+                ),
+                'links' => $this->colors()['primary'],
+            ),
+            'modal' => true,
+            'showCategories' => true,
+            'showPagination' => true,
+            'showSearch' => true,
+            'squareImages' => true,
+            'style' => 'price-right',
+            'text' => 'Add to cart',
+            'truncateTitles' => true,
+            'url' => esc_url_raw($store_url),
+        );
+
+        return '<!-- wp:' . $this->slug . '/store -->
+            <div data-embed="store">
+                <script type="text/props">' . json_encode($props) . '</script>
+            </div>
+            <script async src="' . esc_url_raw($this->embed) . '"></script>
+            <noscript><a href="' . esc_url($store_url) . '" target="_blank" rel="noopener noreferrer">' . __('Shop now', 'izettle') . '</a></noscript>
+            <!-- /wp:' . $this->slug . '/store -->';
     }
 
     /**
