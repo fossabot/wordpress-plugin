@@ -105,7 +105,7 @@ final class Selz
 
         // Store temporary data
         // @see https://codex.wordpress.org/Transients_API
-        set_transient('plugin_did_activate', true, 1);
+        set_transient('plugin_did_activate', true, 5);
     }
 
     /**
@@ -197,46 +197,39 @@ final class Selz
      */
     public function admin_bar_menu($wp_admin_bar)
     {
-        $this->admin_bar_menu_item('Selz', admin_url('admin.php?page=selz'), '', array(), plugins_url('dist/img/svg/icon.svg', __FILE__));
+        $wp_admin_bar->add_node(array(
+            'id'    => $this->slug,
+            'title' => '<img src="' . plugins_url('dist/img/svg/icon.svg', __FILE__) . '" alt="">',
+            'href'  => admin_url('admin.php?page=' . $this->slug),
+        ));
 
         $store_page = $this->get_store_page();
+
         if ($store_page) {
-            $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID), 'Selz');
+            $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID));
         }
 
         if (selz()->api->is_connected()) {
-            $this->admin_bar_menu_item('Manage store', esc_url(selz()->home) . 'dashboard/', 'Selz');
+            $this->admin_bar_menu_item('Manage store', esc_url(selz()->home . 'dashboard/'));
         }
 
-        $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=selz'), 'Selz');
-        $this->admin_bar_menu_item('Help', admin_url('admin.php?page=selz_help'), 'Selz');
+        $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=' . $this->slug));
+        $this->admin_bar_menu_item('Help', admin_url('admin.php?page=' . $this->slug . '_help'));
     }
 
     /**
+     * Helper for adding items to the toolbar menu
      * @since 2.1.0
      */
-    public function admin_bar_menu_item($name, $href = '', $parent = '', $meta = array(), $icon_url = '')
+    public function admin_bar_menu_item($title, $href)
     {
         global $wp_admin_bar;
 
-        $id = sanitize_key(basename(__FILE__, '.php') . '-' . $name);
-
-        if ($parent) {
-            $parent = sanitize_key(basename(__FILE__, '.php') . '-' . $parent);
-        }
-
-        $title = $icon_url && $parent === '' ? '<img src="' . $icon_url . '" alt="' . $name . '">' : $name;
-
-        if ($icon_url) {
-            $meta = array_merge($meta, array('class' => 'has-icon'));
-        }
-
         $wp_admin_bar->add_node(array(
-            'parent' => $parent,
-            'id' => $id,
-            'title' => $title,
-            'href' => $href,
-            'meta' => $meta,
+            'id'     => $this->slug . '-' . sanitize_key($title),
+            'title'  => $title,
+            'href'   => $href,
+            'parent' => $this->slug,
         ));
     }
 
@@ -472,18 +465,6 @@ final class Selz
     }
 
     /**
-     * Return common colors
-     * @since 2.0.0
-     */
-    public function colors()
-    {
-        return array(
-            'primary' => '#7959c7',
-            'white'   => '#fff',
-        );
-    }
-
-    /**
      * Return default arguments for widgets or shortcodes
      * TODO: We should get these from the user defaults on Selz
      * @since 1.5.1
@@ -515,6 +496,18 @@ final class Selz
         );
 
         return $defaults;
+    }
+
+    /**
+     * Return common colors
+     * @since 2.0.0
+     */
+    public function colors()
+    {
+        return array(
+            'primary' => '#7959c7',
+            'white'   => '#fff',
+        );
     }
 
     /**
