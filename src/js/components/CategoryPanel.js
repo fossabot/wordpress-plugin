@@ -10,7 +10,7 @@ export default class CategoryPanel extends Component {
     }
 
     fetchCategories() {
-        const { setAttributes } = this.props;
+        const { attributes: { category }, setAttributes } = this.props;
 
         fetch(`${window.ajaxurl}?action=${namespace}_get_categories`)
             .then(res => res.json())
@@ -24,7 +24,7 @@ export default class CategoryPanel extends Component {
                     setAttributes({
                         isLoading: false,
                         categories,
-                        category: categories && categories.length && categories[0].id,
+                        category: category || categories && categories.length && categories[0].id,
                     });
                 },
                 error =>
