@@ -30,6 +30,7 @@ class Embed extends Component {
             action,
             buttonBackgroundColor,
             buttonTextColor,
+            category,
             checkoutBackgroundColor,
             checkoutTextColor,
             description,
@@ -48,6 +49,7 @@ class Embed extends Component {
 
         const embedProps = {
             action,
+            category,
             colors: {
                 buttons: {
                     background: buttonBackgroundColor,

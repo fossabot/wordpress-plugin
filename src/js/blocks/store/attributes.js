@@ -24,6 +24,9 @@ export default {
     categories: {
         type: 'array',
     },
+    category: {
+        type: 'string',
+    },
     checkoutBackgroundColor: {
         type: 'string',
         default: primaryColor,

@@ -1,6 +1,6 @@
-/* eslint-disable camelcase, no-console */
+import CategoryList from './CategoryList';
 
-const { PanelBody } = wp.components;
+const { PanelBody, TextControl } = wp.components;
 const { Component } = wp.element;
 const { __ } = wp.i18n;
 
@@ -16,34 +16,42 @@ export default class CategoryPanel extends Component {
             .then(res => res.json())
             .then(
                 ({ data }) => {
+                    const isAllCategory = ({ slug }) => slug === 'all';
+
+                    // Move the "All" category to the beginning
+                    const categories = [data.find(isAllCategory), ...data.filter(category => !isAllCategory(category))];
+
                     setAttributes({
                         isLoading: false,
-                        categories: data,
+                        categories,
+                        category: categories && categories.length && categories[0].id,
                     });
                 },
-                error => {
+                error =>
                     setAttributes({
                         isLoading: false,
                         error,
-                    });
-                },
+                    }),
             );
     }
 
     render() {
-        const { categories } = this.props.attributes;
+        const { props } = this;
+        const {
+            attributes: { query },
+            setAttributes,
+        } = props;
 
         return (
             <PanelBody title={__('Category')}>
-                {categories ? (
-                    <ul>
-                        {categories.map(({ title }, index) => (
-                            <li key={index}>{title}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <div>Loading</div>
-                )}
+                <TextControl
+                    label={__('Search Categories')}
+                    type="search"
+                    value={query}
+                    className="is-filter"
+                    onChange={query => setAttributes({ query })}
+                />
+                <CategoryList {...props} />
             </PanelBody>
         );
     }
