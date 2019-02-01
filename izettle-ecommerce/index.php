@@ -211,10 +211,6 @@ final class iZettle
             $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID));
         }
 
-        if ($this->api->is_connected()) {
-            $this->admin_bar_menu_item('Manage store', esc_url($this->dashboard));
-        }
-
         $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=' . $this->slug));
         $this->admin_bar_menu_item('Help', admin_url('admin.php?page=' . $this->slug . '_help'));
     }
