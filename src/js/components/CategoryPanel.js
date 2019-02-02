@@ -10,7 +10,10 @@ export default class CategoryPanel extends Component {
     }
 
     fetchCategories() {
-        const { attributes: { category }, setAttributes } = this.props;
+        const {
+            attributes: { category },
+            setAttributes,
+        } = this.props;
 
         fetch(`${window.ajaxurl}?action=${namespace}_get_categories`)
             .then(res => res.json())
@@ -21,10 +24,13 @@ export default class CategoryPanel extends Component {
                     // Move the "All" category to the beginning
                     const categories = [data.find(isAllCategory), ...data.filter(category => !isAllCategory(category))];
 
+                    // Assign `category` to the "All" category's ID -- this prevents a re-render
+                    categories[0].id = category;
+
                     setAttributes({
                         isLoading: false,
                         categories,
-                        category: category || categories && categories.length && categories[0].id,
+                        category: category || (categories && categories.length && categories[0].id),
                     });
                 },
                 error =>
