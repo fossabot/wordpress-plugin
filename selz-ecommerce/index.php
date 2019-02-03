@@ -623,6 +623,7 @@ final class Selz
     {
         $props = array(
             'action' => 'add-to-cart',
+            'category' => '',
             'colors' => array(
                 'buttons' => array(
                     'background' => $this->colors()['primary'],
