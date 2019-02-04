@@ -135,8 +135,6 @@ final class iZettle
             add_action('wp_ajax_' . $this->slug . '_get_products', array(&$this, 'get_products'));
             add_action('wp_ajax_' . $this->slug . '_search_products', array(&$this, 'search_products'));
             add_action('wp_ajax_' . $this->slug . '_get_categories', array(&$this, 'get_categories'));
-
-            $this->add_store_page();
         }
 
         // Always render shortcode

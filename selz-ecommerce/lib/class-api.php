@@ -228,6 +228,7 @@ class Selz_API
                 $body = json_decode($response['body']);
                 if ($body) {
                     update_option($this->slug . '_store', $body);
+                    selz()->add_store_page();
                 }
             }
         }
