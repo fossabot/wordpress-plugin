@@ -339,7 +339,13 @@ class iZettle_API
             $this->refresh_token();
         }
 
-        $response = $this->send_request('GET', $this->api_url . '/categories', array(
+        // This is the max amount of categories that can be returned from the API
+        // TODO: We'll probably have to properly paginate them later
+        $args = array(
+            'limit' => 50,
+        );
+
+        $response = $this->send_request('GET', add_query_arg($args, $this->api_url . '/categories'), array(
             'timeout' => 120,
             'redirection' => 5,
             'httpversion' => '1.0',
