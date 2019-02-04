@@ -215,7 +215,7 @@ final class Selz
         }
 
         if ($this->api->is_connected()) {
-            $this->admin_bar_menu_item('Manage store', esc_url($this->home . 'dashboard/'));
+            $this->admin_bar_menu_item('Manage store', esc_url($this->home . 'dashboard/'), array('target' => '_blank'));
         }
 
         $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=' . $this->slug));
@@ -226,7 +226,7 @@ final class Selz
      * Helper for adding items to the toolbar menu
      * @since 2.1.0
      */
-    public function admin_bar_menu_item($title, $href)
+    public function admin_bar_menu_item($title, $href, $meta = array())
     {
         global $wp_admin_bar;
 
@@ -234,6 +234,7 @@ final class Selz
             'id'     => $this->slug . '-' . sanitize_title($title),
             'title'  => $title,
             'href'   => $href,
+            'meta'   => $meta,
             'parent' => $this->slug,
         ));
     }

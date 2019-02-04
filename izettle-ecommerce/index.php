@@ -219,7 +219,7 @@ final class iZettle
      * Helper for adding items to the toolbar menu
      * @since 2.1.0
      */
-    public function admin_bar_menu_item($title, $href)
+    public function admin_bar_menu_item($title, $href, $meta = array())
     {
         global $wp_admin_bar;
 
@@ -227,6 +227,7 @@ final class iZettle
             'id'     => $this->slug . '-' . sanitize_title($title),
             'title'  => $title,
             'href'   => $href,
+            'meta'   => $meta,
             'parent' => $this->slug,
         ));
     }
