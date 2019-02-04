@@ -223,7 +223,7 @@ class iZettle_API
                 $body = json_decode($response['body']);
                 if ($body) {
                     update_option($this->slug . '_store', $body);
-                    $this->add_store_page();
+                    izettle()->add_store_page();
                 }
             }
         }
