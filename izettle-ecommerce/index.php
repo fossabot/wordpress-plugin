@@ -240,14 +240,11 @@ final class iZettle
 
         if (in_array($current_screen->base, array('dashboard', 'plugins')) && !$this->api->is_connected()) {
             ?>
-            <div class="notice notice-success is-dismissible">
+            <div class="notice notice-success notice-large is-dismissible">
+                <h3 class="notice-title"><?php _e('Awesome! Your new iZettle plugin is now active.', 'izettle'); ?></h3>
+                <p><strong><?php _e('Take a few simple steps to complete your store setup.', 'izettle'); ?></strong></p>
                 <p>
-                    <?php
-                    printf(
-                        __('<strong>Awesome! Your new iZettle plugin is now active.</strong> Take a few simple steps to <a href="%s">complete your store setup</a>.', 'izettle'),
-                        admin_url('admin.php?page=' . $this->slug)
-                    );
-                    ?>
+                    <a class="button button-primary" href="<?php echo admin_url('admin.php?page=' . $this->slug); ?>"><?php _e('Setup iZettle', 'izettle'); ?></a>
                 </p>
             </div>
             <?php
