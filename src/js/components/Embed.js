@@ -134,8 +134,8 @@ class Embed extends Component {
             <Fragment>
                 <div
                     data-embed={type}
-                    key={clientId && this.state.didRender ? embedProps : Math.random()}
                     className={className}
+                    key={clientId && this.state.didRender ? embedProps : Math.random()}
                 >
                     <script type="text/props">{embedProps}</script>
                 </div>

@@ -606,7 +606,7 @@ final class iZettle
         );
 
         return '<!-- wp:' . $this->slug . '/store -->
-            <div data-embed="store">
+            <div data-embed="store" class="wp-block-' . $this->slug . '-store">
                 <script type="text/props">' . json_encode($props) . '</script>
             </div>
             <script async src="' . esc_url_raw($this->embed) . '"></script>
