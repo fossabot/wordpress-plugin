@@ -16,7 +16,7 @@ export default class Width extends Component {
     }
 
     setWidth(width) {
-        this.props.setAttributes({ width });
+        this.props.setAttributes({ width: String(width) });
     }
 
     render() {

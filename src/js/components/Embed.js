@@ -99,6 +99,7 @@ class Embed extends Component {
 
         const {
             attributes: { text, type, url },
+            className,
             clientId,
             isPreview,
             name,
@@ -131,7 +132,11 @@ class Embed extends Component {
         // trigger an update per prop change -- we do this by supplying the stringified props instead.
         return (
             <Fragment>
-                <div data-embed={type} key={clientId && this.state.didRender ? embedProps : Math.random()}>
+                <div
+                    data-embed={type}
+                    key={clientId && this.state.didRender ? embedProps : Math.random()}
+                    className={className}
+                >
                     <script type="text/props">{embedProps}</script>
                 </div>
 
