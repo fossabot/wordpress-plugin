@@ -62,7 +62,7 @@ export default class BehaviorPanel extends Component {
                     label={__('Window Type')}
                     value={modal}
                     options={[{ label: __('Overlay'), value: true }, { label: __('New Tab'), value: false }]}
-                    onChange={modal => setAttributes({ modal: Boolean(modal) })}
+                    onChange={modal => setAttributes({ modal: modal === 'true' })}
                 />
                 <TextControl
                     label={__('Text')}
