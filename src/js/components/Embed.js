@@ -26,6 +26,7 @@ class Embed extends Component {
     }
 
     getEmbedProps() {
+        const { attributes, deprecated } = this.props;
         const {
             action,
             buttonBackgroundColor,
@@ -45,7 +46,7 @@ class Embed extends Component {
             truncateTitles,
             width,
             url,
-        } = this.props.attributes;
+        } = attributes;
 
         const embedProps = {
             action,
@@ -74,6 +75,10 @@ class Embed extends Component {
             url,
             width,
         };
+
+        if (deprecated) {
+            delete embedProps.category;
+        }
 
         if (env) {
             embedProps.env = env;
