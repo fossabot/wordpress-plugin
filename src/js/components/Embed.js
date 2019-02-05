@@ -101,6 +101,7 @@ class Embed extends Component {
             attributes: { text, type, url },
             className,
             clientId,
+            deprecated,
             isPreview,
             name,
         } = this.props;
@@ -134,7 +135,7 @@ class Embed extends Component {
             <Fragment>
                 <div
                     data-embed={type}
-                    className={className}
+                    className={deprecated ? false : className}
                     key={clientId && this.state.didRender ? embedProps : Math.random()}
                 >
                     <script type="text/props">{embedProps}</script>
