@@ -5,7 +5,7 @@
 Add-Type -assembly "system.io.compression.filesystem"
 
 # exclusion rules. Can use wild cards (*)
-$exclude = @("node_modules",".git",".DS_Store","src")
+$exclude = @(".DS_Store",".git",".vscode","config","node_modules","src","vendor")
 
 Get-ChildItem -path ".\" -exclude $exclude |
 ?{ $_.PSIsContainer } |
