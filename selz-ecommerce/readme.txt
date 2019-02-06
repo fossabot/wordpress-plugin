@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 5.0
 Tested up to: 5.0.3
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,7 +49,7 @@ You can use the built in installer and upgrader, or you can install the plugin m
 2. Navigate to to the 'Plugins' page in the WordPress Dashboard
 3. Select 'Add New > Upload > Choose File' and select the 'selz-ecommerce.zip' file
 
-Once the plugin has been activated you will have "Add Product" and "Add Store" buttons available above your visual editor to add to your post or page.
+Once the plugin has been activated you will see the new Gutenberg blocks available under 'Selz Ecommerce'.
 
 == Frequently Asked Questions ==
 
@@ -61,13 +61,14 @@ Yes, the plugin will work with any theme. You can also customize your button, wi
 
 If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
 
-== Screenshots ==
-
-1. Add products easily
-
-1. Optional shopping cart permanently displayed
-
 == Changelog ==
+= 2.1.0 =
+- Added: New category panel for the store block
+- Added: Automatic creation of store page on connection
+- Added: Toolbar menu for easy navigation to store pages
+- Added: UI improvements for new users
+= 2.0.1 =
+- Added: Backward compatibility for shortcodes. Previously, shortcodes weren't rendering on the front-end.
 = 2.0.0 =
 - Fully compatible with WordPress 5.0; embeds are now fully featured Gutenberg blocks. Please note: if you previously installed the "Classic Editor" plugin, you'll need to deactivate upon upgrading.
 = 1.9.4 =

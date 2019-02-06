@@ -65,12 +65,11 @@ export default class ProductPanel extends Component {
 
                     setAttributes(attributes);
                 },
-                error => {
+                error =>
                     setAttributes({
                         isLoading: false,
                         error,
-                    });
-                },
+                    }),
             );
     }
 

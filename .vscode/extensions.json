@@ -10,6 +10,7 @@
         "felixfbecker.php-debug",
         "wix.vscode-import-cost",
         "shinnn.stylelint",
-        "pflannery.vscode-versionlens"
+        "pflannery.vscode-versionlens",
+        "ikappas.phpcs"
     ]
 }

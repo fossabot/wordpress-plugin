@@ -18,6 +18,7 @@
         "less.validate": false,
         "scss.validate": false,
         "javascript.validate.enable": false,
+        "phpcs.showSources": true,
         // Prettier
         "prettier.eslintIntegration": true,
         "prettier.stylelintIntegration": true,
