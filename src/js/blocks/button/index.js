@@ -56,5 +56,11 @@ export default {
         },
         edit,
         save: props => <Embed {...props} />,
+        deprecated: [
+            {
+                attributes,
+                save: props => <Embed {...props} deprecated />,
+            },
+        ],
     },
 };

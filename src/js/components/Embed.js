@@ -26,10 +26,12 @@ class Embed extends Component {
     }
 
     getEmbedProps() {
+        const { attributes, deprecated } = this.props;
         const {
             action,
             buttonBackgroundColor,
             buttonTextColor,
+            category,
             checkoutBackgroundColor,
             checkoutTextColor,
             description,
@@ -44,10 +46,11 @@ class Embed extends Component {
             truncateTitles,
             width,
             url,
-        } = this.props.attributes;
+        } = attributes;
 
         const embedProps = {
             action,
+            category,
             colors: {
                 buttons: {
                     background: buttonBackgroundColor,
@@ -73,6 +76,10 @@ class Embed extends Component {
             width,
         };
 
+        if (deprecated) {
+            delete embedProps.category;
+        }
+
         if (env) {
             embedProps.env = env;
         }
@@ -97,7 +104,9 @@ class Embed extends Component {
 
         const {
             attributes: { text, type, url },
+            className,
             clientId,
+            deprecated,
             isPreview,
             name,
         } = this.props;
@@ -129,7 +138,11 @@ class Embed extends Component {
         // trigger an update per prop change -- we do this by supplying the stringified props instead.
         return (
             <Fragment>
-                <div data-embed={type} key={clientId && this.state.didRender ? embedProps : Math.random()}>
+                <div
+                    data-embed={type}
+                    className={deprecated ? false : className}
+                    key={clientId && this.state.didRender ? embedProps : Math.random()}
+                >
                     <script type="text/props">{embedProps}</script>
                 </div>
 

@@ -46,12 +46,12 @@ export default class BehaviorPanel extends Component {
 
     render() {
         const {
-            attributes: { _text, action, modal, type, useDefaultText },
+            attributes: { _text, action, modal, useDefaultText },
             setAttributes,
         } = this.props;
 
         return (
-            <PanelBody title={__('Behavior')} initialOpen={type === 'store'}>
+            <PanelBody title={__('Behavior')} initialOpen={false}>
                 <SelectControl
                     label={__('Action')}
                     value={action}
@@ -62,7 +62,7 @@ export default class BehaviorPanel extends Component {
                     label={__('Window Type')}
                     value={modal}
                     options={[{ label: __('Overlay'), value: true }, { label: __('New Tab'), value: false }]}
-                    onChange={modal => setAttributes({ modal })}
+                    onChange={modal => setAttributes({ modal: modal === 'true' })}
                 />
                 <TextControl
                     label={__('Text')}
