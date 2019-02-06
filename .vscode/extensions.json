@@ -7,6 +7,9 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "wayou.vscode-todo-highlight",
-        "felixfbecker.php-debug"
+        "felixfbecker.php-debug",
+        "wix.vscode-import-cost",
+        "shinnn.stylelint",
+        "pflannery.vscode-versionlens"
     ]
 }

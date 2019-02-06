@@ -17,11 +17,11 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 
 ### Building all plugin JavaScript / CSS
 
-If you make changes to the LESS or JavaScript you'll need to run gulp
-
 -   First install node
--   Run `npm install` or `yarn` in the `selz-ecommerce` folder to install the packages
--   Run `gulp` which will run the default tasks and watch for changes
+-   Run `yarn` or `npm install` in the root folder to install the packages
+-   Run `yarn start:selz` or `yarn start:izettle` to compile/run in dev mode and watch for changes
+-   Run `yarn build:selz` or `yarn build:izettle` to build production-ready code
+-   Run `yarn build` to build production-ready code _for both plugins_
 
 ### Building the plugin zips
 

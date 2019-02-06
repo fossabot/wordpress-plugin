@@ -1,0 +1,42 @@
+// ============================================================================
+// Block Editor
+// ============================================================================
+
+// Components
+// ----------------------------------------------------------------------------
+
+@import 'components/cart';
+@import 'components/embed';
+@import 'components/media';
+@import 'components/pager';
+@import 'components/products';
+@import 'components/scroll';
+
+// Overrides
+// ----------------------------------------------------------------------------
+
+.components-panel__body .components-notice {
+    margin: 0;
+}
+
+.components-panel__body .components-spinner {
+    float: none;
+}
+
+// Modifiers
+
+.components-base-control.is-filter {
+    margin-bottom: 8px !important;
+}
+
+.components-radio-control__option.has-image {
+    &,
+    label {
+        align-items: center;
+        display: flex;
+    }
+
+    .components-product-control__input {
+        margin-top: 0;
+    }
+}

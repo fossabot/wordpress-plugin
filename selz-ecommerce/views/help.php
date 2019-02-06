@@ -12,22 +12,23 @@ if (!defined('ABSPATH')) {
 				<h1><?php _e( 'Selz Ecommerce', selz()->lang ); ?></h1>
 				<p><?php printf( __( 'Start selling products online or digital downloads from your WordPress site in minutes. If you don\'t already have a %s account, you can %s.', selz()->lang ), selz()->name, '<a href="' . esc_url( selz()->signup ) . '" target="_blank">' . __( 'open an account', selz()->lang ) . '</a>' ); ?></p>
 
-				<h2><?php _e( 'Embed options', selz()->lang ); ?></h2>
-				<p><?php _e( 'You can choose from the following options to embed on your WordPress site:', selz()->lang ); ?></p>
+				<h2><?php _e( 'Gutenberg blocks', selz()->lang ); ?></h2>
+				<p><?php _e( 'You can choose from the following blocks to embed on your WordPress site:', selz()->lang ); ?></p>
 
 				<ul class="ul-disc">
-					<li><?php _e( 'Buy button', selz()->lang ); ?></li>
-					<li><?php _e( 'Widget', selz()->lang ); ?></li>
-					<li><?php _e( 'Store', selz()->lang ); ?></li>
+					<li><?php _e( 'Selz Button', selz()->lang ); ?></li>
+					<li><?php _e( 'Selz Widget', selz()->lang ); ?></li>
+					<li><?php _e( 'Selz Store', selz()->lang ); ?></li>
 				</ul>
 
-				<h2><?php _e( 'Using the plugin', selz()->lang ); ?></h2>
-				<p><?php _e( 'You can use the user interface or short codes to embed your store or items. Using the interface is easiest. If you\'re in a post or page, you will see the "Add Product" and "Add Store" buttons above your toolbar, clicking either will show the modal to embed your item or store with options for customisation. This will generate the required shortcode for you.', selz()->lang ); ?></p>
-
-				<p><?php printf( __( 'You can also embed items and your store to your sidebar using the Widgets menu. Simply drag "%s" into your chose widget container and customize your embed.', selz()->lang ), selz()->name ); ?></p>
-
 				<h2><?php _e( 'Shopping cart', selz()->lang ); ?></h2>
-				<p><?php printf( __( 'By default, the shopping cart will only show on pages containing a widget, button or store that you\'ve added. You can also enable a global shopping cart on all pages by enabling it in <a href="?page=%s">settings</a>.', selz()->lang ), selz()->slug ); ?></p>
+				<p><?php printf( __( 'By default, the shopping cart will only show on pages containing a %s block that you\'ve added. You can also enable a global shopping cart on all pages by enabling it in <a href="?page=%s">settings</a>.', selz()->lang ), selz()->name, selz()->slug ); ?></p>
+
+				<h2><?php _e( 'Widgets', selz()->lang ); ?></h2>
+				<p><?php _e( 'To embed any of our blocks from the Widgets menu, we recommend installing <a href="https://wordpress.org/plugins/reusable-gutenberg-blocks-widget/" target="_blank">Reusable Gutenberg Blocks Widget</a>.', selz()->lang ); ?></p>
+
+				<h2><?php _e( 'Additional settings', selz()->lang ); ?></h2>
+				<p><?php printf( __( 'More configuration options (e.g., store logo, display mode) are available within the %s.', selz()->lang ), '<a href="' . esc_url( selz()->embeds ) . '" target="_blank">' . __( 'Embed Editor', selz()->lang ) . '</a>' ); ?></p>
 
 				<h2><?php _e( 'SSL/HTTPS Security', selz()->lang ); ?></h2>
 				<p><?php printf( __( 'You don\'t need an SSL certificate on your site to use the %s embeds since all the overlays and store embed use SSL. However, it is recommend to help with buyer confidence. Contact your hosting provider for more information.', selz()->lang ), selz()->name ); ?></p>

@@ -10,7 +10,7 @@ do
     path=${dir%*/}
     folder=${path##*/}
 
-    if [ $folder == ".git" ] || [ $folder == ".vscode" ] || [ $folder == "src" ] || [ $folder == "node_modules" ]; then
+    if [ $folder == ".git" ] || [ $folder == ".vscode" ] || [ $folder == "config" ] || [ $folder == "src" ] || [ $folder == "node_modules" ]; then
         continue
     fi
 

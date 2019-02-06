@@ -33,7 +33,12 @@ button {
     background-image: linear-gradient(fade(#fff, @button-gradient-tint), fade(#fff, 0));
 
     // Default button style
-    .button-styles(@button-bg-default, darken(@button-bg-default, 10%), 8%, @focus-background: darken(@button-bg-default, 10%));
+    .button-styles(
+        @button-bg-default,
+        darken(@button-bg-default, 10%),
+        8%,
+        @focus-background: darken(@button-bg-default, 10%)
+    );
 
     // States
     // --------------------------------------------------
@@ -73,6 +78,7 @@ button {
 // Small
 .btn-small {
     padding: @button-padding-small ceil(@button-padding-small * 2);
+    .font-size(@button-small-font-size);
 }
 
 // Rounded
@@ -109,37 +115,4 @@ button {
 }
 .btn-secondary {
     .button-styles(@button-bg-secondary);
-}
-
-// Close button
-// Simple close icon button (requires <svg class="icon" title="Close"><use xlink:href="#icon-close"/></svg> child)
-.btn-close-modal {
-    position: absolute;
-    top: 50%;
-    right: @padding-base;
-    z-index: 20;
-    transform: translateY(-50%);
-    padding: 0;
-    border: 0;
-    background: none;
-    color: @gray-light;
-    transition: color 0.3s ease;
-
-    svg {
-        display: block;
-        fill: currentColor;
-        width: 16px;
-        height: 16px;
-        margin: 0;
-    }
-
-    &:hover,
-    &:focus {
-        color: @gray-dark;
-    }
-
-    &:focus {
-        outline: 1px dotted @gray-dark;
-        outline-offset: 1px;
-    }
 }

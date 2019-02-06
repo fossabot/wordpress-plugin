@@ -46,6 +46,7 @@ label,
 .input-control--small {
     height: @input-control-height-small;
     padding: @input-control-padding-small;
+    .font-size(@font-size-small);
 }
 
 // Make selects look awesome
@@ -72,41 +73,6 @@ select.input-control {
     margin-top: (@padding-base / 4);
 }
 
-// WordPress color picker
-.wp-picker-container {
-    .wp-picker-holder {
-        position: absolute;
-        z-index: 2;
-    }
-
-    .color-picker {
-        float: left;
-        width: 110px;
-        text-transform: uppercase;
-        margin-right: (@padding-base / 2);
-    }
-
-    .wp-color-result {
-        box-shadow: none;
-        transition: all 0.3s ease;
-
-        &:focus {
-            border-color: @gray-xlight;
-            .tab-focus();
-        }
-    }
-
-    .wp-color-result-text {
-        line-height: 22px; // Restore default
-    }
-
-    .iris-picker {
-        border-radius: @border-radius-base;
-        box-shadow: 0 0 0 1px fade(@gray-dark, 15%), 0 1px 5px fade(@gray-dark, 50%);
-        border-width: 0;
-    }
-}
-
 // Form layout
 // ---------------------------------------------
 .control-group {
@@ -116,31 +82,5 @@ select.input-control {
 
     &:last-child {
         border-bottom: 0;
-    }
-}
-
-// Modal view
-&-modal .control-group {
-    padding-left: (@padding-base * 0.75);
-    padding-right: (@padding-base * 0.75);
-
-    // Float the labels left
-    .control-label {
-        float: left;
-        width: @form-horizontal-offset - @padding-base;
-
-        // Align the label to the middle of the input
-        padding-top: @input-control-padding-vertical;
-    }
-
-    // Move over all input controls and content
-    .controls {
-        margin-left: @form-horizontal-offset;
-
-        // Checkboxes and radio buttons
-        > .control-checkbox:first-child,
-        > .wp-picker-container:first-child {
-            margin-top: @input-control-padding-vertical;
-        }
     }
 }

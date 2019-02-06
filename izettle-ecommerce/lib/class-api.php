@@ -248,6 +248,7 @@ class iZettle_API {
 		$args = array(
 			'limit' => 20,
 			'starting_after' => $starting_after,
+			'is_published' => 'true',
 	    );
 
 	    $response = $this->send_request( 'GET', add_query_arg( $args, $this->api_url . '/products' ),
@@ -291,6 +292,7 @@ class iZettle_API {
 	        'limit' => 20,
 	        'q' => $query,
 	        'page' => $page,
+	        'is_published' => 'true',
 	    );
 
 	    $response = $this->send_request( 'GET', add_query_arg( $args, $this->api_url . '/search/products' ),

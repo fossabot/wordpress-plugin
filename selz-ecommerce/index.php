@@ -3,7 +3,7 @@
     Plugin Name: Selz WordPress Ecommerce
     Plugin URI: https://features.selz.com/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 1.9.3
+    Version: 2.0.0
     Author: Selz
     Author URI: https://features.selz.com/wordpress-ecommerce
     License: MIT
@@ -19,11 +19,10 @@ if (!defined('ABSPATH'))
 
 /**
  * Main Class.
- *
  */
 final class Selz {
 
-	public $version = '1.9.3';
+	public $version = '2.0.0';
 	public $dir 	= '';
 	public $url 	= '';
 	public $name 	= 'Selz';
@@ -31,11 +30,12 @@ final class Selz {
 	public $lang 	= 'selz-ecommerce';
 	public $home 	= 'https://selz.com/';
 	public $signup 	= 'https://selz.com/account/signup';
+	public $embeds 	= 'https://selz.com/embeds';
 	public $embed 	= 'https://embeds.selzstatic.com/1/loader.js';
+	public $developer = false;
 
 	/**
 	 * The single instance of the class.
-	 *
 	 */
 	protected static $_instance = null;
 
@@ -65,8 +65,6 @@ final class Selz {
 	 * Include required core files.
 	 */
 	public function includes() {
-		require_once( $this->dir . 'shortcode.php' );
-		require_once( $this->dir . 'widget.php' );
 		require_once( $this->dir . 'lib/class-api.php' );
 	}
 
@@ -75,7 +73,6 @@ final class Selz {
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation_hook' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'plugin_loaded' ), 9 );
-		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -85,6 +82,11 @@ final class Selz {
 		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+
+		add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
+		add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 3 );
 	}
 
 	/**
@@ -110,29 +112,20 @@ final class Selz {
 	}
 
 	/**
-	 * Initializes the plugin and it's features
-	 * Load necessary plugin files and add action to widget init
 	 * @since 0.0.1
 	 */
 	public function plugin_loaded() {
 		$this->api = new Selz_API();
-		$this->shortcode = new Selz_Shortcode();
 
-		// Load plugin translation
-		load_plugin_textdomain($this->slug, false, $this->dir . 'lang/');
-	}
-
-	/**
-	 * Load widget files and register
-	 * @since 0.0.1
-	 */
-	public function widgets_init() {
-		register_widget( $this->name . '_Widget' );
+		if ( $this->api->is_connected() ) {
+			add_action( 'wp_ajax_' . $this->slug . '_search_products', array( &$this, 'search_products' ) );
+			add_action( 'wp_ajax_' . $this->slug . '_get_products', array( &$this, 'get_products' ) );
+		}
 	}
 
 	public function admin_menu() {
 	    add_menu_page(
-	        __( $this->name . ' Settings', $this->lang ),
+	        __( 'Selz Settings', $this->lang ),
 	        $this->name,
 	        'manage_options',
 	        $this->slug,
@@ -143,7 +136,7 @@ final class Selz {
 
 	    add_submenu_page(
 	        $this->slug,
-	        __( $this->name . ' Settings', $this->lang ),
+	        __( 'Selz Settings', $this->lang ),
 	        __( 'Settings', $this->lang ),
 	        'manage_options',
 	        $this->slug
@@ -151,7 +144,7 @@ final class Selz {
 
 	    add_submenu_page(
 	        $this->slug,
-	        __( $this->name . ' Help', $this->lang ),
+	        __( 'Selz Help', $this->lang ),
 	        __( 'Help', $this->lang ),
 	        'manage_options',
 	        $this->slug . '_help',
@@ -164,12 +157,7 @@ final class Selz {
 	 * @since 1.7.2
 	 */
 	public function enqueue_scripts() {
-		// Load styles
-		wp_enqueue_style( $this->slug, plugins_url( 'dist/css/styles.css', __FILE__ ), null, $this->version);
-		wp_enqueue_style('wp-color-picker');
-
-		// Scripts
-		wp_enqueue_script( $this->slug, plugins_url('dist/js/scripts.js', __FILE__ ), array('jquery', 'wp-color-picker'), $this->version);
+		wp_enqueue_style( $this->slug . '-main', plugins_url( 'dist/css/main.css', __FILE__ ), null, $this->version);
 	}
 
 	public function settings_page() {
@@ -181,16 +169,41 @@ final class Selz {
 	}
 
 	// Register our settings. Add the settings section, and settings fields
-	public function init_settings() {
+	public function init_settings(){
 		register_setting( $this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ) );
 
-		add_settings_field( $this->slug . '_store_id', '', '', __FILE__ );
-		add_settings_field( $this->slug . '_display_cart', '', '', __FILE__ );
+		if ( $_GET['developer'] == 'true' ) {
+			setcookie($this->slug . '_developer', 'true', time() + 315360000);
+		}
+
+		if ( $_GET['developer'] == 'true' || $_COOKIE[$this->slug . '_developer'] == 'true' ) {
+			$this->developer = true;
+		}
 	}
 
 	public function settings_validate( $input ) {
-		$input['store_id'] = trim(sanitize_text_field( $input['store_id'] ));
 		$input['display_cart'] = sanitize_text_field( $input['display_cart'] );
+
+		$env = sanitize_text_field( $input['env'] );
+
+		if ( strpos($env, 'selz.com') !== false ) {
+			$input['env'] = $env;
+		} else {
+			$input['env'] = '';
+		}
+
+		// On change of environment, we need to reset the API
+		$options = get_option( $this->slug . '_settings' );
+
+		if ( $options['env'] != $input['env'] ) {
+			$api = new Selz_API();
+
+			if ( $api->is_connected() ) {
+				$api->remove_tokens();
+				$api->remove_client();
+			}
+		}
+
 		return $input;
 	}
 
@@ -220,172 +233,19 @@ final class Selz {
 	}
 
 	/**
-	 * Generate the selz button with custom arguments
-	 * Set up the default form values
-	 * @param $instance, see $defaults for complete parameters
-	 * @since 0.0.1
+	 * Return common colors
+	 * TODO: Should be gotten from Selz
+	 * @since 2.0.0
 	 */
-	public function embed($instance) {
-		// Merge the user-selected arguments with the defaults.
-		$args = wp_parse_args((array) $instance, $this->default_args());
-
-		// Overwrite "true" to 1, "false" to 0
-		foreach ($args as $k => $v) {
-			$args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
-		}
-
-		if ('store' == $args['type'] || $args['type'] == '') {
-			$store = get_option( $this->slug . '_store' );
-
- 			if ( ! $store || ! $store->name )
-			{
-				return '';
-			}
-
-			$html = '<div data-embed="store">
-			    <script type="text/props">
-			    {
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            },
-			            "links": "' . $args['link_color'] . '"
-			        },
-			        "url": "' . esc_url_raw( $store->name ) . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url( $this->embed ) . '"></script>
-			<noscript><a href="' . esc_url_raw( $store->name ) . '" target="_blank">'. __('View store', $this->lang) .'</a></noscript>';
-
-		} elseif ('button' == $args['type']) {
-			if (!$args['link']) {
-				return '';
-			}
-
-			if ($args['fluid_width']) {
-				$args['width'] = '100%';
-			}
-
-			$html = '<div data-embed="button">
-			    <script type="text/props">
-			    {
-			        "action": "' . $args['action'] . '",
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            }
-			        },
-			        '. ( $args['width'] ? '"width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',' : '') . '
-			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-					"style": "' . $args['style'] . '",
-	                "text": "' . trim($args['button_text']) . '",
-	                "url": "' . trim( $args['link'] ) . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url( $this->embed ) . '"></script>
-	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
-
-		} else {
-			if (!$args['link']) {
-				return '';
-			}
-
-			if ($args['fluid_width']) {
-				$args['width'] = '100%';
-			}
-
-			$html = '<div data-embed="widget">
-			    <script type="text/props">
-			    {
-			        "action": "' . $args['action'] . '",
-			        "colors": {
-			            "buttons": {
-			                "background": "' . $args['background_color'] . '",
-			                "text": "' . $args['text_color'] . '"
-			            },
-			            "checkout": {
-			                "background": "' . $args['chbg_color'] . '",
-			                "text": "' . $args['chtx_color'] . '"
-			            }
-	                },
-	                "description": ' . ( $args['show_description'] ? 'true' : 'false' ) . ',
-			        "width": ' . ( is_numeric($args['width']) ? absint($args['width']) : '"' . trim($args['width']) . '"') . ',
-			        "logos": ' . ( $args['show_logos'] ? 'true' : 'false' ) . ',
-					"modal": ' . ( isset( $args['interact'] ) && $args['interact'] == 'modal' ? 'true' : 'false' ) . ',
-	                "text": "' . trim($args['button_text']) . '",
-			        "url": "' . $args['link'] . '"
-			    }
-			    </script>
-			</div>
-			<script async src="' . esc_url( $this->embed ) . '"></script>
-	        <noscript><a href="' . $args['link'] . '" target="_blank">'. $args['button_text'] .'</a></noscript>';
-
-		}
-
-		return $html;
-	}
-
-	/**
-	 * Return default arguments for widgets or shortcodes
-	 * @since 1.5.1
-	 */
-	public function default_args() {
-		// TODO: We should get these from the user defaults on Selz
-
-		$defaults = array(
-			'title'				=> esc_attr__( $this->name . ' Widget', $this->lang),
-			'link'				=> '',
-			'store_link'		=> '',
-			'type'				=> '',
-			'interact' 			=> 'modal',
-			'style' 			=> 'price-right',
-			'action' 			=> 'add-to-cart',
-			'width' 			=> '320',
-			'auto_width' 		=> 'true',
-			'fluid_width' 		=> 'false',
-			'button_text'		=> __('Add to cart', $this->lang),
-			'text_color' 		=> '#ffffff',
-			'background_color' 	=> '#7959c7',
-			'link_color' 		=> '#7959c7',
-			'chbg_color' 		=> '#7959c7',
-			'chtx_color' 		=> '#ffffff',
-			'tab_active'		=> array(0 => true, 1 => false, 2 => false),
-	        'show_logos'        => '',
-	        'show_description'  => 'true',
-			'intro_text' 		=> '',
-			'outro_text' 		=> '',
-		);
-
-		return $defaults;
-	}
-
-	/**
-	 * Get localized resources
-	 */
-	public function resources() {
+	public function colors() {
 		return array(
-			'add_to_cart' => __( 'Add to cart', $this->lang ),
-			'buy' => __( 'Buy now', $this->lang ),
-			'view' => __( 'View', $this->lang ),
+			'primary' => '#7959c7',
+			'white'   => '#fff',
 		);
 	}
 
 	/**
      * Show row meta on the plugin screen.
-     *
      */
     public function plugin_action_links( $links, $file ) {
         $settings_link = '<a href="' . admin_url( 'admin.php?page=' . $this->slug ) . '">' . esc_html__( 'Settings', $this->lang ) . '</a>';
@@ -406,6 +266,81 @@ final class Selz {
 
 		load_textdomain( $this->lang, WP_LANG_DIR . '/' . $this->lang . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $this->lang, false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	}
+
+	public function search_products() {
+		$api = new Selz_API();
+		$results = $api->search_products(sanitize_text_field($_REQUEST['q']), sanitize_text_field($_REQUEST['page']));
+
+		if ( $results ) {
+			wp_send_json($results);
+		}
+
+		exit;
+	}
+
+	public function get_products() {
+		$api = new Selz_API();
+		$results = $api->get_products(sanitize_text_field($_REQUEST['starting_after']));
+
+		if ( $results ) {
+			wp_send_json($results);
+		}
+
+		exit;
+	}
+
+	/**
+	 * Enqueue block editor assets
+	 * @since 2.0.0
+	 */
+	public function enqueue_block_editor_assets() {
+		wp_enqueue_style( $this->slug . '-block-editor', plugins_url( 'dist/css/block-editor.css', __FILE__ ), array( 'wp-edit-blocks' ), $this->version );
+		wp_enqueue_script( $this->slug . '-blocks', plugins_url( 'dist/js/blocks.js', __FILE__ ), array(
+			'wp-blocks',
+			'wp-editor',
+			'wp-element',
+			'wp-i18n',
+		), $this->version );
+
+		// Load the embed loader
+		wp_enqueue_script( $this->slug . '-embed', $this->embed, array(), false, true );
+
+		wp_localize_script( $this->slug . '-blocks', $this->slug . '_globals', array(
+			'colors' => $this->colors(),
+			'embed'  => $this->embed,
+			'env'    => get_option( $this->slug . '_settings' )['env'],
+			'nonce'  => wp_create_nonce( $this->slug ),
+			'store'  => get_option( $this->slug . '_store' ),
+		) );
+	}
+
+	/**
+	 * Add a block category for Selz blocks
+	 * @since 2.0.0
+	 */
+	public function block_categories( $categories, $post ) {
+		return array_merge(
+			$categories,
+			array(
+				array(
+					'slug'  => $this->slug . '-ecommerce',
+					'title' => __( 'Selz Ecommerce', $this->lang ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Load the embed loader asynchronously
+	 * @since 2.0.0
+	 */
+	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( $handle == $this->slug . '-embed' ) {
+			$tag = '<script async src="' . esc_url( $src ) . '"></script>';
+		}
+
+		return $tag;
 	}
 }
 
