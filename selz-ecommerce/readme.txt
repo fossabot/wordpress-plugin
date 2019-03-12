@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 5.0
 Tested up to: 5.0.3
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,8 @@ Yes, the plugin will work with any theme. You can also customize your button, wi
 If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
 
 == Changelog ==
+= 2.1.1 =
+- Minor bug fix
 = 2.1.0 =
 - Added: New category panel for the store block
 - Added: Automatic creation of store page on connection
