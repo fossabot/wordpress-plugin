@@ -263,11 +263,11 @@ final class Selz
     {
         register_setting($this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ));
 
-        if ($_GET['developer'] == 'true') {
+        if (isset($_GET['developer']) && $_GET['developer'] == 'true') {
             setcookie($this->slug . '_developer', 'true', time() + 315360000);
         }
 
-        if ($_GET['developer'] == 'true' || $_COOKIE[$this->slug . '_developer'] == 'true') {
+        if ((isset($_GET['developer']) && $_GET['developer'] == 'true') || (isset($_COOKIE[$this->slug . '_developer']) && $_COOKIE[$this->slug . '_developer'] == 'true')) {
             $this->developer = true;
         }
 
