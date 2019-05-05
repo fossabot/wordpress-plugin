@@ -36,6 +36,7 @@ const externals = [
         react: 'React', // React itself is there in Gutenberg.
         jquery: 'jQuery', // import $ from 'jquery' // Use the WordPress version after enqueuing it.
         'react-dom': 'ReactDOM',
+        lodash: 'lodash',
     },
 );
 
