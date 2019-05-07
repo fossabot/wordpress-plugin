@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
  */
 final class Selz
 {
-    public $version     = '2.1.1';
+    public $version     = '2.1.2';
     public $dir         = '';
     public $url         = '';
     public $name        = 'Selz';
