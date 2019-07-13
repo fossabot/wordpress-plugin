@@ -13,7 +13,7 @@
     "browserslist": "> 0.25%, not dead",
     "dependencies": {
         "classnames": "^2.2.6",
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.13"
     },
     "devDependencies": {
         "autoprefixer": "^9.4.5",
