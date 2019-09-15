@@ -28,7 +28,6 @@ button {
     // Styling
     border-radius: @border-radius-button;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 1px fade(#000, 5%);
     border: @button-border-width solid;
     background-image: linear-gradient(fade(#fff, @button-gradient-tint), fade(#fff, 0));
 
@@ -64,7 +63,7 @@ button {
         pointer-events: none;
         background: fade(@button-bg-disabled, 50%);
         border-color: fade(darken(@button-bg-disabled, 12%), 50%);
-        color: fade(@gray-light, 50%);
+        color: fade(@color-gray-800, 50%);
         box-shadow: none;
     }
 }
@@ -93,7 +92,7 @@ button {
     // Disabled
     &[disabled] {
         pointer-events: none;
-        color: fade(@gray-light, 50%);
+        color: fade(@color-gray-800, 50%);
     }
 }
 
