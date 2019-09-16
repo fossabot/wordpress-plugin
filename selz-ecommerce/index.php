@@ -506,7 +506,7 @@ final class Selz
     public function colors()
     {
         return array(
-            'primary' => '#7959c7',
+            'primary' => '#8f47e6',
             'white'   => '#fff',
         );
     }

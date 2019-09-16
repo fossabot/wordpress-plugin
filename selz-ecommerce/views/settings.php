@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
         <div class="panel margin-top-4 margin-bottom-2">
             <div class="padding-6">
                 <div class="text-center padding-4">
-                    <img class="align-middle" src="<?php echo plugins_url( '../dist/img/svg/logo.svg?v=' . selz()->version, __FILE__ ); ?>" alt="Selz logo">
+                    <img class="align-middle" src="<?php echo plugins_url( '../dist/img/svg/logo.svg?v=' . selz()->version, __FILE__ ); ?>" alt="Selz logo" width="150" height="54">
 
                     <?php if (!selz()->api->is_connected()) { ?>
 
