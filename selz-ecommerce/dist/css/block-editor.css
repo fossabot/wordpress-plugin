@@ -18,7 +18,7 @@ img.is-loading {
 .media-placeholder {
   position: relative;
   min-height: 32px;
-  background: #dbe3e8;
+  background: hsl(216, 15%, 88%);
   z-index: 1;
 }
 .media-ratio-1-1 {

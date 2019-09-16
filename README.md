@@ -11,7 +11,7 @@ The easiest way to develop on WordPress locally is to use "Local by Flywheel" wh
 -   Install the [Volumes Add-on](https://github.com/getflywheel/local-addon-volumes#downloading-a-release)
 -   Clone this repo to your local machine
 -   In the settings for the VM in Local, go to "More" then click "Volumes"
--   Map the the map to each of the plugins to the VM. For example `~/Development/wordpress-plugins/selz-ecommerce` to `/app/public/wp-content/plugins/selz-ecommerce`. The first part will be specific to where you cloned the `wordpress-plugin` repo to.
+-   Map each of the plugins to the VM. For example `~/Development/wordpress-plugins/selz-ecommerce` to `/app/public/wp-content/plugins/selz-ecommerce`. The first part will be specific to where you cloned the `wordpress-plugin` repo to.
 
 Now you can edit the plugin in the GitHub repo and preview changes live.
 

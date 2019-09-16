@@ -3,45 +3,46 @@
 // ==========================================================================
 
 // Pallette
-@red: #d44334;
-@green: #4cb953;
-@blue: #3498db;
-@orange: #f39c12;
-@yellow: #edb500;
-@pink: #c7358a;
+@red: hsl(0, 84%, 70%);
+@green: hsl(153, 85%, 38%);
+@blue: hsl(211, 93%, 56%);
+@orange: hsl(34, 100%, 64%);
+@purple: hsl(267, 76%, 59%);
 
 // Grays
-@gray-xxdark: #2e343d;
-@gray-xdark: #333b3f;
-@gray-dark: #4f5b60;
-@gray-medium: #5d6c73;
-@gray-light: #6b7d86;
-@gray-xlight: #8799a2;
-@gray-xxlight: #b6c5cd;
-@gray-xxxlight: #dbe3e8;
-@off-white: #f7f8fa;
+@color-gray-50: hsl(216, 15%, 97%);
+@color-gray-100: hsl(216, 15%, 88%);
+@color-gray-200: hsl(216, 15%, 79%);
+@color-gray-300: hsl(216, 15%, 70%);
+@color-gray-400: hsl(216, 15%, 61%);
+@color-gray-500: hsl(216, 15%, 52%);
+@color-gray-600: hsl(216, 15%, 43%);
+@color-gray-700: hsl(216, 15%, 34%);
+@color-gray-800: hsl(216, 15%, 25%);
+@color-gray-840: hsl(216, 15%, 21%);
+@color-gray-900: hsl(216, 15%, 16%);
 
 // Brand
-@color-brand-primary: #7959c7;
-@color-brand-secondary: #bc4166;
+@color-brand-primary: @purple;
+@color-brand-secondary: @green;
 
 // UI
 @color-ui-primary: @green;
-@color-ui-secondary: @gray-light;
+@color-ui-secondary: @color-gray-800;
 
 // Links
 @color-link: @color-ui-primary;
 
 // Text
-@color-text: @gray-xdark;
-@color-headings: @gray-xxdark;
+@color-text: @color-gray-800;
+@color-headings: @color-gray-900;
 
 // Media
-@image-background: @gray-xxxlight;
+@image-background: @color-gray-100;
 
 // Components
-@component-color: @gray-dark;
-@component-hover-color: @gray-xxdark;
-@component-hover-background: @off-white;
-@component-active-color: #fff;
-@component-active-background: @color-ui-primary;
+@component-color: @color-gray-700;
+@component-hover-color: @color-gray-900;
+@component-hover-background: @color-gray-50;
+@component-active-color: @color-gray-900;
+@component-active-background: @color-gray-50;
