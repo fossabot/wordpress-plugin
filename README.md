@@ -28,6 +28,18 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 -   [Install Composer](https://getcomposer.org/)
 -   Run `composer install` to install the packages
 
+### Plugin assets
+
+| Size     | Description | Filename        | Types      |
+| -------- | ----------- | --------------- | ---------- |
+| 772x250  | Banner      | banner-772x250  | PNG or JPG |
+| 1544x500 | Banner      | banner-1544x500 | PNG or JPG |
+| 128x128  | Icon        | icon-128x128    | PNG or JPG |
+| 256x256  | Icon        | icon-256x256    | PNG or JPG |
+| 256x256  | Icon        | icon            | SVG        |
+
+-   https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/
+
 ### Building the plugin zips
 
 To build the plugin zip file for manual installation run `build.sh` (MacOS/Unix Bash) or `build.ps1` (Windows Powershell)
