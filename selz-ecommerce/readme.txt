@@ -3,7 +3,7 @@ Contributors: Selz
 Tags: commerce, e-commerce, ecommerce, wordpress ecommerce, shopping cart, shopping cart for wordpress, wordpress shopping cart, store, shop, online store, wordpress store, sell online, sell digital downloads
 Requires at least: 5.0
 Tested up to: 5.2.3
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ Turn your existing WordPress site into a fully featured ecommerce site with our 
 
 Check out our video to see how easy it is to start selling products from your WordPress site.
 
-[youtube http://www.youtube.com/watch?v=gDaN6Sx5ZsE]
+[youtube https://youtu.be/0bUEK7FFsTo]
 
 ### Key Features
 
@@ -62,6 +62,8 @@ Yes, the plugin will work with any theme. You can also customize your button, wi
 If you have queries, you can contact us here at [help@selz.com](mailto:help@selz.com)
 
 == Changelog ==
+= 2.1.4 =
+- Update introductory video
 = 2.1.3 =
 - Branding updates
 = 2.1.2 =
