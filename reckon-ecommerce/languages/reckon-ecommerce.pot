@@ -1,0 +1,422 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: iZettle\n"
+"POT-Creation-Date: 2018-09-24 09:38+1000\n"
+"PO-Revision-Date: 2018-09-24 09:38+1000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_html_e;_n;_x;_ex;_nx;esc_attr__;"
+"esc_html__;esc_html_x\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: dialog.php:27 includes/fields.php:49 includes/widget-fields.php:43
+msgid "Product"
+msgstr "Product"
+
+#: dialog.php:28
+msgid "store"
+msgstr "store"
+
+#: dialog.php:32 widget.php:154
+msgid "Button"
+msgstr "Button"
+
+#: dialog.php:33 views/help.php:20 widget.php:155
+msgid "Widget"
+msgstr "Widget"
+
+#: dialog.php:34 views/help.php:21 widget.php:156
+msgid "Store"
+msgstr "Store"
+
+#: dialog.php:38 widget.php:160
+msgid "Add to cart"
+msgstr "Add to cart"
+
+#: dialog.php:39 widget.php:161
+msgid "Buy now"
+msgstr "Buy now"
+
+#: dialog.php:40 widget.php:162
+msgid "View"
+msgstr "View"
+
+#: dialog.php:44 widget.php:166
+msgid "Overlay"
+msgstr "Overlay"
+
+#: dialog.php:45 widget.php:167
+msgid "New tab"
+msgstr "New tab"
+
+#: dialog.php:49 widget.php:171
+msgid "Price on right"
+msgstr "Price on right"
+
+#: dialog.php:50 widget.php:172
+msgid "Price on left"
+msgstr "Price on left"
+
+#: dialog.php:51 widget.php:173
+msgid "Price above"
+msgstr "Price above"
+
+#: dialog.php:52 widget.php:174
+msgid "Price below"
+msgstr "Price below"
+
+#: includes/fields.php:7
+msgid "General"
+msgstr "General"
+
+#: includes/fields.php:10
+msgid "Colors"
+msgstr "Colors"
+
+#: includes/fields.php:20 includes/widget-fields.php:18
+msgid "Widget type"
+msgstr "Widget type"
+
+#: includes/fields.php:38 includes/widget-fields.php:34
+msgid "Store URL"
+msgstr "Store URL"
+
+#: includes/fields.php:72 includes/widget-fields.php:66
+msgid "Action"
+msgstr "Action"
+
+#: includes/fields.php:86 includes/widget-fields.php:79
+msgid "Button style"
+msgstr "Button style"
+
+#: includes/fields.php:100 includes/fields.php:182
+#: includes/widget-fields.php:92 includes/widget-fields.php:151
+msgid "Button text"
+msgstr "Button text"
+
+#: includes/fields.php:110 includes/widget-fields.php:101
+msgid "Description"
+msgstr "Description"
+
+#: includes/fields.php:115 includes/widget-fields.php:106
+msgid "Show the description"
+msgstr "Show the description"
+
+#: includes/fields.php:117 includes/widget-fields.php:108
+msgid "Show the item description"
+msgstr "Show the item description"
+
+#: includes/fields.php:125
+msgid "Width"
+msgstr "Width"
+
+#: includes/fields.php:137
+msgid "Automatic"
+msgstr "Automatic"
+
+#: includes/fields.php:139
+msgid "Set the maximum width or choose automatic width"
+msgstr "Set the maximum width or choose automatic width"
+
+#: includes/fields.php:146 includes/widget-fields.php:114
+msgid "Logos"
+msgstr "Logos"
+
+#: includes/fields.php:151 includes/widget-fields.php:119
+msgid "Show payment logos"
+msgstr "Show payment logos"
+
+#: includes/fields.php:153 includes/widget-fields.php:121
+msgid "Show payment method logos underneath embed"
+msgstr "Show payment method logos underneath embed"
+
+#: includes/fields.php:158 includes/widget-fields.php:127
+msgid "Window type"
+msgstr "Window type"
+
+#: includes/fields.php:174 includes/widget-fields.php:142
+msgid "Button background"
+msgstr "Button background"
+
+#: includes/fields.php:190 includes/widget-fields.php:160
+msgid "Links"
+msgstr "Links"
+
+#: includes/fields.php:198 includes/widget-fields.php:169
+msgid "Checkout header background"
+msgstr "Checkout header background"
+
+#: includes/fields.php:206 includes/widget-fields.php:178
+msgid "Checkout header text"
+msgstr "Checkout header text"
+
+#: includes/modal.php:4
+msgid " Options"
+msgstr " Options"
+
+#: includes/modal.php:7
+msgid "Configure the options for your embed"
+msgstr "Configure the options for your embed"
+
+#: includes/modal.php:31
+msgid "Add Shortcode"
+msgstr "Add Shortcode"
+
+#: includes/widget-editor.php:6
+msgid "Title"
+msgstr "Title"
+
+#: includes/widget-editor.php:15
+msgid "Intro text"
+msgstr "Intro text"
+
+#: includes/widget-editor.php:19
+msgid ""
+"This option will display additional text or HTML <em>before</em> the widget "
+"content"
+msgstr ""
+"This option will display additional text or HTML <em>before</em> the widget "
+"content"
+
+#: includes/widget-editor.php:25
+msgid "Outro text"
+msgstr "Outro text"
+
+#: includes/widget-editor.php:29
+msgid ""
+"This option will display additional text or HTML <em>after</em> the widget "
+"content"
+msgstr ""
+"This option will display additional text or HTML <em>after</em> the widget "
+"content"
+
+#: index.php:117 index.php:128
+msgid " Settings"
+msgstr " Settings"
+
+#: index.php:129 index.php:347
+msgid "Settings"
+msgstr "Settings"
+
+#: index.php:136
+msgid " Help"
+msgstr " Help"
+
+#: index.php:137
+msgid "Help"
+msgstr "Help"
+
+#: index.php:221
+msgid "Store URL is empty"
+msgstr "Store URL is empty"
+
+#: index.php:247
+msgid "View store"
+msgstr "View store"
+
+#: index.php:316
+msgid " Widget"
+msgstr " Widget"
+
+#: shortcode.php:37
+#, php-format
+msgid "Please %s"
+msgstr "Please %s"
+
+#: shortcode.php:137
+msgid "Add Product"
+msgstr "Add Product"
+
+#: shortcode.php:140
+msgid "Add Store"
+msgstr "Add Store"
+
+#: shortcode.php:162
+msgid "Fetching your store data"
+msgstr "Fetching your store data"
+
+#: views/help-sidebar.php:9
+msgid "A short review of our plugin would be awesome. If only a few words."
+msgstr "A short review of our plugin would be awesome. If only a few words."
+
+#: views/help-sidebar.php:11
+msgid "Submit a review"
+msgstr "Submit a review"
+
+#: views/help-sidebar.php:16
+msgid "Need some help? Have a feature request?"
+msgstr "Need some help? Have a feature request?"
+
+#: views/help-sidebar.php:18
+msgid "Visit our Support Forums"
+msgstr "Visit our Support Forums"
+
+#: views/help.php:12
+msgid "iZettle Ecommerce"
+msgstr "iZettle Ecommerce"
+
+#: views/help.php:13
+#, php-format
+msgid ""
+"Start selling products online or digital downloads from your WordPress site "
+"in minutes. If you don't already have a %s account, set one up now at %s"
+msgstr ""
+"Start selling products online or digital downloads from your WordPress site "
+"in minutes. If you don't already have a %s account, set one up now at %s"
+
+#: views/help.php:15
+msgid "Embed options"
+msgstr "Embed options"
+
+#: views/help.php:16
+msgid ""
+"You can choose from the following options to embed on your WordPress site:"
+msgstr ""
+"You can choose from the following options to embed on your WordPress site:"
+
+#: views/help.php:19
+msgid "Buy button"
+msgstr "Buy button"
+
+#: views/help.php:24
+msgid "Using the plugin"
+msgstr "Using the plugin"
+
+#: views/help.php:25
+msgid ""
+"You can use the user interface or short codes to embed your store or items. "
+"Using the interface is easiest. If you're in a post or page, you will see "
+"the \"Add Product\" and \"Add Store\" buttons above your toolbar, clicking "
+"either will show the modal to embed your item or store with options for "
+"customisation. This will generate the required shortcode for you."
+msgstr ""
+"You can use the user interface or short codes to embed your store or items. "
+"Using the interface is easiest. If you're in a post or page, you will see "
+"the \"Add Product\" and \"Add Store\" buttons above your toolbar, clicking "
+"either will show the modal to embed your item or store with options for "
+"customisation. This will generate the required shortcode for you."
+
+#: views/help.php:27
+#, php-format
+msgid ""
+"You can also embed items and your store to your sidebar using the Widgets "
+"menu. Simply drag \"%s\" into your chose widget container and customize your "
+"embed."
+msgstr ""
+"You can also embed items and your store to your sidebar using the Widgets "
+"menu. Simply drag \"%s\" into your chose widget container and customize your "
+"embed."
+
+#: views/help.php:29
+msgid "Shopping cart"
+msgstr "Shopping cart"
+
+#: views/help.php:30
+#, php-format
+msgid ""
+"By default, the shopping cart will only show on pages containing a widget, "
+"button or store that you've added. You can also enable a global shopping "
+"cart on all pages by enabling it in <a href=\"?page=%s\">settings</a>."
+msgstr ""
+"By default, the shopping cart will only show on pages containing a widget, "
+"button or store that you've added. You can also enable a global shopping "
+"cart on all pages by enabling it in <a href=\"?page=%s\">settings</a>."
+
+#: views/help.php:32
+msgid "SSL/HTTPS Security"
+msgstr "SSL/HTTPS Security"
+
+#: views/help.php:33
+#, php-format
+msgid ""
+"You don't need an SSL certificate on your site to use the %s embeds since "
+"all the overlays and store embed use SSL. However, it is recommend to help "
+"with buyer confidence. Contact your hosting provider for more information."
+msgstr ""
+"You don't need an SSL certificate on your site to use the %s embeds since "
+"all the overlays and store embed use SSL. However, it is recommend to help "
+"with buyer confidence. Contact your hosting provider for more information."
+
+#: views/help.php:34
+msgid ""
+"If you need help setting up HTTPS on your WordPress site, check out the <a "
+"href=\"http://wordpress.org/plugins/wordpress-https/\" target=\"_blank"
+"\">WordPress HTTPS Plugin</a> that can help."
+msgstr ""
+"If you need help setting up HTTPS on your WordPress site, check out the <a "
+"href=\"http://wordpress.org/plugins/wordpress-https/\" target=\"_blank"
+"\">WordPress HTTPS Plugin</a> that can help."
+
+#: views/settings.php:17
+#, php-format
+msgid "Connect your %s account to WordPress"
+msgstr "Connect your %s account to WordPress"
+
+#: views/settings.php:19
+msgid "Connect"
+msgstr "Connect"
+
+#: views/settings.php:21
+#, php-format
+msgid ""
+"You will be redirected to sign into your %s account and accept permissions "
+"to allow WordPress to access your %s account"
+msgstr ""
+"You will be redirected to sign into your %s account and accept permissions "
+"to allow WordPress to access your %s account"
+
+#: views/settings.php:28
+#, php-format
+msgid "Connected to %s. %s"
+msgstr "Connected to %s. %s"
+
+#: views/settings.php:30
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: views/settings.php:33
+msgid "Go to iZettle dashboard"
+msgstr "Go to iZettle dashboard"
+
+#: views/settings.php:52
+msgid "Shopping Cart"
+msgstr "Shopping Cart"
+
+#: views/settings.php:53
+msgid "Display the shopping cart on all pages of your website."
+msgstr "Display the shopping cart on all pages of your website."
+
+#: views/settings.php:61
+#, php-format
+msgid "Read our %s on how to get the best out of your %s WordPress plugin."
+msgstr "Read our %s on how to get the best out of your %s WordPress plugin."
+
+#: views/settings.php:62
+msgid "guide"
+msgstr "guide"
+
+#: views/settings.php:69
+#, php-format
+msgid "Need a %s account?"
+msgstr "Need a %s account?"
+
+#: views/settings.php:70
+#, php-format
+msgid "Try %s free for 14 days. No risk and no credit card required."
+msgstr "Try %s free for 14 days. No risk and no credit card required."
+
+#: views/settings.php:72
+msgid "Start free trial"
+msgstr "Start free trial"
+
+#: widget.php:31
+#, php-format
+msgid "Add %s items to your sidebar"
+msgstr "Add %s items to your sidebar"

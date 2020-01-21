@@ -1,6 +1,6 @@
 {
     "name": "selz/wordpress-plugin",
-    "description": "WordPress plugin for Selz & iZettle",
+    "description": "WordPress plugin for Selz",
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.4"
     }

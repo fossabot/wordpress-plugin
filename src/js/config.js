@@ -28,6 +28,13 @@ export const translations = {
         store: __('iZettle Store'),
         widget: __('iZettle Widget'),
     },
+    reckon: {
+        button: __('Reckon Button'),
+        connectAccount: sprintf(__('Connect your %s account'), 'Reckon'),
+        connectAccountNotice: sprintf(__('%s blocks require a connection to your account.'), 'Reckon Ecommerce'),
+        store: __('Reckon Store'),
+        widget: __('Reckon Widget'),
+    },
     selz: {
         button: __('Selz Button'),
         connectAccount: sprintf(__('Connect your %s account'), 'Selz'),
