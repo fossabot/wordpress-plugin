@@ -19,11 +19,10 @@
         "scss.validate": false,
         "javascript.validate.enable": false,
         "phpcs.showSources": true,
-        // Prettier
-        "prettier.eslintIntegration": true,
-        "prettier.stylelintIntegration": true,
         // Formatting
-        "editor.insertSpaces": true,
-        "editor.formatOnSave": true
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true,
+            "source.fixAll.stylelint": true
+        }
     }
 }
