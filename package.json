@@ -7,8 +7,10 @@
         "build": "npm run build:selz && npm run build:izettle",
         "build:selz": "webpack --env.namespace=selz --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
         "build:izettle": "webpack --env.namespace=izettle --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
+        "build:reckon": "webpack --env.namespace=reckon --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
         "start:selz": "webpack --env.namespace=selz --hide-modules --watch --config config/webpack.config.dev.js",
-        "start:izettle": "webpack --env.namespace=izettle --hide-modules --watch --config config/webpack.config.dev.js"
+        "start:izettle": "webpack --env.namespace=izettle --hide-modules --watch --config config/webpack.config.dev.js",
+        "start:reckon": "webpack --env.namespace=reckon --hide-modules --watch --config config/webpack.config.dev.js"
     },
     "browserslist": "> 0.25%, not dead",
     "dependencies": {

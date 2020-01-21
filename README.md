@@ -19,9 +19,9 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 
 -   First install node
 -   Run `yarn` or `npm install` in the root folder to install the packages
--   Run `yarn start:selz` or `yarn start:izettle` to compile/run in dev mode and watch for changes
--   Run `yarn build:selz` or `yarn build:izettle` to build production-ready code
--   Run `yarn build` to build production-ready code _for both plugins_
+-   Run `yarn start:{selz|izettle|reckon}` to compile/run in dev mode and watch for changes
+-   Run `yarn build:{selz|izettle|reckon}` to build production-ready code
+-   Run `yarn build` to build production-ready code _for all plugins_
 
 ### PHP linting
 
