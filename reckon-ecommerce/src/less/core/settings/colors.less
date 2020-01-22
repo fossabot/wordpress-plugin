@@ -1,63 +1,63 @@
-// ==========================================================================
-// Color settings
-// ==========================================================================
+// ==================================================
+// Color variables
+// ==================================================
 
-// Pallette
-@red: #d44334;
-@green: #4cb953;
-@blue: #3498db;
-@orange: #f39c12;
-@yellow: #edb500;
-@pink: #c7358a;
+// Greens
+@color-green-50: hsl(170, 100%, 95%);
+@color-green-100: hsl(170, 100%, 90%);
+@color-green-200: hsl(170, 100%, 80%);
+@color-green-300: hsl(170, 100%, 70%);
+@color-green-400: hsl(170, 100%, 60%);
+@color-green-500: hsl(170, 100%, 50%);
+@color-green-570: hsl(170, 100%, 43%);
+@color-green-600: hsl(170, 100%, 40%);
+@color-green-630: hsl(170, 100%, 37%);
+@color-green-700: hsl(170, 100%, 30%);
+@color-green-800: hsl(170, 100%, 20%);
+@color-green-900: hsl(170, 100%, 10%);
 
 // Grays
-@gray-xxdark: #2e343d;
-@gray-xdark: #333b3f;
-@gray-dark: #4f5b60;
-@gray-medium: #5d6c73;
-@gray-light: #6b7d86;
-@gray-xlight: #8799a2;
-@gray-xxlight: #b6c5cd;
-@gray-xxxlight: #dbe3e8;
-@off-white: #f7f8fa;
+@color-gray-50: hsl(0, 0%, 95%);
+@color-gray-100: hsl(0, 0%, 90%);
+@color-gray-200: hsl(0, 0%, 80%);
+@color-gray-300: hsl(0, 0%, 70%);
+@color-gray-400: hsl(0, 0%, 60%);
+@color-gray-500: hsl(0, 0%, 50%);
+@color-gray-600: hsl(0, 0%, 40%);
+@color-gray-700: hsl(0, 0%, 30%);
+@color-gray-800: hsl(0, 0%, 20%);
+@color-gray-840: hsl(0, 0%, 16%);
+@color-gray-850: hsl(0, 0%, 15%);
+@color-gray-900: hsl(0, 0%, 10%);
 
 // Primary
-@color-magnetic-blue: #283663;
+@color-red: #e30613;
+@color-dark-red: #bc1927;
+@color-black: @color-gray-850;
+@color-blue: #475461;
+@color-light-blue: #66737f;
+@color-green: @color-green-630;
 
-// Secondary
-@color-lilac: #a391e0;
-@color-salmon: #f5826b;
-@color-mint-green: #89d6a3;
-@color-silicon-gray: #dcdcdc;
-
-// Tertiary
-@color-magnetic-blue-light: #2a4b89;
-@color-lilac-light: #b5a8e5;
-@color-salmon-light: #ffa08e;
-@color-mint-green-light: #a6e3ba;
-@color-silicon-gray-light: #ebebeb;
+// Complementary
+@color-dark-gray: #6a6a6a; // ~42% lightness
+@color-gray: #b7b8b9; // ~72% lightness
+@color-light-gray: #f1f1f1; // ~95% lightness
 
 // Brand
-@color-brand-primary: @color-magnetic-blue;
-@color-brand-secondary: @color-mint-green;
+@color-brand-primary: @color-green;
+@color-brand-secondary: @color-blue;
 
 // UI
-@color-ui-primary: #60cb83;
-@color-ui-secondary: @color-magnetic-blue;
+@color-ui-primary: @color-green;
+@color-ui-secondary: @color-blue;
 
-// Links
-@color-link: @color-ui-primary;
-
-// Color
-@color-text: @color-magnetic-blue;
-@color-headings: @color-text;
+// Borders
+@border-color-base: @color-gray-100;
 
 // Media
-@image-background: @gray-xxxlight;
+@image-background: @color-gray-100;
 
 // Components
-@component-color: @gray-dark;
-@component-hover-color: @gray-xxdark;
-@component-hover-background: @off-white;
-@component-active-color: #fff;
-@component-active-background: @gray-dark;
+@component-active-color: white;
+@component-active-background: @color-green;
+@component-active-border-color: @color-green;

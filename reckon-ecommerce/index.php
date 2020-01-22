@@ -632,6 +632,7 @@ final class Reckon
      */
     public function enqueue_block_editor_assets()
     {
+        wp_enqueue_style($this->slug . '-fonts', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap', array(), $this->version);
         wp_enqueue_style($this->slug . '-block-editor', plugins_url('dist/css/block-editor.css', __FILE__), array( 'wp-edit-blocks' ), $this->version);
         wp_enqueue_script($this->slug . '-blocks', plugins_url('dist/js/blocks.js', __FILE__), array(
             'wp-blocks',
