@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
         <div class="panel margin-top-4 margin-bottom-2">
             <div class="padding-6">
                 <div class="text-center padding-4">
-                    <img class="align-middle" src="<?php echo plugins_url('../dist/img/svg/logo.svg?v=' . reckon()->version, __FILE__); ?>" alt="Reckon logo" width="220" height="60">
+                    <img class="align-middle" src="<?php echo plugins_url('../dist/img/svg/logo.svg?v=' . reckon()->version, __FILE__); ?>" alt="Reckon logo" width="210" height="57">
 
                     <?php if (!reckon()->api->is_connected()) { ?>
                         <h4 class="margin-top-4"><?php printf(__('Connect your %s account to WordPress', reckon()->lang), reckon()->name); ?></h4>
