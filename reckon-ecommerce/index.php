@@ -27,8 +27,8 @@ final class Reckon
     public $name        = 'Reckon';
     public $slug        = 'reckon';
     public $lang        = 'reckon-ecommerce';
-    public $dashboard   = 'https://www.reckon.com/au/ecommerce-platform/'; // FIXME
-    public $signup      = 'https://www.reckon.com/au/ecommerce-platform/'; // FIXME
+    public $dashboard   = 'https://genesis.dev.reckoncloud.com.au';
+    public $signup      = 'https://www.reckon.com/au/ecommerce-platform/';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
     public $store_title = 'Store';
 
@@ -469,8 +469,8 @@ final class Reckon
     public function colors()
     {
         return array(
-            'primary' => '#6aca89', // FIXME
-            'white'   => '#fff', // FIXME
+            'primary' => '#00bc9d',
+            'white'   => '#fff',
         );
     }
 

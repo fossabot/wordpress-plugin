@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 
 <div class="reckon-panel">
     <p><?php printf(__('Read our in-depth guide on how to get the best out of your %s ecommerce WordPress plugin.', reckon()->lang), reckon()->name); ?></p>
-    <a href="#TODO" class="btn btn-secondary" target="_blank">
+    <a href="https://help.selz.com/article/139-sell-on-a-wordpress-site" class="btn btn-secondary" target="_blank">
         <?php _e('See guide', reckon()->lang); ?>
     </a>
 </div>
