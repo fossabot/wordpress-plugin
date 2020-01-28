@@ -1,4 +1,4 @@
-const { PanelColorSettings } = wp.editor;
+const { PanelColorSettings } = wp.blockEditor;
 const { __ } = wp.i18n;
 
 export default ({ attributes, setAttributes }) => {

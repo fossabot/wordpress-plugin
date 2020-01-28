@@ -6,7 +6,7 @@ import Embed from '../../components/Embed';
 import ProductPanel from '../../components/ProductPanel';
 import WidthPanel from '../../components/WidthPanel';
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor;
 const { Fragment } = wp.element;
 
 export default props => (

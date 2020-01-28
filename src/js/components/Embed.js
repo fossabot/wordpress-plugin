@@ -2,7 +2,7 @@ const { embed, env } = window[`${namespace}_globals`];
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
 const { withDispatch } = wp.data;
-const { BlockIcon } = wp.editor;
+const { BlockIcon } = wp.blockEditor;
 const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
 

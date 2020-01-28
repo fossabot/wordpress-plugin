@@ -7,7 +7,7 @@ import LinksColorPanel from '../../components/LinksColorPanel';
 import OptionsPanel from '../../components/OptionsPanel';
 import StoreDisplayPanel from '../../components/StoreDisplayPanel';
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor;
 const { Fragment } = wp.element;
 
 export default props => (
