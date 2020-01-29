@@ -8,19 +8,24 @@ import OptionsPanel from '../../components/OptionsPanel';
 import StoreDisplayPanel from '../../components/StoreDisplayPanel';
 
 const { InspectorControls } = wp.blockEditor;
+const { useDispatch } = wp.data;
 const { Fragment } = wp.element;
 
-export default props => (
-    <Fragment>
-        <Embed {...props} isPreview />
-        <InspectorControls>
-            <CategoryPanel {...props} />
-            <BehaviorPanel {...props} />
-            <StoreDisplayPanel {...props} />
-            <OptionsPanel {...props} />
-            <ButtonColorsPanel {...props} />
-            <LinksColorPanel {...props} />
-            <CheckoutColorsPanel {...props} />
-        </InspectorControls>
-    </Fragment>
-);
+export default props => {
+    const { openGeneralSidebar } = useDispatch('core/edit-post');
+
+    return (
+        <Fragment>
+            <Embed {...props} openGeneralSidebar={openGeneralSidebar} isPreview />
+            <InspectorControls>
+                <CategoryPanel {...props} />
+                <BehaviorPanel {...props} />
+                <StoreDisplayPanel {...props} />
+                <OptionsPanel {...props} />
+                <ButtonColorsPanel {...props} />
+                <LinksColorPanel {...props} />
+                <CheckoutColorsPanel {...props} />
+            </InspectorControls>
+        </Fragment>
+    );
+};
