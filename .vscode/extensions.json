@@ -9,7 +9,7 @@
         "wayou.vscode-todo-highlight",
         "felixfbecker.php-debug",
         "wix.vscode-import-cost",
-        "shinnn.stylelint",
+        "stylelint.vscode-stylelint",
         "pflannery.vscode-versionlens",
         "ikappas.phpcs"
     ]
