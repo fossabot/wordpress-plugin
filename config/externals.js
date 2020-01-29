@@ -14,10 +14,12 @@ const camelCaseDash = string => string.replace(/-([a-z])/g, (match, letter) => l
  */
 const externals = [
     'components',
+    'api-fetch',
     'edit-post',
     'element',
     'plugins',
     'editor',
+    'block-editor',
     'blocks',
     'hooks',
     'utils',
