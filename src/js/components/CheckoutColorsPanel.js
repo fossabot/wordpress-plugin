@@ -1,4 +1,4 @@
-const { ContrastChecker, PanelColorSettings } = wp.editor;
+const { ContrastChecker, PanelColorSettings } = wp.blockEditor;
 const { __ } = wp.i18n;
 
 export default ({ attributes, setAttributes }) => {
