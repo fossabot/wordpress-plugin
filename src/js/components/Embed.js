@@ -1,8 +1,7 @@
 const { embed, env } = window[`${namespace}_globals`];
+const { BlockIcon } = wp.blockEditor;
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
-const { withDispatch } = wp.data;
-const { BlockIcon } = wp.editor;
 const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
 
@@ -22,7 +21,7 @@ class Embed extends Component {
         }
 
         // Open the sidebar so products can load
-        openGeneralSidebar();
+        openGeneralSidebar('edit-post/block');
     }
 
     getEmbedProps() {
@@ -161,6 +160,4 @@ class Embed extends Component {
     }
 }
 
-export default withDispatch(dispatch => ({
-    openGeneralSidebar: () => dispatch('core/edit-post').openGeneralSidebar('edit-post/block'),
-}))(Embed);
+export default Embed;
