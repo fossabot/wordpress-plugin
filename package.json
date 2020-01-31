@@ -4,7 +4,7 @@
     "description": "Ecommerce for WordPress",
     "homepage": "https://selz.com",
     "scripts": {
-        "build": "npm run build:selz && npm run build:izettle",
+        "build": "npm run build:selz && npm run build:izettle && npm run build:reckon",
         "build:selz": "webpack --env.namespace=selz --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
         "build:izettle": "webpack --env.namespace=izettle --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
         "build:reckon": "webpack --env.namespace=reckon --env.NODE_ENV=production --progress --config config/webpack.config.prod.js",
