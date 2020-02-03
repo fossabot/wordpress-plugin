@@ -30,6 +30,7 @@ final class Reckon
     public $dashboard   = 'https://genesis.dev.reckoncloud.com.au';
     public $signup      = 'https://www.reckon.com/au/ecommerce-platform/';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
+    public $developer   = false;
     public $store_title = 'Store';
 
     /**

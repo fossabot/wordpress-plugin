@@ -7,9 +7,10 @@ if (! defined('ABSPATH')) {
 
 class Reckon_API
 {
-    private $auth_url       = 'https://selz.com/wp';
-    private $api_url        = 'https://api.selz.com';
-    private $redirect       = '';
+    private $env        = '';
+    private $auth_url   = '';
+    private $api_url    = '';
+    private $redirect   = '';
 
     public function __construct()
     {
@@ -21,6 +22,10 @@ class Reckon_API
         $this->redirect = admin_url() . 'admin.php?page=' . reckon()->slug;
 
         $this->generate_client_id();
+
+        $this->env = get_option($this->slug . '_settings')['env'];
+        $this->auth_url = 'https://' . ($this->env != '' ? $this->env : 'selz.com') . '/wp';
+        $this->api_url = 'https://api.' . ($this->env != '' ? $this->env : 'selz.com');
 
         add_action('current_screen', array( $this, 'get_first_token' ));
         add_action('current_screen', array( $this, 'set_store' ));
