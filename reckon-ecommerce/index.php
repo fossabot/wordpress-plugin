@@ -27,7 +27,7 @@ final class Reckon
     public $name        = 'Reckon';
     public $slug        = 'reckon';
     public $lang        = 'reckon-ecommerce';
-    public $dashboard   = 'https://genesis.dev.reckoncloud.com.au';
+    public $dashboard   = 'https://selz.com/dashboard';
     public $signup      = 'https://www.reckon.com/au/ecommerce-platform/';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
     public $developer   = false;
