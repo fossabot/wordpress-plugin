@@ -2,7 +2,7 @@
 /*
     Plugin Name: Reckon Ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 2.1.1
+    Version: 1.0.0
     Author: Reckon
     Author URI: https://www.reckon.com/au/
     License: MIT
@@ -10,7 +10,7 @@
 
 /**
  * Exit if accessed directly
- * @since 0.0.1
+ * @since 1.0.0
  */
 if (!defined('ABSPATH')) {
     exit;
@@ -21,16 +21,15 @@ if (!defined('ABSPATH')) {
  */
 final class Reckon
 {
-    public $version     = '2.1.1';
+    public $version     = '1.0.0';
     public $dir         = '';
     public $url         = '';
     public $name        = 'Reckon';
     public $slug        = 'reckon';
     public $lang        = 'reckon-ecommerce';
-    public $dashboard   = 'https://selz.com/dashboard';
+    public $dashboard   = 'https://z-selz.com/dashboard';
     public $signup      = 'https://www.reckon.com/au/ecommerce-platform/';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
-    public $developer   = false;
     public $store_title = 'Store';
 
     /**
@@ -102,7 +101,7 @@ final class Reckon
      *
      * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
      * @see https://codex.wordpress.org/Transients_API
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public function activation_hook()
     {
@@ -126,7 +125,7 @@ final class Reckon
 
     /**
      * Initializes the plugin and its features
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public function plugin_loaded()
     {
@@ -144,7 +143,7 @@ final class Reckon
 
     /**
      * Enqueue scripts and styles
-     * @since 1.7.2
+     * @since 1.0.0
      */
     public function enqueue_scripts()
     {
@@ -193,7 +192,7 @@ final class Reckon
 
     /**
      * Provide toolbar menu to users for easy navigation back to Reckon pages
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function admin_bar_menu($wp_admin_bar)
     {
@@ -216,7 +215,7 @@ final class Reckon
 
     /**
      * Helper for adding items to the toolbar menu
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function admin_bar_menu_item($title, $href, $meta = array())
     {
@@ -233,7 +232,7 @@ final class Reckon
 
     /**
      * Prompt users to complete store setup on activation
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function admin_notices()
     {
@@ -272,7 +271,7 @@ final class Reckon
 
     /**
      * Redirect user to settings page on plugin activation
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function redirect()
     {
@@ -317,7 +316,7 @@ final class Reckon
      * Generate the reckon button with custom arguments
      * Set up the default form values
      * @param $instance, see $defaults for complete parameters
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public function embed($instance)
     {
@@ -432,7 +431,7 @@ final class Reckon
     /**
      * Return default arguments for widgets or shortcodes
      * TODO: We should get these from the user defaults on Reckon
-     * @since 1.5.1
+     * @since 1.0.0
      */
     public function default_args()
     {
@@ -465,7 +464,7 @@ final class Reckon
 
     /**
      * Return common colors
-     * @since 2.0.0
+     * @since 1.0.0
      */
     public function colors()
     {
@@ -526,7 +525,7 @@ final class Reckon
     }
 
     /**
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function get_categories()
     {
@@ -542,7 +541,7 @@ final class Reckon
 
     /**
      * Add new store page containing merchant's store
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function add_store_page()
     {
@@ -567,7 +566,7 @@ final class Reckon
     /**
      * Get store page if it exists
      * @return WP_Post|null
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function get_store_page()
     {
@@ -577,7 +576,7 @@ final class Reckon
     /**
      * Get store block markup
      * @return HTML
-     * @since 2.1.0
+     * @since 1.0.0
      */
     public function get_store_block($store_url)
     {
@@ -619,7 +618,7 @@ final class Reckon
      * Shortcode function
      * Uses `add_shortcode`
      * @return HTML
-     * @since 1.5
+     * @since 1.0.0
      */
     public function add_shortcode($atts, $content)
     {
@@ -629,7 +628,7 @@ final class Reckon
 
     /**
      * Enqueue block editor assets
-     * @since 2.0.0
+     * @since 1.0.0
      */
     public function enqueue_block_editor_assets()
     {
@@ -655,7 +654,7 @@ final class Reckon
 
     /**
      * Add a block category for Reckon blocks
-     * @since 2.0.0
+     * @since 1.0.0
      */
     public function block_categories($categories, $post)
     {
@@ -672,7 +671,7 @@ final class Reckon
 
     /**
      * Load the embed loader asynchronously
-     * @since 2.0.0
+     * @since 1.0.0
      */
     public function script_loader_tag($tag, $handle, $src)
     {
