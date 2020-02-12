@@ -29,7 +29,10 @@ final class Reckon
     public $lang        = 'reckon-ecommerce';
     public $dashboard   = 'https://z-selz.com/dashboard';
     public $signup      = 'https://www.reckon.com/au/ecommerce-platform/';
+    public $embeds      = 'https://selz.com/embeds';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
+    public $developer   = true;				// change this back to false after testing
+	public $env   		= 'z-selz.com';		// change this back to 'z-selz.com' after testing
     public $store_title = 'Store';
 
     /**
@@ -209,6 +212,10 @@ final class Reckon
             $this->admin_bar_menu_item('View store', get_edit_post_link($store_page->ID));
         }
 
+        if ($this->api->is_connected()) {
+            $this->admin_bar_menu_item('Manage store', esc_url($this->home . 'dashboard/'), array('target' => '_blank'));
+        }
+
         $this->admin_bar_menu_item('Settings', admin_url('admin.php?page=' . $this->slug));
         $this->admin_bar_menu_item('Help', admin_url('admin.php?page=' . $this->slug . '_help'));
     }
@@ -256,16 +263,43 @@ final class Reckon
     {
         register_setting($this->slug . '_settings', $this->slug . '_settings', array( $this, 'settings_validate' ));
 
-        add_settings_field($this->slug . '_store_id', '', '', __FILE__);
-        add_settings_field($this->slug . '_display_cart', '', '', __FILE__);
+        if (isset($_GET['developer']) && $_GET['developer'] == 'true') {
+            setcookie($this->slug . '_developer', 'true', time() + 315360000);
+        }
+
+        if ((isset($_GET['developer']) && $_GET['developer'] == 'true') || (isset($_COOKIE[$this->slug . '_developer']) && $_COOKIE[$this->slug . '_developer'] == 'true')) {
+            $this->developer = true;
+        }
 
         $this->redirect();
     }
 
     public function settings_validate($input)
     {
-        $input['store_id'] = trim(sanitize_text_field($input['store_id']));
         $input['display_cart'] = sanitize_text_field($input['display_cart']);
+
+		if ($input['env']) {
+			$env = sanitize_text_field($input['env']);
+		}
+
+        if (strpos($env, 'selz.com') !== false) {
+            $input['env'] = $env;
+        } else {
+            $input['env'] = '';
+        }
+
+        // On change of environment, we need to reset the API
+        $options = get_option($this->slug . '_settings');
+
+        if ($options['env'] != $input['env']) {
+            $api = new Selz_API();
+
+            if ($api->is_connected()) {
+                $api->remove_tokens();
+                $api->remove_client();
+            }
+        }
+
         return $input;
     }
 
@@ -328,6 +362,8 @@ final class Reckon
             $args[$k] = str_replace(array('true', 'false'), array(true, false), $v);
         }
 
+        $env = get_option($this->slug . '_settings')['env'];
+
         if ('store' == $args['type'] || $args['type'] == '') {
             $store = get_option($this->slug . '_store');
 
@@ -338,6 +374,7 @@ final class Reckon
             $html = '<div data-embed="store">
                 <script type="text/props">
                 {
+                    ' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
                     "colors": {
                         "buttons": {
                             "background": "' . $args['background_color'] . '",
@@ -367,6 +404,7 @@ final class Reckon
             $html = '<div data-embed="button">
                 <script type="text/props">
                 {
+                    ' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
                     "action": "' . $args['action'] . '",
                     "colors": {
                         "buttons": {
@@ -401,6 +439,7 @@ final class Reckon
             $html = '<div data-embed="widget">
                 <script type="text/props">
                 {
+                    ' . ( $env != '' ? '"env": "' . $env . '",' : '' ) . '
                     "action": "' . $args['action'] . '",
                     "colors": {
                         "buttons": {
@@ -647,6 +686,7 @@ final class Reckon
         wp_localize_script($this->slug . '-blocks', $this->slug . '_globals', array(
             'colors' => $this->colors(),
             'embed'  => $this->embed,
+            'env'    => get_option($this->slug . '_settings')['env'],
             'nonce'  => wp_create_nonce($this->slug),
             'store'  => get_option($this->slug . '_store'),
         ));
