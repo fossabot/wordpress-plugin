@@ -31,6 +31,7 @@ final class Reckon
     public $signup      = 'https://www.reckon.com/au/ecommerce-platform/';
     public $embed       = 'https://embeds.selzstatic.com/1/loader.js';
     public $store_title = 'Store';
+    public $env = "z-selz.com";
 
     /**
      * The single instance of the class.
@@ -338,7 +339,7 @@ final class Reckon
             $html = '<div data-embed="store">
                 <script type="text/props">
                 {
-                    "env": "z-selz.com",
+                    ' . ( $this->env != '' ? '"env": "' . $this->env . '",' : '' ) . '
                     "colors": {
                         "buttons": {
                             "background": "' . $args['background_color'] . '",
@@ -368,7 +369,7 @@ final class Reckon
             $html = '<div data-embed="button">
                 <script type="text/props">
                 {
-					"env": "z-selz.com",
+                    ' . ( $this->env != '' ? '"env": "' . $this->env . '",' : '' ) . '
                     "action": "' . $args['action'] . '",
                     "colors": {
                         "buttons": {
@@ -403,7 +404,7 @@ final class Reckon
             $html = '<div data-embed="widget">
                 <script type="text/props">
                 {
-					"env": "z-selz.com",
+                    ' . ( $this->env != '' ? '"env": "' . $this->env . '",' : '' ) . '
                     "action": "' . $args['action'] . '",
                     "colors": {
                         "buttons": {
@@ -650,6 +651,7 @@ final class Reckon
         wp_localize_script($this->slug . '-blocks', $this->slug . '_globals', array(
             'colors' => $this->colors(),
             'embed'  => $this->embed,
+	    'env'    => $this->env,
             'nonce'  => wp_create_nonce($this->slug),
             'store'  => get_option($this->slug . '_store'),
         ));
