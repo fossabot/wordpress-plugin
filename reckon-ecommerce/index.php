@@ -368,6 +368,7 @@ final class Reckon
             $html = '<div data-embed="button">
                 <script type="text/props">
                 {
+					"env": "z-selz.com",
                     "action": "' . $args['action'] . '",
                     "colors": {
                         "buttons": {
@@ -402,6 +403,7 @@ final class Reckon
             $html = '<div data-embed="widget">
                 <script type="text/props">
                 {
+					"env": "z-selz.com",
                     "action": "' . $args['action'] . '",
                     "colors": {
                         "buttons": {
