@@ -338,6 +338,7 @@ final class Reckon
             $html = '<div data-embed="store">
                 <script type="text/props">
                 {
+                    "env": "z-selz.com",
                     "colors": {
                         "buttons": {
                             "background": "' . $args['background_color'] . '",
