@@ -42,7 +42,8 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 
 ### Building the plugin zips
 
-To build the plugin zip file for manual installation run `build.sh` (MacOS/Unix Bash) or `build.ps1` (Windows Powershell)
+1.  `yarn build` to build JavaScript / CSS files
+2.  `build.sh` (MacOS/Unix Bash) or `build.ps1` (Windows Powershell) to build the plugin zip file for manual installation
 
 ## Deploying to WordPress plugins SVN
 
