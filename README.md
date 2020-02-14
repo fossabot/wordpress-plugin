@@ -4,14 +4,12 @@ Embed your Selz items directly into your WordPress site.
 
 ## Local development
 
-The easiest way to develop on WordPress locally is to use "Local by Flywheel" which uses Docker behind the scenes and provides a super easy UI to get setup. To get started:
+The easiest way to develop on WordPress locally is to use "Local" by Flywheel which uses Docker behind the scenes and provides a super easy UI to get setup. To get started:
 
--   Install [Local by Flywheel](https://local.getflywheel.com)
+-   Install [Local](https://localwp.com)
 -   Create a new WordPress site in Local
--   Install the [Volumes Add-on](https://github.com/getflywheel/local-addon-volumes#downloading-a-release)
 -   Clone this repo to your local machine
--   In the settings for the VM in Local, go to "More" then click "Volumes"
--   Map each of the plugins to the VM. For example `~/Development/wordpress-plugins/selz-ecommerce` to `/app/public/wp-content/plugins/selz-ecommerce`. The first part will be specific to where you cloned the `wordpress-plugin` repo to.
+-   [Map each of the plugins to the VM](https://localwp.com/help-docs/how-to-use-volumes-with-local/)
 
 Now you can edit the plugin in the GitHub repo and preview changes live.
 
@@ -42,7 +40,8 @@ Now you can edit the plugin in the GitHub repo and preview changes live.
 
 ### Building the plugin zips
 
-To build the plugin zip file for manual installation run `build.sh` (MacOS/Unix Bash) or `build.ps1` (Windows Powershell)
+1.  `yarn build` to build JavaScript / CSS files
+2.  `build.sh` (MacOS/Unix Bash) or `build.ps1` (Windows Powershell) to build the plugin zip file for manual installation
 
 ## Deploying to WordPress plugins SVN
 
