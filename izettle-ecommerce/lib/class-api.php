@@ -7,7 +7,7 @@ if (! defined('ABSPATH')) {
 
 class iZettle_API
 {
-    private $auth_url       = 'https://selz.com/wp';
+    private $auth_url       = 'https://app.selz.com/wp';
     private $api_url        = 'https://api.selz.com';
     private $redirect       = '';
 

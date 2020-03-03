@@ -3,7 +3,7 @@ Contributors: iZettle
 Tags: izettle, shopping cart, ecommerce, Wordpress ecommerce, e-commerce
 Requires at least: 5.0
 Tested up to: 5.3.2
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,8 @@ Yes, the plugin works with any theme. The store, product widget and buy now butt
 If you have queries, you can contact us here at [help@izettle.com](mailto:help@izettle.com)
 
 == Changelog ==
+= 2.1.3 =
+- General maintenance
 = 2.1.2 =
 - Fixed issue preventing Gutenberg editor from loading
 = 2.1.1 =
