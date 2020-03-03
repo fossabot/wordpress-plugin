@@ -24,7 +24,7 @@ class Selz_API
         $this->generate_client_id();
 
         $this->env = get_option($this->slug . '_settings')['env'];
-        $this->auth_url = 'https://' . ($this->env != '' ? $this->env : 'selz.com') . '/wp';
+        $this->auth_url = 'https://app.' . ($this->env != '' ? $this->env : 'selz.com') . '/wp';
         $this->api_url = 'https://api.' . ($this->env != '' ? $this->env : 'selz.com');
 
         add_action('current_screen', array( $this, 'get_first_token' ));
