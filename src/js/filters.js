@@ -1,4 +1,4 @@
-const { InspectorAdvancedControls } = wp.blockEditor;
+const { InspectorAdvancedControls } = wp.blockEditor || wp.editor;
 const { hasBlockSupport } = wp.blocks;
 const { TextControl } = wp.components;
 const { createHigherOrderComponent } = wp.compose;
