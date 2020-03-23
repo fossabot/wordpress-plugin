@@ -6,13 +6,11 @@ import Embed from '../../components/Embed';
 import ProductPanel from '../../components/ProductPanel';
 import WidthPanel from '../../components/WidthPanel';
 
-const { InspectorControls } = wp.blockEditor;
-const { useDispatch } = wp.data;
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const { withDispatch } = wp.data;
 const { Fragment } = wp.element;
 
-export default props => {
-    const { openGeneralSidebar } = useDispatch('core/edit-post');
-
+function Edit({ openGeneralSidebar, ...props }) {
     return (
         <Fragment>
             <Embed {...props} openGeneralSidebar={openGeneralSidebar} isPreview />
@@ -26,4 +24,9 @@ export default props => {
             </InspectorControls>
         </Fragment>
     );
-};
+}
+
+export default withDispatch(dispatch => {
+    const { openGeneralSidebar } = dispatch('core/edit-post');
+    return { openGeneralSidebar };
+})(Edit);

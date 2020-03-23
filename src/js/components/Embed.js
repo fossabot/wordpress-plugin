@@ -1,5 +1,5 @@
 const { embed, env } = window[`${namespace}_globals`];
-const { BlockIcon } = wp.blockEditor;
+const { BlockIcon } = wp.blockEditor || wp.editor;
 const { getBlockType } = wp.blocks;
 const { Placeholder } = wp.components;
 const { Component, Fragment } = wp.element;
