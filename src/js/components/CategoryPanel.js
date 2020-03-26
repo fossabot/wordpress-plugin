@@ -21,7 +21,8 @@ export default class CategoryPanel extends Component {
                 ({ data }) => {
                     // Filter out unpublished, move the "All" category to the beginning
                     const categories = data
-                        .filter(({ isPublished }) => isPublished)
+                        // eslint-disable-next-line camelcase
+                        .filter(({ is_published }) => is_published)
                         .sort(a => (a.slug === 'all' ? -1 : 0));
 
                     // Assign `category` to the "All" category's ID -- this prevents a re-render
