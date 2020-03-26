@@ -19,10 +19,8 @@ export default class CategoryPanel extends Component {
             .then(res => res.json())
             .then(
                 ({ data }) => {
-                    const isAllCategory = ({ slug }) => slug === 'all';
-
                     // Move the "All" category to the beginning
-                    const categories = [data.find(isAllCategory), ...data.filter(category => !isAllCategory(category))];
+                    const categories = data.sort(a => (a.slug === 'all' ? -1 : 0));
 
                     // Assign `category` to the "All" category's ID -- this prevents a re-render
                     categories[0].id = category;
