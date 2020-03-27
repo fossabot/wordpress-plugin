@@ -1,3 +1,4 @@
+import Client from 'selz-js-sdk';
 import CategoryList from './CategoryList';
 
 const { PanelBody, TextControl } = wp.components;
@@ -6,6 +7,9 @@ const { __ } = wp.i18n;
 
 export default class CategoryPanel extends Component {
     componentDidMount() {
+        const { name } = window[`${namespace}_globals`].store;
+        this.client = new Client({ store: name });
+
         this.fetchCategories();
     }
 
@@ -15,31 +19,26 @@ export default class CategoryPanel extends Component {
             setAttributes,
         } = this.props;
 
-        fetch(`${window.ajaxurl}?action=${namespace}_get_categories`)
-            .then(res => res.json())
-            .then(
-                ({ data }) => {
-                    // Filter out unpublished, move the "All" category to the beginning
-                    const categories = data
-                        // eslint-disable-next-line camelcase
-                        .filter(({ is_published }) => is_published)
-                        .sort(a => (a.slug === 'all' ? -1 : 0));
+        this.client.getCategories().then(
+            res => {
+                // Move the "All" category to the beginning
+                const categories = res.categories.sort(a => (a.slug === 'all' ? -1 : 0));
 
-                    // Assign `category` to the "All" category's ID -- this prevents a re-render
-                    categories[0].id = category;
+                // Assign `category` to the "All" category's ID -- this prevents a re-render
+                categories[0].id = category;
 
-                    setAttributes({
-                        isLoading: false,
-                        categories,
-                        category: category || (categories && categories.length && categories[0].id),
-                    });
-                },
-                error =>
-                    setAttributes({
-                        isLoading: false,
-                        error,
-                    }),
-            );
+                setAttributes({
+                    isLoading: false,
+                    categories,
+                    category: category || (categories && categories.length && categories[0].id),
+                });
+            },
+            error =>
+                setAttributes({
+                    isLoading: false,
+                    error,
+                }),
+        );
     }
 
     render() {

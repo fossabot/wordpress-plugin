@@ -3820,6 +3820,11 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
+humps@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/humps/-/humps-2.0.1.tgz#dd02ea6081bd0568dc5d073184463957ba9ef9aa"
+  integrity sha1-3QLqYIG9BWjcXQcxhEY5V7qe+ao=
+
 iconv-lite@^0.4.17, iconv-lite@^0.4.4:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -6535,6 +6540,13 @@ seek-bzip@^1.0.5:
   integrity sha1-z+kXyz0nS8/6x5J1ivUxc+sfq9w=
   dependencies:
     commander "~2.8.1"
+
+selz-js-sdk@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/selz-js-sdk/-/selz-js-sdk-2.0.0.tgz#85602d4dc8404346c009e783acc393c8319bf723"
+  integrity sha512-9bVnbUKeP/5oIb63LrzKnv4k7WyWvhLOsM8CTo469MnpBDj5gyEMJEmelmJIMjhJp9zqNNkQuC8YRxXL9UMApw==
+  dependencies:
+    humps "^2.0.1"
 
 semver-diff@^2.0.0:
   version "2.1.0"
