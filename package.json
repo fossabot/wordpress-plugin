@@ -13,7 +13,8 @@
     "browserslist": "> 0.25%, not dead",
     "dependencies": {
         "classnames": "^2.2.6",
-        "lodash": "^4.17.13"
+        "lodash": "^4.17.13",
+        "selz-js-sdk": "^2.0.0"
     },
     "devDependencies": {
         "autoprefixer": "^9.4.5",

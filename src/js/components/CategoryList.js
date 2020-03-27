@@ -25,7 +25,7 @@ export default ({ attributes, setAttributes }) => {
     }
 
     if (query) {
-        categories = categories.filter(({ title }) => !query || title.toLowerCase().includes(query));
+        categories = categories.filter(({ title }) => !query || title.toLowerCase().includes(query.toLowerCase()));
     }
 
     if (!categories || !categories.length) {
