@@ -21,4 +21,4 @@ if (!defined('ABSPATH')) {
         min-height: 100vh;
     }
 </style>
-<iframe src="https://styledmatter.com">
+<iframe src="https://app.selz.com">

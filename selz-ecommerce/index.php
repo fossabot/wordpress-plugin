@@ -1,11 +1,11 @@
 <?php
 /*
-    Plugin Name: Selz WordPress Ecommerce
-    Plugin URI: https://features.selz.com/wordpress-ecommerce
+    Plugin Name: Selz Ecommerce [poc]
+    Plugin URI: https://selz.com/wordpress-ecommerce
     Description: Easily add ecommerce and a smooth shopping cart to your WordPress site. The most powerful way to sell physical products, digital items and services.
-    Version: 2.1.8
+    Version: 2.2.0
     Author: Selz
-    Author URI: https://features.selz.com/wordpress-ecommerce
+    Author URI: https://selz.com/wordpress-ecommerce
     License: MIT
 */
 
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
  */
 final class Selz
 {
-    public $version     = '2.1.8';
+    public $version     = '2.2.0';
     public $dir         = '';
     public $url         = '';
     public $name        = 'Selz';
