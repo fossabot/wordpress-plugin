@@ -168,7 +168,7 @@ final class Selz
         add_submenu_page(
             $this->slug,
             __('Selz Settings', $this->lang),
-            __('Settings', $this->lang),
+            __('- Settings', $this->lang),
             'manage_options',
             $this->slug
         );
@@ -176,11 +176,78 @@ final class Selz
         add_submenu_page(
             $this->slug,
             __('Selz Help', $this->lang),
-            __('Help', $this->lang),
+            __('- Help', $this->lang),
             'manage_options',
             $this->slug . '_help',
             array( $this, 'help_page' )
         );
+
+        add_submenu_page(
+            $this->slug,
+            __('Selz General', $this->lang),
+            __('General', $this->lang),
+            'manage_options',
+            $this->slug . '_general',
+            array( $this, 'general_page' )
+        );
+
+        add_submenu_page(
+            $this->slug,
+            __('Selz Dashboard', $this->lang),
+            __('- Dashboard', $this->lang),
+            'manage_options',
+            $this->slug . '_dashboard',
+            array( $this, 'dashboard_page' )
+        );
+
+        add_submenu_page(
+            $this->slug,
+            __('Selz Analytics', $this->lang),
+            __('- Analytics', $this->lang),
+            'manage_options',
+            $this->slug . '_analytics',
+            array( $this, 'analytics_page' )
+        );
+
+        add_submenu_page(
+            $this->slug,
+            __('Selz Orders', $this->lang),
+            __('- Orders >', $this->lang),
+            'manage_options',
+            $this->slug . '_orders',
+            array( $this, 'orders_page' )
+        );
+
+        add_submenu_page(
+            $this->slug,
+            __('Selz Orders', $this->lang),
+            __('- etc.', $this->lang),
+            'manage_options',
+            $this->slug . '_orders',
+            array( $this, 'orders_page' )
+        );
+
+        // $this->admin_bar_menu_item('- Setup', '#');
+        // $this->admin_bar_menu_item('- Help', '#');
+        // $this->admin_bar_menu_item('General', '/');
+        // $this->admin_bar_menu_item('- Dashboard', '#');
+        // $this->admin_bar_menu_item('- Analytics', '#');
+        // $this->admin_bar_menu_item('- Orders >', '#');
+        // $this->admin_bar_menu_item('- Items >', '#');
+        // $this->admin_bar_menu_item('- Categories', '#');
+        // $this->admin_bar_menu_item('- Customers >', '#');
+        // $this->admin_bar_menu_item('- Discounts', '#');
+        // $this->admin_bar_menu_item('Channels', '/');
+        // $this->admin_bar_menu_item('- Store >', '#');
+        // $this->admin_bar_menu_item('- Buttons & Widgets', '#');
+        // $this->admin_bar_menu_item('- WordPress', '#');
+        // $this->admin_bar_menu_item('- Marketplaces >', '#');
+        // $this->admin_bar_menu_item('- Point of Sale >', '#');
+        // $this->admin_bar_menu_item('Admin', '/');
+        // $this->admin_bar_menu_item('- Plans', '#');
+        // $this->admin_bar_menu_item('- Apps >', '#');
+        // $this->admin_bar_menu_item('- Statement', '#');
+        // $this->admin_bar_menu_item('- Settings >', '#');
     }
 
     public function settings_page()
