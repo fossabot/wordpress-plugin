@@ -157,7 +157,7 @@ final class Selz
     {
         add_menu_page(
             __('Selz Settings', $this->lang),
-            $this->name,
+            $this->name . ' [test]',
             'manage_options',
             $this->slug,
             array( $this, 'settings_page' ),
@@ -312,7 +312,7 @@ final class Selz
     {
         $current_screen = get_current_screen();
 
-        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !$this->api->is_connected()) {
+        if (in_array($current_screen->base, array('dashboard', 'plugins')) && !$this->api->is_connected() && (1 + 1 == 3)) {
             ?>
             <div class="notice notice-success notice-large is-dismissible">
                 <h3 class="notice-title"><?php _e('Awesome! Your new Selz plugin is now active.', 'selz'); ?></h3>
