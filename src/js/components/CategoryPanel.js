@@ -7,8 +7,9 @@ const { __ } = wp.i18n;
 
 export default class CategoryPanel extends Component {
     componentDidMount() {
-        const { name } = window[`${namespace}_globals`].store;
-        this.client = new Client({ store: name });
+        const { env, store } = window[`${namespace}_globals`];
+        const { name } = store;
+        this.client = new Client({ env, store: name });
 
         this.fetchCategories();
     }
@@ -20,9 +21,9 @@ export default class CategoryPanel extends Component {
         } = this.props;
 
         this.client.getCategories().then(
-            res => {
+            (res) => {
                 // Move the "All" category to the beginning
-                const categories = res.categories.sort(a => (a.slug === 'all' ? -1 : 0));
+                const categories = res.categories.sort((a) => (a.slug === 'all' ? -1 : 0));
 
                 // Assign `category` to the "All" category's ID -- this prevents a re-render
                 categories[0].id = category;
@@ -33,7 +34,7 @@ export default class CategoryPanel extends Component {
                     category: category || (categories && categories.length && categories[0].id),
                 });
             },
-            error =>
+            (error) =>
                 setAttributes({
                     isLoading: false,
                     error,
@@ -55,7 +56,7 @@ export default class CategoryPanel extends Component {
                     type="search"
                     value={query}
                     className="is-filter"
-                    onChange={query => setAttributes({ query })}
+                    onChange={(query) => setAttributes({ query })}
                 />
                 <CategoryList {...props} />
             </PanelBody>
