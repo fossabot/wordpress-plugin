@@ -216,7 +216,6 @@ class iZettle_API
         );
 
         if (is_wp_error($response)) {
-            $this->remove_tokens();
             $error_message = $response->get_error_message();
         } else {
             if (isset($response['body']) && $response['body'] != '') {
@@ -268,7 +267,6 @@ class iZettle_API
         );
 
         if (is_wp_error($response)) {
-            $this->remove_tokens();
             $error_message = $response->get_error_message();
         } else {
             if (isset($response['body']) && $response['body'] != '') {
@@ -312,7 +310,6 @@ class iZettle_API
         );
 
         if (is_wp_error($response)) {
-            $this->remove_tokens();
             $error_message = $response->get_error_message();
         } else {
             if (isset($response['body']) && $response['body'] != '') {
@@ -353,7 +350,6 @@ class iZettle_API
         ));
 
         if (is_wp_error($response)) {
-            $this->remove_tokens();
             $error_message = $response->get_error_message();
         } elseif (isset($response['body']) && $response['body'] != '') {
             $body = json_decode($response['body']);
