@@ -9,7 +9,7 @@ export default class CategoryPanel extends Component {
     componentDidMount() {
         const { env, store } = window[`${namespace}_globals`];
         const { id } = store;
-        this.client = new Client({ env, store: parseInt(id, 10) });
+        this.client = new Client({ env, store: Number(id) });
 
         this.fetchCategories();
     }
