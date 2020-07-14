@@ -183,10 +183,12 @@ img.is-loading {
 .components-panel__body .components-spinner {
   float: none;
 }
-[data-type^='selz/'] .components-placeholder {
+[data-type^='selz/'] .components-placeholder,
+[data-type^='izettle/'] .components-placeholder {
   align-items: center;
 }
-[data-type^='selz/'] .components-placeholder__fieldset {
+[data-type^='selz/'] .components-placeholder__fieldset,
+[data-type^='izettle/'] .components-placeholder__fieldset {
   justify-content: center;
 }
 .components-base-control.is-filter {
