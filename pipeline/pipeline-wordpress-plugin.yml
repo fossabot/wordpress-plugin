@@ -13,6 +13,7 @@ stages:
   condition: in(variables['build.sourceBranch'], 'refs/heads/master')
   jobs:
   - deployment: Deploy
+    environment: development
     pool:
       vmImage: ubuntu-latest
     strategy:
