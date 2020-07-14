@@ -21,5 +21,6 @@ stages:
               displayName: Run Build
               inputs:
                 script: |
+                  npm install
                   npm install --save-dev webpack
                   npm run build:selz
