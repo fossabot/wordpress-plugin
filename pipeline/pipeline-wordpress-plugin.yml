@@ -1,9 +1,5 @@
 # Azure Devops pipeline file
 name: $(Date:yyyyMMdd)-$(Rev:r)
-#Variables
-variables:
-    SVN_USERNAME: $(SVN_USERNAME)
-    SVN_PASSWORD: $(SVN_PASSWORD)
 
 trigger: none
 pr: none
@@ -23,4 +19,6 @@ stages:
             - checkout: self
             - task: CmdLine@2
               inputs:
-                script: 'npm run build:selz'
+                script: |
+                  npm install --save-dev webpack
+                  npm run build:selz'
