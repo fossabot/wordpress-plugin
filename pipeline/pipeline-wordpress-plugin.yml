@@ -18,7 +18,8 @@ stages:
             steps:
             - checkout: self
             - task: CmdLine@2
+              displayName: Run Build
               inputs:
                 script: |
                   npm install --save-dev webpack
-                  npm run build:selz'
+                  npm run build:selz
