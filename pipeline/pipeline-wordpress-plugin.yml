@@ -1,0 +1,25 @@
+# Azure Devops pipeline file
+name: $(Date:yyyyMMdd)-$(Rev:r)
+#Variables
+variables:
+    SVN_USERNAME: $(SVN_USERNAME)
+    SVN_PASSWORD: $(SVN_PASSWORD)
+
+trigger: none
+pr: none
+
+stages:
+- stage: Build_Selz
+  condition: in(variables['build.sourceBranch'], 'refs/heads/master')
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+            - task: CmdLine@2
+              inputs:
+                script: 'npm run build:selz'
