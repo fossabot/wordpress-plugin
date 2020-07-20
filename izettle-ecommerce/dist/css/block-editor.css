@@ -41,7 +41,8 @@ img.is-loading {
   max-height: none;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .media-ratio-1-1 img.is-landscape {
   width: auto;
@@ -69,7 +70,8 @@ img.is-loading {
   max-height: none;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .media-ratio-4-3 img.is-landscape {
   width: auto;
@@ -97,7 +99,8 @@ img.is-loading {
   max-height: none;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .media-ratio-6-4 img.is-landscape {
   width: auto;
@@ -125,7 +128,8 @@ img.is-loading {
   max-height: none;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .media-ratio-16-9 img.is-landscape {
   width: auto;
@@ -153,7 +157,8 @@ img.is-loading {
   max-height: none;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .media-ratio-21-9 img.is-landscape {
   width: auto;
