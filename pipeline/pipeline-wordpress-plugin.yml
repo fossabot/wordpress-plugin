@@ -1,0 +1,72 @@
+# Azure Devops pipeline file
+name: $(Date:yyyyMMdd)-$(Rev:r)
+
+trigger: none
+pr: none
+
+stages:
+- stage: Selz
+  # condition: in(variables['build.sourceBranch'], 'refs/heads/master')
+  jobs:
+  - deployment: Deploy
+    environment: development
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+            - task: CmdLine@2
+              displayName: Run Checkout and Build
+              inputs:
+                script: |
+                  svn co https://plugins.svn.wordpress.org/selz-ecommerce ../selz-ecommerce
+                  npm install
+                  npm install --save-dev webpack
+                  npm run build:selz
+                  ./update.sh
+
+            - task: CmdLine@2
+              displayName: Run Selz Commit
+              inputs:
+                script: |
+                  tagno=$(grep 'selz-ecommerce/index.php' -e "Version:" | cut -d":" -f2 | sed -e 's/ //g')
+                  svn cp ../selz-ecommerce/trunk ../selz-ecommerce/tags/$tagno
+                  cd ../selz-ecommerce
+                  svn commit --username $(SVN_USERNAME) --password $(SVN_PASSWORD)
+                  ls tags/$tagno
+                  echo $tagno
+
+- stage: IZettle
+  # condition: in(variables['build.sourceBranch'], 'refs/heads/master')
+  jobs:
+  - deployment: Deploy
+    environment: whitelabel
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+            - task: CmdLine@2
+              displayName: Run Checkout and Build
+              inputs:
+                script: |
+                  svn co https://plugins.svn.wordpress.org/izettle-ecommerce ../izettle-ecommerce
+                  npm install
+                  npm install --save-dev webpack
+                  npm run build:izettle
+                  ./update.sh
+
+            - task: CmdLine@2
+              displayName: Run IZettle Commit
+              inputs:
+                script: |
+                  tagno=$(grep 'izettle-ecommerce/index.php' -e "Version:" | cut -d":" -f2 | sed -e 's/ //g')
+                  svn cp ../izettle-ecommerce/trunk ../izettle-ecommerce/tags/$tagno
+                  cd ../izettle-ecommerce
+                  svn commit --username $(SVN_USERNAME) --password $(SVN_PASSWORD)
+                  ls tags/$tagno
+                  echo $tagno
