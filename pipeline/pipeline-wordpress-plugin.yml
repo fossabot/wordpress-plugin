@@ -34,7 +34,7 @@ stages:
                   tagno=$(grep 'selz-ecommerce/index.php' -e "Version:" | cut -d":" -f2 | sed -e 's/ //g')
                   svn cp ../selz-ecommerce/trunk ../selz-ecommerce/tags/$tagno
                   cd ../selz-ecommerce
-                  # svn commit --username $(SVN_USERNAME) --password $(SVN_PASSWORD)
+                  svn commit --username $(SVN_USERNAME) --password $(SVN_PASSWORD)
                   ls tags/$tagno
                   echo $tagno
 
@@ -67,6 +67,6 @@ stages:
                   tagno=$(grep 'izettle-ecommerce/index.php' -e "Version:" | cut -d":" -f2 | sed -e 's/ //g')
                   svn cp ../izettle-ecommerce/trunk ../izettle-ecommerce/tags/$tagno
                   cd ../izettle-ecommerce
-                  # svn commit --username $(SVN_USERNAME) --password $(SVN_PASSWORD)
+                  svn commit --username $(SVN_USERNAME) --password $(SVN_PASSWORD)
                   ls tags/$tagno
                   echo $tagno
