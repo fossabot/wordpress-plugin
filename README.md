@@ -1,4 +1,6 @@
 # Selz WordPress Plugin
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSelz%2Fwordpress-plugin.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSelz%2Fwordpress-plugin?ref=badge_shield)
+
 
 Embed your Selz items directly into your WordPress site.
 
@@ -53,3 +55,7 @@ Some things to remember:
 -   The stable version must be updated in the top of the readme.txt to match the above
 -   A changelog entry is required (for us and the users)
 -   After you commit, you need to tag the release with the new version also
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSelz%2Fwordpress-plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSelz%2Fwordpress-plugin?ref=badge_large)
